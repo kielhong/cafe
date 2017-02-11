@@ -16,15 +16,23 @@ public class CafeTest {
 
     @Before
     public void setUp() {
-        cafe = new Cafe("testcafe");
+        cafe = new Cafe("testcafe", "testcafe");
     }
 
     @Test
-    public void modifyCafeName_should_change_cafeName() {
+    public void updateCafeInfo_should_change_cafeName_description_visibility() {
         // When
-        cafe.modifyName("new name");
+        CafeCategory category = new CafeCategory("category");
+        cafe.updateInfo("new name", "new description", CafeVisibility.PRIVATE, category);
         // Then
-        assertThat(cafe.getName()).isEqualTo("new name");
+        assertThat(cafe.getName())
+                .isEqualTo("new name");
+        assertThat(cafe.getDescription())
+                .isEqualTo("new description");
+        assertThat(cafe.getVisibility())
+                .isEqualTo(CafeVisibility.PRIVATE);
+        assertThat(cafe.getCategory())
+                .isEqualTo(category);
     }
 
     @Test
@@ -38,7 +46,7 @@ public class CafeTest {
         assertThat(cafe.getCafeMembers())
                 .hasSize(beforeSize + 1)
                 .contains(cafeMember);
-        assertThat(cafe.getCafeInfo().getCafeMemberCount())
+        assertThat(cafe.getCafeStatistics().getCafeMemberCount())
                 .isEqualTo(1);
     }
 
@@ -50,7 +58,7 @@ public class CafeTest {
         // Then
         assertThatThrownBy(() -> cafe.addMember(member))
                 .isInstanceOf(CafeMemberAlreadyExistsException.class);
-        assertThat(cafe.getCafeInfo().getCafeMemberCount())
+        assertThat(cafe.getCafeStatistics().getCafeMemberCount())
                 .isEqualTo(1);
     }
 
@@ -68,7 +76,7 @@ public class CafeTest {
         assertThat(cafe.getCafeMembers())
                 .doesNotContain(cafeMember1)
                 .hasSize(beforeSize - 1);
-        assertThat(cafe.getCafeInfo().getCafeMemberCount())
+        assertThat(cafe.getCafeStatistics().getCafeMemberCount())
                 .isEqualTo(1);
     }
 }
