@@ -18,9 +18,17 @@ public class Cafe {
 
     private String name;
 
-    private List<CafeMember> cafeMembers = new ArrayList<>();
+    private CafeInfo cafeInfo;
+
+    private List<CafeMember> cafeMembers;
+
+    public Cafe() {
+        cafeInfo = new CafeInfo();
+        cafeMembers = new ArrayList<>();
+    }
 
     public Cafe(String name) {
+        this();
         this.name = name;
     }
 
@@ -32,6 +40,8 @@ public class Cafe {
         CafeMember cafeMember = new CafeMember(this, member);
         if (cafeMembers.stream().noneMatch((x -> x.getMember().equals(member)))) {
             this.cafeMembers.add(cafeMember);
+            this.cafeInfo.increaseCafeMemberCount();
+            member.getCafes().add(this);
         } else {
             throw new CafeMemberAlreadyExistsException();
         }
@@ -40,6 +50,9 @@ public class Cafe {
     }
 
     public void removeCafeMember(CafeMember cafeMember) {
+        cafeMember.getMember().getCafes().remove(this);
         this.cafeMembers.remove(cafeMember);
+        this.cafeInfo.decreaseCafeMemberCount();
+
     }
 }

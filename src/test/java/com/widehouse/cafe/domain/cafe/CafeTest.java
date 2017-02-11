@@ -38,6 +38,8 @@ public class CafeTest {
         assertThat(cafe.getCafeMembers())
                 .hasSize(beforeSize + 1)
                 .contains(cafeMember);
+        assertThat(cafe.getCafeInfo().getCafeMemberCount())
+                .isEqualTo(1);
     }
 
     @Test
@@ -48,6 +50,8 @@ public class CafeTest {
         // Then
         assertThatThrownBy(() -> cafe.addMember(member))
                 .isInstanceOf(CafeMemberAlreadyExistsException.class);
+        assertThat(cafe.getCafeInfo().getCafeMemberCount())
+                .isEqualTo(1);
     }
 
     @Test
@@ -62,7 +66,9 @@ public class CafeTest {
         cafe.removeCafeMember(cafeMember1);
         // Then
         assertThat(cafe.getCafeMembers())
-                .hasSize(beforeSize - 1)
-                .doesNotContain(cafeMember1);
+                .doesNotContain(cafeMember1)
+                .hasSize(beforeSize - 1);
+        assertThat(cafe.getCafeInfo().getCafeMemberCount())
+                .isEqualTo(1);
     }
 }
