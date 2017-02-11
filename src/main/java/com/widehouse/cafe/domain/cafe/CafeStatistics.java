@@ -10,19 +10,18 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Slf4j
-public class CafeInfo {
+public class CafeStatistics {
     private Long cafeMemberCount;
     private Long cafeArticleCount;
     private Long cafeCommentCount;
     private Long cafeVisitCount;
-    private LocalDateTime createDateTime;
 
-    public CafeInfo() {
+
+    public CafeStatistics() {
         cafeMemberCount = 0L;
         cafeArticleCount = 0L;
         cafeCommentCount = 0L;
         cafeVisitCount = 0L;
-        createDateTime = LocalDateTime.now();
     }
 
     public void increaseCafeMemberCount() {
