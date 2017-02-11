@@ -1,4 +1,4 @@
-package com.widehouse;
+package com.widehouse.cafe;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
