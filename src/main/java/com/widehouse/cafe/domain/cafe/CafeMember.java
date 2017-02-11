@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
  * Created by kiel on 2017. 2. 10..
  */
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class CafeMember {
     private Cafe cafe;
@@ -22,10 +21,16 @@ public class CafeMember {
 
     private LocalDateTime joinDate;
 
-    public CafeMember(Cafe cafe, Member member) {
+    public CafeMember(Cafe cafe, Member member, CafeMemberRole role) {
         this.cafe = cafe;
         this.member = member;
+        this.role = role;
         this.joinDate = LocalDateTime.now();
-        this.role = CafeMemberRole.MEMBER;
     }
+
+    public CafeMember(Cafe cafe, Member member) {
+        this(cafe, member, CafeMemberRole.MEMBER);
+    }
+
+
 }

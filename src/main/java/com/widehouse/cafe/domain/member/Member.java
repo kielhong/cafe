@@ -13,9 +13,16 @@ import java.util.List;
 public class Member {
     private Long id;
 
+    private String nickname;
+
     private List<Cafe> cafes;
 
     public Member() {
-        cafes = new ArrayList<>();
+        this.cafes = new ArrayList<>();
+    }
+
+    public Member(String nickname) {
+        this();
+        this.nickname = nickname;
     }
 }

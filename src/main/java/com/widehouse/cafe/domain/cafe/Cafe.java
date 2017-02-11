@@ -55,6 +55,15 @@ public class Cafe {
         this.visibility = CafeVisibility.PUBLIC;
     }
 
+    public Cafe(String url, String name, String description, CafeVisibility visibility, CafeCategory category) {
+        this();
+        this.url = url;
+        this.name = name;
+        this.description = description;
+        this.visibility = visibility;
+        this.category = category;
+    }
+
     public void updateInfo(String name, String description, CafeVisibility visibility, CafeCategory category) {
         this.name = name;
         this.description = description;
@@ -62,8 +71,8 @@ public class Cafe {
         this.category = category;
     }
 
-    public CafeMember addMember(Member member) {
-        CafeMember cafeMember = new CafeMember(this, member);
+    public CafeMember addMember(Member member, CafeMemberRole role) {
+        CafeMember cafeMember = new CafeMember(this, member, role);
         if (cafeMembers.stream().noneMatch((x -> x.getMember().equals(member)))) {
             this.cafeMembers.add(cafeMember);
             this.cafeStatistics.increaseCafeMemberCount();
@@ -73,6 +82,10 @@ public class Cafe {
         }
 
         return cafeMember;
+    }
+
+    public CafeMember addMember(Member member) {
+        return addMember(member, CafeMemberRole.MEMBER);
     }
 
     public void removeCafeMember(CafeMember cafeMember) {
