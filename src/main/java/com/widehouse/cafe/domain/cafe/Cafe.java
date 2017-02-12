@@ -33,12 +33,12 @@ public class Cafe {
 
     private LocalDateTime createDateTime;
 
-    private CafeStatistics cafeStatistics;
+    private CafeStatistics statistics;
 
     private List<CafeMember> cafeMembers;
 
     public Cafe() {
-        this.cafeStatistics = new CafeStatistics();
+        this.statistics = new CafeStatistics();
         this.cafeMembers = new ArrayList<>();
         this.createDateTime = LocalDateTime.now();
     }
@@ -69,13 +69,13 @@ public class Cafe {
 
     public void addCafeMember(CafeMember cafeMember) {
         this.cafeMembers.add(cafeMember);
-        this.cafeStatistics.increaseCafeMemberCount();
+        this.statistics.increaseCafeMemberCount();
     }
 
     public void removeCafeMember(CafeMember cafeMember) {
         cafeMember.getMember().getCafes().remove(this);
 
         this.cafeMembers.remove(cafeMember);
-        this.cafeStatistics.decreaseCafeMemberCount();
+        this.statistics.decreaseCafeMemberCount();
     }
 }

@@ -1,10 +1,8 @@
 package com.widehouse.cafe.domain.cafe;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.exception.CafeMemberAlreadyExistsException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -67,7 +65,7 @@ public class CafeTest {
         assertThat(cafe.getCafeMembers())
                 .hasSize(beforeSize + 1)
                 .contains(cafeMember);
-        assertThat(cafe.getCafeStatistics().getCafeMemberCount())
+        assertThat(cafe.getStatistics().getCafeMemberCount())
                 .isEqualTo(1);
     }
 
@@ -87,7 +85,7 @@ public class CafeTest {
         assertThat(cafe.getCafeMembers())
                 .doesNotContain(cafeMember1)
                 .hasSize(beforeSize - 1);
-        assertThat(cafe.getCafeStatistics().getCafeMemberCount())
+        assertThat(cafe.getStatistics().getCafeMemberCount())
                 .isEqualTo(1);
     }
 }

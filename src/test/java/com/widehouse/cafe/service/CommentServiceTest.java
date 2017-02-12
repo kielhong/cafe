@@ -2,7 +2,6 @@ package com.widehouse.cafe.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.BDDMockito.given;
 
 import com.widehouse.cafe.domain.board.Article;
 import com.widehouse.cafe.domain.board.Board;
@@ -10,11 +9,9 @@ import com.widehouse.cafe.domain.board.Comment;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -47,6 +44,7 @@ public class CommentServiceTest {
         // Given
         Member commenter = new Member("commenter");
         cafeService.joinMember(cafe, commenter);
+        Long beforeCommentCount = cafe.getStatistics().getCafeCommentCount();
         // When
         Comment comment = commentService.writeComment(article, commenter, "comment");
         // Then
@@ -55,6 +53,8 @@ public class CommentServiceTest {
                 .hasFieldOrPropertyWithValue("article", article)
                 .hasFieldOrPropertyWithValue("commenter", commenter)
                 .hasFieldOrPropertyWithValue("comment", "comment");
+        assertThat(cafe.getStatistics().getCafeCommentCount())
+                .isEqualTo(beforeCommentCount + 1);
     }
 
     @Test

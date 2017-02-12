@@ -70,7 +70,7 @@ public class CafeServiceTest {
         assertThat(cafe.getCafeMembers())
                 .hasSize(beforeSize + 1)
                 .contains(cafeMember);
-        assertThat(cafe.getCafeStatistics().getCafeMemberCount())
+        assertThat(cafe.getStatistics().getCafeMemberCount())
                 .isEqualTo(beforeSize + 1);
     }
 
@@ -79,11 +79,11 @@ public class CafeServiceTest {
         // Given
         Member member = new Member();
         CafeMember cafeMember = cafeService.joinMember(cafe, member);
-        Long beforeSize = cafe.getCafeStatistics().getCafeMemberCount();
+        Long beforeSize = cafe.getStatistics().getCafeMemberCount();
         // Then
         assertThatThrownBy(() -> cafeService.joinMember(cafe, member))
                 .isInstanceOf(CafeMemberAlreadyExistsException.class);
-        assertThat(cafe.getCafeStatistics().getCafeMemberCount())
+        assertThat(cafe.getStatistics().getCafeMemberCount())
                 .isEqualTo(beforeSize);
     }
 

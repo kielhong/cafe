@@ -15,7 +15,11 @@ public class CommentService {
 
     public Comment writeComment(Article article, Member commenter, String content) {
         if (isCafeMember(article.getCafe(), commenter)) {
-            return new Comment(article, commenter, content);
+            Comment comment = new Comment(article, commenter, content);
+            Cafe cafe = article.getCafe();
+            cafe.getStatistics().increaseCommentCount();
+
+            return comment;
         } else {
             throw new NoAuthorityException();
         }

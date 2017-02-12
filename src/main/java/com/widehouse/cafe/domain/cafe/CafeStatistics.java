@@ -24,10 +24,13 @@ public class CafeStatistics {
 
     public void increaseCafeMemberCount() {
         cafeMemberCount++;
-        log.debug("after increase cafe Member Count : {}", cafeMemberCount);
     }
 
     public void decreaseCafeMemberCount() {
         cafeMemberCount--;
+    }
+
+    public void increaseCommentCount() {
+        cafeCommentCount++;
     }
 }
