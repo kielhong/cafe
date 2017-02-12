@@ -1,7 +1,9 @@
 package com.widehouse.cafe.domain.board;
 
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.exception.NoAuthorityException;
 import lombok.Getter;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -18,10 +20,21 @@ public class Comment {
 
     private LocalDateTime createDateTime;
 
+    private LocalDateTime updateDateTime;
+
     public Comment(Article article, Member commenter, String comment) {
         this.article = article;
         this.commenter = commenter;
         this.comment = comment;
-        this.createDateTime = LocalDateTime.now();
+        this.createDateTime = this.updateDateTime = LocalDateTime.now();
+    }
+
+    public void modify(Member commenter, String comment) {
+        if (this.commenter.equals(commenter)) {
+            this.comment = comment;
+            this.updateDateTime = LocalDateTime.now();
+        } else {
+            throw new NoAuthorityException();
+        }
     }
 }
