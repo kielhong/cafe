@@ -54,13 +54,15 @@ public class CafeTest {
                 .isEqualTo(category);
     }
 
+
     @Test
-    public void addMember_increase_cafeMember() {
+    public void addCafeMember_increase_cafeMemberCount() {
         // Given
         Member member = new Member();
+        CafeMember cafeMember = new CafeMember(cafe, member, CafeMemberRole.MEMBER);
         int beforeSize = cafe.getCafeMembers().size();
         // When
-        CafeMember cafeMember = cafe.addMember(member);
+        cafe.addCafeMember(cafeMember);
         // Then
         assertThat(cafe.getCafeMembers())
                 .hasSize(beforeSize + 1)
@@ -70,24 +72,14 @@ public class CafeTest {
     }
 
     @Test
-    public void addMember_existsCafeMember_should_throw_CafeMemberAlreadyExistsException() {
-        // Given
-        Member member = new Member();
-        cafe.addMember(member);
-        // Then
-        assertThatThrownBy(() -> cafe.addMember(member))
-                .isInstanceOf(CafeMemberAlreadyExistsException.class);
-        assertThat(cafe.getCafeStatistics().getCafeMemberCount())
-                .isEqualTo(1);
-    }
-
-    @Test
     public void removeCafeMember_decrease_cafeMember() {
         // Given
         Member member1 = new Member();
         Member member2 = new Member();
-        CafeMember cafeMember1 = cafe.addMember(member1);
-        CafeMember cafeMember2 = cafe.addMember(member2);
+        CafeMember cafeMember1 = new CafeMember(cafe, member1);
+        CafeMember cafeMember2 = new CafeMember(cafe, member2);
+        cafe.addCafeMember(cafeMember1);
+        cafe.addCafeMember(cafeMember2);
         int beforeSize = cafe.getCafeMembers().size();
         // When
         cafe.removeCafeMember(cafeMember1);

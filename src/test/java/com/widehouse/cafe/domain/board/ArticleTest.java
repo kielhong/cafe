@@ -3,6 +3,7 @@ package com.widehouse.cafe.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.cafe.CafeMember;
 import com.widehouse.cafe.domain.member.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -22,7 +23,6 @@ public class ArticleTest {
         cafe = new Cafe("testcafe", "testcafe");
         board = new Board(cafe, "testboard");
         member = new Member();
-        cafe.addMember(member);
     }
 
     @Test

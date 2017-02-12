@@ -1,8 +1,5 @@
 package com.widehouse.cafe.domain.cafe;
 
-import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.exception.CafeMemberAlreadyExistsException;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -70,21 +67,9 @@ public class Cafe {
         this.category = category;
     }
 
-    public CafeMember addMember(Member member, CafeMemberRole role) {
-        CafeMember cafeMember = new CafeMember(this, member, role);
-        if (cafeMembers.stream().noneMatch((x -> x.getMember().equals(member)))) {
-            this.cafeMembers.add(cafeMember);
-            this.cafeStatistics.increaseCafeMemberCount();
-            member.getCafes().add(this);
-        } else {
-            throw new CafeMemberAlreadyExistsException();
-        }
-
-        return cafeMember;
-    }
-
-    public CafeMember addMember(Member member) {
-        return addMember(member, CafeMemberRole.MEMBER);
+    public void addCafeMember(CafeMember cafeMember) {
+        this.cafeMembers.add(cafeMember);
+        this.cafeStatistics.increaseCafeMemberCount();
     }
 
     public void removeCafeMember(CafeMember cafeMember) {

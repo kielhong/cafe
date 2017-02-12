@@ -18,28 +18,5 @@ public class MemberTest {
         member = new Member();
     }
 
-    @Test
-    public void joinCafe_add_cafe_to_cafes() {
-        // Given
-        Cafe cafe = new Cafe("testcafe", "testcafe");
-        // When
-        cafe.addMember(member);
-        // Then
-        assertThat(member.getCafes())
-                .contains(cafe);
-    }
-
-    @Test
-    public void withdrawCafe_remove_cafe_from_cafes() {
-        // Given
-        Cafe cafe = new Cafe("testcafe", "testcafe");
-        CafeMember cafeMember = cafe.addMember(member);
-        // When
-        cafe.removeCafeMember(cafeMember);
-        // Then
-        assertThat(member.getCafes())
-                .doesNotContain(cafe);
-
-    }
 
 }
