@@ -40,8 +40,6 @@ public class ArticleTest {
         assertThat(article.getCreateDateTime())
                 .isNotNull()
                 .isEqualTo(article.getModifyDateTime());
-        assertThat(article.getComments())
-                .hasSize(0);
     }
 
     @Test

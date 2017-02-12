@@ -19,7 +19,6 @@ public class Article {
     // relations
     private Cafe cafe;
     private Board board;
-    private List<Comment> comments;
 
     private Member writer;
 
@@ -37,8 +36,6 @@ public class Article {
         this.writer = writer;
         this.title = title;
         this.content = content;
-
-        this.comments = new ArrayList<>();
         this.createDateTime = this.modifyDateTime = LocalDateTime.now();
     }
 
