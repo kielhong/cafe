@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 /**
  * Created by kiel on 2017. 2. 10..
  */
-@AllArgsConstructor
 @Getter
 public class Cafe {
     private Long id;
@@ -90,6 +89,7 @@ public class Cafe {
 
     public void removeCafeMember(CafeMember cafeMember) {
         cafeMember.getMember().getCafes().remove(this);
+
         this.cafeMembers.remove(cafeMember);
         this.cafeStatistics.decreaseCafeMemberCount();
     }

@@ -20,6 +20,25 @@ public class CafeTest {
     }
 
     @Test
+    public void createCafe() {
+        // Given
+        CafeCategory category = new CafeCategory();
+        // When
+        Cafe cafe = new Cafe("cafeurl", "cafename", "desc", CafeVisibility.PUBLIC, category);
+        // Then
+        assertThat(cafe)
+                .hasFieldOrPropertyWithValue("url", "cafeurl")
+                .hasFieldOrPropertyWithValue("name", "cafename")
+                .hasFieldOrPropertyWithValue("description", "desc")
+                .hasFieldOrPropertyWithValue("visibility", CafeVisibility.PUBLIC)
+                .hasFieldOrPropertyWithValue("category", category);
+        assertThat(cafe.getCafeMembers())
+                .hasSize(0);
+
+
+    }
+
+    @Test
     public void updateCafeInfo_should_change_cafeName_description_visibility() {
         // When
         CafeCategory category = new CafeCategory("category");

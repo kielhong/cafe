@@ -3,8 +3,6 @@ package com.widehouse.cafe.domain.cafe;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
-
 /**
  * Created by kiel on 2017. 2. 10..
  */
