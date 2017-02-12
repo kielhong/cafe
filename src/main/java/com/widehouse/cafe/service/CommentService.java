@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentService {
 
-    public Comment writeComment(Article article, Member commenter, String content) {
+    public Comment writeComment(Article article, Member commenter, String commentContent) {
         if (isCafeMember(article.getCafe(), commenter)) {
-            Comment comment = new Comment(article, commenter, content);
+            Comment comment = new Comment(article, commenter, commentContent);
             Cafe cafe = article.getCafe();
             cafe.getStatistics().increaseCommentCount();
 
@@ -23,6 +23,10 @@ public class CommentService {
         } else {
             throw new NoAuthorityException();
         }
+    }
+
+    public void modifyComment(Comment comment, Member commenter, String newComment) {
+        comment.modify(commenter, newComment);
     }
 
     public boolean isCafeMember(Cafe cafe, Member member) {
