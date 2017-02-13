@@ -88,4 +88,17 @@ public class CafeTest {
         assertThat(cafe.getStatistics().getCafeMemberCount())
                 .isEqualTo(1);
     }
+
+    @Test
+    public void isCafeMember_should_true_member_is_cafeMember() {
+        // given
+        Member member1 = new Member();
+        CafeMember cafeMember1 = new CafeMember(cafe, member1);
+        cafe.addCafeMember(cafeMember1);
+        // when
+        boolean result = cafe.isCafeMember(member1);
+        // then
+        assertThat(result)
+                .isTrue();
+    }
 }

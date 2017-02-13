@@ -4,20 +4,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.widehouse.cafe.domain.board.Article;
 import com.widehouse.cafe.domain.board.Board;
 import com.widehouse.cafe.domain.board.Comment;
 import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.cafe.CafeCategory;
+import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.cafe.CommentRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -26,7 +30,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CommentServiceTest {
-    @Mock
+    @MockBean
     private CommentRepository commentRepository;
     @Autowired
     private CafeService cafeService;
@@ -36,11 +40,13 @@ public class CommentServiceTest {
     private Cafe cafe;
     private Board board;
     private Article article;
+    private Member manager;
     private Member commenter;
 
     @Before
     public void setUp() {
-        cafe = new Cafe("url", "test");
+        manager = new Member("manager");
+        cafe = cafeService.createCafe(manager, "url", "name" , "", CafeVisibility.PUBLIC, new CafeCategory());
         board = new Board(cafe,"board");
         Member writer = new Member("writer");
         article = new Article(cafe, board, writer, "title", "content");
@@ -108,14 +114,42 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void deleteComment_should_remove_comment_and_decrease_commentCount() {
+    public void deleteComment_by_commenter_should_success_and_decrease_commentCount() {
         // given
         Comment comment = commentService.writeComment(article, commenter, "comment");
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
         // when
         commentService.deleteComment(comment, commenter);
         // then
+        verify(commentRepository).delete(comment);
         assertThat(cafe.getStatistics().getCafeCommentCount())
                 .isEqualTo(beforeCafeStatisticsCommentCount - 1);
+    }
+
+    @Test
+    public void deleteComment_by_manager_should_success_and_decrease_commentCount() {
+        // given
+        Comment comment = commentService.writeComment(article, commenter, "comment");
+        Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
+        // when
+        commentService.deleteComment(comment, manager);
+        // then
+        verify(commentRepository).delete(comment);
+        assertThat(cafe.getStatistics().getCafeCommentCount())
+                .isEqualTo(beforeCafeStatisticsCommentCount - 1);
+    }
+
+    @Test
+    public void deleteComment_by_nonmanager_nor_noncomment_throw_NoAuthorityException() {
+        // given
+        Member member1 = new Member();
+        Comment comment = commentService.writeComment(article, commenter, "comment");
+        Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
+        // then
+        assertThatThrownBy(() -> commentService.deleteComment(comment, member1))
+                .isInstanceOf(NoAuthorityException.class);
+        verify(commentRepository, times(0)).delete(comment);
+        assertThat(cafe.getStatistics().getCafeCommentCount())
+                .isEqualTo(beforeCafeStatisticsCommentCount);
     }
 }

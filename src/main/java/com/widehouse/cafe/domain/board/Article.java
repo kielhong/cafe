@@ -4,6 +4,7 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeMember;
 import com.widehouse.cafe.domain.member.Member;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 
+@NoArgsConstructor
 @Getter
 public class Article {
     @Id @GeneratedValue

@@ -3,6 +3,7 @@ package com.widehouse.cafe.domain.board;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 
+@NoArgsConstructor
 @Getter
 public class Comment {
     @Id @GeneratedValue

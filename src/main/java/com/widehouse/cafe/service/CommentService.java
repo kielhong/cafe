@@ -3,20 +3,30 @@ package com.widehouse.cafe.service;
 import com.widehouse.cafe.domain.board.Article;
 import com.widehouse.cafe.domain.board.Comment;
 import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.cafe.CommentRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 /**
  * Created by kiel on 2017. 2. 12..
  */
 @Service
 public class CommentService {
+    private CommentRepository commentRepository;
+
+    @Autowired
+    public CommentService(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
 
     public Comment writeComment(Article article, Member commenter, String commentContent) {
-        if (isCafeMember(article.getCafe(), commenter)) {
+        Cafe cafe = article.getCafe();
+        if (cafe.isCafeMember(commenter)) {
             Comment comment = new Comment(article, commenter, commentContent);
-            Cafe cafe = article.getCafe();
             cafe.getStatistics().increaseCommentCount();
 
             return comment;
@@ -33,17 +43,16 @@ public class CommentService {
         }
     }
 
+    @Transactional
     public void deleteComment(Comment comment, Member member) {
-        if (comment.getCommenter().equals(member)) {
-            Cafe cafe = comment.getArticle().getCafe();
-            comment = null;
-            // repository delete
-            cafe.getStatistics().decreaseCommentCount();
-        }
-    }
+        Cafe cafe = comment.getArticle().getCafe();
+        if (comment.getCommenter().equals(member) ||
+                cafe.getCafeManager().getMember().equals(member)) {
+            commentRepository.delete(comment);
 
-    public boolean isCafeMember(Cafe cafe, Member member) {
-        return cafe.getCafeMembers().stream()
-                .anyMatch(x -> x.getMember().equals(member));
+            cafe.getStatistics().decreaseCommentCount();
+        } else {
+            throw new NoAuthorityException();
+        }
     }
 }

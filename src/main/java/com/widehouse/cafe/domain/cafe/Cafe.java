@@ -1,5 +1,6 @@
 package com.widehouse.cafe.domain.cafe;
 
+import com.widehouse.cafe.domain.member.Member;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -90,5 +91,16 @@ public class Cafe {
 
         this.cafeMembers.remove(cafeMember);
         this.statistics.decreaseCafeMemberCount();
+    }
+
+    public boolean isCafeMember(Member member) {
+        return cafeMembers.stream()
+                .anyMatch(x -> x.getMember().equals(member));
+    }
+
+    public CafeMember getCafeManager() {
+        return cafeMembers.stream()
+                .filter(x -> x.getRole() == CafeMemberRole.MANAGER)
+                .findFirst().get();
     }
 }
