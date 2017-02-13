@@ -30,7 +30,7 @@ public class CafeService {
             CafeMember cafeMember = new CafeMember(cafe, member, role);
             cafe.addCafeMember(cafeMember);
 
-            member.getCafes().add(cafe);
+//            member.getCafes().add(cafe);
 
             return cafeMember;
         } else {

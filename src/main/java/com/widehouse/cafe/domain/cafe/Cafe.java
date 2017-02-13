@@ -6,14 +6,24 @@ import lombok.NonNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  * Created by kiel on 2017. 2. 10..
  */
+@Entity
+
 @Getter
 public class Cafe {
+    @Id @GeneratedValue
     private Long id;
 
     @NonNull
@@ -27,14 +37,17 @@ public class Cafe {
     @NotNull
     private CafeVisibility visibility;
 
+    @ManyToOne
     private CafeCategory category;
 
     private String description;
 
     private LocalDateTime createDateTime;
 
+    @Embedded
     private CafeStatistics statistics;
 
+    @OneToMany(mappedBy = "cafe")
     private List<CafeMember> cafeMembers;
 
     public Cafe() {
@@ -73,7 +86,7 @@ public class Cafe {
     }
 
     public void removeCafeMember(CafeMember cafeMember) {
-        cafeMember.getMember().getCafes().remove(this);
+//        cafeMember.getMember().getCafes().remove(this);
 
         this.cafeMembers.remove(cafeMember);
         this.statistics.decreaseCafeMemberCount();

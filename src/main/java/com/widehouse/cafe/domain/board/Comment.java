@@ -6,14 +6,25 @@ import lombok.Getter;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by kiel on 2017. 2. 11..
  */
+@Entity
+
 @Getter
 public class Comment {
+    @Id @GeneratedValue
+    private Long id;
+
+    @ManyToOne
     private Article article;
 
+    @ManyToOne
     private Member commenter;
 
     private String comment;

@@ -25,8 +25,21 @@ public class CommentService {
         }
     }
 
-    public void modifyComment(Comment comment, Member commenter, String newComment) {
-        comment.modify(commenter, newComment);
+    public void modifyComment(Comment comment, Member member, String newComment) {
+        if (comment.getCommenter().equals(member)) {
+            comment.modify(member, newComment);
+        } else {
+            throw new NoAuthorityException();
+        }
+    }
+
+    public void deleteComment(Comment comment, Member member) {
+        if (comment.getCommenter().equals(member)) {
+            Cafe cafe = comment.getArticle().getCafe();
+            comment = null;
+            // repository delete
+            cafe.getStatistics().decreaseCommentCount();
+        }
     }
 
     public boolean isCafeMember(Cafe cafe, Member member) {

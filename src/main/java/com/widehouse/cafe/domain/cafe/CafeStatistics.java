@@ -3,11 +3,14 @@ package com.widehouse.cafe.domain.cafe;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.persistence.Embeddable;
+
 /**
  * Created by kiel on 2017. 2. 10..
  */
+@Embeddable
+
 @Getter
-@Slf4j
 public class CafeStatistics {
     private Long cafeMemberCount;
     private Long cafeArticleCount;
@@ -33,4 +36,9 @@ public class CafeStatistics {
     public void increaseCommentCount() {
         cafeCommentCount++;
     }
+
+    public void decreaseCommentCount() {
+        cafeCommentCount = cafeCommentCount > 0 ? cafeCommentCount - 1 : 0;
+    }
 }
+

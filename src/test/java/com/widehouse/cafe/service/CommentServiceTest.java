@@ -3,16 +3,19 @@ package com.widehouse.cafe.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
 
 import com.widehouse.cafe.domain.board.Article;
 import com.widehouse.cafe.domain.board.Board;
 import com.widehouse.cafe.domain.board.Comment;
 import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.cafe.CommentRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -23,6 +26,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CommentServiceTest {
+    @Mock
+    private CommentRepository commentRepository;
     @Autowired
     private CafeService cafeService;
     @Autowired
@@ -45,17 +50,20 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void writeComment_should_createComment_to_article() {
+    public void writeComment_should_create_comment_and_increase_commentCount() {
         // Given
+        String commentText = "comment";
         Long beforeCommentCount = cafe.getStatistics().getCafeCommentCount();
+        given(commentRepository.save(any(Comment.class)))
+                .willReturn(new Comment(article, commenter, commentText));
         // When
-        Comment comment = commentService.writeComment(article, commenter, "comment");
+        Comment comment = commentService.writeComment(article, commenter, commentText);
         // Then
         assertThat(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("article", article)
                 .hasFieldOrPropertyWithValue("commenter", commenter)
-                .hasFieldOrPropertyWithValue("comment", "comment");
+                .hasFieldOrPropertyWithValue("comment", commentText);
         assertThat(cafe.getStatistics().getCafeCommentCount())
                 .isEqualTo(beforeCommentCount + 1);
     }
@@ -97,5 +105,17 @@ public class CommentServiceTest {
         // then
         assertThatThrownBy(() -> commentService.modifyComment(comment, another, "new comment"))
                 .isInstanceOf(NoAuthorityException.class);
+    }
+
+    @Test
+    public void deleteComment_should_remove_comment_and_decrease_commentCount() {
+        // given
+        Comment comment = commentService.writeComment(article, commenter, "comment");
+        Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
+        // when
+        commentService.deleteComment(comment, commenter);
+        // then
+        assertThat(cafe.getStatistics().getCafeCommentCount())
+                .isEqualTo(beforeCafeStatisticsCommentCount - 1);
     }
 }

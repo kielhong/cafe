@@ -8,18 +8,28 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by kiel on 2017. 2. 10..
  */
+@Entity
+
 @Getter
 public class Article {
+    @Id @GeneratedValue
     private Long id;
 
-    // relations
+    @ManyToOne
     private Cafe cafe;
+
+    @ManyToOne
     private Board board;
 
+    @ManyToOne
     private Member writer;
 
     private String title;
