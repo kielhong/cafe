@@ -60,8 +60,6 @@ public class CommentServiceTest {
         // Given
         String commentText = "comment";
         Long beforeCommentCount = cafe.getStatistics().getCafeCommentCount();
-        given(commentRepository.save(any(Comment.class)))
-                .willReturn(new Comment(article, commenter, commentText));
         // When
         Comment comment = commentService.writeComment(article, commenter, commentText);
         // Then
@@ -93,6 +91,7 @@ public class CommentServiceTest {
         // when
         commentService.modifyComment(comment, commenter, "another comment");
         // then
+        verify(commentRepository).save(comment);
         assertThat(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("article", article)
