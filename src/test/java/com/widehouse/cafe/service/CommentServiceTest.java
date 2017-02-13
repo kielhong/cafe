@@ -65,6 +65,7 @@ public class CommentServiceTest {
         // When
         Comment comment = commentService.writeComment(article, commenter, commentText);
         // Then
+        verify(commentRepository).save(comment);
         assertThat(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("article", article)
@@ -72,6 +73,7 @@ public class CommentServiceTest {
                 .hasFieldOrPropertyWithValue("comment", commentText);
         assertThat(cafe.getStatistics().getCafeCommentCount())
                 .isEqualTo(beforeCommentCount + 1);
+
     }
 
     @Test

@@ -27,6 +27,8 @@ public class CommentService {
         Cafe cafe = article.getCafe();
         if (cafe.isCafeMember(commenter)) {
             Comment comment = new Comment(article, commenter, commentContent);
+            commentRepository.save(comment);
+
             cafe.getStatistics().increaseCommentCount();
 
             return comment;
