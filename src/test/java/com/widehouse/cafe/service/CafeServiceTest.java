@@ -19,6 +19,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -39,17 +41,18 @@ public class CafeServiceTest {
     private Cafe cafe;
     private Cafe cafe1;
     private Cafe cafe2;
+    private Cafe cafe3;
+    private Cafe cafe4;
 
     @Before
     public void setUp() {
         Member member = new Member("user");
         category = new CafeCategory(1L, "category");
-        cafe = cafeService.createCafe(member, "url", "name", "description",
-                CafeVisibility.PUBLIC, category);
-        cafe1 = cafeService.createCafe(member, "url", "name", "description",
-                CafeVisibility.PUBLIC, category);
-        cafe2 = cafeService.createCafe(member, "url", "name", "description",
-                CafeVisibility.PUBLIC, category);
+        cafe = cafeService.createCafe(member, "url", "name", "desc", CafeVisibility.PUBLIC, category);
+        cafe1 = cafeService.createCafe(member, "url1", "name1", "desc", CafeVisibility.PUBLIC, category);
+        cafe2 = cafeService.createCafe(member, "url2", "name2", "desc", CafeVisibility.PUBLIC, category);
+        cafe3 = cafeService.createCafe(member, "url3", "name3", "desc", CafeVisibility.PUBLIC, category);
+        cafe4 = cafeService.createCafe(member, "url4", "name4", "desc", CafeVisibility.PUBLIC, category);
     }
 
     @Test
@@ -106,13 +109,14 @@ public class CafeServiceTest {
     @Test
     public void getCafesByCategory_should_return_cafes_by_category() {
         // given
-        given(cafeRepository.findByCategoryId(category.getId()))
-                .willReturn(Arrays.asList(cafe1, cafe2));
+        given(cafeRepository.findByCategoryId(category.getId(),
+                new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
+                .willReturn(Arrays.asList(cafe4, cafe3, cafe2, cafe1));
         // when
-        List<Cafe> cafes = cafeService.getCafeByCategory(category.getId());
+        List<Cafe> cafes = cafeService.getCafeByCategory(category.getId(), new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
         // then
         assertThat(cafes)
-                .contains(cafe1, cafe2);
+                .contains(cafe4, cafe3, cafe2, cafe1);
     }
 
 }

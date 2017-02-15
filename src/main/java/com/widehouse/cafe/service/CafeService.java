@@ -9,6 +9,9 @@ import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.CafeMemberAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,7 +55,7 @@ public class CafeService {
         return joinMember(cafe, member, CafeMemberRole.MEMBER);
     }
 
-    public List<Cafe> getCafeByCategory(Long categoryId) {
-        return cafeRepository.findByCategoryId(categoryId);
+    public List<Cafe> getCafeByCategory(Long categoryId, Pageable pageable) {
+        return cafeRepository.findByCategoryId(categoryId, pageable);
     }
 }

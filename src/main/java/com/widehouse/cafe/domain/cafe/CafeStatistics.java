@@ -1,6 +1,7 @@
 package com.widehouse.cafe.domain.cafe;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.Embeddable;
@@ -10,6 +11,7 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 
+@Setter
 @Getter
 public class CafeStatistics {
     private Long cafeMemberCount;

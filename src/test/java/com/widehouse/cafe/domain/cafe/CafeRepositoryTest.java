@@ -82,15 +82,18 @@ public class CafeRepositoryTest {
     }
 
     @Test
-    public void cafeList_by_category_with_paging() {
+    public void cafeList_by_category_with_paging_sorting() {
+        // given
+        cafe1.getStatistics().setCafeMemberCount(10L);
+        cafe2.getStatistics().setCafeMemberCount(5L);
+        cafe3.getStatistics().setCafeMemberCount(2L);
         // when
-        Pageable pageable = new PageRequest(0, 2, new Sort(Sort.Direction.DESC, "name"));
+        Pageable pageable = new PageRequest(0, 3, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"));
         List<Cafe> cafes = cafeRepository.findByCategory(category1, pageable);
         // then
         assertThat(cafes)
-                .hasSize(2)
-                .containsExactly(cafe3, cafe2)
-                .doesNotContain(cafe1, cafe4, cafe5, cafe6);
+                .hasSize(3)
+                .containsExactly(cafe1, cafe2, cafe3)
+                .doesNotContain(cafe4, cafe5, cafe6);
     }
-
 }

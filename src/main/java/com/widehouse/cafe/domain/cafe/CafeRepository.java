@@ -15,4 +15,6 @@ public interface CafeRepository extends JpaRepository<Cafe, Long> {
     List<Cafe> findByCategory(CafeCategory category, Pageable pageable);
 
     List<Cafe> findByCategoryId(Long categoryId);
+
+    List<Cafe> findByCategoryId(Long categoryId, Pageable pageable);
 }
