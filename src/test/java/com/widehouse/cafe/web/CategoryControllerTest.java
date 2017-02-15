@@ -28,9 +28,9 @@ import java.util.Arrays;
  * Created by kiel on 2017. 2. 15..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(CafeController.class)
+@WebMvcTest(CategoryController.class)
 @EnableSpringDataWebSupport
-public class CafeControllerTest {
+public class CategoryControllerTest {
     @Autowired
     private MockMvc mvc;
 

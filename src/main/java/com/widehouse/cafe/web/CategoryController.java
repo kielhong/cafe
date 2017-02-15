@@ -18,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @Slf4j
-public class CafeController {
+public class CategoryController {
     @Autowired
     private CafeService cafeService;
 
