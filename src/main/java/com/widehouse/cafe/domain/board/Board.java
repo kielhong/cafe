@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 
-@Getter
+//@Getter
 public class Board {
     @Id @GeneratedValue
     private Long id;

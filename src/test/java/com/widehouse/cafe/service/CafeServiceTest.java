@@ -2,20 +2,27 @@ package com.widehouse.cafe.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeCategory;
 import com.widehouse.cafe.domain.cafe.CafeMember;
 import com.widehouse.cafe.domain.cafe.CafeMemberRole;
+import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.CafeMemberAlreadyExistsException;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by kiel on 2017. 2. 11..
@@ -23,16 +30,25 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CafeServiceTest {
+    @MockBean
+    private CafeRepository cafeRepository;
     @Autowired
-    CafeService cafeService;
+    private CafeService cafeService;
 
+    private CafeCategory category;
     private Cafe cafe;
+    private Cafe cafe1;
+    private Cafe cafe2;
 
     @Before
     public void setUp() {
         Member member = new Member("user");
-        CafeCategory category = new CafeCategory();
+        category = new CafeCategory(1L, "category");
         cafe = cafeService.createCafe(member, "url", "name", "description",
+                CafeVisibility.PUBLIC, category);
+        cafe1 = cafeService.createCafe(member, "url", "name", "description",
+                CafeVisibility.PUBLIC, category);
+        cafe2 = cafeService.createCafe(member, "url", "name", "description",
                 CafeVisibility.PUBLIC, category);
     }
 
@@ -85,6 +101,18 @@ public class CafeServiceTest {
                 .isInstanceOf(CafeMemberAlreadyExistsException.class);
         assertThat(cafe.getStatistics().getCafeMemberCount())
                 .isEqualTo(beforeSize);
+    }
+
+    @Test
+    public void getCafesByCategory_should_return_cafes_by_category() {
+        // given
+        given(cafeRepository.findByCategoryId(category.getId()))
+                .willReturn(Arrays.asList(cafe1, cafe2));
+        // when
+        List<Cafe> cafes = cafeService.getCafeByCategory(category.getId());
+        // then
+        assertThat(cafes)
+                .contains(cafe1, cafe2);
     }
 
 }

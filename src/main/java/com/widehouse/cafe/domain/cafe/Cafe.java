@@ -7,6 +7,7 @@ import lombok.NonNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -21,6 +24,7 @@ import javax.validation.constraints.Size;
  * Created by kiel on 2017. 2. 10..
  */
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "url")})
 
 @Getter
 public class Cafe {
@@ -99,8 +103,10 @@ public class Cafe {
     }
 
     public CafeMember getCafeManager() {
+        // TODO : cafeManager는 필수이다. 없으면 안되도록 코드 수정
         return cafeMembers.stream()
                 .filter(x -> x.getRole() == CafeMemberRole.MANAGER)
-                .findFirst().get();
+                .findFirst()
+                .orElse(null);
     }
 }

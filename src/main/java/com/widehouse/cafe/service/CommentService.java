@@ -3,7 +3,7 @@ package com.widehouse.cafe.service;
 import com.widehouse.cafe.domain.board.Article;
 import com.widehouse.cafe.domain.board.Comment;
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CommentRepository;
+import com.widehouse.cafe.domain.board.CommentRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import org.springframework.beans.factory.annotation.Autowired;

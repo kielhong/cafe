@@ -1,6 +1,7 @@
 buildscript {
 	ext {
 		springBootVersion = '1.5.1.RELEASE'
+		hibernateVersion = '5.1.1.Final'
 	}
 	repositories {
 		jcenter()
@@ -30,12 +31,13 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-security')
+//	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-web')
 
     runtime('com.h2database:h2')
 	runtime('mysql:mysql-connector-java')
 	compile('org.projectlombok:lombok')
+	compile("org.hibernate:hibernate-java8:${hibernateVersion}")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.assertj:assertj-core:3.6.2')

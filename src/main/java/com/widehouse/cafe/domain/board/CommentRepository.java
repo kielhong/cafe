@@ -1,4 +1,4 @@
-package com.widehouse.cafe.domain.cafe;
+package com.widehouse.cafe.domain.board;
 
 import com.widehouse.cafe.domain.board.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;

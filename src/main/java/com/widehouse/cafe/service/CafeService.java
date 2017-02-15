@@ -4,16 +4,26 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeCategory;
 import com.widehouse.cafe.domain.cafe.CafeMember;
 import com.widehouse.cafe.domain.cafe.CafeMemberRole;
+import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.CafeMemberAlreadyExistsException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by kiel on 2017. 2. 11..
  */
 @Service
 public class CafeService {
+    private CafeRepository cafeRepository;
+
+    @Autowired
+    public CafeService(CafeRepository cafeRepository) {
+        this.cafeRepository = cafeRepository;
+    }
 
     public Cafe createCafe(Member member, String url, String name, String description,
                            CafeVisibility visibility, CafeCategory category) {
@@ -40,5 +50,9 @@ public class CafeService {
 
     public CafeMember joinMember(Cafe cafe, Member member) {
         return joinMember(cafe, member, CafeMemberRole.MEMBER);
+    }
+
+    public List<Cafe> getCafeByCategory(Long categoryId) {
+        return cafeRepository.findByCategoryId(categoryId);
     }
 }
