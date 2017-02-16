@@ -47,7 +47,7 @@ public class CategoryControllerTest {
                         new Cafe("test1", "test1", "", CafeVisibility.PUBLIC, category1),
                         new Cafe("test2", "test2", "", CafeVisibility.PUBLIC, category1)));
         // then
-        this.mvc.perform(get("/categories/1"))
+        this.mvc.perform(get("/categories/1/cafes"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.length()").value(2))
@@ -67,7 +67,7 @@ public class CategoryControllerTest {
                         new Cafe("test3", "test3", "", CafeVisibility.PUBLIC, category1),
                         new Cafe("test4", "test4", "", CafeVisibility.PUBLIC, category1)));
         // then
-        this.mvc.perform(get("/categories/1?page=0&size=4"))
+        this.mvc.perform(get("/categories/1/cafes?page=0&size=4"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.length()").value(4))

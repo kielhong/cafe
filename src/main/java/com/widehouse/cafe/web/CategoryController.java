@@ -22,7 +22,7 @@ public class CategoryController {
     @Autowired
     private CafeService cafeService;
 
-    @GetMapping("/categories/{categoryId}")
+    @GetMapping("/categories/{categoryId}/cafes")
     public List<Cafe> getCafesByCategory(@PathVariable Long categoryId,
                                          @PageableDefault(page = 0, size = 10,
                                                  direction = Sort.Direction.DESC,
