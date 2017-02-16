@@ -1,6 +1,7 @@
 package com.widehouse.cafe.domain.cafe;
 
 import com.widehouse.cafe.domain.member.Member;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,5 +13,5 @@ import java.util.List;
 public interface CafeMemberRepository extends JpaRepository<CafeMember, CafeMemberId> {
 
     @Query("SELECT cm.cafe FROM CafeMember cm WHERE cm.member = ?1")
-    List<Cafe> findCafeByMember(Member member);
+    List<Cafe> findCafeByMember(Member member, Pageable pageable);
 }

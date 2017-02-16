@@ -5,6 +5,9 @@ import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
 import com.widehouse.cafe.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +25,11 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping("/members/{memberId}/cafes")
-    public List<Cafe> getCafesByMember(@PathVariable Long memberId) {
+    public List<Cafe> getCafesByMember(@PathVariable Long memberId,
+                                       @PageableDefault(sort = "cafe.createDateTime",
+                                               direction = Sort.Direction.DESC) Pageable pageable) {
         Member member = memberRepository.findOne(memberId);
 
-        return memberService.getCafesByMember(member);
+        return memberService.getCafesByMember(member, pageable);
     }
 }

@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -44,11 +45,10 @@ public class CafeMemberRepositoryTest {
         entityManager.persist(new CafeMember(cafe4, member));
         entityManager.persist(new CafeMember(cafe5, member));
         // when
-        List<Cafe> cafes = cafeMemberRepository.findCafeByMember(member);
+        List<Cafe> cafes = cafeMemberRepository.findCafeByMember(member, new PageRequest(0, 5));
         // then
         assertThat(cafes)
                 .contains(cafe1, cafe2, cafe3, cafe4, cafe5);
-
     }
 
 }

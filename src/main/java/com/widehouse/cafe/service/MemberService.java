@@ -5,6 +5,7 @@ import com.widehouse.cafe.domain.cafe.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class MemberService {
     private CafeMemberRepository cafeMemberRepository;
 
 
-    public List<Cafe> getCafesByMember(Member member) {
-        return cafeMemberRepository.findCafeByMember(member);
+    public List<Cafe> getCafesByMember(Member member, Pageable pageable) {
+        return cafeMemberRepository.findCafeByMember(member, pageable);
     }
 }

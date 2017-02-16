@@ -49,4 +49,11 @@ jacocoTestReport {
         csv.enabled false
         html.enabled true
     }
+
+	afterEvaluate {
+		classDirectories = files(classDirectories.files.collect {
+			fileTree(dir: it,
+					exclude: ['**/**Id'])
+		})
+	}
 }
