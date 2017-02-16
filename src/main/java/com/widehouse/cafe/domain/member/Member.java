@@ -1,7 +1,9 @@
 package com.widehouse.cafe.domain.member;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,22 +19,14 @@ import javax.persistence.ManyToMany;
  */
 @Entity
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class Member {
     @Id @GeneratedValue
     private Long id;
 
     private String nickname;
-
-//    @ManyToMany
-//    @JoinTable(name = "cafe_member",
-//            joinColumns = { @JoinColumn(name = "member_id", nullable = false, updatable = false) },
-//            inverseJoinColumns = { @JoinColumn(name = "cafe_id", nullable = false, updatable = false) })
-//    private List<Cafe> cafes;
-
-    public Member() {
-//        this.cafes = new ArrayList<>();
-    }
 
     public Member(String nickname) {
         this();

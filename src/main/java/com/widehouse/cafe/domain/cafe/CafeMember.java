@@ -7,21 +7,21 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 
 /**
  * Created by kiel on 2017. 2. 10..
  */
 @Entity
-
+@IdClass(CafeMemberId.class)
 @Getter
 public class CafeMember {
-    @Id @GeneratedValue
-    private Long id;
-
+    @Id
     @ManyToOne
     private Cafe cafe;
 
+    @Id
     @ManyToOne
     private Member member;
 
