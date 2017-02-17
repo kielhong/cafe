@@ -1,6 +1,6 @@
 package com.widehouse.cafe.service;
 
-import com.widehouse.cafe.domain.board.BoardRepository;
+import com.widehouse.cafe.domain.cafe.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

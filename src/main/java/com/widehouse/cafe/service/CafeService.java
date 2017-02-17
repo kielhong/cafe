@@ -1,5 +1,6 @@
 package com.widehouse.cafe.service;
 
+import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeCategory;
 import com.widehouse.cafe.domain.cafe.CafeMember;
@@ -9,11 +10,10 @@ import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.CafeMemberAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -43,8 +43,6 @@ public class CafeService {
             CafeMember cafeMember = new CafeMember(cafe, member, role);
             cafe.addCafeMember(cafeMember);
 
-//            member.getCafes().add(cafe);
-
             return cafeMember;
         } else {
             throw new CafeMemberAlreadyExistsException();
@@ -57,5 +55,26 @@ public class CafeService {
 
     public List<Cafe> getCafeByCategory(Long categoryId, Pageable pageable) {
         return cafeRepository.findByCategoryId(categoryId, pageable);
+    }
+
+    public void addBoard(Cafe cafe, String boardName, int listOrder) {
+        cafe.getBoards().add(new Board(cafe, boardName, listOrder));
+        cafe.getBoards().sort(Comparator.comparing(Board::getListOrder));
+        cafeRepository.save(cafe);
+    }
+
+    public void addBoard(Cafe cafe, String boardName) {
+        int lastOrder = cafe.getBoards().stream()
+                .sorted(Comparator.comparing(Board::getListOrder))
+                .mapToInt(Board::getListOrder)
+                .reduce((a, b) -> b)
+                .orElse(0);
+        addBoard(cafe, boardName, lastOrder + 1);
+    }
+
+    public void removeBoard(Cafe cafe, Board board) {
+        cafe.getBoards().remove(board);
+        cafe.getBoards().sort(Comparator.comparing(Board::getListOrder));
+        cafeRepository.save(cafe);
     }
 }

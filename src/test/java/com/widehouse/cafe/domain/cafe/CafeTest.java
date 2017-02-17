@@ -3,7 +3,6 @@ package com.widehouse.cafe.domain.cafe;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
-import com.widehouse.cafe.domain.board.Board;
 import com.widehouse.cafe.domain.member.Member;
 import org.junit.Before;
 import org.junit.Test;

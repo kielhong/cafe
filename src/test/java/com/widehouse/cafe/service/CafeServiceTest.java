@@ -2,8 +2,14 @@ package com.widehouse.cafe.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.assertj.core.groups.Tuple.tuple;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+
+import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeCategory;
 import com.widehouse.cafe.domain.cafe.CafeMember;
@@ -12,6 +18,7 @@ import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.CafeMemberAlreadyExistsException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,9 +37,12 @@ import java.util.List;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class CafeServiceTest {
     @MockBean
     private CafeRepository cafeRepository;
+    @MockBean
+    private Cafe mockCafe;
     @Autowired
     private CafeService cafeService;
 
@@ -118,4 +128,59 @@ public class CafeServiceTest {
                 .contains(cafe4, cafe3, cafe2, cafe1);
     }
 
+    @Test
+    public void addBoard_should_attach_board_sort() {
+        // given
+        cafe.getBoards().add(new Board(cafe, "test board1", 1));
+        cafe.getBoards().add(new Board(cafe, "test board2", 3));
+        cafe.getBoards().add(new Board(cafe, "test board3", 4));
+        // when
+        cafeService.addBoard(cafe, "test board3", 2);
+//        cafe.getBoards().add(new Board(cafe, "test board2", 3));
+//        cafeService.addBoard(cafe, "test board1", 1);
+//        cafeService.addBoard(cafe, "test board2", 3);
+//        cafeService.addBoard(cafe, "test board3", 4);
+//        cafeService.addBoard(cafe, "test board3", 2);
+        // then
+        then(cafe.getBoards())
+                .hasSize(4)
+                .extracting("listOrder")
+                .containsExactly(1, 2, 3, 4);
+        verify(cafeRepository).save(cafe);
+    }
+
+    @Test
+    public void addBoard_without_listOrder_should_append_board_with_last_order() {
+        // given
+        cafe.getBoards().add(new Board(cafe, "board1", 1));
+        cafe.getBoards().add(new Board(cafe, "board3", 3));
+        // when
+        cafeService.addBoard(cafe, "new test board");
+        // then
+        then(cafe.getBoards())
+                .hasSize(3)
+                .extracting("name", "listOrder")
+                .containsExactly(
+                        tuple("board1", 1),
+                        tuple("board3", 3),
+                        tuple("new test board", 4));
+        verify(cafeRepository).save(cafe);
+    }
+
+    @Test
+    public void removeBoard_should_detach_and_remove_board_from_cafe() {
+        // given
+        cafe.getBoards().add(new Board(cafe, "board1", 1));
+        cafe.getBoards().add(new Board(cafe, "board2", 3));
+        cafe.getBoards().add(new Board(cafe, "board3", 4));
+        cafe.getBoards().add(new Board(cafe, "board4", 2));
+        Board board = cafe.getBoards().get(1);
+        // when
+        cafeService.removeBoard(cafe, board);
+        // then
+        then(cafe.getBoards())
+                .hasSize(3)
+                .extracting("listOrder")
+                .containsExactly(1, 2, 4);
+    }
 }

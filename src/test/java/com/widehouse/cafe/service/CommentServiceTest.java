@@ -6,13 +6,13 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.widehouse.cafe.domain.board.Article;
-import com.widehouse.cafe.domain.board.Board;
-import com.widehouse.cafe.domain.board.Comment;
+import com.widehouse.cafe.domain.article.Article;
+import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeCategory;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
-import com.widehouse.cafe.domain.board.CommentRepository;
+import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import org.junit.Before;
@@ -46,7 +46,7 @@ public class CommentServiceTest {
     public void setUp() {
         manager = new Member("manager");
         cafe = cafeService.createCafe(manager, "url", "name" , "", CafeVisibility.PUBLIC, new CafeCategory());
-        board = new Board(cafe,"board");
+        board = new Board(cafe,"article");
         Member writer = new Member("writer");
         article = new Article(cafe, board, writer, "title", "content");
 

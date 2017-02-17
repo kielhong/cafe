@@ -1,6 +1,5 @@
 package com.widehouse.cafe.domain.cafe;
 
-import com.widehouse.cafe.domain.board.Board;
 import com.widehouse.cafe.domain.member.Member;
 import lombok.Getter;
 import lombok.NonNull;
@@ -8,6 +7,7 @@ import lombok.NonNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -56,7 +56,7 @@ public class Cafe {
     @OneToMany(mappedBy = "cafe")
     private List<CafeMember> cafeMembers;
 
-    @OneToMany(mappedBy = "cafe")
+    @OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("listOrder ASC")
     private List<Board> boards;
 

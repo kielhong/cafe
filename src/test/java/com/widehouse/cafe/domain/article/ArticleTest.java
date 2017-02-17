@@ -33,7 +33,7 @@ public class ArticleTest {
         assertThat(article)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("cafe", cafe)
-                .hasFieldOrPropertyWithValue("article", board)
+                .hasFieldOrPropertyWithValue("board", board)
                 .hasFieldOrPropertyWithValue("writer", member)
                 .hasFieldOrPropertyWithValue("title", "test title")
                 .hasFieldOrPropertyWithValue("content", "test content");
@@ -51,7 +51,7 @@ public class ArticleTest {
         // Then
         assertThat(article)
                 .hasFieldOrPropertyWithValue("cafe", cafe)
-                .hasFieldOrPropertyWithValue("article", board)
+                .hasFieldOrPropertyWithValue("board", board)
                 .hasFieldOrPropertyWithValue("writer", member)
                 .hasFieldOrPropertyWithValue("title", "modify title")
                 .hasFieldOrPropertyWithValue("content", "modify content");
@@ -69,6 +69,6 @@ public class ArticleTest {
         // Then
         assertThat(article)
                 .hasFieldOrPropertyWithValue("cafe", cafe)
-                .hasFieldOrPropertyWithValue("article", board2);
+                .hasFieldOrPropertyWithValue("board", board2);
     }
 }
