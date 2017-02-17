@@ -14,7 +14,6 @@ import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.CafeMemberAlreadyExistsException;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

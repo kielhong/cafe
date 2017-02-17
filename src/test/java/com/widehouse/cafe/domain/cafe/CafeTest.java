@@ -1,10 +1,14 @@
 package com.widehouse.cafe.domain.cafe;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
+import com.widehouse.cafe.domain.board.Board;
 import com.widehouse.cafe.domain.member.Member;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * Created by kiel on 2017. 2. 10..
@@ -100,5 +104,24 @@ public class CafeTest {
         // then
         assertThat(result)
                 .isTrue();
+    }
+
+    @Test
+    public void boards_list_by_listOrder() {
+        // given
+        Board board1 = new Board(cafe, "board1", 4);
+        Board board2 = new Board(cafe, "board2", 3);
+        Board board3 = new Board(cafe, "board3", 2);
+        Board board4 = new Board(cafe, "board4", 1);
+        cafe.getBoards().add(board1);
+        cafe.getBoards().add(board2);
+        cafe.getBoards().add(board3);
+        cafe.getBoards().add(board4);
+        // when
+        List<Board> boards = cafe.getBoards();
+        // then
+        then(boards)
+                .hasSize(4)
+                .contains(board4, board3, board2, board1);
     }
 }

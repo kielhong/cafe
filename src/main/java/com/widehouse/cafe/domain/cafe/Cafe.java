@@ -1,5 +1,6 @@
 package com.widehouse.cafe.domain.cafe;
 
+import com.widehouse.cafe.domain.board.Board;
 import com.widehouse.cafe.domain.member.Member;
 import lombok.Getter;
 import lombok.NonNull;
@@ -7,18 +8,18 @@ import lombok.NonNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 /**
  * Created by kiel on 2017. 2. 10..
@@ -55,9 +56,14 @@ public class Cafe {
     @OneToMany(mappedBy = "cafe")
     private List<CafeMember> cafeMembers;
 
+    @OneToMany(mappedBy = "cafe")
+    @OrderBy("listOrder ASC")
+    private List<Board> boards;
+
     public Cafe() {
         this.statistics = new CafeStatistics();
         this.cafeMembers = new ArrayList<>();
+        this.boards = new ArrayList<>();
         this.createDateTime = LocalDateTime.now();
     }
 
@@ -91,8 +97,6 @@ public class Cafe {
     }
 
     public void removeCafeMember(CafeMember cafeMember) {
-//        cafeMember.getMember().getCafes().remove(this);
-
         this.cafeMembers.remove(cafeMember);
         this.statistics.decreaseCafeMemberCount();
     }
