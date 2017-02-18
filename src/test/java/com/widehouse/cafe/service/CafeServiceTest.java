@@ -237,10 +237,28 @@ public class CafeServiceTest {
     }
 
     @Test
-    public void getCafe_Should_CafeInfo() {
+    public void getCafeById_Should_CafeInfo() {
         // given
         given(cafeRepository.findOne(1L))
                 .willReturn(new Cafe("testurl", "testname"));
+        // when
+        Cafe cafe = cafeService.getCafe(1L);
+        // then
+        assertThat(cafe)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("url", "testurl")
+                .hasFieldOrPropertyWithValue("name", "testname");
+
+    }
+
+    @Test
+    public void getCafeByUrl_Should_CafeInfo() {
+        // given
+        Cafe givenCafe = new Cafe(1L, "testurl", "testname");
+        given(cafeRepository.findByUrl("testurl"))
+                .willReturn(givenCafe);
+        given(cafeRepository.findOne(1L))
+                .willReturn(givenCafe);
         // when
         Cafe cafe = cafeService.getCafe(1L);
         // then

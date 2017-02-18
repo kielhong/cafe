@@ -94,7 +94,22 @@ public class CafeService {
         }
     }
 
-    public Cafe getCafe(Long id) {
-        return cafeRepository.findOne(id);
+    /**
+     * get {@link Cafe} by cafe id
+     * @param cafeId cafe id
+     * @return Cafe Info
+     */
+    public Cafe getCafe(Long cafeId) {
+        return cafeRepository.findOne(cafeId);
     }
+
+    /**
+     * get {@link Cafe} by cafe url
+     * @param cafeUrl cafe url
+     * @return Cafe Info
+     */
+    public Cafe getCafe(String cafeUrl) {
+        return cafeRepository.findByUrl(cafeUrl);
+    }
+
 }

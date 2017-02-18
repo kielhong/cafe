@@ -67,6 +67,11 @@ public class Cafe {
         this.createDateTime = LocalDateTime.now();
     }
 
+    public Cafe(Long id, String url, String name) {
+        this(url, name);
+        this.id = id;
+    }
+
     public Cafe(String url, String name) {
         this();
         this.url = url;

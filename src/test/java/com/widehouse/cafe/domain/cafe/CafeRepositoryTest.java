@@ -39,8 +39,8 @@ public class CafeRepositoryTest {
 
     @Before
     public void setUp() {
-        category1 = new CafeCategory("test1");
-        category2 = new CafeCategory("test2");
+        category1 = new CafeCategory("category1");
+        category2 = new CafeCategory("category2");
         entityManager.persist(category1);
         entityManager.persist(category2);
 
@@ -119,5 +119,15 @@ public class CafeRepositoryTest {
         then(boards)
                 .hasSize(4)
                 .containsExactly(board4, board3, board2, board1);
+    }
+
+    @Test
+    public void findCafeByUrl_Should_findCafe() {
+        // when
+        Cafe cafe = cafeRepository.findByUrl("test1");
+        // then
+        then(cafe)
+                .isEqualTo(cafe1);
+
     }
 }
