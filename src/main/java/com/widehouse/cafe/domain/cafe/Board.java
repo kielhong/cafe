@@ -1,10 +1,8 @@
 package com.widehouse.cafe.domain.cafe;
 
-import com.widehouse.cafe.domain.cafe.Cafe;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +19,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@ToString(exclude = "cafe")
 public class Board {
     @Id @GeneratedValue
     private Long id;

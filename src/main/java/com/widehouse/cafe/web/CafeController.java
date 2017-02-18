@@ -18,15 +18,15 @@ public class CafeController {
     @Autowired
     private CafeService cafeService;
 
-    @GetMapping("/cafes/?id={cafeId}")
-    public Cafe getCafe(@RequestParam Long cafeId) {
-        Cafe cafe = cafeService.getCafe(cafeId);
+    @GetMapping(name = "/cafes", params = "id")
+    public Cafe getCafeById(@RequestParam Long id) {
+        Cafe cafe = cafeService.getCafe(id);
 
         return cafe;
     }
 
     @GetMapping("/cafes/{cafeUrl}")
-    public Cafe getCafe(@PathVariable String cafeUrl) {
+    public Cafe getCafeByUrl(@PathVariable String cafeUrl) {
         Cafe cafe = cafeService.getCafe(cafeUrl);
 
         return cafe;
