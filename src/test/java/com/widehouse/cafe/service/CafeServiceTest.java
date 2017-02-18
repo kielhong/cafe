@@ -5,9 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.groups.Tuple.tuple;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
@@ -182,5 +181,58 @@ public class CafeServiceTest {
                 .hasSize(3)
                 .extracting("listOrder")
                 .containsExactly(1, 2, 4);
+    }
+
+    @Test
+    public void changeBoard_should_change_board() {
+        // given
+        Board board1 = new Board(1L, cafe, "board1", 1);
+        Board board2 = new Board(2L, cafe, "board2", 2);
+        cafe.getBoards().add(board1);
+        cafe.getBoards().add(board2);
+        // when
+        board1.update("update board1", 1);
+        cafeService.updateBoard(cafe, board1);
+        // then
+        assertThat(cafe.getBoards())
+                .filteredOn("name", "update board1")
+                .containsOnly(board1);
+        verify(cafeRepository).save(cafe);
+    }
+
+    @Test
+    public void changeBoard_not_contained_board_do_nothing() {
+        // given
+        Board board1 = new Board(1L, cafe, "board1", 1);
+        Board board2 = new Board(2L, cafe, "board2", 2);
+        cafe.getBoards().add(board1);
+        cafe.getBoards().add(board2);
+        // when
+        Board board3 = new Board(3L, cafe, "new board", 3);
+        cafeService.updateBoard(cafe, board3);
+        // then
+        assertThat(cafe.getBoards())
+                .hasSize(2)
+                .containsOnly(board1, board2);
+        verify(cafeRepository, times(0)).save(cafe);
+    }
+
+    @Test
+    public void changeBoard_Should_changeBoardsListOrder() {
+        // given
+        Board board1 = new Board(1L, cafe, "board1", 1);
+        Board board2 = new Board(2L, cafe, "board2", 2);
+        Board board3 = new Board(3L, cafe, "new board", 3);
+        cafe.getBoards().add(board1);
+        cafe.getBoards().add(board2);
+        cafe.getBoards().add(board3);
+        // when
+        board1.update("update board1", 4);
+        cafeService.updateBoard(cafe, board1);
+        // then
+        assertThat(cafe.getBoards())
+                .hasSize(3)
+                .containsOnly(board2, board3, board1);
+        verify(cafeRepository).save(cafe);
     }
 }

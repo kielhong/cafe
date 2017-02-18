@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Size;
 
 /**
  * Created by kiel on 2017. 2. 10..
@@ -26,6 +27,7 @@ public class Member {
     @Id @GeneratedValue
     private Long id;
 
+    @Size(max = 30)
     private String nickname;
 
     public Member(String nickname) {

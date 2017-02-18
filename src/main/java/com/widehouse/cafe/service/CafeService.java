@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by kiel on 2017. 2. 11..
@@ -76,5 +78,19 @@ public class CafeService {
         cafe.getBoards().remove(board);
         cafe.getBoards().sort(Comparator.comparing(Board::getListOrder));
         cafeRepository.save(cafe);
+    }
+
+    public void updateBoard(Cafe cafe, Board board) {
+        Optional<Board> boardOptional = cafe.getBoards().stream()
+                .filter(o -> o.getId() == board.getId())
+                .findFirst();
+        if (boardOptional.isPresent()) {
+            Board oldBoard = boardOptional.get();
+            int index = cafe.getBoards().indexOf(oldBoard);
+            cafe.getBoards().set(index, board);
+
+            cafe.getBoards().sort(Comparator.comparing(Board::getListOrder));
+            cafeRepository.save(cafe);
+        }
     }
 }

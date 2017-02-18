@@ -39,7 +39,7 @@ public class ArticleTest {
                 .hasFieldOrPropertyWithValue("content", "test content");
         assertThat(article.getCreateDateTime())
                 .isNotNull()
-                .isEqualTo(article.getModifyDateTime());
+                .isEqualTo(article.getUpdateDateTime());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ArticleTest {
                 .hasFieldOrPropertyWithValue("writer", member)
                 .hasFieldOrPropertyWithValue("title", "modify title")
                 .hasFieldOrPropertyWithValue("content", "modify content");
-        assertThat(article.getModifyDateTime())
+        assertThat(article.getUpdateDateTime())
                 .isAfterOrEqualTo(article.getCreateDateTime());
     }
 

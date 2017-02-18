@@ -38,7 +38,7 @@ public class Article {
 
     private LocalDateTime createDateTime;
 
-    private LocalDateTime modifyDateTime;
+    private LocalDateTime updateDateTime;
 
     public Article(Cafe cafe, Board board, Member writer, String title, String content) {
         this.cafe = cafe;
@@ -46,13 +46,13 @@ public class Article {
         this.writer = writer;
         this.title = title;
         this.content = content;
-        this.createDateTime = this.modifyDateTime = LocalDateTime.now();
+        this.createDateTime = this.updateDateTime = LocalDateTime.now();
     }
 
     public void modify(String title, String content) {
         this.title = title;
         this.content = content;
-        this.modifyDateTime = LocalDateTime.now();
+        this.updateDateTime = LocalDateTime.now();
     }
 
     public void moveBoard(Board board) {

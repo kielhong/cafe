@@ -1,7 +1,9 @@
 package com.widehouse.cafe.domain.cafe;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -16,6 +18,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @ToString(exclude = "cafe")
 public class Board {
@@ -41,5 +45,10 @@ public class Board {
         this.cafe = cafe;
         this.name = name;
         this.listOrder = 1;
+    }
+
+    public void update(String name, int listOrder) {
+        this.name = name;
+        this.listOrder = listOrder;
     }
 }
