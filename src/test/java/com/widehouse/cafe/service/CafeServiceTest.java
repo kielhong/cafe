@@ -235,4 +235,19 @@ public class CafeServiceTest {
                 .containsOnly(board2, board3, board1);
         verify(cafeRepository).save(cafe);
     }
+
+    @Test
+    public void getCafe_Should_CafeInfo() {
+        // given
+        given(cafeRepository.findOne(1L))
+                .willReturn(new Cafe("testurl", "testname"));
+        // when
+        Cafe cafe = cafeService.getCafe(1L);
+        // then
+        assertThat(cafe)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("url", "testurl")
+                .hasFieldOrPropertyWithValue("name", "testname");
+
+    }
 }

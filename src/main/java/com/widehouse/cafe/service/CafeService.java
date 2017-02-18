@@ -93,4 +93,8 @@ public class CafeService {
             cafeRepository.save(cafe);
         }
     }
+
+    public Cafe getCafe(Long id) {
+        return cafeRepository.findOne(id);
+    }
 }
