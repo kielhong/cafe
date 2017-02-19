@@ -18,6 +18,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 
@@ -33,6 +34,7 @@ public class Cafe {
     private Long id;
 
     @NonNull
+    @Pattern(regexp = "^[a-z][a-z0-9_]*$")
     @Size(min = 1, max = 30)
     private String url;
 
@@ -46,6 +48,7 @@ public class Cafe {
     @ManyToOne
     private CafeCategory category;
 
+    @Size(max = 1000)
     private String description;
 
     private LocalDateTime createDateTime;
