@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
 
 /**
  * Created by kiel on 2017. 2. 10..
@@ -32,9 +33,13 @@ public class Article {
     @ManyToOne
     private Member writer;
 
+    @Size(max = 200)
     private String title;
 
+    @Size(max = 5000)
     private String content;
+
+    private Long commentCount;
 
     private LocalDateTime createDateTime;
 
@@ -46,6 +51,7 @@ public class Article {
         this.writer = writer;
         this.title = title;
         this.content = content;
+        this.commentCount = 0L;
         this.createDateTime = this.updateDateTime = LocalDateTime.now();
     }
 
@@ -58,4 +64,13 @@ public class Article {
     public void moveBoard(Board board) {
         this.board = board;
     }
+
+    public void increaseCommentCount() {
+        this.commentCount++;
+    }
+
+    public void decreaseCommentCount() {
+        this.commentCount--;
+    }
+
 }

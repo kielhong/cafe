@@ -1,9 +1,11 @@
 package com.widehouse.cafe.service;
 
 import com.widehouse.cafe.domain.article.Article;
+import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.article.CommentRepository;
+import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +18,14 @@ import javax.transaction.Transactional;
  */
 @Service
 public class CommentService {
-    private CommentRepository commentRepository;
-
     @Autowired
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
+    private CommentRepository commentRepository;
+    @Autowired
+    private CafeRepository cafeRepository;
+    @Autowired
+    private ArticleRepository articleRepository;
 
+    @Transactional
     public Comment writeComment(Article article, Member commenter, String commentContent) {
         Cafe cafe = article.getCafe();
         if (cafe.isCafeMember(commenter)) {
@@ -30,6 +33,10 @@ public class CommentService {
             commentRepository.save(comment);
 
             cafe.getStatistics().increaseCommentCount();
+            cafeRepository.save(cafe);
+
+            article.increaseCommentCount();
+            articleRepository.save(article);
 
             return comment;
         } else {
@@ -47,12 +54,17 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(Comment comment, Member member) {
+        Article article = comment.getArticle();
         Cafe cafe = comment.getArticle().getCafe();
         if (comment.getCommenter().equals(member) ||
                 cafe.getCafeManager().getMember().equals(member)) {
             commentRepository.delete(comment);
 
             cafe.getStatistics().decreaseCommentCount();
+            cafeRepository.save(cafe);
+
+            article.decreaseCommentCount();
+            articleRepository.save(article);
         } else {
             throw new NoAuthorityException();
         }

@@ -2,22 +2,24 @@ package com.widehouse.cafe.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
+import com.widehouse.cafe.domain.article.CommentRepository;
+import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeCategory;
+import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
-import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,6 +33,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class CommentServiceTest {
     @MockBean
     private CommentRepository commentRepository;
+    @MockBean
+    private CafeRepository cafeRepository;
+    @MockBean
+    private ArticleRepository articleRepository;
+
     @Autowired
     private CafeService cafeService;
     @Autowired
@@ -55,21 +62,27 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void writeComment_should_create_comment_and_increase_commentCount() {
+    public void writeComment_Should_CreateComment_IncreaseCafeCommentCount_IncreaseArticleCommentCount() {
         // Given
         String commentText = "comment";
-        Long beforeCommentCount = cafe.getStatistics().getCafeCommentCount();
+        Long cafeCommentCount = cafe.getStatistics().getCafeCommentCount();
+        Long articleCommentCount = article.getCommentCount();
+
         // When
         Comment comment = commentService.writeComment(article, commenter, commentText);
         // Then
         verify(commentRepository).save(comment);
+        verify(cafeRepository).save(cafe);
+        verify(articleRepository).save(article);
         assertThat(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("article", article)
                 .hasFieldOrPropertyWithValue("commenter", commenter)
                 .hasFieldOrPropertyWithValue("comment", commentText);
         assertThat(cafe.getStatistics().getCafeCommentCount())
-                .isEqualTo(beforeCommentCount + 1);
+                .isEqualTo(cafeCommentCount + 1);
+        assertThat(article.getCommentCount())
+                .isEqualTo(articleCommentCount + 1);
 
     }
 
@@ -114,16 +127,24 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void deleteComment_by_commenter_should_success_and_decrease_commentCount() {
+    public void DeleteCommentByCmmenter_Should_Success_DecreaseCafeCommentCount_DecreaseArticleCommentCount() {
         // given
         Comment comment = commentService.writeComment(article, commenter, "comment");
-        Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
+        Mockito.reset(commentRepository);
+        Mockito.reset(cafeRepository);
+        Mockito.reset(articleRepository);
+        Long cafeCommentCount = cafe.getStatistics().getCafeCommentCount();
+        Long articleCommentCount = article.getCommentCount();
         // when
         commentService.deleteComment(comment, commenter);
         // then
         verify(commentRepository).delete(comment);
+        verify(cafeRepository).save(cafe);
+        verify(articleRepository).save(article);
         assertThat(cafe.getStatistics().getCafeCommentCount())
-                .isEqualTo(beforeCafeStatisticsCommentCount - 1);
+                .isEqualTo(cafeCommentCount - 1);
+        assertThat(article.getCommentCount())
+                .isEqualTo(articleCommentCount - 1);
     }
 
     @Test
