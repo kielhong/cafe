@@ -18,9 +18,9 @@ import java.util.List;
 @Service
 public class ArticleService {
     @Autowired
-    private ArticleRepository articleRepository;
+    ArticleRepository articleRepository;
 
-    List<Article> getArticlesByCafe(Cafe cafe, int page, int size) {
+    public List<Article> getArticlesByCafe(Cafe cafe, int page, int size) {
         List<Article> articles = articleRepository.findByCafe(cafe,
                 new PageRequest(page, size, new Sort(DESC, "id")));
 
