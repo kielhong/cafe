@@ -57,6 +57,8 @@ public class ArticleControllerTest {
                 .andExpect(jsonPath("$.[1].cafe.url").value(cafe.getUrl()))
                 .andExpect(jsonPath("$.[1].title").value("test article2"))
                 .andExpect(jsonPath("$.[2].cafe.url").value(cafe.getUrl()))
-                .andExpect(jsonPath("$.[2].title").value("test article3"));
+                .andExpect(jsonPath("$.[2].title").value("test article3"))
+                .andExpect(jsonPath("$.[2].commentCount").value(0))
+                .andExpect(jsonPath("$.[2].writer").exists());
     }
 }
