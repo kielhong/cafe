@@ -33,7 +33,7 @@ public class Article {
     @ManyToOne
     private Member writer;
 
-    @Size(max = 200)
+    @Size(max = 500)
     private String title;
 
     @Size(max = 5000)
