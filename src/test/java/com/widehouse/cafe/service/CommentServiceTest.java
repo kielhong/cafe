@@ -12,7 +12,7 @@ import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeCategory;
+import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.member.Member;
@@ -53,7 +53,7 @@ public class CommentServiceTest {
     @Before
     public void setUp() {
         manager = new Member("manager");
-        cafe = cafeService.createCafe(manager, "url", "name" , "", CafeVisibility.PUBLIC, new CafeCategory());
+        cafe = cafeService.createCafe(manager, "url", "name" , "", CafeVisibility.PUBLIC, new Category());
         board = new Board(cafe,"article");
         Member writer = new Member("writer");
         article = new Article(board, writer, "title", "content");

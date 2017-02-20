@@ -28,8 +28,8 @@ public class CafeRepositoryTest {
     @Autowired
     private CafeRepository cafeRepository;
 
-    private CafeCategory category1;
-    private CafeCategory category2;
+    private Category category1;
+    private Category category2;
     private Cafe cafe1;
     private Cafe cafe2;
     private Cafe cafe3;
@@ -39,8 +39,8 @@ public class CafeRepositoryTest {
 
     @Before
     public void setUp() {
-        category1 = new CafeCategory("category1");
-        category2 = new CafeCategory("category2");
+        category1 = new Category("category1");
+        category2 = new Category("category2");
         entityManager.persist(category1);
         entityManager.persist(category2);
 

@@ -7,8 +7,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeCategory;
+import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
+import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.service.CafeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,14 +34,29 @@ import java.util.Arrays;
 public class CategoryControllerTest {
     @Autowired
     private MockMvc mvc;
-
+    @MockBean
+    private CategoryRepository categoryRepository;
     @MockBean
     private CafeService cafeService;
 
     @Test
+    public void getCategories() throws Exception {
+        // given
+        given(categoryRepository.findAll())
+                .willReturn(Arrays.asList(
+                        new Category(1L, "Games"),
+                        new Category(2L, "Comics"),
+                        new Category(3L, "Broadcasts")
+                ));
+        mvc.perform(get("/categories"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(3));
+    }
+
+    @Test
     public void getCafesByCategory() throws Exception {
         // given
-        CafeCategory category1 = new CafeCategory("category");
+        Category category1 = new Category("category");
         given(this.cafeService.getCafeByCategory(1L,
                 new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(
@@ -58,7 +74,7 @@ public class CategoryControllerTest {
     @Test
     public void getCafesByCategoryWithPaging() throws Exception {
         // given
-        CafeCategory category1 = new CafeCategory("category");
+        Category category1 = new Category("category");
         given(this.cafeService.getCafeByCategory(1L,
                 new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(

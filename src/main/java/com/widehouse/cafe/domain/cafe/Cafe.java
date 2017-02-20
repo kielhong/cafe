@@ -46,7 +46,7 @@ public class Cafe {
     private CafeVisibility visibility;
 
     @ManyToOne
-    private CafeCategory category;
+    private Category category;
 
     @Size(max = 1000)
     private String description;
@@ -83,7 +83,7 @@ public class Cafe {
         this.visibility = CafeVisibility.PUBLIC;
     }
 
-    public Cafe(String url, String name, String description, CafeVisibility visibility, CafeCategory category) {
+    public Cafe(String url, String name, String description, CafeVisibility visibility, Category category) {
         this();
         this.url = url;
         this.name = name;
@@ -92,7 +92,7 @@ public class Cafe {
         this.category = category;
     }
 
-    public void updateInfo(String name, String description, CafeVisibility visibility, CafeCategory category) {
+    public void updateInfo(String name, String description, CafeVisibility visibility, Category category) {
         this.name = name;
         this.description = description;
         this.visibility = visibility;

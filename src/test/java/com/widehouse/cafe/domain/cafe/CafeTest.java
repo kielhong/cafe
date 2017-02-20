@@ -23,7 +23,7 @@ public class CafeTest {
     @Test
     public void createCafe() {
         // Given
-        CafeCategory category = new CafeCategory();
+        Category category = new Category();
         // When
         Cafe cafe = new Cafe("cafeurl", "cafename", "desc", CafeVisibility.PUBLIC, category);
         // Then
@@ -42,7 +42,7 @@ public class CafeTest {
     @Test
     public void updateCafeInfo_should_change_cafeName_description_visibility() {
         // When
-        CafeCategory category = new CafeCategory("category");
+        Category category = new Category("category");
         cafe.updateInfo("new name", "new description", CafeVisibility.PRIVATE, category);
         // Then
         assertThat(cafe.getName())

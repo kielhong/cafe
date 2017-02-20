@@ -10,7 +10,7 @@ import static org.mockito.Mockito.verify;
 
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeCategory;
+import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CafeMember;
 import com.widehouse.cafe.domain.cafe.CafeMemberRole;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
@@ -45,7 +45,7 @@ public class CafeServiceTest {
     @Autowired
     private CafeService cafeService;
 
-    private CafeCategory category;
+    private Category category;
     private Cafe cafe;
     private Cafe cafe1;
     private Cafe cafe2;
@@ -55,7 +55,7 @@ public class CafeServiceTest {
     @Before
     public void setUp() {
         Member member = new Member("user");
-        category = new CafeCategory(1L, "category");
+        category = new Category(1L, "category");
         cafe = cafeService.createCafe(member, "url", "name", "desc", CafeVisibility.PUBLIC, category);
         cafe1 = cafeService.createCafe(member, "url1", "name1", "desc", CafeVisibility.PUBLIC, category);
         cafe2 = cafeService.createCafe(member, "url2", "name2", "desc", CafeVisibility.PUBLIC, category);
@@ -67,7 +67,7 @@ public class CafeServiceTest {
     public void createCafe_should_create_cafe_and_assign_cafeManager() {
         // Given
         Member member = new Member("user");
-        CafeCategory category = new CafeCategory();
+        Category category = new Category();
         // When
         Cafe cafe = cafeService.createCafe(member, "cafeurl", "cafename", "cafedescription",
                 CafeVisibility.PUBLIC, category);

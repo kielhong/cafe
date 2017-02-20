@@ -16,13 +16,13 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class CafeCategory {
+public class Category {
     @Id @GeneratedValue
     private Long id;
 
     private String name;
 
-    public CafeCategory(String name) {
+    public Category(String name) {
         this.name = name;
     }
 }

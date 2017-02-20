@@ -1,6 +1,8 @@
 package com.widehouse.cafe.web;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.cafe.Category;
+import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.service.CafeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,15 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private CafeService cafeService;
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @GetMapping("/categories")
+    public List<Category> getCategories() {
+        List<Category> categories = categoryRepository.findAll();
+
+        return categories;
+    }
 
     @GetMapping("/categories/{categoryId}/cafes")
     public List<Cafe> getCafesByCategory(@PathVariable Long categoryId,

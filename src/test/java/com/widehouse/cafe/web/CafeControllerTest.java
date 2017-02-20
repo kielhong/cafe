@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeCategory;
+import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.service.CafeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +34,7 @@ public class CafeControllerTest {
     @Test
     public void getCafeByUrl_Should_CafeInfo() throws Exception {
         // given
-        CafeCategory category = new CafeCategory(1L, "category");
+        Category category = new Category(1L, "category");
         given(cafeService.getCafe("cafeurl"))
                 .willReturn(new Cafe("cafeurl", "cafename", "", PUBLIC, category));
         // then
@@ -54,7 +54,7 @@ public class CafeControllerTest {
     @Test
     public void getCafeById_Should_CafeInfo() throws Exception {
         // given
-        CafeCategory category = new CafeCategory(1L, "category");
+        Category category = new Category(1L, "category");
         Cafe cafe = new Cafe("cafeurl", "cafename", "", PUBLIC, category);
         cafe.getStatistics().increaseCafeMemberCount();
         given(cafeService.getCafe(1L))
