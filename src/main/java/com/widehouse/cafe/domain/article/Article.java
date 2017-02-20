@@ -39,7 +39,7 @@ public class Article {
     @Size(max = 5000)
     private String content;
 
-    private Long commentCount;
+    private int commentCount;
 
     private LocalDateTime createDateTime;
 
@@ -51,7 +51,7 @@ public class Article {
         this.writer = writer;
         this.title = title;
         this.content = content;
-        this.commentCount = 0L;
+        this.commentCount = 0;
         this.createDateTime = this.updateDateTime = LocalDateTime.now();
     }
 

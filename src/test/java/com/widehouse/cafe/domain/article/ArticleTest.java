@@ -48,7 +48,7 @@ public class ArticleTest {
     @Test
     public void modifyArticle_should_update_article() {
         // Given
-        Long commentCount = article.getCommentCount();
+        int commentCount = article.getCommentCount();
         // When
         article.modify("modify title", "modify content");
         // Then
@@ -78,7 +78,7 @@ public class ArticleTest {
     @Test
     public void increaseCommentCount_Should_IncreaseCommentCountBy1() {
         // given
-        Long commentCount = article.getCommentCount();
+        int commentCount = article.getCommentCount();
         // when
         article.increaseCommentCount();
         // then
@@ -89,7 +89,7 @@ public class ArticleTest {
     @Test
     public void descreaseCommentCount_Should_DescreaseCommentCountBy1() {
         // given
-        Long commentCount = article.getCommentCount();
+        int commentCount = article.getCommentCount();
         // when
         article.decreaseCommentCount();
         // then

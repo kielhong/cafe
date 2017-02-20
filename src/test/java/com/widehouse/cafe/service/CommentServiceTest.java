@@ -66,7 +66,7 @@ public class CommentServiceTest {
         // Given
         String commentText = "comment";
         Long cafeCommentCount = cafe.getStatistics().getCafeCommentCount();
-        Long articleCommentCount = article.getCommentCount();
+        int articleCommentCount = article.getCommentCount();
 
         // When
         Comment comment = commentService.writeComment(article, commenter, commentText);
@@ -134,7 +134,7 @@ public class CommentServiceTest {
         Mockito.reset(cafeRepository);
         Mockito.reset(articleRepository);
         Long cafeCommentCount = cafe.getStatistics().getCafeCommentCount();
-        Long articleCommentCount = article.getCommentCount();
+        int articleCommentCount = article.getCommentCount();
         // when
         commentService.deleteComment(comment, commenter);
         // then
