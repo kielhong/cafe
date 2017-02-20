@@ -39,7 +39,7 @@ public class ArticleTest {
                 .hasFieldOrPropertyWithValue("writer", member)
                 .hasFieldOrPropertyWithValue("title", "test title")
                 .hasFieldOrPropertyWithValue("content", "test content")
-                .hasFieldOrPropertyWithValue("commentCount", 0L);
+                .hasFieldOrPropertyWithValue("commentCount", 0);
         assertThat(newArticle.getCreateDateTime())
                 .isNotNull()
                 .isEqualTo(newArticle.getUpdateDateTime());
