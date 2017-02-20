@@ -45,8 +45,8 @@ public class Article {
 
     private LocalDateTime updateDateTime;
 
-    public Article(Cafe cafe, Board board, Member writer, String title, String content) {
-        this.cafe = cafe;
+    public Article(Board board, Member writer, String title, String content) {
+        this.cafe = board.getCafe();
         this.board = board;
         this.writer = writer;
         this.title = title;

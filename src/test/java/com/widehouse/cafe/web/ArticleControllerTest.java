@@ -44,9 +44,9 @@ public class ArticleControllerTest {
                 .willReturn(cafe);
         given(articleService.getArticlesByCafe(cafe, 0, 3))
                 .willReturn(Arrays.asList(
-                        new Article(cafe, board, writer, "test article1", "test1"),
-                        new Article(cafe, board, writer, "test article2", "test2"),
-                        new Article(cafe, board, writer, "test article3", "test3"))
+                        new Article(board, writer, "test article1", "test1"),
+                        new Article(board, writer, "test article2", "test2"),
+                        new Article(board, writer, "test article3", "test3"))
                 );
         // then
         mvc.perform(get("/cafes/" + cafe.getUrl() + "/articles?page=0&size=3"))

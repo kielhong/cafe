@@ -55,7 +55,7 @@ public class CommentServiceTest {
         cafe = cafeService.createCafe(manager, "url", "name" , "", CafeVisibility.PUBLIC, new CafeCategory());
         board = new Board(cafe,"article");
         Member writer = new Member("writer");
-        article = new Article(cafe, board, writer, "title", "content");
+        article = new Article(board, writer, "title", "content");
 
         commenter = new Member("commenter");
         cafeService.joinMember(cafe, commenter);

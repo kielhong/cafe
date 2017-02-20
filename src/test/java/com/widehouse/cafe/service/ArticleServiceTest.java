@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -48,9 +47,9 @@ public class ArticleServiceTest {
     @Test
     public void getArticlesByCafe_Should_Return_ListArticleWithIdOrderDesc() {
         // given
-        Article article1 = new Article(cafe, board, writer, "test article1", "test1");
-        Article article2 = new Article(cafe, board, writer, "test article2", "test2");
-        Article article3 = new Article(cafe, board, writer, "test article3", "test3");
+        Article article1 = new Article(board, writer, "test article1", "test1");
+        Article article2 = new Article(board, writer, "test article2", "test2");
+        Article article3 = new Article(board, writer, "test article3", "test3");
         given(articleRepository.findByCafe(cafe, new PageRequest(0, 3, new Sort(DESC, "id"))))
                 .willReturn(Arrays.asList(article3, article2, article1));
         // when

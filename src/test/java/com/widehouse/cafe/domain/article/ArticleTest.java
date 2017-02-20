@@ -24,13 +24,13 @@ public class ArticleTest {
         cafe = new Cafe("testcafe", "testcafe");
         board = new Board(cafe, "testboard");
         member = new Member();
-        article = new Article(cafe, board, member, "test title", "test content");
+        article = new Article(board, member, "test title", "test content");
     }
 
     @Test
     public void writeArticle_should_create_article() {
         // When
-        Article newArticle = new Article(cafe, board, member, "test title", "test content");
+        Article newArticle = new Article(board, member, "test title", "test content");
         // Then
         assertThat(newArticle)
                 .isNotNull()
@@ -74,6 +74,8 @@ public class ArticleTest {
                 .hasFieldOrPropertyWithValue("cafe", cafe)
                 .hasFieldOrPropertyWithValue("board", board2);
     }
+
+    // TODO : cafe 가 다른 board로 이동할 경우 오류 처리
 
     @Test
     public void increaseCommentCount_Should_IncreaseCommentCountBy1() {

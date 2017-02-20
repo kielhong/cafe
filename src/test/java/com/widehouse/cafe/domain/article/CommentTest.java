@@ -24,7 +24,7 @@ public class CommentTest {
         cafe = new Cafe("testcafe", "testcafe");
         board = new Board(cafe, "testboard");
         member = new Member();
-        article = new Article(cafe, board, member, "test title", "test content");
+        article = new Article(board, member, "test title", "test content");
     }
 
     @Test
