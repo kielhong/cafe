@@ -31,32 +31,48 @@ public class ArticleRepositoryTest {
     private ArticleRepository articleRepository;
 
     private Cafe cafe;
-    private Board board;
+    private Board board1;
+    private Board board2;
     private Member writer;
+
+    private Article article1;
+    private Article article2;
+    private Article article3;
 
     @Before
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         entityManager.persist(cafe);
-        board = new Board(cafe, "board");
-        entityManager.persist(board);
+        board1 = new Board(cafe, "board1");
+        entityManager.persist(board1);
+        board2 = new Board(cafe, "board2");
+        entityManager.persist(board2);
         writer = new Member("writer");
         entityManager.persist(writer);
+
+        article1 = new Article(board1, writer, "test article1", "test1");
+        entityManager.persist(article1);
+        article2 = new Article(board1, writer, "test article2", "test2");
+        entityManager.persist(article2);
+        article3 = new Article(board2, writer, "test article3", "test3");
+        entityManager.persist(article3);
     }
 
     @Test
     public void findByCafe_Should_Return_ListArticle() {
-        // given
-        Article article1 = new Article(cafe, board, writer, "test article1", "test1");
-        entityManager.persist(article1);
-        Article article2 = new Article(cafe, board, writer, "test article2", "test2");
-        entityManager.persist(article2);
-        Article article3 = new Article(cafe, board, writer, "test article3", "test3");
-        entityManager.persist(article3);
         // when
         List<Article> articles = articleRepository.findByCafe(cafe, new PageRequest(0, 2, new Sort(DESC, "id")));
         // then
         then(articles)
                 .containsExactly(article3, article2);
+    }
+
+    @Test
+    public void findByBoard_Should_Return_ListArticle() {
+        // when
+        List<Article> articles = articleRepository.findByBoard(board1, new PageRequest(0, 3, new Sort(DESC, "id")));
+        // then
+        then(articles)
+                .containsExactly(article2, article1);
     }
 }
