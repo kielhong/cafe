@@ -26,7 +26,7 @@ public class Board {
     @ManyToOne
     private Cafe cafe;
 
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 50)
     private String name;
 
     @Min(1)
