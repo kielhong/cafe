@@ -1,9 +1,11 @@
 package com.widehouse.cafe.domain.cafe;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,7 +24,23 @@ public class Category {
 
     private String name;
 
-    public Category(String name) {
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createDateTime;
+
+    private int listOrder;
+
+    public Category(String name, int listOrder) {
         this.name = name;
+        this.listOrder = listOrder;
+        this.createDateTime = LocalDateTime.now();
+    }
+
+    public Category(Long id, String name) {
+        this(name);
+        this.id = id;
+    }
+
+    public Category(String name) {
+        this(name, 1);
     }
 }

@@ -1,6 +1,7 @@
 package com.widehouse.cafe.web;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -42,15 +43,18 @@ public class CategoryControllerTest {
     @Test
     public void getCategories() throws Exception {
         // given
-        given(categoryRepository.findAll())
+        given(categoryRepository.findAll(new Sort(ASC, "listOrder")))
                 .willReturn(Arrays.asList(
-                        new Category(1L, "Games"),
-                        new Category(2L, "Comics"),
-                        new Category(3L, "Broadcasts")
+                        new Category("Games", 1),
+                        new Category("Comics", 2),
+                        new Category("Broadcasts", 3)
                 ));
         mvc.perform(get("/categories"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(3));
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$.[0].listOrder").value(1))
+                .andExpect(jsonPath("$.[1].listOrder").value(2))
+                .andExpect(jsonPath("$.[2].listOrder").value(3));
     }
 
     @Test

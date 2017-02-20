@@ -1,5 +1,7 @@
 package com.widehouse.cafe.web;
 
+import static org.springframework.data.domain.Sort.Direction.ASC;
+
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
@@ -28,7 +30,7 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public List<Category> getCategories() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll(new Sort(ASC, "listOrder"));
 
         return categories;
     }
