@@ -53,7 +53,8 @@ public class CommentService {
     }
 
     @Transactional
-    public void deleteComment(Comment comment, Member member) {
+    public void deleteComment(Long commentId, Member member) {
+        Comment comment = commentRepository.findOne(commentId);
         Article article = comment.getArticle();
         Cafe cafe = comment.getArticle().getCafe();
         if (comment.getCommenter().equals(member) ||

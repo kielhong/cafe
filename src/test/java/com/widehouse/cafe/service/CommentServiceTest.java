@@ -2,7 +2,8 @@ package com.widehouse.cafe.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.times;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import com.widehouse.cafe.domain.article.Article;
@@ -135,8 +136,10 @@ public class CommentServiceTest {
         Mockito.reset(articleRepository);
         Long cafeCommentCount = cafe.getStatistics().getCafeCommentCount();
         int articleCommentCount = article.getCommentCount();
+        given(commentRepository.findOne(comment.getId()))
+                .willReturn(comment);
         // when
-        commentService.deleteComment(comment, commenter);
+        commentService.deleteComment(comment.getId(), commenter);
         // then
         verify(commentRepository).delete(comment);
         verify(cafeRepository).save(cafe);
@@ -152,8 +155,10 @@ public class CommentServiceTest {
         // given
         Comment comment = commentService.writeComment(article, commenter, "comment");
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
+        given(commentRepository.findOne(comment.getId()))
+                .willReturn(comment);
         // when
-        commentService.deleteComment(comment, manager);
+        commentService.deleteComment(comment.getId(), manager);
         // then
         verify(commentRepository).delete(comment);
         assertThat(cafe.getStatistics().getCafeCommentCount())
@@ -163,13 +168,15 @@ public class CommentServiceTest {
     @Test
     public void deleteComment_by_nonmanager_nor_noncomment_throw_NoAuthorityException() {
         // given
-        Member member1 = new Member();
+        Member member1 = new Member("another writer");
         Comment comment = commentService.writeComment(article, commenter, "comment");
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
+        given(commentRepository.findOne(comment.getId()))
+                .willReturn(comment);
         // then
-        assertThatThrownBy(() -> commentService.deleteComment(comment, member1))
+        assertThatThrownBy(() -> commentService.deleteComment(comment.getId(), member1))
                 .isInstanceOf(NoAuthorityException.class);
-        verify(commentRepository, times(0)).delete(comment);
+        verify(commentRepository, never()).delete(comment);
         assertThat(cafe.getStatistics().getCafeCommentCount())
                 .isEqualTo(beforeCafeStatisticsCommentCount);
     }
