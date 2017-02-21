@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
 
 /**
  * Created by kiel on 2017. 2. 11..
@@ -28,6 +29,7 @@ public class Comment {
     @ManyToOne
     private Member commenter;
 
+    @Size(max = 2000)
     private String comment;
 
     private LocalDateTime createDateTime;
