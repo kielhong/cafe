@@ -1,7 +1,7 @@
 package com.widehouse.cafe.service;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeMemberRepository;
+import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;

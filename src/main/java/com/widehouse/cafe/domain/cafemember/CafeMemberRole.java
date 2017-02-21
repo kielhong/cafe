@@ -1,4 +1,4 @@
-package com.widehouse.cafe.domain.cafe;
+package com.widehouse.cafe.domain.cafemember;
 
 /**
  * Created by kiel on 2017. 2. 11..

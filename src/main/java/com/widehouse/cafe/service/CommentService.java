@@ -1,7 +1,6 @@
 package com.widehouse.cafe.service;
 
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PRIVATE;
-import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.widehouse.cafe.domain.article.Article;
@@ -9,7 +8,7 @@ import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.article.CommentRepository;
-import com.widehouse.cafe.domain.cafe.CafeMemberRepository;
+import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;

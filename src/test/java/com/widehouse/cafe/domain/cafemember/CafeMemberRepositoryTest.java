@@ -1,8 +1,11 @@
-package com.widehouse.cafe.domain.cafe;
+package com.widehouse.cafe.domain.cafemember;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
+import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.cafemember.CafeMember;
+import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import org.junit.Test;
 import org.junit.runner.RunWith;

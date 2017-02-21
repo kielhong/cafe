@@ -1,11 +1,11 @@
-package com.widehouse.cafe.domain.cafe;
+package com.widehouse.cafe.domain.cafemember;
 
+import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;

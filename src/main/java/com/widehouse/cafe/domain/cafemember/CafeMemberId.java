@@ -1,5 +1,6 @@
-package com.widehouse.cafe.domain.cafe;
+package com.widehouse.cafe.domain.cafemember;
 
+import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
