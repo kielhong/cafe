@@ -1,6 +1,7 @@
 package com.widehouse.cafe.domain.cafe;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 import com.widehouse.cafe.domain.member.Member;
 import org.junit.Test;
@@ -51,4 +52,32 @@ public class CafeMemberRepositoryTest {
                 .contains(cafe1, cafe2, cafe3, cafe4, cafe5);
     }
 
+    @Test
+    public void existsCafeAndMember_WithCafeMember_Should_True() {
+        // given
+        Member member = new Member("member");
+        entityManager.persist(member);
+        Cafe cafe = new Cafe("url1", "name1");
+        entityManager.persist(cafe);
+        entityManager.persist(new CafeMember(cafe, member));
+        // when
+        boolean exist = cafeMemberRepository.existsByCafeMember(cafe, member);
+        // then
+        then(exist)
+                .isTrue();
+    }
+
+    @Test
+    public void existsCafeAndMember_WithNotCafeMember_Should_False() {
+        // given
+        Member member = new Member("member");
+        entityManager.persist(member);
+        Cafe cafe = new Cafe("url1", "name1");
+        entityManager.persist(cafe);
+        // when
+        boolean exist = cafeMemberRepository.existsByCafeMember(cafe, member);
+        // then
+        then(exist)
+                .isFalse();
+    }
 }
