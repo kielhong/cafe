@@ -2,9 +2,11 @@ package com.widehouse.cafe.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
@@ -12,9 +14,9 @@ import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
+import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import org.junit.Before;
@@ -24,7 +26,12 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by kiel on 2017. 2. 12..
@@ -151,7 +158,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void deleteComment_by_manager_should_success_and_decrease_commentCount() {
+    public void deleteCommentByCafeManager_Should_Success_DecreaseCommentCount() {
         // given
         Comment comment = commentService.writeComment(article, commenter, "comment");
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
@@ -166,7 +173,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void deleteComment_by_nonmanager_nor_noncomment_throw_NoAuthorityException() {
+    public void deleteCommentByNotCafeManagerNorNotCommenter_Throw_NoAuthorityException() {
         // given
         Member member1 = new Member("another writer");
         Comment comment = commentService.writeComment(article, commenter, "comment");
