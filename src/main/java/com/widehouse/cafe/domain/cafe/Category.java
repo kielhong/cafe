@@ -24,7 +24,6 @@ public class Category {
 
     private String name;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createDateTime;
 
     private int listOrder;

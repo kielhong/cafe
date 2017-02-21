@@ -26,8 +26,10 @@ public class JsonFormatTest {
         LocalDateTime datetime = LocalDateTime.of(2017, 2, 15, 13, 14, 15);
         Category category = new Category(1L, "test", datetime, 1);
 
-        assertThat(this.json.write(category)).hasJsonPathStringValue("@.createDateTime");
-        assertThat(this.json.write(category)).extractingJsonPathStringValue("@.createDateTime")
-                .isEqualTo("2017-02-15 13:14:15");
+        assertThat(this.json.write(category))
+                .hasJsonPathStringValue("@.createDateTime");
+        assertThat(this.json.write(category))
+                .extractingJsonPathStringValue("@.createDateTime")
+                .isEqualTo("2017-02-15T13:14:15");
     }
 }
