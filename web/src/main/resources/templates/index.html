@@ -1,10 +1,1059 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8"></meta>
-    <title>Title</title>
-</head>
-<body>
+    <title>Cafe</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    <meta name="viewport" content="width=1024"></meta>
+    <meta http-equiv="X-UA-Compatible" content="requiresActiveX=true"></meta>
+    <meta http-equiv="Content-Script-Type" content="text/javascript"></meta>
+    <meta http-equiv="Content-Style-Type" content="text/css"></meta>
 
+    <link rel="stylesheet" href="/css/Layout.css" type="text/css"/>
+    <script type="text/javascript" src="/js/CommonTopScript.js" charset="utf-8"></script>
+</head>
+
+<body>
+<div id="u_skip">
+    <a href="#gnbMenu" onclick="var t=document.getElementById('gnbMenu');t.tabIndex=-1;t.focus();return false;" class="skip">메뉴 바로가기</a>
+    <a href="#container" onclick="var t=document.getElementById('container');t.tabIndex=-1;t.focus();return false;" class="skip">본문 바로가기</a>
+</div>
+
+<div id="wrap">
+    <div id="header">
+
+        <div class="snb_area">
+            <div class="snb_inner">
+                <h1>
+                    <a href="http://www.naver.com" class="N=a:STA.naverlogo logo_naver">NAVER</a>
+                    <a href="http://section.cafe.naver.com" class="N=a:STA.cafe logo_cafe">카페</a>
+                </h1>
+
+                <div class="blind"><a href="#start">본문 바로가기</a></div>
+                <form id="frmSearch" name="frmSearch" action="/CombinationSearch.nhn" method="get" class="_submit(CafeSection|CafeSearch|query)">
+                    <fieldset>
+                        <legend class="blind">검색</legend>
+                        <div class="snb_search_box" role="search">
+                            <div class="snb_search_bsub">
+                                <div id="searchOptionBox" class="search_option_box off">
+                                </div>
+                            </div>
+
+                            <input alt="검색" type="submit" class="btn_search N=a:STA.search" value="검색"></input>
+                            <a href="http://search.naver.com/search.naver" target="_blank" class="btn_search_all _click(CafeSection|Nexearch)">통합검색</a>
+                        </div>
+                    </fieldset>
+                </form>
+
+
+                <div class="cafe_gnb_wrap">
+                    <div id="gnb">
+
+                        <script charset="utf-8" type="text/javascript" src="http://static.gn.naver.net/template/gnb_utf8.nhn?2017022210"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="gnbMenu" class="menu">
+            <div class="menu_inner" role="navigation">
+                <ul>
+
+                    <li class="lnb1 on"><a href="http://section.cafe.naver.com" class="N=a:LNB.home">
+                        <span class="tx">카페홈</span><div class="status"></div>
+                    </a></li>
+
+
+                    <li class="lnb2 "><a href="/SectionCafeStoryList.nhn" class="N=a:LNB.sto">
+                        <span class="tx">카페스토리</span>
+                    </a></li>
+
+
+                    <li class="lnb3 "><a href="/RandomPowerCafeList.nhn" class="N=a:LNB.top">
+                        <span class="tx">대표카페</span>
+                    </a></li>
+
+
+                    <li class="lnb4 "><a href="/CafeRankingList.nhn" class="N=a:LNB.rnk">
+                        <span class="tx">랭킹</span>
+                    </a></li>
+
+
+                    <li class="lnb5 "><a href="/StarCafeList.nhn" class="N=a:LNB.star">
+                        <span class="tx">인기팬카페</span>
+                    </a></li>
+
+
+                    <li class="lnb6 "><a href="/GameCafeList.nhn" class="N=a:LNB.game">
+                        <span class="tx">공식게임카페</span>
+                    </a></li>
+
+
+                    <li class="lnb7 "><a href="/EducationCafeList.nhn" class="N=a:LNB.wiu">
+                        <span class="tx">WIU지식나눔카페</span>
+                    </a></li>
+
+                    <li class="lnb8"><a href="http://m.cafe.naver.com/CafeSupport.nhn" class="N=a:LNB.spt"><span class="tx">카페지원센터</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="container" class="main" role="main">
+
+
+
+
+
+        <!-- spot -->
+        <div class="spot" id="cafestoryArea">
+            <h2><img src="http://cafeimgs.naver.net/img/section/h_cafestory.gif" width="117" height="24" alt="cafe story"/></h2>
+            <div class="date_control">
+
+
+
+
+                <span class="n2 _date">2</span>
+
+
+
+
+
+
+                <span class="n0 _date">0</span>
+
+
+
+
+
+
+                <span class="n1 _date">1</span>
+
+
+
+
+
+
+                <span class="n7 _date">7</span>
+
+
+
+
+
+                <span class="dot">.</span>
+
+
+
+
+
+
+
+                <span class="n0 _date">0</span>
+
+
+
+
+
+
+                <span class="n2 _date">2</span>
+
+
+
+
+
+                <span class="dot">.</span>
+
+
+
+
+
+
+
+                <span class="n2 _date">2</span>
+
+
+
+
+
+
+                <span class="n2 _date">2</span>
+
+
+
+
+
+                <span class="dot">.</span>
+
+
+
+
+                <button class="btn_prev N=a:cvr.prev _click(CafeStory|PrevDate)">이전</button>
+                <button class="btn_next_off N=a:cvr.next _click(CafeStory|NextDate) _disabled" disabled="disabled" style="cursor:default;">다음</button>
+            </div>
+
+
+            <div class="_CafeStoryContent" id="cafeStory">
+
+                <div class="type1" style="background:url(http://cafefiles.naver.net/MjAxNzAyMTVfNTQg/MDAxNDg3MTQxMDM2Nzgy.PCNj1DAQY4ilgDRbyaOV1T4xRUxg0H28pzlUjI06bmsg.PhtDIgNegGTvkuvj-ObEivOK4W_HuXFDLs1iRJF0NGMg.JPEG.cafesupport/default.jpg) no-repeat">
+                    <div class="thumb"><a href="http://cafe.naver.com/korjapif" target="_blank" class="N=a:cvr.image">문화와 함께 언어도 교류해요!</a></div>
+                    <div class="cont">
+                        <h3><a href="http://cafe.naver.com/korjapif" target="_blank" class="N=a:cvr.title" >문화와 함께 언어도 교류해요!</a></h3>
+                        <div class="option">
+                            <dl>
+                                <dt class="member">회원</dt>
+                                <dd class="member">12,400</dd>
+                                <dt class="writing">게시글</dt>
+                                <dd class="writing">18,867</dd>
+                                <dt class="manager">매니저</dt>
+                                <dd class="manager">Evan Kang</dd>
+                                <dt class="since">since</dt>
+                                <dd class="since">2012.04.12.</dd>
+                            </dl>
+                        </div>
+
+                        <ul>
+                            <li><a href="http://cafe.naver.com/korjapif/menu/30" target="_blank" class="N=a:cvr.article,r:1">한일문화 日韓文化</a></li>
+                            <li><a href="http://cafe.naver.com/korjapif/menu/13" target="_blank" class="N=a:cvr.article,r:2">친구만들기 友達作る</a></li>
+                            <li><a href="http://cafe.naver.com/korjapif/menu/37" target="_blank" class="N=a:cvr.article,r:3">함께해요일본어 日語</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cafenew">
+                <div class="navi">
+
+
+                    <a href="#" class="n1  N=a:cfn.num,r:1 _mouseover(CafeStory|SelectCafeNew|0) _stopDefault">1</a>
+
+                    <a href="#" class="n2 on N=a:cfn.num,r:2 _mouseover(CafeStory|SelectCafeNew|1) _stopDefault">2</a>
+
+
+                </div>
+                <div class="cafenew_cont" id="sectionNews"><a href="http://cafe.naver.com/cafesupport/107252" class="N=a:cfn.list2,r:2"><img src="http://cafefiles.naver.net/20160715_5/0_1468540939505_scoz2U_png/지원센터-공지변경_3.png" width="255" height="225" alt="정모장소지원-뉴버전"/></a></div>
+            </div>
+        </div>
+        <!-- //spot -->
+
+        <div id="content">
+            <a name="start" class="blind">본문시작</a>
+
+            <div class="directory_section" style="display:none;z-index:999;">
+                <h3><img src="http://cafeimgs.naver.net/img/section/h_directory.gif" width="152" height="21" alt="디렉토리 전체보기"/></h3>
+                <a href="#" class="btn_clse _click(CategoryCafe|HideTotalView) _stopDefault"><span>닫기</span></a>
+                <!-- [D] 클래스 변경 주제디렉토리:directory1, 지역디렉토리:directory2 -->
+                <ul class="tab_directory directory1">
+                    <li class="t1"><a href="#" class="_click(CategoryCafe|ShowTotalView|1) _stopDefault">주제 디렉토리</a></li>
+                    <li class="t2"><a href="#" class="_click(CategoryCafe|ShowTotalView|2) _stopDefault">지역 디렉토리</a></li>
+                </ul>
+                <p class="dsc_directory"><img src="http://cafeimgs.naver.net/img/section/txt_directory.gif" width="218" height="10" alt="Ctrl+F를 이용하시면 디렉토리를 쉽게 찾을 수 있어요"/></p>
+                <div class="lst_directory">
+                    <div class="wrap">  </div>
+                </div>
+                <div class="btn_area">
+                    <a href="#" class="_click(CategoryCafe|HideTotalView) _stopDefault"><img src="http://cafeimgs.naver.net/img/section/btn_go_main.gif" width="156" height="37" alt="메인으로 돌아가기"/></a>
+                </div>
+            </div>
+
+            <h2 class="blind">주제별 카페</h2>
+            <ul class="tab_cafe">
+                <li class="t1 on"><a id="focusTop" href="/SectionHome.nhn?t=1" class="N=a:cnt.tab1"><span>주제별 카페</span><em class="blind">선택됨</em><em>7,994,822</em></a></li>
+                <li class="t2 "><a href="/AreaCafeHome.nhn?t=2" class="N=a:cnt.tab2"><span>지역별 카페</span><em>2,478,763</em></a></li>
+
+
+                <li class="t3" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|ShowLogInLayer) _stopDefault N=a:cnt.tab3,t:1"><span>가입카페 새글 소식</span></a></li>
+
+
+
+            </ul>
+            <div class="layer_type news_login" style="display:none;" id="LoginLayer">
+                <h4>로그인 후 사용 가능합니다.</h4>
+                <p>우측 로그인 영역에서 로그인 후<br/>사용해 주세요.</p>
+                <a class="close _click(LayerManager|CloseLayer|LoginLayer) _stopDefault" href="#"><img height="19" width="19" alt="닫기" src="http://static.naver.net/kin/09renewal/btn_close_layer3.gif"/></a>
+            </div>
+
+            <div class="category">
+                <ul>
+
+
+                    <li id="category_1" class="open select firstchild">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|1) _stopDefault" aria-expanded="true">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:1,t:1 _click(CategoryCafe|SelectNode|1) _stopDefault" id="theme1">게임</a>
+                        </div>
+                    </li>
+
+
+
+
+
+                    <li id="category_2" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|2) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:2,t:1 _click(CategoryCafe|SelectNode|2) _stopDefault">만화/애니메이션</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_3" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|3) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:3,t:1 _click(CategoryCafe|SelectNode|3) _stopDefault">방송/연예</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_4" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|4) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:4,t:1 _click(CategoryCafe|SelectNode|4) _stopDefault">문화/예술</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_5" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|5) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:5,t:1 _click(CategoryCafe|SelectNode|5) _stopDefault">영화</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_6" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|6) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:6,t:1 _click(CategoryCafe|SelectNode|6) _stopDefault">음악</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_7" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|7) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:7,t:1 _click(CategoryCafe|SelectNode|7) _stopDefault">팬카페</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_8" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|8) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:8,t:1 _click(CategoryCafe|SelectNode|8) _stopDefault">여행</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_9" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|9) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:9,t:1 _click(CategoryCafe|SelectNode|9) _stopDefault">스포츠/레저</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_10" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|10) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:10,t:1 _click(CategoryCafe|SelectNode|10) _stopDefault">애완동물</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_11" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|11) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:11,t:1 _click(CategoryCafe|SelectNode|11) _stopDefault">취미</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_12" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|12) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:12,t:1 _click(CategoryCafe|SelectNode|12) _stopDefault">생활</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_13" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|13) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:13,t:1 _click(CategoryCafe|SelectNode|13) _stopDefault">패션/미용</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_14" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|14) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:14,t:1 _click(CategoryCafe|SelectNode|14) _stopDefault">건강/다이어트</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_15" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|15) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:15,t:1 _click(CategoryCafe|SelectNode|15) _stopDefault">가족/육아</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_16" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|16) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:16,t:1 _click(CategoryCafe|SelectNode|16) _stopDefault">컴퓨터/통신</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_17" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|17) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:17,t:1 _click(CategoryCafe|SelectNode|17) _stopDefault">교육</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_18" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|18) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:18,t:1 _click(CategoryCafe|SelectNode|18) _stopDefault">외국어</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_19" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|19) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:19,t:1 _click(CategoryCafe|SelectNode|19) _stopDefault">인문/과학</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_20" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|20) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:20,t:1 _click(CategoryCafe|SelectNode|20) _stopDefault">경제/금융</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_21" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|21) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:21,t:1 _click(CategoryCafe|SelectNode|21) _stopDefault">정치/사회</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_22" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|22) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:22,t:1 _click(CategoryCafe|SelectNode|22) _stopDefault">문학/창작</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_23" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|23) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:23,t:1 _click(CategoryCafe|SelectNode|23) _stopDefault">동창/동문</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_24" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|24) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:24,t:1 _click(CategoryCafe|SelectNode|24) _stopDefault">친목/모임</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_25" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|25) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:25,t:1 _click(CategoryCafe|SelectNode|25) _stopDefault">종교/봉사</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+
+
+                    <li id="category_26" class="">
+                        <div>
+                            <button class="_click(CategoryCafe|ToggleNode|26) _stopDefault" aria-expanded="false">열기</button>
+                            <a href="#" class="N=a:cnt_thm.dir1,i:26,t:1 _click(CategoryCafe|SelectNode|26) _stopDefault">쥬니버</a>
+                        </div>
+
+                        <ul></ul>
+
+                    </li>
+
+
+                </ul>
+                <div class="btn_allview">
+                    <a href="#" class="_click(CategoryCafe|ShowTotalView|1) _stopDefault N=a:cnt_thm.dirmore,t:1" title="디렉토리 전체보기">전체보기</a>
+                </div>
+            </div>
+
+            <div class="category_list">
+                <div class="tit_area">
+
+                    <h3>게임</h3>
+                    <a href="#" class="moreview _click(CategoryCafe|MoreView|1) _stopDefault">더보기</a>
+                    <em>1,480,039</em>
+
+
+
+                </div>
+                <div class="category_layer" id="CategoryLayer" style="display:none;">
+                    <h3 class="blind">카테고리 목록</h3>
+                    <ul>
+                        <li><a href="#">게임</a></li>
+                        <li><a href="#">여행</a></li>
+                        <li><strong>가족·육아</strong></li>
+                        <li><a href="#">게임</a></li>
+                        <li><a href="#">여행</a></li>
+                        <li><a href="#">가족·육아</a></li>
+                        <li><a href="#">게임</a></li>
+                        <li><a href="#">여행</a></li>
+                        <li><a href="#">가족·육아</a></li>
+                        <li><a href="#">게임</a></li>
+                        <li><a href="#">여행</a></li>
+                        <li><a href="#">가족·육아</a></li>
+                    </ul>
+                </div>
+                <div class="list_order">
+                    <h4 class="blind">대표 카페</h4>
+                    <ul class="bg_tab_categorylist" role="tablist">
+
+                        <li class="t1  _PC" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|SelectType|PC) _stopDefault N=a:cnt_thm.keycafe,t:1">대표 카페</a></li>
+
+                        <li class="t2  _AT" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|SelectType|AT) _stopDefault N=a:cnt_thm.rank,t:1">랭킹 Top 100</a></li>
+                        <li class="t3 on _AR" role="tab" aria-selected="true"><a href="#" class="_click(CategoryCafe|SelectType|AR) _stopDefault N=a:cnt_thm.hot,t:1">급상승 Top 100</a></li>
+                        <li class="t4 _AC" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|SelectType|AC) _stopDefault N=a:cnt_thm.all">전체</a></li>
+                    </ul>
+                    <ul class="sorting">
+
+
+                        <li class="t1"><a href="#" class="_3 _click(CategoryCafe|SelectSortType|3) _stopDefault N=a:cnt_thm.bymember,t:1">멤버</a></li>
+                        <li class="t2"><a href="#" class="_4 _click(CategoryCafe|SelectSortType|4) _stopDefault N=a:cnt_thm.byarticle,t:1">게시글</a></li>
+                        <li class="t4"><a href="#" class="_1 on _click(CategoryCafe|SelectSortType|1) _stopDefault N=a:cnt_thm.byrankup,t:1">상승폭</a></li>
+
+
+
+                    </ul>
+                </div>
+                <div id="CategoryLoadingImageLayer" style="display:block;z-index:1000;position:absolute;top:335px;left:395px" >
+                    <img height="40" width="40" alt="로딩중" src="http://cafeimgs.naver.net/img/section/loading.gif"/>
+                </div>
+                <div id="CategoryCafeHideArea" style="visibility:hidden">
+                    <ul id="ListArea" class="list ranking2"  style="display:block;">
+
+
+                        <li class="fc">
+                            <div class="thmb_cafe_ty1 cafe_thumb_32">
+                                <a href="http://cafe.naver.com/shadowversekorea" target="_blank">
+                                    <img src="http://cafeptthumb4.phinf.naver.net/MjAxNjEyMTdfOSAg/MDAxNDgxOTAyMzE4ODk2.FNgIaPKuFRFODNcd5AffFwkZ1nuCac80LSeOSHmFEkIg._dLdD9FiaEsTxHvGdxa3dJYs4m1YZ5PHfka21b3-l1Qg.PNG.handyblog/game_icon.PNG?type=f40_40_mask" width="32" height="32" alt="카페아이콘"
+                                    />
+                                    <span class="border"></span>
+                                </a>
+                            </div>
+                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/shadowversekorea" target="_blank" title="섀도우버스 공식 카페" style="width:315px">섀도우버스 공식 카페</a>
+
+                                <i class="icon_offgame">공식게임카페</i>
+
+                            </h5>
+                            <p class="ellipsis" title="리얼 판타지 블록버스터 섀도우버스 한국 공식 카페 입니다." style="width:345px">리얼 판타지 블록버스터 섀도우버스 한국 공식 카페 입니다.&nbsp;</p>
+
+                            <dl class="option">
+
+                                <dt class="blind">랭킹</dt>
+                                <dd class="level"><span>새싹3단계</span> (<span class="up">증가</span><em>762,156</em>)</dd>
+
+                                <dt class="manager">매니저</dt>
+                                <dd class="manager"><span class="gray05 ellipsis">섀도우버스</span></dd>
+                                <dt class="since">since</dt>
+                                <dd class="since">2016.12.17.</dd>
+                            </dl>
+
+                            <dl class="count">
+                                <dt class="member">멤버수</dt>
+                                <dd class="member">34,652</dd>
+                                <dt class="board">게시글</dt>
+                                <dd class="board">78,542</dd>
+                                <dt class="new">New</dt>
+                                <dd class="new">4,222</dd>
+                            </dl>
+                        </li>
+
+
+                        <li >
+                            <div class="thmb_cafe_ty1 cafe_thumb_32">
+                                <a href="http://cafe.naver.com/lostsagasecond" target="_blank">
+                                    <img src="http://cafeptthumb4.phinf.naver.net/MjAxNzAyMDVfNTIg/MDAxNDg2MjI0OTI3MTQx.FTApsqcHBtrputXpZSieW8fI0d1qxz1HZ9CtG169c50g.FjiVvuO8NTxNRK57dMhAm7MMxf0zLhuIvua3JtOqRF8g.JPEG.qkrrjsgk45/externalFile.jpg?type=f40_40_mask" width="32" height="32" alt="카페아이콘"/>
+                                    <span class="border"></span>
+                                </a>
+                            </div>
+                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/lostsagasecond" target="_blank" title="로스트사가 타임게이트" style="width:315px">로스트사가 타임게이트</a>
+
+
+
+                            </h5>
+                            <p class="ellipsis" title="로스트사가를 위한 커뮤니티 카페입니다." style="width:345px">로스트사가를 위한 커뮤니티 카페입니다.&nbsp;</p>
+
+                            <dl class="option">
+
+                                <dt class="blind">랭킹</dt>
+                                <dd class="level"><span>씨앗3단계</span> (<span class="up">증가</span><em>220,974</em>)</dd>
+
+                                <dt class="manager">매니저</dt>
+                                <dd class="manager"><span class="gray05 ellipsis">BUILDWATER</span></dd>
+                                <dt class="since">since</dt>
+                                <dd class="since">2017.02.03.</dd>
+                            </dl>
+
+                            <dl class="count">
+                                <dt class="member">멤버수</dt>
+                                <dd class="member">1,850</dd>
+                                <dt class="board">게시글</dt>
+                                <dd class="board">12,770</dd>
+                                <dt class="new">New</dt>
+                                <dd class="new">891</dd>
+                            </dl>
+                        </li>
+
+
+                        <li >
+                            <div class="thmb_cafe_ty1 cafe_thumb_32">
+                                <a href="http://cafe.naver.com/longtubsg" target="_blank">
+                                    <img src="http://cafeptthumb3.phinf.naver.net/MjAxNzAxMDRfMjYw/MDAxNDgzNTI2NTUxODQ3.Zh1kDZPZOHgm5k3MVYMh9xdJ09FAhqtBEkrtV1QRfykg.H8pb-Et30HUskp7W0zbyibM39s1E1Lkv2aOKw_2cFe4g.PNG.longtukorea1/cafe_icon_150150_010417_kbe.png?type=f40_40_mask" width="32" height="32" alt="카페아이콘" />
+                                    <span class="border"></span>
+                                </a>
+                            </div>
+                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/longtubsg" target="_blank" title="강철소녀 공식카페" style="width:315px">강철소녀 공식카페</a>
+
+                                <i class="icon_offgame">공식게임카페</i>
+
+                            </h5>
+                            <p class="ellipsis" title="강철소녀 공식카페 입니다." style="width:345px">강철소녀 공식카페 입니다.&nbsp;</p>
+
+                            <dl class="option">
+
+                                <dt class="blind">랭킹</dt>
+                                <dd class="level"><span>새싹3단계</span> (<span class="up">증가</span><em>97,983</em>)</dd>
+
+                                <dt class="manager">매니저</dt>
+                                <dd class="manager"><span class="gray05 ellipsis">GM함장</span></dd>
+                                <dt class="since">since</dt>
+                                <dd class="since">2016.12.02.</dd>
+                            </dl>
+
+                            <dl class="count">
+                                <dt class="member">멤버수</dt>
+                                <dd class="member">8,419</dd>
+                                <dt class="board">게시글</dt>
+                                <dd class="board">8,440</dd>
+                                <dt class="new">New</dt>
+                                <dd class="new">616</dd>
+                            </dl>
+                        </li>
+
+
+                        <li >
+                            <div class="thmb_cafe_ty1 cafe_thumb_32">
+                                <a href="http://cafe.naver.com/headapji" target="_blank">
+                                    <img src="http://cafeptthumb3.phinf.naver.net/20160713_251/lovepooh30_1468338544135Nd5xV_JPEG/5.jpg?type=f40_40_mask" width="32" height="32" alt="카페아이콘"
+                                         onerror="this.onerror=null;this.src='http://static.naver.net/cafe/thumb/cafe_thumb_noimg_32.png';" />
+                                    <span class="border"></span>
+                                </a>
+                            </div>
+                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/headapji" target="_blank" title="포공카-포켓몬GO,포켓몬,추천,포켓몬고,POKEMON,포켓몬위치,한국" style="width:315px">포공카-포켓몬GO,포켓몬,추천,포켓몬고,POKEMON,포켓몬위치,한국</a>
+
+
+
+                            </h5>
+                            <p class="ellipsis" title="포켓몬GO,포켓몬고,포켓몬GO카페,카페,,POKEMONGO,메뉴얼,설명서,테크트리,커뮤니티,포켓몬스터,공식" style="width:345px">포켓몬GO,포켓몬고,포켓몬GO카페,카페,,POKEMONGO,메뉴얼,설명서,테크트리,커뮤니티,포켓몬스터,공식&nbsp;</p>
+
+                            <dl class="option">
+
+                                <dt class="blind">랭킹</dt>
+                                <dd class="level"><span>숲</span> (<span class="up">증가</span><em>97,228</em>)</dd>
+
+                                <dt class="manager">매니저</dt>
+                                <dd class="manager"><span class="gray05 ellipsis">포공카</span></dd>
+                                <dt class="since">since</dt>
+                                <dd class="since">2012.02.12.</dd>
+                            </dl>
+
+                            <dl class="count">
+                                <dt class="member">멤버수</dt>
+                                <dd class="member">164,914</dd>
+                                <dt class="board">게시글</dt>
+                                <dd class="board">312,066</dd>
+                                <dt class="new">New</dt>
+                                <dd class="new">3,513</dd>
+                            </dl>
+                        </li>
+
+
+                        <li >
+                            <div class="thmb_cafe_ty1 cafe_thumb_32">
+                                <a href="http://cafe.naver.com/wooparoomountain" target="_blank">
+                                    <img src="http://cafeptthumb2.phinf.naver.net/MjAxNzAyMDNfMzQg/MDAxNDg2MDg3MTU5OTMy.zkgq_XVdNHJFB7LGSJPEjxVQJiwiz5ItkxI5RUUL0oUg.DGQbld8hcAgE8c0iF5bD7zDZi3WTPC70fbxkNL5hOHIg.PNG.nv_roopa/iOS6_1024x1024_kakao.png?type=f40_40_mask" width="32" height="32" alt="카페아이콘"
+                                         onerror="this.onerror=null;this.src='http://static.naver.net/cafe/thumb/cafe_thumb_noimg_32.png';" />
+                                    <span class="border"></span>
+                                </a>
+                            </div>
+                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/wooparoomountain" target="_blank" title="우파루마운틴 공식카페, 우파루 마을" style="width:315px">우파루마운틴 공식카페, 우파루 마을</a>
+
+                                <i class="icon_offgame">공식게임카페</i>
+
+                            </h5>
+                            <p class="ellipsis" title="귀요미 우파루들의 좌충우돌 성장 이야기! 스마트폰 소셜게임 &amp;lt;우파루 마운틴&amp;gt; 공식카페입니다.^^" style="width:345px">귀요미 우파루들의 좌충우돌 성장 이야기! 스마트폰 소셜게임 &lt;우파루 마운틴&gt; 공식카페입니다.^^&nbsp;</p>
+
+                            <dl class="option">
+
+                                <dt class="blind">랭킹</dt>
+                                <dd class="level"><span>숲</span> (<span class="up">증가</span><em>70,545</em>)</dd>
+
+                                <dt class="manager">매니저</dt>
+                                <dd class="manager"><span class="gray05 ellipsis">공식우파루마운틴</span></dd>
+                                <dt class="since">since</dt>
+                                <dd class="since">2012.11.27.</dd>
+                            </dl>
+
+                            <dl class="count">
+                                <dt class="member">멤버수</dt>
+                                <dd class="member">165,901</dd>
+                                <dt class="board">게시글</dt>
+                                <dd class="board">446,885</dd>
+                                <dt class="new">New</dt>
+                                <dd class="new">243</dd>
+                            </dl>
+                        </li>
+
+
+                        <li >
+                            <div class="thmb_cafe_ty1 cafe_thumb_32">
+                                <a href="http://cafe.naver.com/crashfever" target="_blank">
+                                    <img src="http://cafeptthumb3.phinf.naver.net/MjAxNjExMDFfNTgg/MDAxNDc3OTkxMDc3NjQx.mwNwPE8N3kY_4TJIPi2ICcwx7M41gEFdO5x7Fpr8Svgg.e78sntRcNEGHrub7e2OVB55gA8FuzqBTCNAhtAfT18og.PNG.igs_inc/icon.png?type=f40_40_mask" width="32" height="32" alt="카페아이콘"
+                                         onerror="this.onerror=null;this.src='http://static.naver.net/cafe/thumb/cafe_thumb_noimg_32.png';" />
+                                    <span class="border"></span>
+                                </a>
+                            </div>
+                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/crashfever" target="_blank" title="크래시피버 공식 카페" style="width:315px">크래시피버 공식 카페</a>
+
+                                <i class="icon_offgame">공식게임카페</i>
+
+                            </h5>
+                            <p class="ellipsis" title="CRASH FEVER 공식카페입니다. 환영합니다. &amp;#726;&amp;#10023;&amp;#9693;(&amp;#8304;&amp;#9663;&amp;#8304;)&amp;#9692;&amp;#10023;&amp;" style="width:345px">CRASH FEVER 공식카페입니다. 환영합니다.</p>
+
+                            <dl class="option">
+
+                                <dt class="blind">랭킹</dt>
+                                <dd class="level"><span>잎새5단계</span> (<span class="up">증가</span><em>61,789</em>)</dd>
+
+                                <dt class="manager">매니저</dt>
+                                <dd class="manager"><span class="gray05 ellipsis">GM앨리스</span></dd>
+                                <dt class="since">since</dt>
+                                <dd class="since">2016.11.01.</dd>
+                            </dl>
+
+                            <dl class="count">
+                                <dt class="member">멤버수</dt>
+                                <dd class="member">6,907</dd>
+                                <dt class="board">게시글</dt>
+                                <dd class="board">16,189</dd>
+                                <dt class="new">New</dt>
+                                <dd class="new">584</dd>
+                            </dl>
+                        </li>
+
+
+                        <li >
+                            <div class="thmb_cafe_ty1 cafe_thumb_32">
+                                <a href="http://cafe.naver.com/lunatichaifan" target="_blank">
+                                    <img src="http://cafeptthumb4.phinf.naver.net/20160820_112/jgps020119_1471675632323HjdEe_JPEG/1.jpg?type=f40_40_mask" width="32" height="32" alt="카페아이콘"
+                                         onerror="this.onerror=null;this.src='http://static.naver.net/cafe/thumb/cafe_thumb_noimg_32.png';" />
+                                    <span class="border"></span>
+                                </a>
+                            </div>
+                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/lunatichaifan" target="_blank" title="오버워치 프로팀 루나틱하이 공식 팬카페" style="width:315px">오버워치 프로팀 루나틱하이 공식 팬카페</a>
+
+
+
+                            </h5>
+                            <p class="ellipsis" title="오버워치 프로팀 루나틱하이 팬카페입니다." style="width:345px">오버워치 프로팀 루나틱하이 팬카페입니다.&nbsp;</p>
+
+                            <dl class="option">
+
+                                <dt class="blind">랭킹</dt>
+                                <dd class="level"><span>열매5단계</span> (<span class="up">증가</span><em>56,872</em>)</dd>
+
+                                <dt class="manager">매니저</dt>
+                                <dd class="manager"><span class="gray05 ellipsis">뇽이</span></dd>
+                                <dt class="since">since</dt>
+                                <dd class="since">2016.08.20.</dd>
+                            </dl>
+
+                            <dl class="count">
+                                <dt class="member">멤버수</dt>
+                                <dd class="member">8,965</dd>
+                                <dt class="board">게시글</dt>
+                                <dd class="board">6,349</dd>
+                                <dt class="new">New</dt>
+                                <dd class="new">109</dd>
+                            </dl>
+                        </li>
+
+
+
+
+                    </ul>
+
+
+
+
+                    <p class="txt_cate_nolist3">선택하신 디렉토리에는 급상승 Top100 카페가 없습니다.</p>
+
+                </div>
+
+                <div id="PageArea" class="more_view" style="display:block;">
+
+
+                    <a href="#" class="btn_view N=a:cnt_thm.morecafe,t:1 _click(CategoryCafe|ListMore) _stopDefault">카페리스트 더보기</a>
+
+
+
+                    <a href="#" class="btn_up _click(CategoryCafe|FocusTop) _stopDefault N=a:cnt_thm.top">위로</a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- aside -->
+    <div id="aside" class="aside" role="complementary">
+
+        <div class="login">
+            <h2 class="blind"><a id="account_h" name="account_h" href="#account_h">로그인</a></h2>
+            <div class="btn_login">
+                <div class="bl_inner">
+                    <a href="https://nid.naver.com/nidlogin.login?url=http://section.cafe.naver.com" class="bl_btn">NAVER 로그인</a>
+                    <div class="find_info">
+                        <a href="https://nid.naver.com/user2/help/idInquiry.nhn?menu=idinquiry" class="btn_id">아이디 찾기</a><span class="vt">|</span><a href="https://nid.naver.com/user2/help/pwInquiry.nhn?menu=pwinquiry" class="btn_pw">비밀번호 찾기</a>
+                        <a href="https://nid.naver.com/nidregister.form" class="btn_join">회원가입</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="cafemake">
+
+
+
+            <a href="#" class="_click(CafeSection|CafeCreate|true) N=a:cst.make _stopDefault"><img src="http://cafeimgs.naver.net/img/section/btn_cafemake_20150623.gif" width="250" height="42" alt="카페 만들기"/></a>
+
+
+
+            <div id="_AppInstall" class="cafemake_sublink_wrap">
+                <a href="/CafeWhitePaper.nhn" class="N=a:LNB.appbook cafemake_sublink">카페앱 백서</a>
+
+            </div>
+        </div>
+        <div id="denyNamelessLayer" class="cafetype_layer2" style="width:356px;top:15px;left:0px; display:none;">
+            <img src="http://cafeimgs.naver.net/img/realname/ico_layer.gif" width="25" height="24" alt=""/>
+            <h3>카페 만들기는 실명 확인 회원만 사용 가능 합니다.</h3>
+            <p class="layer_txt">카페를 만드시려면 실명 확인을 해주세요.</p>
+            <div class="btn_box">
+                <a href="#" class="_click(LayerManager|CloseLayer|denyNamelessLayer) _stopDefault"><img src="http://cafeimgs.naver.net/img/realname/btn_clse_lay.gif" width="47" height="26" alt="닫기"/></a> <a href="#" class="_click(CafeSection|ToCertPage) _stopDefault"><img src="http://cafeimgs.naver.net/img/realname/btn_cfm_lay.gif" width="105" height="26" alt="실명 확인 하기"/></a>
+            </div>
+            <a href="#" class="btn_close _click(LayerManager|CloseLayer|denyNamelessLayer) _stopDefault"><img src="http://cafeimgs.naver.net/img/btn_close_layer3.gif" width="19" height="19" alt="닫기"/></a>
+        </div>
+
+        <div id="cafeNoticeSideArea" class="notice" >
+            <h2><img height="11" width="94" alt="카페서비스 공지사항" src="http://cafeimgs.naver.net/img/section/h_service_notice.gif"/></h2>
+            <ul>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030651437" class="ellipsis N=a:not.list,r:1" style="width: 225px;"><strong>[안내] 네이버페이 안전거래 사칭 사기에 주의하세요!</strong></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030651193" class="ellipsis N=a:not.list,r:2" style="width: 225px;"><em>[안내] 멸종위기 야생생물 보호 당부</em></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030650304" class="ellipsis N=a:not.list,r:3" style="width: 225px;"><strong>[안내] 매니저 위임/취소 시 본인 인증 방식 개선</strong></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030650130" class="ellipsis N=a:not.list,r:4" style="width: 225px;"><strong>[안내] 모바일 동영상 웹플레이어 개선</strong></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030651273" class="ellipsis N=a:not.list,r:5" style="width: 225px;"><em>[안내] 2월 9일 카페서비스 점검 공지</em></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030649860" class="ellipsis N=a:not.list,r:6" style="width: 225px;"><strong>[예고] 2/7 동맹카페 종료 안내</strong></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030649635" class="ellipsis N=a:not.list,r:7" style="width: 225px;"><em>[안내] 해피빈 '행복한 약속 배너' 캠페인 종료 안내</em></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030649365" class="ellipsis N=a:not.list,r:8" style="width: 225px;"><em>[안내] embed 및 object 태그 제한 안내</em></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030648571" class="ellipsis N=a:not.list,r:9" style="width: 225px;"><em>[안내] 전자상거래 사기피해 긴급구제 신청 안내</em></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030634325" class="ellipsis N=a:not.list,r:10" style="width: 225px;"><em> [안내] 상거래 목적 카페 운영시 사업자 정보 표시 안내</em></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030516751" class="ellipsis N=a:not.list,r:11" style="width: 225px;"><em>[안내] 광고성정보 전달에 대한 주의 당부</em></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000029941608" class="ellipsis N=a:not.list,r:12" style="width: 225px;"><em>[안내] 추천/보증 등에 관한 심사지침</em></a></li>
+
+                <li><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000024450244" class="ellipsis N=a:not.list,r:13" style="width: 225px;"><em>[안내] 상업활동 시 준수해야 할 사항</em></a></li>
+
+            </ul>
+            <a href="/SectionNoticeList.nhn" class="btn_more N=a:not.more" title="카페서비스 공지사항 더보기">더보기</a>
+        </div>
+        <div id="cafeSupportSideArea" class="notice">
+            <h2><img src="http://cafeimgs.naver.net/img/section/h_center_notice.gif" width="105" height="11" alt="카페지원센터 공지사항"/></h2>
+            <ul>
+
+                <li><a href="http://cafe.naver.com/cafesupport/112944" target="_blank" class="ellipsis N=a:not.slist,r:1" style="width: 225px;">[발표] 2월 카페 창작활동 지원</a></li>
+
+                <li><a href="http://cafe.naver.com/cafesupport/112585" target="_blank" class="ellipsis N=a:not.slist,r:2" style="width: 225px;">[발표] 2월 정모지원</a></li>
+
+                <li><a href="http://section.cafe.naver.com/OurCafeEventSupport.nhn" target="_blank" class="ellipsis N=a:not.slist,r:3" style="width: 225px;">[안내] 우리 카페 행사 지원</a></li>
+
+                <li><a href="http://cafe.naver.com/cafesupport/35016" target="_blank" class="ellipsis N=a:not.slist,r:4" style="width: 225px;">[안내] 카페 정모 기념품 지원</a></li>
+
+                <li><a href="http://cafe.naver.com/cafesupport/35017" target="_blank" class="ellipsis N=a:not.slist,r:5" style="width: 225px;">[안내] 카페 맛있는 파티 지원</a></li>
+
+            </ul>
+        </div>
+        <div id="cafeReportSideArea" class="report">
+            <a href="https://help.naver.com/support/reportCenter/home.nhn" class="btn_rpt _click(CafeSection|OpenHelpPopup) _stopDefault" target="_blank">신고센터</a>
+        </div>
+    </div>
+    <!-- //aside -->
+</div>
 </body>
 </html>
