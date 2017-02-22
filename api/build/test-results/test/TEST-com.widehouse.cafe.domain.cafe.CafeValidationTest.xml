@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.widehouse.cafe.domain.cafe.CafeValidationTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2017-02-22T01:12:08" hostname="Kiel-MBP-2.fios-router.home" time="0.112">
+  <properties/>
+  <testcase name="NumericCafeUrl_Should_Violated" classname="com.widehouse.cafe.domain.cafe.CafeValidationTest" time="0.057"/>
+  <testcase name="AlphanumericunderscoreCafeUrl_Should_Validate" classname="com.widehouse.cafe.domain.cafe.CafeValidationTest" time="0.018"/>
+  <testcase name="BeginWithNumericCafeUrl_Should_Violated" classname="com.widehouse.cafe.domain.cafe.CafeValidationTest" time="0.018"/>
+  <testcase name="SpaceCafeUrl_Should_Violated" classname="com.widehouse.cafe.domain.cafe.CafeValidationTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

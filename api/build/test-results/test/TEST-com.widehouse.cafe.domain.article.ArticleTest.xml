@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.widehouse.cafe.domain.article.ArticleTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2017-02-22T01:12:06" hostname="Kiel-MBP-2.fios-router.home" time="0.02">
+  <properties/>
+  <testcase name="descreaseCommentCount_Should_DescreaseCommentCountBy1" classname="com.widehouse.cafe.domain.article.ArticleTest" time="0.013"/>
+  <testcase name="modifyArticle_should_update_article" classname="com.widehouse.cafe.domain.article.ArticleTest" time="0.005"/>
+  <testcase name="writeArticle_should_create_article" classname="com.widehouse.cafe.domain.article.ArticleTest" time="0.001"/>
+  <testcase name="moveBoard_should_update_board" classname="com.widehouse.cafe.domain.article.ArticleTest" time="0.0"/>
+  <testcase name="increaseCommentCount_Should_IncreaseCommentCountBy1" classname="com.widehouse.cafe.domain.article.ArticleTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

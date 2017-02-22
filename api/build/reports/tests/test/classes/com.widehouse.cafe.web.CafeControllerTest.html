@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class com.widehouse.cafe.web.CafeControllerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class com.widehouse.cafe.web.CafeControllerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.widehouse.cafe.web.html">com.widehouse.cafe.web</a> &gt; CafeControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">2</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.048s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">getCafeById_Should_CafeInfo</td>
+<td>0.036s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getCafeByUrl_Should_CafeInfo</td>
+<td>0.012s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2017-02-21 20:12:26.797  INFO 30607 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.widehouse.cafe.web.CafeControllerTest], using SpringBootContextLoader
+2017-02-21 20:12:26.798  INFO 30607 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.widehouse.cafe.web.CafeControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2017-02-21 20:12:26.798  INFO 30607 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.widehouse.cafe.web.CafeControllerTest]: CafeControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2017-02-21 20:12:26.821  INFO 30607 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.widehouse.cafe.CafeApplication for test class com.widehouse.cafe.web.CafeControllerTest
+2017-02-21 20:12:26.824  INFO 30607 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2017-02-21 20:12:26.827  INFO 30607 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@4ed59078, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@15646e8b, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@5b3d38fb, org.springframework.test.context.support.DirtiesContextTestExecutionListener@28a51df, org.springframework.test.context.transaction.TransactionalTestExecutionListener@60be57a6, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@56987d0c, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@64d06dc4, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@3484dc28, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@2615ae79, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@33f0c7aa, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@5429225d, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@46dec16c]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.5.1.RELEASE)
+
+2017-02-21 20:12:26.893  INFO 30607 --- [    Test worker] c.widehouse.cafe.web.CafeControllerTest  : Starting CafeControllerTest on Kiel-MBP-2.fios-router.home with PID 30607 (started by kiel in /Users/kiel/Development/workspace/cafe/api)
+2017-02-21 20:12:26.893 DEBUG 30607 --- [    Test worker] c.widehouse.cafe.web.CafeControllerTest  : Running with Spring Boot v1.5.1.RELEASE, Spring v4.3.6.RELEASE
+2017-02-21 20:12:26.894  INFO 30607 --- [    Test worker] c.widehouse.cafe.web.CafeControllerTest  : No active profile set, falling back to default profiles: default
+2017-02-21 20:12:26.899  INFO 30607 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@395bee35: startup date [Tue Feb 21 20:12:26 EST 2017]; root of context hierarchy
+2017-02-21 20:12:27.423  INFO 30607 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration' of type [class org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2017-02-21 20:12:27.435  INFO 30607 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'validator' of type [class org.springframework.validation.beanvalidation.LocalValidatorFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2017-02-21 20:12:27.674  INFO 30607 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@395bee35: startup date [Tue Feb 21 20:12:26 EST 2017]; root of context hierarchy
+2017-02-21 20:12:27.689  INFO 30607 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;{[],methods=[GET],params=[id]}&quot; onto public com.widehouse.cafe.domain.cafe.Cafe com.widehouse.cafe.web.CafeController.getCafeById(java.lang.Long)
+2017-02-21 20:12:27.690  INFO 30607 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;{[/cafes/{cafeUrl}],methods=[GET]}&quot; onto public com.widehouse.cafe.domain.cafe.Cafe com.widehouse.cafe.web.CafeController.getCafeByUrl(java.lang.String)
+2017-02-21 20:12:27.691  INFO 30607 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;{[/error]}&quot; onto public org.springframework.http.ResponseEntity&lt;java.util.Map&lt;java.lang.String, java.lang.Object&gt;&gt; org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2017-02-21 20:12:27.691  INFO 30607 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;{[/error],produces=[text/html]}&quot; onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2017-02-21 20:12:27.709  INFO 30607 --- [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-02-21 20:12:27.709  INFO 30607 --- [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-02-21 20:12:27.739  INFO 30607 --- [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-02-21 20:12:27.798  INFO 30607 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring FrameworkServlet ''
+2017-02-21 20:12:27.798  INFO 30607 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : FrameworkServlet '': initialization started
+2017-02-21 20:12:27.813  INFO 30607 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : FrameworkServlet '': initialization completed in 15 ms
+2017-02-21 20:12:27.902  INFO 30607 --- [    Test worker] c.widehouse.cafe.web.CafeControllerTest  : Started CafeControllerTest in 1.067 seconds (JVM running for 33.254)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 3.3</a> at 2017. 2. 21 오후 8:12:35</p>
+</div>
+</div>
+</body>
+</html>

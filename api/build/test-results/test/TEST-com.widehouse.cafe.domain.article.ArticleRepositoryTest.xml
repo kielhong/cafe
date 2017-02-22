@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.widehouse.cafe.domain.article.ArticleRepositoryTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-02-22T01:12:05" hostname="Kiel-MBP-2.fios-router.home" time="0.522">
+  <properties/>
+  <testcase name="findByCafe_Should_Return_ListArticle" classname="com.widehouse.cafe.domain.article.ArticleRepositoryTest" time="0.45"/>
+  <testcase name="findByBoard_Should_Return_ListArticle" classname="com.widehouse.cafe.domain.article.ArticleRepositoryTest" time="0.069"/>
+  <system-out><![CDATA[20:11:56.402 [Test worker] DEBUG org.springframework.test.context.junit4.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class com.widehouse.cafe.domain.article.ArticleRepositoryTest]
+20:11:56.420 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+20:11:56.452 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+20:11:56.506 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.widehouse.cafe.domain.article.ArticleRepositoryTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+20:11:56.568 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.widehouse.cafe.domain.article.ArticleRepositoryTest], using SpringBootContextLoader
+20:11:56.580 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]: class path resource [com/widehouse/cafe/domain/article/ArticleRepositoryTest-context.xml] does not exist
+20:11:56.581 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]: class path resource [com/widehouse/cafe/domain/article/ArticleRepositoryTestContext.groovy] does not exist
+20:11:56.582 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+20:11:56.594 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]: ArticleRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:11:56.776 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]
+20:11:56.797 [Test worker] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemProperties] PropertySource with lowest search precedence
+20:11:56.798 [Test worker] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemEnvironment] PropertySource with lowest search precedence
+20:11:56.798 [Test worker] DEBUG org.springframework.core.env.StandardEnvironment - Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+20:11:56.825 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved classpath location [com/widehouse/cafe/domain/article/] to resources [URL [file:/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain/article/], URL [file:/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain/article/]]
+20:11:56.826 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain/article]
+20:11:56.827 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain/article] for files matching pattern [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain/article/*.class]
+20:11:56.833 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain/article]
+20:11:56.834 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain/article] for files matching pattern [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain/article/*.class]
+20:11:56.835 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved location pattern [classpath*:com/widehouse/cafe/domain/article/*.class] to resources [file [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain/article/ArticleRepositoryTest.class], file [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain/article/ArticleTest.class], file [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain/article/CommentRepositoryTest.class], file [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain/article/CommentTest.class], file [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain/article/Article.class], file [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain/article/ArticleRepository.class], file [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain/article/Comment.class], file [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain/article/CommentRepository.class]]
+20:11:56.917 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved classpath location [com/widehouse/cafe/domain/] to resources [URL [file:/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain/], URL [file:/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain/]]
+20:11:56.918 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain]
+20:11:56.918 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain] for files matching pattern [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/domain/*.class]
+20:11:56.919 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain]
+20:11:56.919 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain] for files matching pattern [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/domain/*.class]
+20:11:56.920 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved location pattern [classpath*:com/widehouse/cafe/domain/*.class] to resources []
+20:11:56.921 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved classpath location [com/widehouse/cafe/] to resources [URL [file:/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/], URL [file:/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/]]
+20:11:56.922 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe]
+20:11:56.922 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe] for files matching pattern [/Users/kiel/Development/workspace/cafe/api/build/classes/test/com/widehouse/cafe/*.class]
+20:11:56.923 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe]
+20:11:56.923 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe] for files matching pattern [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/*.class]
+20:11:56.928 [Test worker] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved location pattern [classpath*:com/widehouse/cafe/*.class] to resources [file [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/CafeApplication.class]]
+20:11:56.977 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/Users/kiel/Development/workspace/cafe/api/build/classes/main/com/widehouse/cafe/CafeApplication.class]
+20:11:56.979 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.widehouse.cafe.CafeApplication for test class com.widehouse.cafe.domain.article.ArticleRepositoryTest
+20:11:56.987 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]: using defaults.
+20:11:56.993 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+20:11:57.061 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@7d04f4a5, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@2c91b072, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@6d80b99b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@41f72090, org.springframework.test.context.transaction.TransactionalTestExecutionListener@1b8c55d7, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@3a3f74f4, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@529b5e49, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@2a90172a, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@534bdd42, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@12128b0b, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@1a73f616, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@30f09b35]
+20:11:57.069 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]
+20:11:57.070 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]
+20:11:57.072 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]
+20:11:57.073 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]
+20:11:57.086 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@22d0ccd9 testClass = ArticleRepositoryTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@ee36470 testClass = ArticleRepositoryTest, locations = '{}', classes = '{class com.widehouse.cafe.CafeApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@1a744428 key = [Package Import com.widehouse.cafe.domain.article, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7c5b372f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@56a10d0, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@50992f1b, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@16c5f4c9], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]], class annotated with @DirtiesContext [false] with mode [null].
+20:11:57.089 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]
+20:11:57.089 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.widehouse.cafe.domain.article.ArticleRepositoryTest]
+20:11:57.093 [Test worker] DEBUG org.springframework.test.context.support.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@22d0ccd9 testClass = ArticleRepositoryTest, testInstance = com.widehouse.cafe.domain.article.ArticleRepositoryTest@26eb363c, testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@ee36470 testClass = ArticleRepositoryTest, locations = '{}', classes = '{class com.widehouse.cafe.CafeApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@1a744428 key = [Package Import com.widehouse.cafe.domain.article, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7c5b372f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@56a10d0, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@50992f1b, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@16c5f4c9], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]]].
+20:11:57.257 [Test worker] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemProperties] PropertySource with lowest search precedence
+20:11:57.257 [Test worker] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemEnvironment] PropertySource with lowest search precedence
+20:11:57.257 [Test worker] DEBUG org.springframework.core.env.StandardEnvironment - Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+20:11:57.260 [Test worker] DEBUG org.springframework.core.env.MutablePropertySources - Adding [inline] PropertySource with highest search precedence
+20:11:57.276 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=-1}
+20:11:57.277 [Test worker] DEBUG org.springframework.core.env.StandardEnvironment - Adding [Inlined Test Properties] PropertySource with highest search precedence
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.5.1.RELEASE)
+
+2017-02-21 20:11:58.338  INFO 30607 --- [    Test worker] c.w.c.d.article.ArticleRepositoryTest    : Starting ArticleRepositoryTest on Kiel-MBP-2.fios-router.home with PID 30607 (started by kiel in /Users/kiel/Development/workspace/cafe/api)
+2017-02-21 20:11:58.340 DEBUG 30607 --- [    Test worker] c.w.c.d.article.ArticleRepositoryTest    : Running with Spring Boot v1.5.1.RELEASE, Spring v4.3.6.RELEASE
+2017-02-21 20:11:58.341  INFO 30607 --- [    Test worker] c.w.c.d.article.ArticleRepositoryTest    : No active profile set, falling back to default profiles: default
+2017-02-21 20:11:58.389  INFO 30607 --- [    Test worker] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@46feebd: startup date [Tue Feb 21 20:11:58 EST 2017]; root of context hierarchy
+2017-02-21 20:12:00.033  INFO 30607 --- [    Test worker] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2017-02-21 20:12:00.034  INFO 30607 --- [    Test worker] o.s.b.f.s.DefaultListableBeanFactory     : Overriding bean definition for bean 'dataSource' with a different definition: replacing [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Tomcat; factoryMethodName=dataSource; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Tomcat.class]] with [Root bean: class [org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration$EmbeddedDataSourceFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null]
+2017-02-21 20:12:00.036  WARN 30607 --- [    Test worker] o.s.c.a.ConfigurationClassPostProcessor  : Cannot enhance @Configuration bean definition 'embeddedDataSourceBeanFactoryPostProcessor' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2017-02-21 20:12:00.477  INFO 30607 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:a1375fc0-b6c1-4857-b8d8-23482abc49a3;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2017-02-21 20:12:01.757  INFO 30607 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2017-02-21 20:12:01.794  INFO 30607 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2017-02-21 20:12:02.188  INFO 30607 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.11.Final}
+2017-02-21 20:12:02.191  INFO 30607 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2017-02-21 20:12:02.194  INFO 30607 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2017-02-21 20:12:02.291  INFO 30607 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2017-02-21 20:12:02.592  INFO 30607 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2017-02-21 20:12:03.268  INFO 30607 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-21 20:12:03.705  INFO 30607 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-21 20:12:03.708  INFO 30607 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-21 20:12:03.714  INFO 30607 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-21 20:12:03.720  INFO 30607 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-21 20:12:03.722  INFO 30607 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-21 20:12:03.723  INFO 30607 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-21 20:12:04.179  INFO 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000227: Running hbm2ddl schema export
+Hibernate: 
+    alter table article 
+        drop 
+        foreign key FK2y7w132xb5xp1aiouig87aqjo
+2017-02-21 20:12:04.185 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000389: Unsuccessful: alter table article drop foreign key FK2y7w132xb5xp1aiouig87aqjo
+2017-02-21 20:12:04.186 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : Table "ARTICLE" not found; SQL statement:
+
+    alter table article 
+        drop 
+        foreign key FK2y7w132xb5xp1aiouig87aqjo [42102-193]
+Hibernate: 
+    alter table article 
+        drop 
+        foreign key FK5f6cq4n0pw2m9qjvsggq0g8n3
+2017-02-21 20:12:04.187 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000389: Unsuccessful: alter table article drop foreign key FK5f6cq4n0pw2m9qjvsggq0g8n3
+2017-02-21 20:12:04.187 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : Table "ARTICLE" not found; SQL statement:
+
+    alter table article 
+        drop 
+        foreign key FK5f6cq4n0pw2m9qjvsggq0g8n3 [42102-193]
+Hibernate: 
+    alter table article 
+        drop 
+        foreign key FKnb2hbmy476nrjmhb5qa2j3gxl
+2017-02-21 20:12:04.188 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000389: Unsuccessful: alter table article drop foreign key FKnb2hbmy476nrjmhb5qa2j3gxl
+2017-02-21 20:12:04.188 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : Table "ARTICLE" not found; SQL statement:
+
+    alter table article 
+        drop 
+        foreign key FKnb2hbmy476nrjmhb5qa2j3gxl [42102-193]
+Hibernate: 
+    alter table board 
+        drop 
+        foreign key FKb4mbnyvplmrnhrowpmh68vygy
+2017-02-21 20:12:04.189 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000389: Unsuccessful: alter table board drop foreign key FKb4mbnyvplmrnhrowpmh68vygy
+2017-02-21 20:12:04.189 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : Table "BOARD" not found; SQL statement:
+
+    alter table board 
+        drop 
+        foreign key FKb4mbnyvplmrnhrowpmh68vygy [42102-193]
+Hibernate: 
+    alter table cafe 
+        drop 
+        foreign key FK3ogxcjbcw5u4wq5vxswp1q5mw
+2017-02-21 20:12:04.190 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000389: Unsuccessful: alter table cafe drop foreign key FK3ogxcjbcw5u4wq5vxswp1q5mw
+2017-02-21 20:12:04.190 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : Table "CAFE" not found; SQL statement:
+
+    alter table cafe 
+        drop 
+        foreign key FK3ogxcjbcw5u4wq5vxswp1q5mw [42102-193]
+Hibernate: 
+    alter table cafe_member 
+        drop 
+        foreign key FK6wfe3rrg8veu24j9flwp6av7p
+2017-02-21 20:12:04.191 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000389: Unsuccessful: alter table cafe_member drop foreign key FK6wfe3rrg8veu24j9flwp6av7p
+2017-02-21 20:12:04.191 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : Table "CAFE_MEMBER" not found; SQL statement:
+
+    alter table cafe_member 
+        drop 
+        foreign key FK6wfe3rrg8veu24j9flwp6av7p [42102-193]
+Hibernate: 
+    alter table cafe_member 
+        drop 
+        foreign key FKp4vtm2u9e6j1kjkvm7amp2h60
+2017-02-21 20:12:04.192 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000389: Unsuccessful: alter table cafe_member drop foreign key FKp4vtm2u9e6j1kjkvm7amp2h60
+2017-02-21 20:12:04.193 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : Table "CAFE_MEMBER" not found; SQL statement:
+
+    alter table cafe_member 
+        drop 
+        foreign key FKp4vtm2u9e6j1kjkvm7amp2h60 [42102-193]
+Hibernate: 
+    alter table comment 
+        drop 
+        foreign key FK5yx0uphgjc6ik6hb82kkw501y
+2017-02-21 20:12:04.194 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000389: Unsuccessful: alter table comment drop foreign key FK5yx0uphgjc6ik6hb82kkw501y
+2017-02-21 20:12:04.194 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : Table "COMMENT" not found; SQL statement:
+
+    alter table comment 
+        drop 
+        foreign key FK5yx0uphgjc6ik6hb82kkw501y [42102-193]
+Hibernate: 
+    alter table comment 
+        drop 
+        foreign key FKkkdf3y7qctevtw918afg82uw7
+2017-02-21 20:12:04.195 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000389: Unsuccessful: alter table comment drop foreign key FKkkdf3y7qctevtw918afg82uw7
+2017-02-21 20:12:04.195 ERROR 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : Table "COMMENT" not found; SQL statement:
+
+    alter table comment 
+        drop 
+        foreign key FKkkdf3y7qctevtw918afg82uw7 [42102-193]
+Hibernate: 
+    drop table if exists article
+Hibernate: 
+    drop table if exists board
+Hibernate: 
+    drop table if exists cafe
+Hibernate: 
+    drop table if exists cafe_member
+Hibernate: 
+    drop table if exists category
+Hibernate: 
+    drop table if exists comment
+Hibernate: 
+    drop table if exists member
+Hibernate: 
+    create table article (
+        id bigint not null auto_increment,
+        comment_count integer not null,
+        content longtext,
+        create_date_time datetime,
+        title longtext,
+        update_date_time datetime,
+        board_id bigint,
+        cafe_id bigint,
+        writer_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table board (
+        id bigint not null auto_increment,
+        list_order integer not null check (list_order>=1),
+        name varchar(50),
+        cafe_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table cafe (
+        id bigint not null auto_increment,
+        create_date_time datetime,
+        description longtext,
+        name varchar(100),
+        cafe_article_count bigint,
+        cafe_comment_count bigint,
+        cafe_member_count bigint,
+        cafe_visit_count bigint,
+        url varchar(30),
+        visibility integer not null,
+        category_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table cafe_member (
+        join_date datetime,
+        role integer,
+        member_id bigint not null,
+        cafe_id bigint not null,
+        primary key (cafe_id, member_id)
+    )
+Hibernate: 
+    create table category (
+        id bigint not null auto_increment,
+        create_date_time datetime,
+        list_order integer not null,
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table comment (
+        id bigint not null auto_increment,
+        comment longtext,
+        create_date_time datetime,
+        update_date_time datetime,
+        article_id bigint,
+        commenter_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table member (
+        id bigint not null auto_increment,
+        nickname varchar(30),
+        primary key (id)
+    )
+Hibernate: 
+    alter table cafe 
+        add constraint UKit98p4n4mjd3i1642wipaufan unique (url)
+Hibernate: 
+    alter table article 
+        add constraint FK2y7w132xb5xp1aiouig87aqjo 
+        foreign key (board_id) 
+        references board (id)
+Hibernate: 
+    alter table article 
+        add constraint FK5f6cq4n0pw2m9qjvsggq0g8n3 
+        foreign key (cafe_id) 
+        references cafe (id)
+Hibernate: 
+    alter table article 
+        add constraint FKnb2hbmy476nrjmhb5qa2j3gxl 
+        foreign key (writer_id) 
+        references member (id)
+Hibernate: 
+    alter table board 
+        add constraint FKb4mbnyvplmrnhrowpmh68vygy 
+        foreign key (cafe_id) 
+        references cafe (id)
+Hibernate: 
+    alter table cafe 
+        add constraint FK3ogxcjbcw5u4wq5vxswp1q5mw 
+        foreign key (category_id) 
+        references category (id)
+Hibernate: 
+    alter table cafe_member 
+        add constraint FK6wfe3rrg8veu24j9flwp6av7p 
+        foreign key (member_id) 
+        references member (id)
+Hibernate: 
+    alter table cafe_member 
+        add constraint FKp4vtm2u9e6j1kjkvm7amp2h60 
+        foreign key (cafe_id) 
+        references cafe (id)
+Hibernate: 
+    alter table comment 
+        add constraint FK5yx0uphgjc6ik6hb82kkw501y 
+        foreign key (article_id) 
+        references article (id)
+Hibernate: 
+    alter table comment 
+        add constraint FKkkdf3y7qctevtw918afg82uw7 
+        foreign key (commenter_id) 
+        references member (id)
+2017-02-21 20:12:04.288  INFO 30607 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000230: Schema export complete
+2017-02-21 20:12:04.409  INFO 30607 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2017-02-21 20:12:04.504  INFO 30607 --- [    Test worker] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from URL [file:/Users/kiel/Development/workspace/cafe/api/build/resources/main/data.sql]
+2017-02-21 20:12:04.516  INFO 30607 --- [    Test worker] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from URL [file:/Users/kiel/Development/workspace/cafe/api/build/resources/main/data.sql] in 12 ms.
+2017-02-21 20:12:05.044  INFO 30607 --- [    Test worker] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2017-02-21 20:12:05.534  INFO 30607 --- [    Test worker] c.w.c.d.article.ArticleRepositoryTest    : Started ArticleRepositoryTest in 8.25 seconds (JVM running for 10.885)
+2017-02-21 20:12:05.627  INFO 30607 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@22d0ccd9 testClass = ArticleRepositoryTest, testInstance = com.widehouse.cafe.domain.article.ArticleRepositoryTest@26eb363c, testMethod = findByCafe_Should_Return_ListArticle@ArticleRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@ee36470 testClass = ArticleRepositoryTest, locations = '{}', classes = '{class com.widehouse.cafe.CafeApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@1a744428 key = [Package Import com.widehouse.cafe.domain.article, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7c5b372f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@56a10d0, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@50992f1b, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@16c5f4c9], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@7e0f9945]; rollback [true]
+Hibernate: 
+    insert 
+    into
+        cafe
+        (category_id, create_date_time, description, name, cafe_article_count, cafe_comment_count, cafe_member_count, cafe_visit_count, url, visibility) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        board
+        (cafe_id, list_order, name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        board
+        (cafe_id, list_order, name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        member
+        (nickname) 
+    values
+        (?)
+Hibernate: 
+    insert 
+    into
+        article
+        (board_id, cafe_id, comment_count, content, create_date_time, title, update_date_time, writer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        article
+        (board_id, cafe_id, comment_count, content, create_date_time, title, update_date_time, writer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        article
+        (board_id, cafe_id, comment_count, content, create_date_time, title, update_date_time, writer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        article0_.id as id1_0_,
+        article0_.board_id as board_id7_0_,
+        article0_.cafe_id as cafe_id8_0_,
+        article0_.comment_count as comment_2_0_,
+        article0_.content as content3_0_,
+        article0_.create_date_time as create_d4_0_,
+        article0_.title as title5_0_,
+        article0_.update_date_time as update_d6_0_,
+        article0_.writer_id as writer_i9_0_ 
+    from
+        article article0_ 
+    left outer join
+        cafe cafe1_ 
+            on article0_.cafe_id=cafe1_.id 
+    where
+        cafe1_.id=? 
+    order by
+        article0_.id desc limit ?
+2017-02-21 20:12:06.053  INFO 30607 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test context [DefaultTestContext@22d0ccd9 testClass = ArticleRepositoryTest, testInstance = com.widehouse.cafe.domain.article.ArticleRepositoryTest@26eb363c, testMethod = findByCafe_Should_Return_ListArticle@ArticleRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@ee36470 testClass = ArticleRepositoryTest, locations = '{}', classes = '{class com.widehouse.cafe.CafeApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@1a744428 key = [Package Import com.widehouse.cafe.domain.article, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7c5b372f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@56a10d0, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@50992f1b, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@16c5f4c9], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]].
+2017-02-21 20:12:06.063  INFO 30607 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@22d0ccd9 testClass = ArticleRepositoryTest, testInstance = com.widehouse.cafe.domain.article.ArticleRepositoryTest@b24225a, testMethod = findByBoard_Should_Return_ListArticle@ArticleRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@ee36470 testClass = ArticleRepositoryTest, locations = '{}', classes = '{class com.widehouse.cafe.CafeApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@1a744428 key = [Package Import com.widehouse.cafe.domain.article, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7c5b372f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@56a10d0, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@50992f1b, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@16c5f4c9], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@7e0f9945]; rollback [true]
+Hibernate: 
+    insert 
+    into
+        cafe
+        (category_id, create_date_time, description, name, cafe_article_count, cafe_comment_count, cafe_member_count, cafe_visit_count, url, visibility) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        board
+        (cafe_id, list_order, name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        board
+        (cafe_id, list_order, name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        member
+        (nickname) 
+    values
+        (?)
+Hibernate: 
+    insert 
+    into
+        article
+        (board_id, cafe_id, comment_count, content, create_date_time, title, update_date_time, writer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        article
+        (board_id, cafe_id, comment_count, content, create_date_time, title, update_date_time, writer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        article
+        (board_id, cafe_id, comment_count, content, create_date_time, title, update_date_time, writer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        article0_.id as id1_0_,
+        article0_.board_id as board_id7_0_,
+        article0_.cafe_id as cafe_id8_0_,
+        article0_.comment_count as comment_2_0_,
+        article0_.content as content3_0_,
+        article0_.create_date_time as create_d4_0_,
+        article0_.title as title5_0_,
+        article0_.update_date_time as update_d6_0_,
+        article0_.writer_id as writer_i9_0_ 
+    from
+        article article0_ 
+    left outer join
+        board board1_ 
+            on article0_.board_id=board1_.id 
+    where
+        board1_.id=? 
+    order by
+        article0_.id desc limit ?
+2017-02-21 20:12:06.128  INFO 30607 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test context [DefaultTestContext@22d0ccd9 testClass = ArticleRepositoryTest, testInstance = com.widehouse.cafe.domain.article.ArticleRepositoryTest@b24225a, testMethod = findByBoard_Should_Return_ListArticle@ArticleRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@ee36470 testClass = ArticleRepositoryTest, locations = '{}', classes = '{class com.widehouse.cafe.CafeApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@1a744428 key = [Package Import com.widehouse.cafe.domain.article, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7c5b372f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@56a10d0, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@50992f1b, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@16c5f4c9], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]].
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

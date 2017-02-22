@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.widehouse.cafe.domain.cafe.BoardTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-02-22T01:12:07" hostname="Kiel-MBP-2.fios-router.home" time="0.001">
+  <properties/>
+  <testcase name="modifyBoard_should_change_board_info" classname="com.widehouse.cafe.domain.cafe.BoardTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
