@@ -52,7 +52,7 @@ subprojects() {
         afterEvaluate {
             classDirectories = files(classDirectories.files.collect {
                 fileTree(dir: it,
-                        exclude: ['**/CafeApplication.class',
+                        exclude: ['**/Cafe*Application.class',
                                   '**/**Id.class'])
             })
         }
@@ -83,5 +83,8 @@ project(':web') {
 
     dependencies {
         compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+
+        runtime("org.webjars:angularjs:1.6.1")
+        runtime("org.webjars:bootstrap:3.3.7")
     }
 }
