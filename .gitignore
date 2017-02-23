@@ -2,9 +2,8 @@
 /build/
 /gradle
 /web/build/
+/api/build/
 
 ### IntelliJ IDEA ###
 .idea
-
-
 
