@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: cafe-web
-  jackson:
-    serialization.write-dates-as-timestamps: false
-  thymeleaf:
-    cache: false
-server:
-  port: 8081
