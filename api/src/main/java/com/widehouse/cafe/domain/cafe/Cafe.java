@@ -12,6 +12,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -45,6 +47,7 @@ public class Cafe {
     private String name;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private CafeVisibility visibility;
 
     @ManyToOne

@@ -1,7 +1,9 @@
 package com.widehouse.cafe.web;
 
+import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -14,6 +16,7 @@ import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.service.CafeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -40,6 +43,14 @@ public class CategoryControllerTest {
     @MockBean
     private CafeService cafeService;
 
+    @Mock
+    com.widehouse.cafe.projection.Cafe cafeMock1;
+    @Mock
+    com.widehouse.cafe.projection.Cafe cafeMock2;
+    @Mock
+    com.widehouse.cafe.projection.Cafe cafeMock3;
+    @Mock
+    com.widehouse.cafe.projection.Cafe cafeMock4;
     @Test
     public void getCategories() throws Exception {
         // given
@@ -61,11 +72,11 @@ public class CategoryControllerTest {
     public void getCafesByCategory() throws Exception {
         // given
         Category category1 = new Category("category");
+        given(cafeMock1.getUrl()).willReturn("test1");
+        given(cafeMock1.getUrl()).willReturn("test2");
         given(this.cafeService.getCafeByCategory(1L,
                 new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
-                .willReturn(Arrays.asList(
-                        new Cafe("test1", "test1", "", CafeVisibility.PUBLIC, category1),
-                        new Cafe("test2", "test2", "", CafeVisibility.PUBLIC, category1)));
+                .willReturn(Arrays.asList(cafeMock1, cafeMock2));
         // then
         this.mvc.perform(get("/categories/1/cafes"))
                 .andExpect(status().isOk())
@@ -79,19 +90,21 @@ public class CategoryControllerTest {
     public void getCafesByCategoryWithPaging() throws Exception {
         // given
         Category category1 = new Category("category");
+        given(cafeMock1.getUrl()).willReturn("test1");
+        given(cafeMock1.getViisibility()).willReturn(CafeVisibility.PUBLIC);
+        given(cafeMock2.getUrl()).willReturn("test2");
+        given(cafeMock3.getUrl()).willReturn("test3");
+        given(cafeMock4.getUrl()).willReturn("test4");
         given(this.cafeService.getCafeByCategory(1L,
-                new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
-                .willReturn(Arrays.asList(
-                        new Cafe("test1", "test1", "", CafeVisibility.PUBLIC, category1),
-                        new Cafe("test2", "test2", "", CafeVisibility.PUBLIC, category1),
-                        new Cafe("test3", "test3", "", CafeVisibility.PUBLIC, category1),
-                        new Cafe("test4", "test4", "", CafeVisibility.PUBLIC, category1)));
+                new PageRequest(0, 4, new Sort(DESC, "statistics.cafeMemberCount"))))
+                .willReturn(Arrays.asList(cafeMock1, cafeMock2, cafeMock3, cafeMock4));
         // then
         this.mvc.perform(get("/categories/1/cafes?page=0&size=4"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.length()").value(4))
                 .andExpect(jsonPath("$.[0].url").value("test1"))
+                .andExpect(jsonPath("$.[0].visibility").value(PUBLIC.toString()))
                 .andExpect(jsonPath("$.[1].url").value("test2"))
                 .andExpect(jsonPath("$.[2].url").value("test3"))
                 .andExpect(jsonPath("$.[3].url").value("test4"));

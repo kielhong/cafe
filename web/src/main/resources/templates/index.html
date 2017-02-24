@@ -43,11 +43,8 @@
                         </div>
                     </fieldset>
                 </form>
-
-
                 <div class="cafe_gnb_wrap">
                     <div id="gnb">
-
                         <script charset="utf-8" type="text/javascript" src="http://static.gn.naver.net/template/gnb_utf8.nhn?2017022210"></script>
                     </div>
                 </div>
@@ -57,39 +54,23 @@
         <div id="gnbMenu" class="menu">
             <div class="menu_inner" role="navigation">
                 <ul>
-
                     <li class="lnb1 on"><a href="http://section.cafe.naver.com" class="N=a:LNB.home">
                         <span class="tx">카페홈</span><div class="status"></div>
                     </a></li>
-
-
                     <li class="lnb2 "><a href="/SectionCafeStoryList.nhn" class="N=a:LNB.sto">
                         <span class="tx">카페스토리</span>
                     </a></li>
-
-
                     <li class="lnb3 "><a href="/RandomPowerCafeList.nhn" class="N=a:LNB.top">
                         <span class="tx">대표카페</span>
                     </a></li>
-
-
                     <li class="lnb4 "><a href="/CafeRankingList.nhn" class="N=a:LNB.rnk">
                         <span class="tx">랭킹</span>
                     </a></li>
-
-
                     <li class="lnb5 "><a href="/StarCafeList.nhn" class="N=a:LNB.star">
                         <span class="tx">인기팬카페</span>
                     </a></li>
-
-
                     <li class="lnb6 "><a href="/GameCafeList.nhn" class="N=a:LNB.game">
                         <span class="tx">공식게임카페</span>
-                    </a></li>
-
-
-                    <li class="lnb7 "><a href="/EducationCafeList.nhn" class="N=a:LNB.wiu">
-                        <span class="tx">WIU지식나눔카페</span>
                     </a></li>
 
                     <li class="lnb8"><a href="http://m.cafe.naver.com/CafeSupport.nhn" class="N=a:LNB.spt"><span class="tx">카페지원센터</span></a></li>
@@ -100,99 +81,25 @@
 
     <div id="container" class="main" role="main">
 
-
-
-
-
         <!-- spot -->
         <div class="spot" id="cafestoryArea">
             <h2><img src="http://cafeimgs.naver.net/img/section/h_cafestory.gif" width="117" height="24" alt="cafe story"/></h2>
             <div class="date_control">
-
-
-
-
                 <span class="n2 _date">2</span>
-
-
-
-
-
-
                 <span class="n0 _date">0</span>
-
-
-
-
-
-
                 <span class="n1 _date">1</span>
-
-
-
-
-
-
                 <span class="n7 _date">7</span>
-
-
-
-
-
                 <span class="dot">.</span>
-
-
-
-
-
-
-
                 <span class="n0 _date">0</span>
-
-
-
-
-
-
                 <span class="n2 _date">2</span>
-
-
-
-
-
                 <span class="dot">.</span>
-
-
-
-
-
-
-
                 <span class="n2 _date">2</span>
-
-
-
-
-
-
                 <span class="n2 _date">2</span>
-
-
-
-
-
                 <span class="dot">.</span>
-
-
-
-
                 <button class="btn_prev N=a:cvr.prev _click(CafeStory|PrevDate)">이전</button>
                 <button class="btn_next_off N=a:cvr.next _click(CafeStory|NextDate) _disabled" disabled="disabled" style="cursor:default;">다음</button>
             </div>
-
-
             <div class="_CafeStoryContent" id="cafeStory">
-
                 <div class="type1" style="background:url(http://cafefiles.naver.net/MjAxNzAyMTVfNTQg/MDAxNDg3MTQxMDM2Nzgy.PCNj1DAQY4ilgDRbyaOV1T4xRUxg0H28pzlUjI06bmsg.PhtDIgNegGTvkuvj-ObEivOK4W_HuXFDLs1iRJF0NGMg.JPEG.cafesupport/default.jpg) no-repeat">
                     <div class="thumb"><a href="http://cafe.naver.com/korjapif" target="_blank" class="N=a:cvr.image">문화와 함께 언어도 교류해요!</a></div>
                     <div class="cont">
@@ -221,13 +128,8 @@
 
             <div class="cafenew">
                 <div class="navi">
-
-
                     <a href="#" class="n1  N=a:cfn.num,r:1 _mouseover(CafeStory|SelectCafeNew|0) _stopDefault">1</a>
-
                     <a href="#" class="n2 on N=a:cfn.num,r:2 _mouseover(CafeStory|SelectCafeNew|1) _stopDefault">2</a>
-
-
                 </div>
                 <div class="cafenew_cont" id="sectionNews"><a href="http://cafe.naver.com/cafesupport/107252" class="N=a:cfn.list2,r:2"><img src="http://cafefiles.naver.net/20160715_5/0_1468540939505_scoz2U_png/지원센터-공지변경_3.png" width="255" height="225" alt="정모장소지원-뉴버전"/></a></div>
             </div>
@@ -271,9 +173,9 @@
                 <a class="close _click(LayerManager|CloseLayer|LoginLayer) _stopDefault" href="#"><img height="19" width="19" alt="닫기" src="http://static.naver.net/kin/09renewal/btn_close_layer3.gif"/></a>
             </div>
 
-            <div class="category" ng-app="categoryApp" ng-controller="categoryCtrl" data-ng-init="init()">
+            <div class="category" ng-app="sectionApp" ng-controller="categoryCtrl" data-ng-init="init()">
                 <ul>
-                    <li id="category_{{ category.id }}" ng-repeat="category in categories">
+                    <li id="category_{{ category.id }}" ng-repeat="category in categories" ng-class="{'firstchild select':$first}">
                         <div>
                             <button class="_click(CategoryCafe|ToggleNode|1) _stopDefault" aria-expanded="false">열기</button>
                             <a href="#" class="N=a:cnt_thm.dir1,i:1,t:1 _click(CategoryCafe|SelectNode|1) _stopDefault" id="theme1">{{ category.name }}</a>
@@ -315,18 +217,14 @@
 
                     </ul>
                 </div>
-                <div id="CategoryLoadingImageLayer" style="display:block;z-index:1000;position:absolute;top:335px;left:395px" >
-                    <img height="40" width="40" alt="로딩중" src="http://cafeimgs.naver.net/img/section/loading.gif"/>
-                </div>
-                <div id="CategoryCafeHideArea" style="visibility:hidden">
+                <div id="CategoryCafeHideArea">
                     <ul id="ListArea" class="list ranking2"  style="display:block;">
 
 
                         <li class="fc">
                             <div class="thmb_cafe_ty1 cafe_thumb_32">
                                 <a href="http://cafe.naver.com/shadowversekorea" target="_blank">
-                                    <img src="http://cafeptthumb4.phinf.naver.net/MjAxNjEyMTdfOSAg/MDAxNDgxOTAyMzE4ODk2.FNgIaPKuFRFODNcd5AffFwkZ1nuCac80LSeOSHmFEkIg._dLdD9FiaEsTxHvGdxa3dJYs4m1YZ5PHfka21b3-l1Qg.PNG.handyblog/game_icon.PNG?type=f40_40_mask" width="32" height="32" alt="카페아이콘"
-                                    />
+                                    <img src="http://cafeptthumb4.phinf.naver.net/MjAxNjEyMTdfOSAg/MDAxNDgxOTAyMzE4ODk2.FNgIaPKuFRFODNcd5AffFwkZ1nuCac80LSeOSHmFEkIg._dLdD9FiaEsTxHvGdxa3dJYs4m1YZ5PHfka21b3-l1Qg.PNG.handyblog/game_icon.PNG?type=f40_40_mask" width="32" height="32" alt="카페아이콘"/>
                                     <span class="border"></span>
                                 </a>
                             </div>
@@ -600,13 +498,22 @@
                     <a href="#" class="btn_up _click(CategoryCafe|FocusTop) _stopDefault N=a:cnt_thm.top">위로</a>
                 </div>
 
+                <form id="CategoryFormArea" name="frmSearchBottom" method="get" action="/CafeSearch.nhn" style="display:block;" class="_submit(CategoryCafe|CafeSearchDirectory|directoryQuery) N=a:cnt_thm.search">
+                    <fieldset class="cafe_search">
+                        <legend class="blind">카페검색</legend>
+                        <label for="directoryQuery">'게임'내 카페검색</label>
+                        <input type="text" title="검색" name="query" id="directoryQuery" value="" accesskey="s" class="snb_search_text"/>
+                        <input type="hidden" name="themeDir1Ids" id="themeDir1Ids" value="1"/>
+                        <input src="http://cafeimgs.naver.net/img/section/btn_search2.gif" alt="검색" type="image"/>
+                    </fieldset>
+                </form>
 
             </div>
         </div>
     </div>
 
 
-
+    <div id="ad_randicon" class="happybean_layer"></div>
 
 
 
@@ -707,12 +614,28 @@
     </div>
     <!-- //aside -->
 </div>
+<div id="footer" role="contentinfo">
+    <ul>
+        <li class="first"><a href="http://section.cafe.naver.com/CafeTerms.nhn" target="_blank" class="N=a:fot.agreement">카페 이용약관</a></li>
+        <li><a href="http://section.cafe.naver.com/CafeOperatingRules.nhn" target="_blank" class="N=a:fot.rule">카페 운영원칙</a></li>
+        <li><a href="http://www.naver.com/rules/privacy.html" target="_blank" class="N=a:fot.privacy"><strong>개인정보처리방침</strong></a></li>
+        <li><a href="http://www.naver.com/rules/disclaimer.html" target="_blank" class="N=a:fot.discalimer">책임의 한계와 법적고지</a></li>
+        <li><a href="https://inoti.naver.com" target="_blank" class="N=a:fot.claim">게시중단요청서비스</a></li>
+        <li><a href="https://help.naver.com/support/service/main.nhn?serviceNo=522" target="_blank" class="N=a:fot.help">카페 고객센터</a></li>
+    </ul>
+    <address>
+        <a href="http://www.navercorp.com/" target="_blank" class="logo"><img src="http://static.naver.net/common/footer/ci_naver.gif" width="63" height="11" alt="NAVER Corp."/></a>
+        <em>Copyright &copy;</em>
+        <a href="http://www.navercorp.com/" target="_blank">NAVER Corp.</a>
+        <span>All Rights Reserved.</span>
+    </address>
+</div>
 <!-- angularjs -->
 <script src="/webjars/angularjs/angular.js"></script>
 <script src="/webjars/angularjs/angular-resource.js"></script>
 <script src="/webjars/angularjs/angular-route.js"></script>
-<script src="/js/app.js"></script>
-<script src="/js/controller.js"></script>
+<script src="/js/ng/app.js"></script>
+<script src="/js/ng/controller.js"></script>
 <!-- // angularjs -->
 </body>
 </html>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.widehouse.cafe.domain.article.CommentTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2017-02-22T01:12:06" hostname="Kiel-MBP-2.fios-router.home" time="0.009">
-  <properties/>
-  <testcase name="modifyComment_should_update_comment" classname="com.widehouse.cafe.domain.article.CommentTest" time="0.001"/>
-  <testcase name="createComment_should_create_comment_and_attachto_article" classname="com.widehouse.cafe.domain.article.CommentTest" time="0.001"/>
-  <testcase name="modifyComment_not_commenter_throws_NoAuthroityException" classname="com.widehouse.cafe.domain.article.CommentTest" time="0.007"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

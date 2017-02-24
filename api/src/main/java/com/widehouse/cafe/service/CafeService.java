@@ -22,12 +22,8 @@ import java.util.Optional;
  */
 @Service
 public class CafeService {
-    private CafeRepository cafeRepository;
-
     @Autowired
-    public CafeService(CafeRepository cafeRepository) {
-        this.cafeRepository = cafeRepository;
-    }
+    private CafeRepository cafeRepository;
 
     public Cafe createCafe(Member member, String url, String name, String description,
                            CafeVisibility visibility, Category category) {
@@ -54,7 +50,7 @@ public class CafeService {
         return joinMember(cafe, member, CafeMemberRole.MEMBER);
     }
 
-    public List<Cafe> getCafeByCategory(Long categoryId, Pageable pageable) {
+    public List<com.widehouse.cafe.projection.Cafe> getCafeByCategory(Long categoryId, Pageable pageable) {
         return cafeRepository.findByCategoryId(categoryId, pageable);
     }
 

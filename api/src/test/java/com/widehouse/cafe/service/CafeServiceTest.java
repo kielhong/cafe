@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -114,17 +115,25 @@ public class CafeServiceTest {
                 .isEqualTo(beforeSize);
     }
 
+    @Mock
+    com.widehouse.cafe.projection.Cafe cafeMock1;
+    @Mock
+    com.widehouse.cafe.projection.Cafe cafeMock2;
+    @Mock
+    com.widehouse.cafe.projection.Cafe cafeMock3;
+    @Mock
+    com.widehouse.cafe.projection.Cafe cafeMock4;
     @Test
     public void getCafesByCategory_should_return_cafes_by_category() {
         // given
         given(cafeRepository.findByCategoryId(category.getId(),
                 new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
-                .willReturn(Arrays.asList(cafe4, cafe3, cafe2, cafe1));
+                .willReturn(Arrays.asList(cafeMock4, cafeMock3, cafeMock2, cafeMock1));
         // when
-        List<Cafe> cafes = cafeService.getCafeByCategory(category.getId(), new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
+        List<com.widehouse.cafe.projection.Cafe> cafes = cafeService.getCafeByCategory(category.getId(), new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
         // then
         assertThat(cafes)
-                .contains(cafe4, cafe3, cafe2, cafe1);
+                .contains(cafeMock4, cafeMock3, cafeMock2, cafeMock1);
     }
 
     @Test

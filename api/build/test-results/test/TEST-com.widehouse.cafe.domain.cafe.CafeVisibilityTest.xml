@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.widehouse.cafe.domain.cafe.CafeVisibilityTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-02-22T01:12:08" hostname="Kiel-MBP-2.fios-router.home" time="0.0">
-  <properties/>
-  <testcase name="PUBLIC_Should_ValueOfPublic" classname="com.widehouse.cafe.domain.cafe.CafeVisibilityTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
