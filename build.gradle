@@ -83,6 +83,7 @@ project(':web') {
 
     dependencies {
         compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+        compile("org.springframework.boot:spring-boot-devtools")
 
         compile("org.webjars:webjars-locator:0.30")
         runtime("org.webjars:angularjs:1.6.1")
