@@ -19,4 +19,4 @@ app.config(function($routeProvider,$locationProvider){
         );
 });
 
-var app2 = angular.module('categoryApp', ['ngRoute', 'ngResource']);
+var app2 = angular.module('sectionApp', ['ngRoute', 'ngResource']);

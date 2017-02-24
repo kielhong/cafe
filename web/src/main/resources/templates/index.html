@@ -12,7 +12,7 @@
     <script type="text/javascript" src="/js/CommonTopScript.js" charset="utf-8"></script>
 </head>
 
-<body>
+<body ng-app="sectionApp">
 <div id="u_skip">
     <a href="#gnbMenu" onclick="var t=document.getElementById('gnbMenu');t.tabIndex=-1;t.focus();return false;" class="skip">메뉴 바로가기</a>
     <a href="#container" onclick="var t=document.getElementById('container');t.tabIndex=-1;t.focus();return false;" class="skip">본문 바로가기</a>
@@ -173,9 +173,9 @@
                 <a class="close _click(LayerManager|CloseLayer|LoginLayer) _stopDefault" href="#"><img height="19" width="19" alt="닫기" src="http://static.naver.net/kin/09renewal/btn_close_layer3.gif"/></a>
             </div>
 
-            <div class="category" ng-app="sectionApp" ng-controller="categoryCtrl" data-ng-init="init()">
+            <div class="category" ng-controller="categoryCtrl" data-ng-init="init()">
                 <ul>
-                    <li id="category_{{ category.id }}" ng-repeat="category in categories" ng-class="{'firstchild select':$first}">
+                    <li id="category_{{ category.id }}" ng-repeat="category in categories" ng-class="{'firstchild select':$first}" ng-click="cafeByCategory(category.id)" ng-init="isFirst($first, category)">
                         <div>
                             <button class="_click(CategoryCafe|ToggleNode|1) _stopDefault" aria-expanded="false">열기</button>
                             <a href="#" class="N=a:cnt_thm.dir1,i:1,t:1 _click(CategoryCafe|SelectNode|1) _stopDefault" id="theme1">{{ category.name }}</a>
@@ -189,51 +189,36 @@
 
             <div class="category_list">
                 <div class="tit_area">
-
                     <h3>게임</h3>
                     <em>1,480,039</em>
-
-
-
                 </div>
                 <div class="list_order">
                     <h4 class="blind">대표 카페</h4>
                     <ul class="bg_tab_categorylist" role="tablist">
-
                         <li class="t1  _PC" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|SelectType|PC) _stopDefault N=a:cnt_thm.keycafe,t:1">대표 카페</a></li>
-
                         <li class="t2  _AT" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|SelectType|AT) _stopDefault N=a:cnt_thm.rank,t:1">랭킹 Top 100</a></li>
                         <li class="t3 on _AR" role="tab" aria-selected="true"><a href="#" class="_click(CategoryCafe|SelectType|AR) _stopDefault N=a:cnt_thm.hot,t:1">급상승 Top 100</a></li>
                         <li class="t4 _AC" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|SelectType|AC) _stopDefault N=a:cnt_thm.all">전체</a></li>
                     </ul>
                     <ul class="sorting">
-
-
                         <li class="t1"><a href="#" class="_3 _click(CategoryCafe|SelectSortType|3) _stopDefault N=a:cnt_thm.bymember,t:1">멤버</a></li>
                         <li class="t2"><a href="#" class="_4 _click(CategoryCafe|SelectSortType|4) _stopDefault N=a:cnt_thm.byarticle,t:1">게시글</a></li>
                         <li class="t4"><a href="#" class="_1 on _click(CategoryCafe|SelectSortType|1) _stopDefault N=a:cnt_thm.byrankup,t:1">상승폭</a></li>
-
-
-
                     </ul>
                 </div>
-                <div id="CategoryCafeHideArea">
+                <div id="CategoryCafeHideArea" ng-controller="categoryCafeCtrl">
                     <ul id="ListArea" class="list ranking2"  style="display:block;">
-
-
-                        <li class="fc">
+                        <li ng-repeat="cafe in cafes" ng-class="{'fc':$first}">
                             <div class="thmb_cafe_ty1 cafe_thumb_32">
                                 <a href="http://cafe.naver.com/shadowversekorea" target="_blank">
                                     <img src="http://cafeptthumb4.phinf.naver.net/MjAxNjEyMTdfOSAg/MDAxNDgxOTAyMzE4ODk2.FNgIaPKuFRFODNcd5AffFwkZ1nuCac80LSeOSHmFEkIg._dLdD9FiaEsTxHvGdxa3dJYs4m1YZ5PHfka21b3-l1Qg.PNG.handyblog/game_icon.PNG?type=f40_40_mask" width="32" height="32" alt="카페아이콘"/>
                                     <span class="border"></span>
                                 </a>
                             </div>
-                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/shadowversekorea" target="_blank" title="섀도우버스 공식 카페" style="width:315px">섀도우버스 공식 카페</a>
-
+                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="cafes/{{ cafe.url }}" target="_blank" title="{{ cafe.name }}" style="width:315px">{{ cafe.name }}</a>
                                 <i class="icon_offgame">공식게임카페</i>
-
                             </h5>
-                            <p class="ellipsis" title="리얼 판타지 블록버스터 섀도우버스 한국 공식 카페 입니다." style="width:345px">리얼 판타지 블록버스터 섀도우버스 한국 공식 카페 입니다.&nbsp;</p>
+                            <p class="ellipsis" title="{{ cafe.description }}" style="width:345px">{{ cafe.description }}</p>
 
                             <dl class="option">
 
@@ -243,249 +228,20 @@
                                 <dt class="manager">매니저</dt>
                                 <dd class="manager"><span class="gray05 ellipsis">섀도우버스</span></dd>
                                 <dt class="since">since</dt>
-                                <dd class="since">2016.12.17.</dd>
+                                <dd class="since">{{ cafe.createDateTime | date:'yyyy.MM.dd' }}</dd>
                             </dl>
 
                             <dl class="count">
                                 <dt class="member">멤버수</dt>
-                                <dd class="member">34,652</dd>
+                                <dd class="member">{{ cafe.cafeMemberCount | number:0 }}</dd>
                                 <dt class="board">게시글</dt>
-                                <dd class="board">78,542</dd>
+                                <dd class="board">{{ cafe.articleCount | number:0 }}</dd>
                                 <dt class="new">New</dt>
                                 <dd class="new">4,222</dd>
                             </dl>
                         </li>
-
-
-                        <li >
-                            <div class="thmb_cafe_ty1 cafe_thumb_32">
-                                <a href="http://cafe.naver.com/lostsagasecond" target="_blank">
-                                    <img src="http://cafeptthumb4.phinf.naver.net/MjAxNzAyMDVfNTIg/MDAxNDg2MjI0OTI3MTQx.FTApsqcHBtrputXpZSieW8fI0d1qxz1HZ9CtG169c50g.FjiVvuO8NTxNRK57dMhAm7MMxf0zLhuIvua3JtOqRF8g.JPEG.qkrrjsgk45/externalFile.jpg?type=f40_40_mask" width="32" height="32" alt="카페아이콘"/>
-                                    <span class="border"></span>
-                                </a>
-                            </div>
-                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/lostsagasecond" target="_blank" title="로스트사가 타임게이트" style="width:315px">로스트사가 타임게이트</a>
-
-
-
-                            </h5>
-                            <p class="ellipsis" title="로스트사가를 위한 커뮤니티 카페입니다." style="width:345px">로스트사가를 위한 커뮤니티 카페입니다.&nbsp;</p>
-
-                            <dl class="option">
-
-                                <dt class="blind">랭킹</dt>
-                                <dd class="level"><span>씨앗3단계</span> (<span class="up">증가</span><em>220,974</em>)</dd>
-
-                                <dt class="manager">매니저</dt>
-                                <dd class="manager"><span class="gray05 ellipsis">BUILDWATER</span></dd>
-                                <dt class="since">since</dt>
-                                <dd class="since">2017.02.03.</dd>
-                            </dl>
-
-                            <dl class="count">
-                                <dt class="member">멤버수</dt>
-                                <dd class="member">1,850</dd>
-                                <dt class="board">게시글</dt>
-                                <dd class="board">12,770</dd>
-                                <dt class="new">New</dt>
-                                <dd class="new">891</dd>
-                            </dl>
-                        </li>
-
-
-                        <li >
-                            <div class="thmb_cafe_ty1 cafe_thumb_32">
-                                <a href="http://cafe.naver.com/longtubsg" target="_blank">
-                                    <img src="http://cafeptthumb3.phinf.naver.net/MjAxNzAxMDRfMjYw/MDAxNDgzNTI2NTUxODQ3.Zh1kDZPZOHgm5k3MVYMh9xdJ09FAhqtBEkrtV1QRfykg.H8pb-Et30HUskp7W0zbyibM39s1E1Lkv2aOKw_2cFe4g.PNG.longtukorea1/cafe_icon_150150_010417_kbe.png?type=f40_40_mask" width="32" height="32" alt="카페아이콘" />
-                                    <span class="border"></span>
-                                </a>
-                            </div>
-                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/longtubsg" target="_blank" title="강철소녀 공식카페" style="width:315px">강철소녀 공식카페</a>
-
-                                <i class="icon_offgame">공식게임카페</i>
-
-                            </h5>
-                            <p class="ellipsis" title="강철소녀 공식카페 입니다." style="width:345px">강철소녀 공식카페 입니다.&nbsp;</p>
-
-                            <dl class="option">
-
-                                <dt class="blind">랭킹</dt>
-                                <dd class="level"><span>새싹3단계</span> (<span class="up">증가</span><em>97,983</em>)</dd>
-
-                                <dt class="manager">매니저</dt>
-                                <dd class="manager"><span class="gray05 ellipsis">GM함장</span></dd>
-                                <dt class="since">since</dt>
-                                <dd class="since">2016.12.02.</dd>
-                            </dl>
-
-                            <dl class="count">
-                                <dt class="member">멤버수</dt>
-                                <dd class="member">8,419</dd>
-                                <dt class="board">게시글</dt>
-                                <dd class="board">8,440</dd>
-                                <dt class="new">New</dt>
-                                <dd class="new">616</dd>
-                            </dl>
-                        </li>
-
-
-                        <li >
-                            <div class="thmb_cafe_ty1 cafe_thumb_32">
-                                <a href="http://cafe.naver.com/headapji" target="_blank">
-                                    <img src="http://cafeptthumb3.phinf.naver.net/20160713_251/lovepooh30_1468338544135Nd5xV_JPEG/5.jpg?type=f40_40_mask" width="32" height="32" alt="카페아이콘"
-                                         onerror="this.onerror=null;this.src='http://static.naver.net/cafe/thumb/cafe_thumb_noimg_32.png';" />
-                                    <span class="border"></span>
-                                </a>
-                            </div>
-                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/headapji" target="_blank" title="포공카-포켓몬GO,포켓몬,추천,포켓몬고,POKEMON,포켓몬위치,한국" style="width:315px">포공카-포켓몬GO,포켓몬,추천,포켓몬고,POKEMON,포켓몬위치,한국</a>
-
-
-
-                            </h5>
-                            <p class="ellipsis" title="포켓몬GO,포켓몬고,포켓몬GO카페,카페,,POKEMONGO,메뉴얼,설명서,테크트리,커뮤니티,포켓몬스터,공식" style="width:345px">포켓몬GO,포켓몬고,포켓몬GO카페,카페,,POKEMONGO,메뉴얼,설명서,테크트리,커뮤니티,포켓몬스터,공식&nbsp;</p>
-
-                            <dl class="option">
-
-                                <dt class="blind">랭킹</dt>
-                                <dd class="level"><span>숲</span> (<span class="up">증가</span><em>97,228</em>)</dd>
-
-                                <dt class="manager">매니저</dt>
-                                <dd class="manager"><span class="gray05 ellipsis">포공카</span></dd>
-                                <dt class="since">since</dt>
-                                <dd class="since">2012.02.12.</dd>
-                            </dl>
-
-                            <dl class="count">
-                                <dt class="member">멤버수</dt>
-                                <dd class="member">164,914</dd>
-                                <dt class="board">게시글</dt>
-                                <dd class="board">312,066</dd>
-                                <dt class="new">New</dt>
-                                <dd class="new">3,513</dd>
-                            </dl>
-                        </li>
-
-
-                        <li >
-                            <div class="thmb_cafe_ty1 cafe_thumb_32">
-                                <a href="http://cafe.naver.com/wooparoomountain" target="_blank">
-                                    <img src="http://cafeptthumb2.phinf.naver.net/MjAxNzAyMDNfMzQg/MDAxNDg2MDg3MTU5OTMy.zkgq_XVdNHJFB7LGSJPEjxVQJiwiz5ItkxI5RUUL0oUg.DGQbld8hcAgE8c0iF5bD7zDZi3WTPC70fbxkNL5hOHIg.PNG.nv_roopa/iOS6_1024x1024_kakao.png?type=f40_40_mask" width="32" height="32" alt="카페아이콘"
-                                         onerror="this.onerror=null;this.src='http://static.naver.net/cafe/thumb/cafe_thumb_noimg_32.png';" />
-                                    <span class="border"></span>
-                                </a>
-                            </div>
-                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/wooparoomountain" target="_blank" title="우파루마운틴 공식카페, 우파루 마을" style="width:315px">우파루마운틴 공식카페, 우파루 마을</a>
-
-                                <i class="icon_offgame">공식게임카페</i>
-
-                            </h5>
-                            <p class="ellipsis" title="귀요미 우파루들의 좌충우돌 성장 이야기! 스마트폰 소셜게임 &amp;lt;우파루 마운틴&amp;gt; 공식카페입니다.^^" style="width:345px">귀요미 우파루들의 좌충우돌 성장 이야기! 스마트폰 소셜게임 &lt;우파루 마운틴&gt; 공식카페입니다.^^&nbsp;</p>
-
-                            <dl class="option">
-
-                                <dt class="blind">랭킹</dt>
-                                <dd class="level"><span>숲</span> (<span class="up">증가</span><em>70,545</em>)</dd>
-
-                                <dt class="manager">매니저</dt>
-                                <dd class="manager"><span class="gray05 ellipsis">공식우파루마운틴</span></dd>
-                                <dt class="since">since</dt>
-                                <dd class="since">2012.11.27.</dd>
-                            </dl>
-
-                            <dl class="count">
-                                <dt class="member">멤버수</dt>
-                                <dd class="member">165,901</dd>
-                                <dt class="board">게시글</dt>
-                                <dd class="board">446,885</dd>
-                                <dt class="new">New</dt>
-                                <dd class="new">243</dd>
-                            </dl>
-                        </li>
-
-
-                        <li >
-                            <div class="thmb_cafe_ty1 cafe_thumb_32">
-                                <a href="http://cafe.naver.com/crashfever" target="_blank">
-                                    <img src="http://cafeptthumb3.phinf.naver.net/MjAxNjExMDFfNTgg/MDAxNDc3OTkxMDc3NjQx.mwNwPE8N3kY_4TJIPi2ICcwx7M41gEFdO5x7Fpr8Svgg.e78sntRcNEGHrub7e2OVB55gA8FuzqBTCNAhtAfT18og.PNG.igs_inc/icon.png?type=f40_40_mask" width="32" height="32" alt="카페아이콘"
-                                         onerror="this.onerror=null;this.src='http://static.naver.net/cafe/thumb/cafe_thumb_noimg_32.png';" />
-                                    <span class="border"></span>
-                                </a>
-                            </div>
-                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/crashfever" target="_blank" title="크래시피버 공식 카페" style="width:315px">크래시피버 공식 카페</a>
-
-                                <i class="icon_offgame">공식게임카페</i>
-
-                            </h5>
-                            <p class="ellipsis" title="CRASH FEVER 공식카페입니다. 환영합니다. &amp;#726;&amp;#10023;&amp;#9693;(&amp;#8304;&amp;#9663;&amp;#8304;)&amp;#9692;&amp;#10023;&amp;" style="width:345px">CRASH FEVER 공식카페입니다. 환영합니다.</p>
-
-                            <dl class="option">
-
-                                <dt class="blind">랭킹</dt>
-                                <dd class="level"><span>잎새5단계</span> (<span class="up">증가</span><em>61,789</em>)</dd>
-
-                                <dt class="manager">매니저</dt>
-                                <dd class="manager"><span class="gray05 ellipsis">GM앨리스</span></dd>
-                                <dt class="since">since</dt>
-                                <dd class="since">2016.11.01.</dd>
-                            </dl>
-
-                            <dl class="count">
-                                <dt class="member">멤버수</dt>
-                                <dd class="member">6,907</dd>
-                                <dt class="board">게시글</dt>
-                                <dd class="board">16,189</dd>
-                                <dt class="new">New</dt>
-                                <dd class="new">584</dd>
-                            </dl>
-                        </li>
-
-
-                        <li >
-                            <div class="thmb_cafe_ty1 cafe_thumb_32">
-                                <a href="http://cafe.naver.com/lunatichaifan" target="_blank">
-                                    <img src="http://cafeptthumb4.phinf.naver.net/20160820_112/jgps020119_1471675632323HjdEe_JPEG/1.jpg?type=f40_40_mask" width="32" height="32" alt="카페아이콘"
-                                         onerror="this.onerror=null;this.src='http://static.naver.net/cafe/thumb/cafe_thumb_noimg_32.png';" />
-                                    <span class="border"></span>
-                                </a>
-                            </div>
-                            <h5><a class="ellipsis N=a:cnt_thm.cafe" href="http://cafe.naver.com/lunatichaifan" target="_blank" title="오버워치 프로팀 루나틱하이 공식 팬카페" style="width:315px">오버워치 프로팀 루나틱하이 공식 팬카페</a>
-
-
-
-                            </h5>
-                            <p class="ellipsis" title="오버워치 프로팀 루나틱하이 팬카페입니다." style="width:345px">오버워치 프로팀 루나틱하이 팬카페입니다.&nbsp;</p>
-
-                            <dl class="option">
-
-                                <dt class="blind">랭킹</dt>
-                                <dd class="level"><span>열매5단계</span> (<span class="up">증가</span><em>56,872</em>)</dd>
-
-                                <dt class="manager">매니저</dt>
-                                <dd class="manager"><span class="gray05 ellipsis">뇽이</span></dd>
-                                <dt class="since">since</dt>
-                                <dd class="since">2016.08.20.</dd>
-                            </dl>
-
-                            <dl class="count">
-                                <dt class="member">멤버수</dt>
-                                <dd class="member">8,965</dd>
-                                <dt class="board">게시글</dt>
-                                <dd class="board">6,349</dd>
-                                <dt class="new">New</dt>
-                                <dd class="new">109</dd>
-                            </dl>
-                        </li>
-
-
-
-
                     </ul>
-
-
-
-
                     <p class="txt_cate_nolist3">선택하신 디렉토리에는 급상승 Top100 카페가 없습니다.</p>
-
                 </div>
 
                 <div id="PageArea" class="more_view" style="display:block;">
