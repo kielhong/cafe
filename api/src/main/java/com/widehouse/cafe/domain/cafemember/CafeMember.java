@@ -6,6 +6,8 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
@@ -25,6 +27,7 @@ public class CafeMember {
     @ManyToOne
     private Member member;
 
+    @Enumerated(EnumType.STRING)
     private CafeMemberRole role;
 
     private LocalDateTime joinDate;

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/widget-1459945953000-14603.css" type="text/css"/>
     <link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/moz_fix-1459945953000-1346.css" type="text/css"/>
     <link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/map/cafe_map-1459945953000-14564.css" type="text/css"/>
+    <link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/ip_layer_2-1459945953000-2882.css" type="text/css"/>
     <style id="cafeCss" type="text/css">
 /*sub*/
 body {background-color: #ffffff;background-image: none;background-repeat: repeat;}
@@ -381,21 +382,9 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
 
 
 </style>
-
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/jindo.all-1484033572000-90818.js"></script>
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/cssquery-1459945953000-18676.js"></script>
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/jindo/common_util-1459945953000-4535.js"></script>
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/widget-1459945953000-2800.js"></script>
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/cafe_common-1485948244000-23698.js"></script>
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/cafe_eventutil-1459945953000-2096.js"></script>
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/autosourcing-1459945953000-8747.js"></script>
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/AjaxRequest-1459945953000-16024.js"></script>
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/click/clickcr-1459945953000-6201.js"></script>
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/lib/skipNavigationWebkit-1459945953000-907.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/editor/MainLocalStorage-1485413655000-1434.js" charset="utf-8"></script>
 </head>
 
-<body >
+<body ng-app="cafeApp">
 <div id="u_skip">
     <a href="#cafe-menu" onclick="var t=document.getElementById('cafe-menu');t.tabIndex=-1;t.focus();return false;" class="skip">게시판 목록 바로가기</a>
     <a href="#main-area" onclick="var t=document.getElementById('main-area');t.tabIndex=-1;t.focus();return false;" class="skip">본문 바로가기</a>
@@ -404,7 +393,7 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
 
 <h1 class="d-none">1호 카페</h1>
 <div id="cafe-body-skin">
-    <div id="cafe-body">
+    <div id="cafe-body" ng-controller="cafeCtrl" data-ng-init="init()">
 
         <div id="naver-gnb">
 
@@ -444,55 +433,34 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
         <div id="front-img">
             <div id="front-cafe"  style="cursor:hand;cursor:pointer;background-image:none;width:956px">
                 <a name="myCafeUrlLink" onclick="updateMoveMenu()" href="/MyCafeIntro.nhn?clubid=10000001" target="cafe_main" >
-                    <img src="http://cafefiles.naver.nethttp://cafeimgs.naver.com/img/skin/img_80/skin80_46.gif" alt="1호 카페" onload="resizeTopSkin(this)" />
+                    <img src="http://cafefiles.naver.nethttp://cafeimgs.naver.com/img/skin/img_80/skin80_46.gif" alt="{{ cafeName }}" onload="resizeTopSkin(this)" />
                 </a>
             </div>
         </div>
         <div id="special-menu">
             <div class="box-special-menu">
                 <ul class="special-menu" id="special-menu-item">
-
-
-
-                    <li class="default" id="special-menu-0"><p>
-                        <a href="/ArticleList.nhn?search.clubid=10000001&amp;search.boardtype=L" target="cafe_main" onclick="goMenu(0);" class="off" id="special-menuLink-0">전체글보기</a>
-                    </p><span> </span></li>
-
-
-
-                    <li class="default" id="special-menu--1"><p>
-                        <a href="/BestArticleList.nhn?clubid=10000001&amp;period=week&amp;listtype=commentcount" target="cafe_main" onclick="goMenu(-1);" class="off" id="special-menuLink--1">베스트게시글</a>
-                    </p><span> </span></li>
-
-
-
-                    <li class="default" id="special-menu--2"><p>
-                        <a href="/ArticleList.nhn?search.clubid=10000001&amp;search.boardtype=I&amp;search.specialmenutype=P" target="cafe_main" onclick="goMenu(-2);" class="off" id="special-menuLink--2">이미지모아보기</a>
-                    </p><span> </span></li>
-
-
-
-                    <li class="default" id="special-menu--3"><p>
-                        <a href="/ArticleList.nhn?search.clubid=10000001&amp;search.boardtype=M&amp;search.specialmenutype=M" target="cafe_main" onclick="goMenu(-3);" class="off" id="special-menuLink--3">동영상모아보기</a>
-                    </p><span> </span></li>
-
-                    <li class="default" id="special-menu--10"><p>
-                        <a href="/CafeTagCloudList.nhn?search.clubId=10000001" target="cafe_main" onclick="goMenu(-10);" class="off" id="special-menuLink--10">카페태그보기</a>
-                    </p></li>
-
+                    <li class="default" id="special-menu-0">
+                        <p><a href="/ArticleList.nhn?search.clubid=10000001&amp;search.boardtype=L" target="cafe_main" onclick="goMenu(0);" class="off" id="special-menuLink-0">전체글보기</a></p><span> </span>
+                    </li>
+                    <li class="default" id="special-menu--1">
+                        <p><a href="/BestArticleList.nhn?clubid=10000001&amp;period=week&amp;listtype=commentcount" target="cafe_main" onclick="goMenu(-1);" class="off" id="special-menuLink--1">베스트게시글</a></p><span> </span>
+                    </li>
+                    <li class="default" id="special-menu--2">
+                        <p><a href="/ArticleList.nhn?search.clubid=10000001&amp;search.boardtype=I&amp;search.specialmenutype=P" target="cafe_main" onclick="goMenu(-2);" class="off" id="special-menuLink--2">이미지모아보기</a></p><span> </span>
+                    </li>
+                    <li class="default" id="special-menu--3">
+                        <p><a href="/ArticleList.nhn?search.clubid=10000001&amp;search.boardtype=M&amp;search.specialmenutype=M" target="cafe_main" onclick="goMenu(-3);" class="off" id="special-menuLink--3">동영상모아보기</a></p><span> </span>
+                    </li>
+                    <li class="default" id="special-menu--10">
+                        <p><a href="/CafeTagCloudList.nhn?search.clubId=10000001" target="cafe_main" onclick="goMenu(-10);" class="off" id="special-menuLink--10">카페태그보기</a></p>
+                    </li>
                 </ul>
             </div>
         </div>
 
         <div id="info-search" >
-
-            <div id="cafe-icoinfo">
-
-            </div>
-            <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/URLEncodingMap_MS949-1459945953000-97750.js"></script>
-
-            <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/URLEncoder-1459945953000-2121.js"></script>
-
+            <div id="cafe-icoinfo"></div>
             <div id="cafe-search">
                 <form name="frmBoardSearch" action="" onsubmit="return false;" autocomplete="off">
                     <input type="text" name="query" style="ime-mode:active" id="topLayerQueryInput" onkeydown="if (event.keyCode == 13) {searchBoard();}"/>
@@ -504,25 +472,9 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
                 <input type="hidden" name="ugcTypeName" value=""/>
                 <input type="hidden" name="prohibitWords" value=""/>
             </form>
-
-
-
-
         </div>
         <div id="content-area">
-
             <div id="group-area" class="fl">
-
-                <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/click/clickcr-1459945953000-6201.js"></script>
-
-                <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/favorite/favorite_cafe-1459945953000-1385.js"></script>
-
-                <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/lcslog-1459945953000-11106.js"></script>
-
-                <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/tablet/Tablet-1459945953000-4233.js"></script>
-
-                <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/tablet/TabletHandler-1459945953000-2403.js" charset="utf-8"></script>
-
 
                 <div class="cafe-info-action" id="cafe-info-action">
                     <!-- 카페정보  -->
@@ -535,9 +487,6 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
                                 <p><a href="#" class="_rosRestrict" onclick="showMyAction();clickcr(this, 'cia.my', '', '', event);return false;">나의활동</a></p>
                             </li>
                             <li class="tit-bookmark">
-
-
-
                                 <a class="_rosRestrict" href="#" title="즐겨찾는 카페 등록" onClick="setupFavoriteCafe(true, true, 10000001);clickcr(this, 'cia.fav', '', '', event);return false;"><img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="27" height="28" alt="즐겨찾는 카페 등록" class="btn-bookmark-off" id="favoriteCafeInCafeInfo"/></a>
                             </li>
                         </ul>
@@ -552,7 +501,7 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
                                         </a>
                                     </li>
                                     <li class="gm-tcol-c">
-                                        <div class="thm"><a href="/CafeHistoryView.nhn?clubid=10000001" class="gm-tcol-c" target="cafe_main" onclick="clickcr(this, 'cia*i.history', '', '', event); targetCleaner(this);">since 2003.12.06.</a></div>
+                                        <div class="thm"><a href="/CafeHistoryView.nhn?clubid=10000001" class="gm-tcol-c" target="cafe_main" onclick="clickcr(this, 'cia*i.history', '', '', event); targetCleaner(this);">since {{ createDateTime | date:'yyyy.MM.dd.' }}</a></div>
                                         <div class="info-view"><a href="#" onclick="cafeProfile();clickcr(this, 'cia*i.intro', '', '', event);return false;" class="u gm-tcol-c">카페소개</a></div>
                                     </li>
 
@@ -576,12 +525,9 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
                                     <li class="level-info border-sub">
                                         <span class="ico_lock"></span><br></br><span class="txt_lock gm-tcol-c"><em>비공개카페</em></span>
                                     </li>
-
-
-
                                     <li class="mem-cnt-info"  style="cursor:pointer;">
                                         <strong class="d-none">카페멤버수</strong>
-                                        <a href="#" onclick="showCafeMember();clickcr(this, 'cia*i.member', '', '', event);return false;" class="gm-tcol-c"><span class="ico"></span><br></br><em>2</em></a>
+                                        <a href="#" class="gm-tcol-c"><span class="ico"></span><br></br><em>{{ cafeMemberCount | number:0 }}</em></a>
                                         <div class="ly_info_dsc" style="font-weight:normal;top:31px;left:5px;display:none;" id="hiddenCafeApplyLayer">
                                             <div class="cont cont_v1" style="width:60px">
                                                 <p><a href="/ManageJoinApplication.nhn?search.clubid=10000001" >가입대기 <span>0</span></a></p>
@@ -622,13 +568,7 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
                         </div>
                         <div class="box_g_b"></div>
                         <div class="cafe-write-btn">
-
-
-
                             <a href="#" class="_rosRestrict" onclick="writeBoard();clickcr(this, 'mnu.write', '', '', event);return false;"><img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="171" height="34" alt="카페 글쓰기" class="btn-write"/></a>
-
-
-
                         </div>
                     </div>
 
@@ -678,8 +618,6 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
                     </div>
                     <!-- //나의활동 -->
                 </div>
-                <script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/menu/Menu-1459945953000-4245.js"></script>
-
 
                 <div id="cafe-menu">
                     <div class="box-g-t"></div>
@@ -759,7 +697,6 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
 
                 <div id="ad-banner">
                     <div id="da_170170" name="da_170170">
-                        <iframe id="f170170" title="광고영역" name="f170170" data-veta-preview="cafe_in_other" src="http://ad.naver.com/fxshow?su=SU10063&amp;cluburl=cafeno1&amp;subject=tid1--001_tid2--001" width="170" height="170" marginheight="0" marginwidth="0" scrolling="no" frameborder="0" align="center"></iframe>
                     </div>
                 </div>
 
@@ -813,23 +750,13 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
                 <input id="searchviewtype" type="hidden" value="title" />
                 <iframe name="cafe_main" id="cafe_main" title="카페 메인" src="about:blank" width="773" height="100%" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowtransparency="true" allowfullscreen="true"></iframe>
 
-                <script type="text/javascript">
-                            $("cafe_main").src = "http://cafe.naver.com/MyCafeIntro.nhn?clubid=10000001";
-                            </script>
-
-
-
-
+                <!--<script type="text/javascript">
+                            document.getElementById("cafe_main").src = "http://cafe.naver.com/MyCafeIntro.nhn?clubid=10000001";
+                            </script>-->
             </div>
-
         </div>
-
-
-
-
-
         <div id="cafe-footer">
-            <p class="cafe-name m-tcol-c">네이버 카페 <span class="m-tcol-p">1호 카페</span></p>
+            <p class="cafe-name m-tcol-c">네이버 카페 <span class="m-tcol-p">{{ cafeName }}</span></p>
         </div>
 
 
@@ -840,45 +767,13 @@ body {background-color: #ffffff;background-image: none;background-repeat: repeat
     <a href="#" class="blind" onfocus="var t=document.getElementById('u_skip');t.tabIndex=-1;t.focus();return false" style="visibility:visible">콘텐츠 상단</a>
 </div>
 
-
-
-
-
-
-
-
-<input type="hidden" id="questionct" value="block"/>
-<iframe name="cafe_check" id="cafe_check" width="0" height="0" frameborder="0" title="카페확인"></iframe>
-<form id="cafeApply_check" action="/CafeApplyCheck.nhn" method="post" target="cafe_check" style="margin:0;padding:0;">
-    <input type="hidden" name="clubid" value="10000001"/>
-    <input type="hidden" name="email" value=""/>
-    <input type="hidden" name="alreadyMemberPopup" value="true"/>
-    <input type="hidden" id="redirectwrite" name="redirectwrite" value=""/>
-</form>
-<form name="answerSaveFrm" style="display:none;">
-</form>
-<form name="nicknameSaveFrm">
-    <input type="hidden" id="cafeTempApplyNickname" name="cafeTempApplyNickname" value="" />
-</form>
-
-
-
-
-
-<script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/lib/nanoajax/nanoajax.min-1476841572000-685.js" charset="UTF-8"></script>
-
-<script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/mycafe/linkedmember/LinkedMember-1476841572000-6801.js" charset="UTF-8"></script>
-
-<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/ip_layer_2-1459945953000-2882.css" type="text/css"/>
-
-<div id="login_layer_bg" style="z-index:100;display:none;position:absolute;width:100%;height:3800px;top:0px;left:0px;background-color:GRAY;filter:alpha(opacity=20);-moz-opacity:0.2;">
-    <iframe id="login_layer_bg_iframe" frameborder="0" style="position:absolute;top:0px;left:0px;width:100%;height:3800px;background-color:GRAY;filter:alpha(opacity=20);-moz-opacity:0.2;" title="로그인영역"></iframe>
-</div>
-
-
-<script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/lib/cafe/jindo1/OneToOneChatLauncher-1459945953000-1473.js" charset="utf-8"></script>
-<script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/cafe_ui-1485413655000-18861.js"></script>
-<script type="text/javascript" src="http://cafe.naver.com/static/js/mycafe/javascript/widget/Clock-1482825612000-168663.js" charset="UTF-8"></script>
+<!-- angularjs -->
+<script src="/webjars/angularjs/angular.js"></script>
+<script src="/webjars/angularjs/angular-resource.js"></script>
+<script src="/webjars/angularjs/angular-route.js"></script>
+<script src="/js/ng/cafeApp.js"></script>
+<script src="/js/ng/cafeController.js"></script>
+<!-- // angularjs -->
 
 </body>
 </html>

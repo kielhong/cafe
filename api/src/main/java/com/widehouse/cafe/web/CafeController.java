@@ -4,6 +4,7 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.service.CafeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,7 @@ public class CafeController {
         return cafe;
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping("/cafes/{cafeUrl}")
     public Cafe getCafeByUrl(@PathVariable String cafeUrl) {
         Cafe cafe = cafeService.getCafe(cafeUrl);
