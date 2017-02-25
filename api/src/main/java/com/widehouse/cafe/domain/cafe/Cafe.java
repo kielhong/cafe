@@ -1,5 +1,6 @@
 package com.widehouse.cafe.domain.cafe;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.member.Member;
@@ -63,6 +64,7 @@ public class Cafe {
 
     @OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("listOrder ASC")
+    @JsonManagedReference
     private List<Board> boards;
 
     public Cafe() {

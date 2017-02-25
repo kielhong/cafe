@@ -1,5 +1,7 @@
 package com.widehouse.cafe.domain.cafe;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,7 @@ public class Board {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     private Cafe cafe;
 
     @Size(min = 1, max = 50)

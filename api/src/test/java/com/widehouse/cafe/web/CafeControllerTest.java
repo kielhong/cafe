@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.service.CafeService;
@@ -35,8 +36,11 @@ public class CafeControllerTest {
     public void getCafeByUrl_Should_CafeInfo() throws Exception {
         // given
         Category category = new Category(1L, "category");
+        Cafe cafe = new Cafe("cafeurl", "cafename", "", PUBLIC, category);
+        cafe.getBoards().add(new Board(cafe, "board1", 1));
+        cafe.getBoards().add(new Board(cafe, "board2", 2));
         given(cafeService.getCafe("cafeurl"))
-                .willReturn(new Cafe("cafeurl", "cafename", "", PUBLIC, category));
+                .willReturn(cafe);
         // then
         this.mvc.perform(get("/cafes/cafeurl"))
                 .andExpect(status().isOk())
@@ -48,7 +52,9 @@ public class CafeControllerTest {
                 .andExpect(jsonPath("$.category.id").value(category.getId()))
                 .andExpect(jsonPath("$.category.name").value(category.getName()))
                 .andExpect(jsonPath("$.statistics.cafeMemberCount").value(0))
-                .andExpect(jsonPath("$.statistics.cafeArticleCount").value(0));
+                .andExpect(jsonPath("$.statistics.cafeArticleCount").value(0))
+                .andExpect(jsonPath("$.boards.[0].name").value("board1"))
+                .andExpect(jsonPath("$.boards.[1].name").value("board2"));
     }
 
     @Test

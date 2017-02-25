@@ -1,0 +1,362 @@
+/*sub*/
+body {background-color: #ffffff;background-image: none;background-repeat: repeat;}
+
+#main-area select,#main-area textarea,#main-area .list-search input {
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5 !important;
+}  /*body backgroundcolor input000*/
+#main-area .border-sub {
+    border-color: #e5e5e5;
+}  /* 333 list-line*/
+#main-area .board-line {
+    background-color: #e5e5e5;
+}  /* 333 list-line*/
+#main-area .board-text {
+    color: #e5e5e5;
+}
+
+#main-area .cafebook-line {
+    background-color: #3FBF18;
+}
+
+#main-area .skin-bgcolor {
+    background-color: #ffffff;
+    background-image: none;
+    background-repeat: repeat;
+}
+
+#main-area #sub-tit {
+    background-image:
+        url(http://cafeimgs.naver.net/style/s01_03/sub-tit-bg.gif);
+}
+
+#main-area .sub-tit-bottom {
+    background-image:
+        url(http://cafeimgs.naver.net/style/s01_03/sub-tit-bg.gif);
+}
+
+#main-area .bg-color {
+    background-color: #f9f9f9;
+}
+
+#main-area .sub-tit-color {
+    color: #3fbf18;
+}
+
+#main-area .list-tab li.selected {
+    background-color: #ffffff;
+}  /*body backgroundcolor*/
+#main-area .btn span {
+    background-image: url(http://cafeimgs.naver.net/style/s01_03/btn-bg.gif)
+        ;
+}
+
+#main-area .btn p {
+    background-image: url(http://cafeimgs.naver.net/style/s01_03/btn-bg.gif)
+        ;
+}
+
+#main-area .btn2 span {
+    background-image: url(http://cafeimgs.naver.net/style/s01_03/btn-bg2.gif)
+        ;
+}
+
+#main-area .btn2 p {
+    background-image: url(http://cafeimgs.naver.net/style/s01_03/btn-bg2.gif)
+        ;
+}
+
+#main-area
+.btn_wide span{background-image:url(http://cafeimgs.naver.net/style/s01_03/btn_wide.gif)}
+#main-area
+.btn_wide p{background-image:url(http://cafeimgs.naver.net/style/s01_03/btn_wide.gif)}
+#main-area
+.btn_scroll{background-image:url(http://cafeimgs.naver.net/style/s01_03/btn_scroll.gif)}
+
+#cafe-footer {
+    border-top-color: #e5e5e5;
+}  /* 333 list-line*/ /*sub*/
+#cafe-body-skin {
+    background-image: none;
+    background-position: 0 0;
+}  /*skin-background*/
+#cafe-icoinfo .tcol-c {
+    color: #000000;
+}  /*222*/
+#required-notice .notice {
+    color: #000000;
+}  /*222*/
+#front-cafe a {
+    color: #000000;
+}  /*222*/
+#group-box-area input {
+    background-color: #FFFFFF !important;
+}  /*body backgroundcolor*/
+#linked-member .group-list {
+    background-color: #EFEFEF;
+    border-color: #BEBEBE;
+}  /*body backgroundcolor input000*/ /*gnb-menu */
+#gnb-menu a, #gnb-menu .view_mobile, #gnb-menu a.gnb_my .gnb_name {
+    color: #444444;
+}  /*222*/
+#gnb-menu img.tcol-c {
+    background-color: #444444;
+}  /*222*/
+#gnb-menu .up-gnb, #gnb-menu .gnb_my_li.gnb_lyr_opened .gnb_my_namebox {
+    background-image:
+        url(http://cafeimgs.naver.net/style2014/s01_03/btn-up-gnb.png)
+}
+
+#gnb-menu .down-gnb, #gnb-menu .gnb_my_li .gnb_my_namebox {
+    background-image:
+        url(http://cafeimgs.naver.net/style2014/s01_03/btn-down-gnb.png)
+}
+
+#gnb-menu .logout {
+    background-image:
+        url(http://cafeimgs.naver.net/style/s01_03/btn-logout.gif)
+}
+
+#gnb-menu .login {
+    background-image:
+        url(http://cafeimgs.naver.net/style2014/s01_03/btn-login.png)
+}
+
+/* Naver GNB Icon */
+#gnb-menu .gnb_service_li a.gnb_service .gnb_icon {
+    background-image:
+    url(http://cafeimgs.naver.net/style2014/s01_03/btn-service-gnb.png);filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src=http://cafeimgs.naver.net/style2014/s01_03/btn-service-gnb.png);_background:none;
+}
+
+/* Naver GNB Login Button */
+#gnb-menu .gnb_bg{
+    background-color:#ffffff;
+}
+
+#gnb-menu .gnb_bdr{
+    border-color:#bebebe;
+}
+
+#gnb-menu .gnb_txt{
+    color:#444444;
+}
+
+/*widget sub*/
+#content-area .tcol-c {
+    color: #666666;
+}  /* ccc txt-contents*/
+#content-area .tcol-t {
+    color: #333333;
+}  /*txt-title*/
+#content-area .tcol-p {
+    color: #FF4836;
+}  /*txt-point*/
+#content-area .group-list li img.tcol-c {
+    background-color: #666666;
+}  /* ccc img_ico*/
+#content-area .group-mlist-line {
+    background-color: #666666;
+}  /* ccc line*/
+#content-area .group-border {
+    border-color: #666666;
+}  /* ccc line*/
+#content-area .box-w {
+    background-color: #F9F9F9;
+}  /*background =reply-bg =banner-border*/
+#content-area .group-tit h4 {
+    padding-top: 0;
+    background-image:
+        url(http://cafeimgs.naver.net/style/s01_03/ico-widget-tit.gif);
+    background-repeat: no-repeat;
+    background-position: left top;
+}  /*tit*/
+#content-area .group-tit p {
+    padding-top: 0;
+}
+
+#content-area .member-reload {
+    background-image:
+        url(http://cafeimgs.naver.net/style/s01_03/btn-reload.gif);
+}
+
+#content-area .member-up {
+    background-image:
+        url(http://cafeimgs.naver.net/style/s01_03/btn-up-reload.gif);
+}
+
+#content-area .member-down {
+    background-image:
+        url(http://cafeimgs.naver.net/style/s01_03/btn-down-reload.gif);
+}
+
+#content-area .design-input {
+    background-color: #EFEFEF;
+    border-color: #BEBEBE;
+}  /*body backgroundcolor input000*/
+#content-area .widget-search {
+    background-image:
+        url(http://cafeimgs.naver.net/style/s01_03/btn_widget_search.gif);
+}
+
+#ad-banner .linebox {
+    border-color: #F9F9F9;
+}  /*background =reply-bg =banner-border*/
+#cafe-footer .m-tcol-c {
+    color: #333333;
+}  /* 000 txt-contents*/
+#cafe-footer .m-tcol-p {
+    color: #ff4e00;
+}  /*txt-point*/
+#main-area .con_link {
+    color: #333333;
+} /* 000 txt-contents*/
+.list-style .srch_tx{padding:6px 0 0 19px;background:url(http://cafeimgs.naver.net/style2014/ic_noti.png) no-repeat 0 5px;color:#666;font-size:13px;font-weight:bold;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src=http://cafeimgs.naver.net/style2014/ic_noti.png);_background:none;letter-spacing:-1px}
+.list-btn-view{clear:both;height:67px}
+.list-btn-view .btn_link{float:right;margin-top:12px;padding-right:6px;background:url(http://cafeimgs.naver.net/style2014/ico_arr2.gif) no-repeat 100% 4px;font-size:13px;font-weight:bold;color:#666;letter-spacing:-1px;text-decoration:none}
+
+
+
+
+
+
+#cafe-footer .cafe-name {display:block;}
+#cafe-footer p {font-size:12px;font-family:dotum !important;}
+#cafe-footer span {font-weight:bold;}
+#cafe-footer .m-tcol-c {font-size:12px;font-family:dotum !important;color:;}
+#cafe-footer .m-tcol-p {font-weight:bold;color:;}
+
+
+
+
+
+
+#cafe-menu .gm-tcol-c {color:#333333;}
+#cafe-menu .gm-tcol-t {color:#3fbf18;}
+#cafe-menu .gm-tcol-p {color:#3fbf18;}
+#cafe-menu .box-g-t {height:6px;background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/menu-bg-t.gif);}
+#cafe-menu .box-g-m {padding-top:0;padding-bottom:5px;background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/menu-bg-m.gif);}
+#cafe-menu .box-g-b {height:6px;background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/menu-bg-b.gif);}
+#cafe-menu .cafe-menu-tit {width:165px;height:27px;margin-top:0;margin-bottom:3px;background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/menu-bg-tit.gif);}
+#cafe-menu .cafe-menu-tit h3 {margin-top:10px;margin-left:11px;}
+#cafe-menu .cafe-menu-tit p {margin-top:8px;margin-right:5px;}
+#cafe-menu .cafe-menu-tit.frst{background-image:none;}
+#cafe-menu .cafe-menu-tit .up-btn {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn-up-menu.gif);}
+#cafe-menu .cafe-menu-tit .down-btn {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn-down-menu.gif);}
+#cafe-menu .cafe-menu-space {height:2px;margin-top:0;margin-right:3px;margin-bottom:0;margin-left:3px;border-top-style:solid;border-top-width:1px;border-color:#e7e7e7;}
+#cafe-menu .cafe-menu-list {margin-top:6px;margin-left:15px;margin-right:8px;}
+#cafe-menu .ico-list {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-list.gif);}
+#cafe-menu .ico-attendance {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-attendance.png);}
+#cafe-menu .ico-best {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-best.gif);}
+#cafe-menu .ico-link {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-link.gif);}
+#cafe-menu .ico-memo {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-memo.gif);}
+#cafe-menu .ico-photo {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-photo.gif);}
+#cafe-menu .ico-picture {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-picture.gif);}
+#cafe-menu .ico-tag {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-tag.gif);}
+#cafe-menu .ico-kin {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-kin.gif);}
+#cafe-menu .ico-indent {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-indent.gif);}
+#cafe-menu .ico-simple {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-simple.png);}
+#cafe-menu .ico-map {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-map.png);}
+#group-area .cafe-info-action .border-sub {border-color: #e5e5e5;}
+#group-area .cafe-info-action .gm-tcol-c {color:#333333;}
+#group-area .cafe-info-action .gm-tcol-t {color:#3fbf18;}
+#group-area .cafe-info-action .gm-tcol-p {color:#ff4836;}
+#group-area .cafe-info-action .box-g {padding:0 0 12px 0;background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/bg_info_action.gif);}
+#group-area .cafe-info-action .info-action-tab li {height:37px;}
+#group-area .cafe-info-action .info-action-tab li a {color:#fff;}
+#group-area .cafe-info-action .info-action-tab li p {margin:12px 0 0 5px;color:#3fbf18;}
+#group-area .cafe-info-action .info-action-tab li.tit-info {width:71px;padding-right:0;padding-left:0;background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/tab_group.gif);text-align:center;}
+#group-area .cafe-info-action .info-action-tab li.tit-info-on {width:71px;padding-right:0;padding-left:0;background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/tab_group_on.gif);text-align:center;}
+#group-area .cafe-info-action .info-action-tab li.tit-action {width:68px;padding-right:0;padding-left:0;background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/tab_group2.gif);text-align:center;}
+#group-area .cafe-info-action .info-action-tab li.tit-action-on {width:68px;padding-right:0;padding-left:0;background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/tab_group2_on.gif);text-align:center;}
+#group-area .cafe-info-action .info-action-tab li.tit-bookmark {width:27px;height:34px;padding:3px 3px 0 2px;background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/tab_group3.gif) no-repeat 0 0;}
+#group-area .cafe-info-action .info-action-tab li.tit-bookmark img {width:27px !important;height:28px !important;margin:0;vertical-align:middle;}
+#group-area .cafe-info-action .info-action-tab li.tit-bookmark .btn-bookmark-on {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn_bookmark_on.png);_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src=http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn_bookmark_on.png);_background-image:none;}
+#group-area .cafe-info-action .info-action-tab li.tit-bookmark .btn-bookmark-off {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn_bookmark_off.png);_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src=http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn_bookmark_off.png);_background-image:none;}
+#group-area .cafe-info-action .ia-action-data {width:163px;height:50px;border-color:#e5e5e5;border-bottom-style:solid;}
+#group-area .cafe-info-action .ia-action-data ul {margin:10px 0 0 10px;}
+#group-area .cafe-info-action .ia-action-data .grade {width:66px;padding-right:10px;}
+#group-area .cafe-info-action .ia-info-data {width:163px;border-color:#e6e6e6;border-bottom-style:solid;}
+#group-area .cafe-info-action .ia-info-data ul {margin:7px 0 1px 10px;}
+#group-area .cafe-info-action .ia-info-data ul .info-view {padding-right:10px;}
+#group-area .cafe-info-action .ia-info-data li .mlink {width:122px;}
+#group-area .cafe-info-action .ia-info-data .cafe-admin .ico-admin {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_admin.gif) no-repeat;}
+#group-area .cafe-info-action .ia-info-data .cafe-admin .ico-stat {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_stat.gif) no-repeat;}
+#group-area .cafe-info-action .ia-info-data2 {width:163px;border-color:#e6e6e6;border-bottom-style:solid;}
+#group-area .cafe-info-action .ia-info-data2 .ico_lock{background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_lock.gif);}
+#group-area .cafe-info-action .ia-info-data2 .level-info {width:81px;}
+#group-area .cafe-info-action .ia-info-data2 .mem-cnt-info{width:80px;}
+#group-area .cafe-info-action .ia-info-data2 .mem-cnt-info .ico {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_cnt_mem.gif);}
+#group-area .cafe-info-action .ia-info-data3 {width:163px;margin:11px auto 7px;}
+#group-area .cafe-info-action .ia-info-data3 ul {margin:0 8px 0 10px;}
+#group-area .cafe-info-action .ia-info-data3 .ico_bkmk{background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_cnt_bkmk.gif);}
+#group-area .cafe-info-action .ia-info-data3 .ico_bkmk2 {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_cnt_bkmk2_20111028.gif);}
+#group-area .cafe-info-action .ia-info-data3 .ico_mbl {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_cnt_mbl.gif);}
+#group-area .cafe-info-action .ia-info-data3 .ico_vst {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_cnt_vst.gif);}
+#group-area .cafe-info-action .ia-info-data3 .ico_wrt {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_cnt_wrt.gif);}
+#group-area .cafe-info-action .ia-info-data3 .ico_cmt {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_cnt_cmt.gif);}
+#group-area .cafe-info-action .ia-info-btn {height:30px;margin:0 4px;padding-top:3px;border-top:1px solid #e6e6e6;}
+#group-area .cafe-info-action .ia-action-link {height:25px;border-style:solid;}
+#group-area .cafe-info-action .ia-action-link .bar {margin:0 -12px 0 2px;}
+#group-area .cafe-info-action .tab-up {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn-up-tab.gif);}
+#group-area .cafe-info-action .tab-down {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn-down-tab.gif);}
+#group-area .cafe-info-action .tab-upc {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn-up-tabc.gif);}
+#group-area .cafe-info-action .tab-downc {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn-down-tabc.gif);}
+#group-area .cafe-info-action .btn-write {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn_write.png);_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src=http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn_write.png);_background-image:none;}
+#group-area .cafe-info-action .btn-join {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn_join.png);_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src=http://cafeimgs.naver.net/design/menubox/menubox-296-1/btn_join.png);_background-image:none;}
+#group-area .cafe-info-action .cafe-join-info{position:relative;width:169px;height:26px;margin-bottom:4px;border:1px solid #bebebe;background:#f9f9f9;}
+#group-area .cafe-info-action .cafe-join-info .tcol-c {color: #666666;}
+#group-area .cafe-info-action .cafe-join-info p {border-color: #bebebe;}
+#group-area .cafe-info-action .cafe-join-info .tail {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ly_join_tail.gif)}
+#cafe-menu .ico-market {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-market.gif);}
+#cafe-menu .ico-book {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-book.gif);}
+#cafe-menu .ico-list-metoo {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-list-metoo.png);filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src=http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-list-metoo.png);_background:none;}
+#cafe-menu .ico-calendar {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-calendart.gif);}
+#cafe-menu .ico-app {background-image:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico-m-app.gif);}
+#cafe-menu .ico-cafe-kin {background:url(http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_cafe_kin.png) no-repeat;_background:none;_filter:progid:dximagetransform.microsoft.alphaimageloader(src='http://cafeimgs.naver.net/design/menubox/menubox-296-1/ico_cafe_kin.png', sizingmethod='crop')}
+
+
+
+
+
+
+
+
+
+
+#special-menu {background-image:url(http://cafeimgs.naver.com/style/s01_03/sepcial-menu-bg.gif);background-color:transparent;border-width:0;border-color:#cccccc;border-style:solid;}
+#special-menu .box-special-menu {height:35px;}
+#special-menu .special-menu {width:910px;overflow:hidden;position:relative;margin-left:10px;}
+#special-menu .special-menu li.default {margin-left:0;height:35px;background-image:url(http://cafeimgs.naver.com/style/s01_03/sepcial-menu-line.gif);}
+#special-menu .special-menu li.selected .last {background-position:-2px;}
+#special-menu .special-menu li.selected p {padding-right:0;margin-left:0;background-position:right center;padding-left:0;margin-right:0;background-image:url(http://cafeimgs.naver.com/style/s01_03/sepcial-menu-line.gif);height:35px;}
+#special-menu .special-menu li.selected {margin-right:0;background-position:right center;background-color:transparent;margin-left:0;background-image:none;}
+#special-menu .special-menu li span {display:none;color:#a6f38f;margin-top:11px;}
+#special-menu .special-menu .off {margin-top:12px;margin-right:11px;margin-left:10px;color:#a6f38f;}
+#special-menu .special-menu .on {padding-top:0;margin-top:12px;margin-right:11px;margin-left:10px;color:#ffffff;}
+
+
+
+
+#main-area .m-tcol-c {color:#333333;}
+#main-area #tbody td {color:#333333;}
+#main-area #tbody th {color:#333333;}
+#main-area .m-tcol-t {color:#3fbf18;}
+#main-area .m-tcol-p {color:#ff4e00;}
+#main-area .board-box img.tcol-c {background-color:#333333;}
+#main-area .board-box-line {background-color:#333333;}
+#main-area .board-box-line-dashed {border-color:#333333;}
+#main-area .list-tit {height:29px;background-color:transparent;border-width:0;border-style:solid;border-color:#cccccc;background-image:url(http://cafeimgs.naver.com/style/s01_03/list-tit-bg.gif);margin-right:0;}
+#main-area .list-tit .inbox {width:8px;height:29px;background-image:none;display:none;}
+#main-area .list-tit h3 {margin-top:7px;padding-left:10px;font-size:14px;background-image:none;}
+#main-area .list-tit span {margin-top:7px;margin-right:8px;background-image:url(http://cafeimgs.naver.net/style/s01_03/btn-more.gif);}
+#main-area .ico-list-notice {background-image:url(http://cafeimgs.naver.net/style/s01_03/ico-list-notice.gif);}
+#main-area .ico-list-recomm {background-image:url(http://cafeimgs.naver.net/style/s01_03/ico-list-recomm.gif);}
+#main-area .ico-list-info {background-image:url(http://cafeimgs.naver.net/style/s01_03/ico-list-info.gif);}
+#main-area .ico-list-event {background-image:url(http://cafeimgs.naver.net/style/s01_03/ico-list-event.gif);}
+#main-area .ico-list-faq {background:url(http://cafeimgs.naver.net/style/skin/skin_faq_s01.gif) no-repeat -54px 0;}
+#main-area .ico-recomm {background:url(http://cafeimgs.naver.net/style/skin/skin_recomm_s01.gif) no-repeat -132px 0;}
+#main-area .ico-solution {background:url(http://cafeimgs.naver.net/style/skin/skin_solution_s01.gif) no-repeat -130px 0;}
+#main-area .ico-question-select {background:url(http://cafeimgs.naver.net/style/skin/qa_ico_s01_03.gif) no-repeat 0 0;}
+#main-area .ico-book {background-image:url(http://cafeimgs.naver.net/style/s01_03/ico-m-book.gif);}
+#main-area .kin_activity_area .cnt_answer{background:url(http://cafeimgs.naver.net/style/s01_03/ico_cafekin_answer.png) no-repeat;_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src=http://cafeimgs.naver.net/style/s01_03/ico_cafekin_answer.png);_background:none;_filter:progid:dximagetransform.microsoft.alphaimageloader(src='http://cafeimgs.naver.net/style/s01_03/ico_cafekin_answer.png', sizingmethod='crop')}
+#main-area .kin_activity_area .cnt_adopt{background:url(http://cafeimgs.naver.net/style/s01_03/ico_cafekin_adopt.png) no-repeat;_background:none;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src=http://cafeimgs.naver.net/style/s01_03/ico_cafekin_adopt.png);_background:none;_filter:progid:dximagetransform.microsoft.alphaimageloader(src='http://cafeimgs.naver.net/style/s01_03/ico_cafekin_adopt.png', sizingmethod='crop')}
