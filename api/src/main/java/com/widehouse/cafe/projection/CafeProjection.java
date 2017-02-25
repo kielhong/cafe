@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 /**
  * Created by kiel on 2017. 2. 24..
  */
-public interface CafeSummary {
+public interface CafeProjection {
     Long getId();
 
     String getUrl();

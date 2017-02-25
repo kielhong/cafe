@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
-import com.widehouse.cafe.projection.CafeSummary;
+import com.widehouse.cafe.projection.CafeProjection;
 import com.widehouse.cafe.service.CafeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,14 +43,10 @@ public class CategoryControllerTest {
     @MockBean
     private CafeService cafeService;
 
-    @Mock
-    private CafeSummary cafeMock1;
-    @Mock
-    private CafeSummary cafeMock2;
-    @Mock
-    private CafeSummary cafeMock3;
-    @Mock
-    private CafeSummary cafeMock4;
+    private CafeProjection cafeMock1;
+    private CafeProjection cafeMock2;
+    private CafeProjection cafeMock3;
+    private CafeProjection cafeMock4;
 
     @Test
     public void getCategories() throws Exception {
@@ -72,33 +68,19 @@ public class CategoryControllerTest {
     @Test
     public void getCafesByCategory() throws Exception {
         // given
-        given(cafeMock1.getUrl()).willReturn("test1");
-        given(cafeMock1.getUrl()).willReturn("test2");
         given(this.cafeService.getCafeByCategory(1L,
                 new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock1, cafeMock2));
         // then
-        try {
-            this.mvc.perform(get("/categories/1/cafes"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                    .andExpect(jsonPath("$.length()").value(2))
-                    .andExpect(jsonPath("$.[0].url").value("test1"))
-                    .andExpect(jsonPath("$.[1].url").value("test2"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.mvc.perform(get("/categories/1/cafes"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.length()").value(2));
     }
 
     @Test
     public void getCafesByCategoryWithPaging() throws Exception {
         // given
-        Category category1 = new Category("category");
-        given(cafeMock1.getUrl()).willReturn("test1");
-        given(cafeMock1.getViisibility()).willReturn(CafeVisibility.PUBLIC);
-        given(cafeMock2.getUrl()).willReturn("test2");
-        given(cafeMock3.getUrl()).willReturn("test3");
-        given(cafeMock4.getUrl()).willReturn("test4");
         given(this.cafeService.getCafeByCategory(1L,
                 new PageRequest(0, 4, new Sort(DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock1, cafeMock2, cafeMock3, cafeMock4));
@@ -106,11 +88,6 @@ public class CategoryControllerTest {
         this.mvc.perform(get("/categories/1/cafes?page=0&size=4"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.length()").value(4))
-                .andExpect(jsonPath("$.[0].url").value("test1"))
-                .andExpect(jsonPath("$.[0].visibility").value(PUBLIC.toString()))
-                .andExpect(jsonPath("$.[1].url").value("test2"))
-                .andExpect(jsonPath("$.[2].url").value("test3"))
-                .andExpect(jsonPath("$.[3].url").value("test4"));
+                .andExpect(jsonPath("$.length()").value(4));
     }
 }

@@ -5,6 +5,7 @@ import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
+import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,12 +29,12 @@ public class ArticleController {
 
 
     @GetMapping(value = "/cafes/{cafeUrl}/articles", params = {"page", "size"})
-    public List<Article> getArticlesByCafe(@PathVariable String cafeUrl,
-                                           @RequestParam(defaultValue = "0") int page,
-                                           @RequestParam(defaultValue = "10") int size) {
+    public List<ArticleProjection> getArticlesByCafe(@PathVariable String cafeUrl,
+                                                     @RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "10") int size) {
         // TODO : artcleService 가 url을 받도록 하는게 좋을지?
         Cafe cafe = cafeRepository.findByUrl(cafeUrl);
-        List<Article> articles = articleService.getArticlesByCafe(cafe, page, size);
+        List<ArticleProjection> articles = articleService.getArticlesByCafe(cafe, page, size);
 
         return articles;
     }

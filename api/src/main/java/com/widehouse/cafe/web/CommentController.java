@@ -6,7 +6,9 @@ import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,9 +38,9 @@ public class CommentController {
         return comments;
     }
 
-    @PostMapping("/articles/{articleId}/comments")
+    @PostMapping(value = "/articles/{articleId}/comments", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Comment write(@PathVariable Long articleId,
-                         @RequestBody Comment input) {
+                         @ModelAttribute Comment input) {
         // TODO : member 코드 처리
         Member member = new Member("member");
         Article article = articleRepository.findOne(articleId);
