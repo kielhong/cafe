@@ -35,10 +35,6 @@ public class CafeTest {
                 .hasFieldOrPropertyWithValue("description", "desc")
                 .hasFieldOrPropertyWithValue("visibility", CafeVisibility.PUBLIC)
                 .hasFieldOrPropertyWithValue("category", category);
-        assertThat(cafe.getCafeMembers())
-                .hasSize(0);
-
-
     }
 
     @Test
@@ -55,56 +51,6 @@ public class CafeTest {
                 .isEqualTo(CafeVisibility.PRIVATE);
         assertThat(cafe.getCategory())
                 .isEqualTo(category);
-    }
-
-
-    @Test
-    public void addCafeMember_increase_cafeMemberCount() {
-        // Given
-        Member member = new Member();
-        CafeMember cafeMember = new CafeMember(cafe, member, CafeMemberRole.MEMBER);
-        int beforeSize = cafe.getCafeMembers().size();
-        // When
-        cafe.addCafeMember(cafeMember);
-        // Then
-        assertThat(cafe.getCafeMembers())
-                .hasSize(beforeSize + 1)
-                .contains(cafeMember);
-        assertThat(cafe.getStatistics().getCafeMemberCount())
-                .isEqualTo(1);
-    }
-
-    @Test
-    public void removeCafeMember_decrease_cafeMember() {
-        // Given
-        Member member1 = new Member();
-        Member member2 = new Member();
-        CafeMember cafeMember1 = new CafeMember(cafe, member1);
-        CafeMember cafeMember2 = new CafeMember(cafe, member2);
-        cafe.addCafeMember(cafeMember1);
-        cafe.addCafeMember(cafeMember2);
-        int beforeSize = cafe.getCafeMembers().size();
-        // When
-        cafe.removeCafeMember(cafeMember1);
-        // Then
-        assertThat(cafe.getCafeMembers())
-                .doesNotContain(cafeMember1)
-                .hasSize(beforeSize - 1);
-        assertThat(cafe.getStatistics().getCafeMemberCount())
-                .isEqualTo(1);
-    }
-
-    @Test
-    public void isCafeMember_should_true_member_is_cafeMember() {
-        // given
-        Member member1 = new Member();
-        CafeMember cafeMember1 = new CafeMember(cafe, member1);
-        cafe.addCafeMember(cafeMember1);
-        // when
-        boolean result = cafe.isCafeMember(member1);
-        // then
-        assertThat(result)
-                .isTrue();
     }
 
     @Test

@@ -8,8 +8,10 @@ import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.article.CommentRepository;
+import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
+import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class CommentService {
     @Transactional
     public Comment writeComment(Article article, Member commenter, String commentContent) {
         Cafe cafe = article.getCafe();
-        if (cafe.isCafeMember(commenter)) {
+        if (cafeMemberRepository.existsByCafeMember(cafe, commenter)) {
             Comment comment = new Comment(article, commenter, commentContent);
             commentRepository.save(comment);
 
@@ -57,18 +59,20 @@ public class CommentService {
     public void modifyComment(Comment comment, Member member, String newComment) {
         if (comment.getCommenter().equals(member)) {
             comment.modify(member, newComment);
+            commentRepository.save(comment);
         } else {
             throw new NoAuthorityException();
         }
     }
 
     @Transactional
-    public void deleteComment(Long commentId, Member member) {
+    public void deleteComment(Long commentId, Member deleter) {
         Comment comment = commentRepository.findOne(commentId);
         Article article = comment.getArticle();
         Cafe cafe = comment.getArticle().getCafe();
-        if (comment.getCommenter().equals(member) ||
-                cafe.getCafeManager().getMember().equals(member)) {
+        CafeMember cafeMember = cafeMemberRepository.findByCafeAndMember(cafe, deleter);
+        if (comment.getCommenter().equals(deleter)
+                || cafeMember.getRole() == CafeMemberRole.MANAGER) {
             commentRepository.delete(comment);
 
             cafe.getStatistics().decreaseCommentCount();

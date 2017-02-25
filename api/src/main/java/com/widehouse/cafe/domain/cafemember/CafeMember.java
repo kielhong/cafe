@@ -39,6 +39,4 @@ public class CafeMember {
     public CafeMember(Cafe cafe, Member member) {
         this(cafe, member, CafeMemberRole.MEMBER);
     }
-
-
 }

@@ -2,9 +2,9 @@ package com.widehouse.cafe.web;
 
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
-import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
+import com.widehouse.cafe.projection.CafeSummary;
 import com.widehouse.cafe.service.CafeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +36,14 @@ public class CategoryController {
         return categories;
     }
 
-    @GetMapping("/categories/{categoryId}/cafes")
     @CrossOrigin(origins = "http://localhost:8081")
-    public List<com.widehouse.cafe.projection.Cafe> getCafesByCategory(@PathVariable Long categoryId,
-                                                                       @PageableDefault(page = 0, size = 10,
+    @GetMapping("/categories/{categoryId}/cafes")
+    public List<CafeSummary> getCafesByCategory(@PathVariable Long categoryId,
+                                                @PageableDefault(page = 0, size = 10,
                                                  direction = Sort.Direction.DESC,
                                                  sort = "statistics.cafeMemberCount") Pageable pageable) {
-        return cafeService.getCafeByCategory(categoryId, pageable);
+        List<CafeSummary> cafes = cafeService.getCafeByCategory(categoryId, pageable);
+
+        return cafes;
     }
 }

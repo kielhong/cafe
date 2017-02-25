@@ -61,16 +61,12 @@ public class Cafe {
     @Embedded
     private CafeStatistics statistics;
 
-    @OneToMany(mappedBy = "cafe")
-    private List<CafeMember> cafeMembers;
-
     @OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("listOrder ASC")
     private List<Board> boards;
 
     public Cafe() {
         this.statistics = new CafeStatistics();
-        this.cafeMembers = new ArrayList<>();
         this.boards = new ArrayList<>();
         this.createDateTime = LocalDateTime.now();
     }
@@ -104,26 +100,22 @@ public class Cafe {
         this.category = category;
     }
 
-    public void addCafeMember(CafeMember cafeMember) {
-        this.cafeMembers.add(cafeMember);
-        this.statistics.increaseCafeMemberCount();
-    }
+//
+//    public void removeCafeMember(CafeMember cafeMember) {
+//        this.cafeMembers.remove(cafeMember);
+//        this.statistics.decreaseCafeMemberCount();
+//    }
 
-    public void removeCafeMember(CafeMember cafeMember) {
-        this.cafeMembers.remove(cafeMember);
-        this.statistics.decreaseCafeMemberCount();
-    }
-
-    public boolean isCafeMember(Member member) {
-        return cafeMembers.stream()
-                .anyMatch(x -> x.getMember().equals(member));
-    }
-
-    public CafeMember getCafeManager() {
-        // TODO : cafeManager는 필수이다. 없으면 안되도록 코드 수정
-        return cafeMembers.stream()
-                .filter(x -> x.getRole() == CafeMemberRole.MANAGER)
-                .findFirst()
-                .orElse(null);
-    }
+//    public boolean isCafeMember(Member member) {
+//        return cafeMembers.stream()
+//                .anyMatch(x -> x.getMember().equals(member));
+//    }
+//
+//    public CafeMember getCafeManager() {
+//        // TODO : cafeManager는 필수이다. 없으면 안되도록 코드 수정
+//        return cafeMembers.stream()
+//                .filter(x -> x.getRole() == CafeMemberRole.MANAGER)
+//                .findFirst()
+//                .orElse(null);
+//    }
 }

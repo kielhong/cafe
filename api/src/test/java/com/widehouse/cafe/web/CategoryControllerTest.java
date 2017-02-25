@@ -9,10 +9,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
+import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
+import com.widehouse.cafe.projection.CafeSummary;
 import com.widehouse.cafe.service.CafeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,13 +44,14 @@ public class CategoryControllerTest {
     private CafeService cafeService;
 
     @Mock
-    com.widehouse.cafe.projection.Cafe cafeMock1;
+    private CafeSummary cafeMock1;
     @Mock
-    com.widehouse.cafe.projection.Cafe cafeMock2;
+    private CafeSummary cafeMock2;
     @Mock
-    com.widehouse.cafe.projection.Cafe cafeMock3;
+    private CafeSummary cafeMock3;
     @Mock
-    com.widehouse.cafe.projection.Cafe cafeMock4;
+    private CafeSummary cafeMock4;
+
     @Test
     public void getCategories() throws Exception {
         // given
@@ -71,19 +72,22 @@ public class CategoryControllerTest {
     @Test
     public void getCafesByCategory() throws Exception {
         // given
-        Category category1 = new Category("category");
         given(cafeMock1.getUrl()).willReturn("test1");
         given(cafeMock1.getUrl()).willReturn("test2");
         given(this.cafeService.getCafeByCategory(1L,
                 new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock1, cafeMock2));
         // then
-        this.mvc.perform(get("/categories/1/cafes"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$.[0].url").value("test1"))
-                .andExpect(jsonPath("$.[1].url").value("test2"));
+        try {
+            this.mvc.perform(get("/categories/1/cafes"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(jsonPath("$.length()").value(2))
+                    .andExpect(jsonPath("$.[0].url").value("test1"))
+                    .andExpect(jsonPath("$.[1].url").value("test2"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

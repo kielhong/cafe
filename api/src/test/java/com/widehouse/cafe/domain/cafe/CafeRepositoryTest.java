@@ -3,6 +3,7 @@ package com.widehouse.cafe.domain.cafe;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
+import com.widehouse.cafe.projection.CafeSummary;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,7 +89,7 @@ public class CafeRepositoryTest {
         cafe3.getStatistics().setCafeMemberCount(2L);
         // when
         Pageable pageable = new PageRequest(0, 3, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"));
-        List<com.widehouse.cafe.projection.Cafe> cafes = cafeRepository.findByCategory(category1, pageable);
+        List<CafeSummary> cafes = cafeRepository.findByCategory(category1, pageable);
         // then
         assertThat(cafes)
                 .hasSize(3);
@@ -102,7 +103,7 @@ public class CafeRepositoryTest {
         cafe3.getStatistics().setCafeMemberCount(2L);
         // when
         Pageable pageable = new PageRequest(0, 3, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"));
-        List<com.widehouse.cafe.projection.Cafe> cafes = cafeRepository.findByCategoryId(category1.getId(), pageable);
+        List<CafeSummary> cafes = cafeRepository.findByCategoryId(category1.getId(), pageable);
         // then
         assertThat(cafes)
                 .hasSize(3);

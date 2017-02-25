@@ -19,4 +19,6 @@ public interface CafeMemberRepository extends JpaRepository<CafeMember, CafeMemb
     @Query("SELECT CASE WHEN count(cm) > 0 THEN true ELSE false END " +
             " FROM CafeMember cm WHERE cm.cafe = :cafe AND cm.member = :member")
     boolean existsByCafeMember(@Param("cafe") Cafe cafe, @Param("member") Member member);
+
+    CafeMember findByCafeAndMember(Cafe cafe, Member member);
 }

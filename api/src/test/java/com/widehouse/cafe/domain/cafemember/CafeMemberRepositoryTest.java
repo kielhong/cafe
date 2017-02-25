@@ -1,5 +1,6 @@
 package com.widehouse.cafe.domain.cafemember;
 
+import static com.widehouse.cafe.domain.cafemember.CafeMemberRole.MANAGER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -7,6 +8,7 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +31,20 @@ public class CafeMemberRepositoryTest {
     @Autowired
     private CafeMemberRepository cafeMemberRepository;
 
+    private Member member;
+    private Cafe cafe;
+
+    @Before
+    public void setUp() {
+        member = new Member("member");
+        entityManager.persist(member);
+
+        cafe = new Cafe("testurl", "testcafe");
+        entityManager.persist(cafe);
+    }
+
     @Test
     public void findCafeByMember_should_list_cafes() {
-        Member member = new Member("member");
-        entityManager.persist(member);
         Cafe cafe1 = new Cafe("url1", "name1");
         entityManager.persist(cafe1);
         Cafe cafe2 = new Cafe("url2", "name2");
@@ -58,10 +70,6 @@ public class CafeMemberRepositoryTest {
     @Test
     public void existsCafeAndMember_WithCafeMember_Should_True() {
         // given
-        Member member = new Member("member");
-        entityManager.persist(member);
-        Cafe cafe = new Cafe("url1", "name1");
-        entityManager.persist(cafe);
         entityManager.persist(new CafeMember(cafe, member));
         // when
         boolean exist = cafeMemberRepository.existsByCafeMember(cafe, member);
@@ -72,15 +80,22 @@ public class CafeMemberRepositoryTest {
 
     @Test
     public void existsCafeAndMember_WithNotCafeMember_Should_False() {
-        // given
-        Member member = new Member("member");
-        entityManager.persist(member);
-        Cafe cafe = new Cafe("url1", "name1");
-        entityManager.persist(cafe);
         // when
         boolean exist = cafeMemberRepository.existsByCafeMember(cafe, member);
         // then
         then(exist)
                 .isFalse();
+    }
+
+    @Test
+    public void findByCafeAndMember_Should_Return_CafeMember() {
+        // given
+        CafeMember cafeMember = new CafeMember(cafe, member, MANAGER);
+        entityManager.persist(cafeMember);
+        // when
+        CafeMember result = cafeMemberRepository.findByCafeAndMember(cafe, member);
+        // then
+        then(result)
+                .isEqualTo(cafeMember);
     }
 }
