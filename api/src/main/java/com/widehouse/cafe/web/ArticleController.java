@@ -26,10 +26,11 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+
     @GetMapping(value = "/cafes/{cafeUrl}/articles", params = {"page", "size"})
     public List<Article> getArticlesByCafe(@PathVariable String cafeUrl,
-                                    @RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "10") int size) {
+                                           @RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "10") int size) {
         // TODO : artcleService 가 url을 받도록 하는게 좋을지?
         Cafe cafe = cafeRepository.findByUrl(cafeUrl);
         List<Article> articles = articleService.getArticlesByCafe(cafe, page, size);

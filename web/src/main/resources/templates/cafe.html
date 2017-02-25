@@ -183,7 +183,6 @@
                     <!-- 나의활동 -->
 
                     <div id="member-action-data" style="display:none">
-
                         <ul class="info-action-tab">
                             <li class="tit-info">
                                 <p><a href="#" onclick="showCafeInfo();">카페정보</a></p>
@@ -192,9 +191,6 @@
                                 <p class="gm-tcol-t">나의활동</p>
                             </li>
                             <li class="tit-bookmark">
-
-
-
                                 <a href="#" title="즐겨찾는 카페 등록" onClick="setupFavoriteCafe(true, true, 10000001);"><img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="27" height="28" alt="즐겨찾는 카페 등록" class="btn-bookmark-off" id="favoriteCafeInMemberInfo"/></a>
                             </li>
                         </ul>
@@ -291,13 +287,7 @@
                 </ul>
             </div>
 
-            <div id="main-area" class="fr">
-                <iframe name="cafe_main" id="cafe_main" title="카페 메인" src="about:blank" width="773" height="100%" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" allowtransparency="true" allowfullscreen="true"></iframe>
-
-                <!--<script type="text/javascript">
-                            document.getElementById("cafe_main").src = "http://cafe.naver.com/MyCafeIntro.nhn?clubid=10000001";
-                            </script>-->
-            </div>
+            <div id="main-area" class="fr" ng-include="'/view/board.html'" ng-controller="contentCtrl" data-ng-init="getContent('all', 0)"></div>
         </div>
         <div id="cafe-footer">
             <p class="cafe-name m-tcol-c">네이버 카페 <span class="m-tcol-p">{{ cafeName }}</span></p>
