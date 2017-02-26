@@ -4,7 +4,6 @@ cafeApp.controller('cafeCtrl', function($scope, $location, $http) {
 
         $http.get("http://localhost:8080/cafes/" + $scope.cafeUrl)
             .then(function(response) {
-                console.log(response);
                 cafe = response.data;
                 $scope.cafeId = cafe.id;
                 $scope.cafeName = cafe.name;
@@ -21,18 +20,38 @@ cafeApp.controller('cafeCtrl', function($scope, $location, $http) {
             { name: '카페북 책꽂이', type: 'book' }
         ];
     };
+
+    $scope.allBoard = function() {
+        $scope.$broadcast("allBoard", {});
+    };
+    $scope.getBoard = function(boardId) {
+        $scope.$broadcast("board", { boardId : boardId });
+    };
 });
 
 cafeApp.controller('contentCtrl', function($scope, $http) {
-    $scope.getContent = function(type, boardId) {
+    $scope.mainContent = function() {
+        $scope.boardName = "전체글보기";
+
         $http.get("http://localhost:8080/cafes/" + $scope.$parent.cafeUrl + "/articles?page=0&size=10")
+            .then(function(response) {
+                $scope.articles = response.data;
+           });
+    };
+
+    $scope.$on("allBoard", function(event, args) {
+        $scope.mainContent();
+    });
+
+    $scope.$on("board", function (event, args) {
+        $http.get("http://localhost:8080/cafes/" + $scope.$parent.cafeUrl + "/boards/" + args.boardId + "/articles?page=0&size=10")
             .then(function(response) {
                 $scope.articles = response.data;
             });
 
-        $http.get("http://localhost:8080/cafes/" + $scope.$parent.cafeUrl + "/boards/" + boardId)
-            .then(function(response) {
-
-            });
-    };
+        $http.get("http://localhost:8080/cafes/" + $scope.$parent.cafeUrl + "/boards/" + args.boardId)
+           .then(function(response) {
+                $scope.boardName = response.data.name;
+           });
+    });
 });

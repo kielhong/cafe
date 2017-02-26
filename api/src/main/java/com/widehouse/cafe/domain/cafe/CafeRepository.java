@@ -1,6 +1,6 @@
 package com.widehouse.cafe.domain.cafe;
 
-import com.widehouse.cafe.projection.CafeSummary;
+import com.widehouse.cafe.projection.CafeProjection;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,11 +14,11 @@ public interface CafeRepository extends JpaRepository<Cafe, Long> {
 
     List<Cafe> findByCategory(Category category);
 
-    List<CafeSummary> findByCategory(Category category, Pageable pageable);
+    List<CafeProjection> findByCategory(Category category, Pageable pageable);
 
     List<Cafe> findByCategoryId(Long categoryId);
 
-    List<CafeSummary> findByCategoryId(Long categoryId, Pageable pageable);
+    List<CafeProjection> findByCategoryId(Long categoryId, Pageable pageable);
 
 
 }

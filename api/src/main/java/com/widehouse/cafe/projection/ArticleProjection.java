@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 /**
  * Created by kiel on 2017. 2. 25..
  */
-public interface BoardSummary {
+public interface ArticleProjection {
     Long getId();
 
     @Value("#{target.cafe.id}")
@@ -19,7 +19,7 @@ public interface BoardSummary {
     @Value("#{target.writer.id}")
     Long getWriterId();
 
-    @Value("#{target.writer.name}")
+    @Value("#{target.writer.nickname}")
     String getWriterName();
 
     String getTitle();

@@ -9,9 +9,11 @@ import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.projection.ArticleProjection;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -43,6 +45,13 @@ public class ArticleServiceTest {
     private Article article3;
     private Article article4;
 
+    @Mock
+    private ArticleProjection articleMock1;
+    @Mock
+    private ArticleProjection articleMock2;
+    @Mock
+    private ArticleProjection articleMock3;
+
     @Before
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
@@ -60,12 +69,12 @@ public class ArticleServiceTest {
     public void getArticlesByCafe_Should_Return_ListArticleInCafeWithIdOrderDesc() {
         // given
         given(articleRepository.findByCafe(cafe, new PageRequest(0, 3, new Sort(DESC, "id"))))
-                .willReturn(Arrays.asList(article3, article2, article1));
+                .willReturn(Arrays.asList(articleMock3, articleMock2, articleMock1));
         // when
-        List<Article> articles = articleService.getArticlesByCafe(cafe, 0, 3);
+        List<ArticleProjection> articles = articleService.getArticlesByCafe(cafe, 0, 3);
         // then
         then(articles)
-                .containsExactly(article3, article2, article1);
+                .containsExactly(articleMock3, articleMock2, articleMock1);
     }
 
     @Test

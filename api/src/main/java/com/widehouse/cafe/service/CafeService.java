@@ -9,7 +9,7 @@ import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.projection.CafeSummary;
+import com.widehouse.cafe.projection.CafeProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class CafeService {
         return cafe;
     }
 
-    public List<CafeSummary> getCafeByCategory(Long categoryId, Pageable pageable) {
+    public List<CafeProjection> getCafeByCategory(Long categoryId, Pageable pageable) {
         return cafeRepository.findByCategoryId(categoryId, pageable);
     }
 

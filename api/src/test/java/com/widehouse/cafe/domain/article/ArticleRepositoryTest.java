@@ -6,9 +6,11 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.projection.ArticleProjection;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -39,6 +41,11 @@ public class ArticleRepositoryTest {
     private Article article2;
     private Article article3;
 
+    @Mock
+    private ArticleProjection articleMock1;
+    @Mock
+    private ArticleProjection articleMock2;
+
     @Before
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
@@ -61,10 +68,12 @@ public class ArticleRepositoryTest {
     @Test
     public void findByCafe_Should_Return_ListArticle() {
         // when
-        List<Article> articles = articleRepository.findByCafe(cafe, new PageRequest(0, 2, new Sort(DESC, "id")));
+        List<ArticleProjection> articles = articleRepository.findByCafe(cafe, new PageRequest(0, 2, new Sort(DESC, "id")));
         // then
         then(articles)
-                .containsExactly(article3, article2);
+                .hasSize(2)
+                .extracting("id")
+                .containsExactly(article3.getId(), article2.getId());
     }
 
     @Test

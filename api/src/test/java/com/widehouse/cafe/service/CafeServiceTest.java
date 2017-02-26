@@ -2,12 +2,10 @@ package com.widehouse.cafe.service;
 
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.groups.Tuple.tuple;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -16,12 +14,10 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.exception.CafeMemberAlreadyExistsException;
-import com.widehouse.cafe.projection.CafeSummary;
+import com.widehouse.cafe.projection.CafeProjection;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,13 +50,13 @@ public class CafeServiceTest {
     private CafeService cafeService;
 
     @Mock
-    private CafeSummary cafeMock1;
+    private CafeProjection cafeMock1;
     @Mock
-    private CafeSummary cafeMock2;
+    private CafeProjection cafeMock2;
     @Mock
-    private CafeSummary cafeMock3;
+    private CafeProjection cafeMock3;
     @Mock
-    private CafeSummary cafeMock4;
+    private CafeProjection cafeMock4;
 
     private Member member;
     private Category category;
@@ -98,7 +94,7 @@ public class CafeServiceTest {
                 new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock4, cafeMock3, cafeMock2, cafeMock1));
         // when
-        List<CafeSummary> cafes = cafeService.getCafeByCategory(category.getId(), new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
+        List<CafeProjection> cafes = cafeService.getCafeByCategory(category.getId(), new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
         // then
         assertThat(cafes)
                 .contains(cafeMock4, cafeMock3, cafeMock2, cafeMock1);

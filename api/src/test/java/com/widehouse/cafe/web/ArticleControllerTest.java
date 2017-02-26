@@ -11,12 +11,15 @@ import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,6 +30,7 @@ import java.util.Arrays;
  */
 @RunWith(SpringRunner.class)
 @WebMvcTest(ArticleController.class)
+@EnableSpringDataWebSupport
 public class ArticleControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -37,41 +41,39 @@ public class ArticleControllerTest {
     @MockBean
     private BoardRepository boardRepository;
 
+    private Cafe cafe;
+    private Board board;
+    private Member writer;
+
+    private ArticleProjection articleProjection1;
+    private ArticleProjection articleProjection2;
+    private ArticleProjection articleProjection3;
+
+
+    @Before
+    public void setUp() {
+        cafe = new Cafe("testurl", "testcafe");
+        board = new Board(1L, cafe, "board", 1);
+        writer = new Member("writer");
+    }
+
     @Test
     public void getArticlesByCafe_Should_ListArticles() throws Exception {
-        Cafe cafe = new Cafe("testurl", "testcafe");
-        Board board = new Board(cafe, "board");
-        Member writer = new Member("writer");
         // given
-        given(cafeRepository.findByUrl("testurl"))
+        given(cafeRepository.findByUrl(cafe.getUrl()))
                 .willReturn(cafe);
         given(articleService.getArticlesByCafe(cafe, 0, 3))
-                .willReturn(Arrays.asList(
-                        new Article(board, writer, "test article1", "test1"),
-                        new Article(board, writer, "test article2", "test2"),
-                        new Article(board, writer, "test article3", "test3"))
-                );
+                .willReturn(Arrays.asList(articleProjection3, articleProjection2, articleProjection1));
         // then
         mvc.perform(get("/cafes/" + cafe.getUrl() + "/articles?page=0&size=3"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(3))
-                .andExpect(jsonPath("$.[0].cafe.url").value(cafe.getUrl()))
-                .andExpect(jsonPath("$.[0].title").value("test article1"))
-                .andExpect(jsonPath("$.[1].cafe.url").value(cafe.getUrl()))
-                .andExpect(jsonPath("$.[1].title").value("test article2"))
-                .andExpect(jsonPath("$.[2].cafe.url").value(cafe.getUrl()))
-                .andExpect(jsonPath("$.[2].title").value("test article3"))
-                .andExpect(jsonPath("$.[2].commentCount").value(0))
-                .andExpect(jsonPath("$.[2].writer").exists());
+                .andExpect(jsonPath("$.length()").value(3));
     }
 
     @Test
     public void getArticlesByBoard_Should_ListArticles() throws Exception {
-        Cafe cafe = new Cafe("testurl", "testcafe");
-        Board board = new Board(1L, cafe, "board", 1);
-        Member writer = new Member("writer");
         // given
-        given(cafeRepository.findByUrl("testurl"))
+        given(cafeRepository.findByUrl(cafe.getUrl()))
                 .willReturn(cafe);
         given(boardRepository.findOne(board.getId()))
                 .willReturn(board);
