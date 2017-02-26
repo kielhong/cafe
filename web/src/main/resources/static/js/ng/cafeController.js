@@ -21,15 +21,24 @@ cafeApp.controller('cafeCtrl', function($scope, $location, $http) {
             { name: '카페북 책꽂이', type: 'book' }
         ];
     };
+
+    $scope.getBoard = function(boardId) {
+        $scope.$broadcast("board", { boardId : boardId});
+    };
 });
 
 cafeApp.controller('contentCtrl', function($scope, $http) {
-    $scope.getContent = function(type, boardId) {
+    $scope.mainContent = function() {
         $http.get("http://localhost:8080/cafes/" + $scope.$parent.cafeUrl + "/articles?page=0&size=10")
             .then(function(response) {
-                console.log("articles")
-                console.log(response);
                 $scope.articles = response.data;
             });
     };
+
+    $scope.$on("board", function (event, args) {
+       $http.get("http://localhost:8080/cafes/" + $scope.$parent.cafeUrl + "/boards/" + args.boardId + "/articles?page=0&size=10")
+           .then(function(response) {
+               $scope.articles = response.data;
+           });
+    });
 });

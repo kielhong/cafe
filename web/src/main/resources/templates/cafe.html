@@ -251,7 +251,8 @@
                         <ul class="cafe-menu-list">
                             <li ng-repeat="board in boards">
                                 <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" class="ico-list" alt=""/>
-                                <a href="/ArticleList.nhn?search.clubid={{ cafe.id }}&amp;search.menuid={{ board.id }}&amp;search.boardtype=L" target="cafe_main" class="gm-tcol-c " id="menuLink3" ng-bind="board.name"></a>
+                                <a href="#" class="gm-tcol-c " id="menuLink3" ng-bind="board.name" ng-click="getBoard(board.id)"></a>
+                                <!--<a href="/ArticleList.nhn?search.clubid={{ cafe.id }}&amp;search.menuid={{ board.id }}&amp;search.boardtype=L" target="cafe_main" class="gm-tcol-c " id="menuLink3" ng-bind="board.name"></a>-->
                             </li>
                         </ul>
                     </div>
@@ -287,7 +288,7 @@
                 </ul>
             </div>
 
-            <div id="main-area" class="fr" ng-include="'/view/board.html'" ng-controller="contentCtrl" data-ng-init="getContent('all', 0)"></div>
+            <div id="main-area" class="fr" ng-include="'/view/board.html'" ng-controller="contentCtrl" data-ng-init="mainContent()"></div>
         </div>
         <div id="cafe-footer">
             <p class="cafe-name m-tcol-c">네이버 카페 <span class="m-tcol-p">{{ cafeName }}</span></p>

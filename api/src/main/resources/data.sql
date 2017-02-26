@@ -46,3 +46,9 @@ INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count,
 VALUES (1, 1, 1, '테스트 7*7번째 글', '테스트 글 내용 7', 0, now(), now());
 INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
 VALUES (1, 1, 1, '테스트 888번째 글', '테스트 글 내용 8', 0, now(), now());
+INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 2, 1, '테스트 99번째 보드2 글', '테스트 글 내용 9', 0, now(), now());
+INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 2, 1, '테스트 1010번째 보드 2글', '테스트 글 내용 10', 0, now(), now());
+INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 2, 1, '테스트 11번째 보드 2글', '테스트 글 내용 11', 0, now(), now());
