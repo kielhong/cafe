@@ -26,8 +26,10 @@ cafeApp.controller('cafeCtrl', function($scope, $location, $http) {
 cafeApp.controller('contentCtrl', function($scope, $http) {
     $scope.getContent = function(type, boardId) {
         $http.get("http://localhost:8080/cafes/" + $scope.$parent.cafeUrl + "/articles?page=0&size=10")
-                .then(function(response) {
-                    console.log(response);
+            .then(function(response) {
+                console.log("articles")
+                console.log(response);
+                $scope.articles = response.data;
             });
     };
 });

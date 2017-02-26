@@ -19,7 +19,7 @@ public interface ArticleProjection {
     @Value("#{target.writer.id}")
     Long getWriterId();
 
-    @Value("#{target.writer.name}")
+    @Value("#{target.writer.nickname}")
     String getWriterName();
 
     String getTitle();
