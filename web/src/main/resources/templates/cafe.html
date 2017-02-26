@@ -48,7 +48,7 @@
             <div class="box-special-menu">
                 <ul class="special-menu" id="special-menu-item">
                     <li class="default" id="special-menu-0">
-                        <p><a href="/ArticleList.nhn?search.clubid=10000001&amp;search.boardtype=L" target="cafe_main" onclick="goMenu(0);" class="off" id="special-menuLink-0">전체글보기</a></p><span> </span>
+                        <p><a href="#articles" class="off" id="special-menuLink-0">전체글보기</a></p><span> </span>
                     </li>
                     <li class="default" id="special-menu--1">
                         <p><a href="/BestArticleList.nhn?clubid=10000001&amp;period=week&amp;listtype=commentcount" target="cafe_main" onclick="goMenu(-1);" class="off" id="special-menuLink--1">베스트게시글</a></p><span> </span>
@@ -178,10 +178,8 @@
                             <a href="#" class="_rosRestrict" onclick="writeBoard();"><img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="171" height="34" alt="카페 글쓰기" class="btn-write"/></a>
                         </div>
                     </div>
-
                     <!-- //카페정보 -->
                     <!-- 나의활동 -->
-
                     <div id="member-action-data" style="display:none">
                         <ul class="info-action-tab">
                             <li class="tit-info">
@@ -233,12 +231,12 @@
                         <ul id="favoriteMenuGroup" style="display:none" class="cafe-menu-list">
                         </ul>
                         <div class="cafe-menu-space" id="gend141"></div>
-
                         <!-- //즐겨찾는 게시판 그룹 -->
+
                         <ul class="cafe-menu-list">
                             <li>
                                 <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" class="ico-list" alt=""/>
-                                <a href="#" class="gm-tcol-c" id="menuLink0" ng-click="allBoard()">전체글보기</a>
+                                <a href="#articles" class="gm-tcol-c" id="menuLink0">전체글보기</a>
                                 <span class="gm-tcol-c p11" style="padding-right:2px;">(<strong ng-bind="cafeArticleCount">0</strong>)</span>
                             </li>
                             <li ng-repeat="board in specialBoards">
@@ -246,13 +244,11 @@
                                 <a href="/CafeTagCloudList.nhn?search.clubId=10000001" class="gm-tcol-c" id="menuLink-10" ng-bind="board.name"></a>
                             </li>
                         </ul>
-
                         <div class="cafe-menu-space"></div>
                         <ul class="cafe-menu-list">
                             <li ng-repeat="board in boards">
                                 <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" class="ico-list" alt=""/>
-                                <a href="#" class="gm-tcol-c " id="menuLink3" ng-bind="board.name" ng-click="getBoard(board.id)"></a>
-                                <!--<a href="/ArticleList.nhn?search.clubid={{ cafe.id }}&amp;search.menuid={{ board.id }}&amp;search.boardtype=L" target="cafe_main" class="gm-tcol-c " id="menuLink3" ng-bind="board.name"></a>-->
+                                <a href="#boards/{{ board.id }}/articles" class="gm-tcol-c " id="menuLink3" ng-bind="board.name"></a>
                             </li>
                         </ul>
                     </div>
@@ -288,10 +284,11 @@
                 </ul>
             </div>
 
-            <div id="main-area" class="fr" ng-include="'/view/board.html'" ng-controller="contentCtrl" data-ng-init="mainContent()"></div>
+            <div id="main-area" class="fr" ng-view=""></div>
+
         </div>
         <div id="cafe-footer">
-            <p class="cafe-name m-tcol-c">네이버 카페 <span class="m-tcol-p">{{ cafeName }}</span></p>
+            <p class="cafe-name m-tcol-c">마이 카페 <span class="m-tcol-p">{{ cafeName }}</span></p>
         </div>
     </div>
 
@@ -300,6 +297,7 @@
 
 <!-- angularjs -->
 <script src="/webjars/angularjs/angular.min.js"></script>
+<script src="/webjars/angularjs/angular-route.js"></script>
 <script src="/js/ng/cafeApp.js"></script>
 <script src="/js/ng/cafeController.js"></script>
 <!-- // angularjs -->
