@@ -1,16 +1,21 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.api;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.widehouse.cafe.api.ArticleController;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.exception.NoAuthorityException;
 import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
 import org.junit.Before;
@@ -97,4 +102,28 @@ public class ArticleControllerTest {
                 .andExpect(jsonPath("$.[2].commentCount").value(0))
                 .andExpect(jsonPath("$.[2].writer").exists());
     }
+
+    @Test
+    public void getArticle_Should_ReturnArticle() throws Exception {
+        // given
+        given(articleService.getArticle(anyLong(), any(Member.class)))
+                .willReturn(new Article(new Board(new Cafe("testurl", "testname"), "board"), new Member("writer"), "title", "content"));
+        // when
+        mvc.perform(get("/cafes/testurl/articles/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("title"))
+                .andExpect(jsonPath("$.content").value("content"))
+                .andExpect(jsonPath("$.board.name").value("board"));
+    }
+
+    @Test
+    public void getArticle_WithNoAuthorityMember_Should_Error_403Forbidden() throws Exception {
+        // given
+        given(articleService.getArticle(anyLong(), any(Member.class)))
+                .willThrow(new NoAuthorityException());
+        // when
+        mvc.perform(get("/cafes/testurl/articles/1"))
+                .andExpect(status().isForbidden());
+    }
+
 }

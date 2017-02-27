@@ -1,13 +1,15 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.api;
 
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
+import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,5 +51,16 @@ public class ArticleController {
         List<Article> articles = articleService.getArticlesByBoard(board, page, size);
 
         return articles;
+    }
+
+    @GetMapping("/cafes/{cafeUrl}/articles/{articleId}")
+    public Article getArticle(@PathVariable String cafeUrl,
+                              @PathVariable Long articleId) {
+        // TODO : member 처리
+        Member reader = new Member("reader");
+        Article article = articleService.getArticle(articleId, reader);
+
+        return article;
+
     }
 }

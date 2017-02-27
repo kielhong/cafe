@@ -1,0 +1,495 @@
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/mycafe-common-1487314414000-57562.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/mycafe-layout-1485413655000-59862.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/line_sticker-1459945953000-9159.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/comment-1463630909000-16252.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/mycafe-main-1486728022000-202870.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/moz_fix-1459945953000-1346.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/message_box-1459945953000-2175.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/search/sa-1485413655000-3280.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/ip_layer_2-1459945953000-2882.css" type="text/css">
+
+<div id="basisElement">
+    <div id="content-area" >
+        <div id="main-area">
+            <div class="list-btn-nor2 upper-list">
+                <div class="fl">
+                    <div class="btn2"><span></span>
+                        <p><a href="#" class="m-tcol-c"><img src="http://cafeimgs.naver.net/cafe4/ico-btn-net_.gif" width="6" height="5" alt="">다음글</a></p>
+                    </div>
+                </div>
+                <div class="fr">
+                    <div class="btn2"><span></span>
+                        <p><a href="#" class="m-tcol-c">목록</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-blog border-sub" id="post_9">
+                <div class="inbox">
+
+                    <div class="tit-box">
+                        <div class="fl">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tr valign="top">
+                                    <td>
+                                        <span class="b m-tcol-c" ng-bind="article.title"></span></td>
+                                    <td nowrap class="m-tcol-c filter-30">&#124;</td>
+                                    <td nowrap class="m-tcol-c"><a href="#boards/{{ article.board.id }}" class="m-tcol-c" ng-bind="article.board.name"></a></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="fr">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td class="m-tcol-c date" ng-bind="article.createDateTime | date:'yyyy.MM.dd HH:mm'"></td>
+
+                                    <td nowrap="" class="m-tcol-c filter-30">|</td>
+                                    <td class="edit _rosRestrict"><a id="addArticleStorage" href="#" class="m-tcol-c">보관</a></td>
+
+
+                                    <td nowrap="" class="m-tcol-c filter-30">|</td>
+                                    <td class="edit _rosRestrict"><a id="modifyFormLink" href="#" class="m-tcol-c">수정</a></td>
+
+
+                                    <td nowrap="" class="m-tcol-c filter-30">|</td>
+                                    <td class="delete _rosRestrict"><a href="#" class="m-tcol-c">삭제</a></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="board-box-line-dashed"></div>
+
+                    <div class="etc-box">
+                        <div class="fl">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td class="m-tcol-c b nick">
+                                        <table cellspacing="0"><caption><span class="blind">퍼스나콘/아이디 영역</span></caption><tr><td class="pc2w"><a href="http://item.naver.com/personacon/PersonaconShop.jsp?Redirect=PersonaconSub.jsp?type=itemdetail%26itemseq=1433716" target="itemshop"><img src="http://itemimgs.naver.net/personacon/16/37/1433716.gif" width="19" height="19" alt=""></a></td><td class="p-nick"><a href="#" class="m-tcol-c b" ng-bind="article.writer.nickname + '(' + article.writer.id + ')'"></a></td></tr></table>
+                                    </td>
+                                    <td class="m-tcol-c step">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="fr">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td valign="top" class="url" align="right">
+                                        <span class="filter-50"><a id="linkUrl" href="#" target="_top" class="m-tcol-c url-txt">http://cafe.naver.com/cafes/{{ article.cafe.url}}/articles/{{article.id}}</a></span>
+                                        <span><a href="#" onclick="return false;" class="_copyUrl url-btn" data-clipboard-action="copy" data-clipboard-target="#linkUrl"><img src="http://cafeimgs.naver.net/cafe4/btn-copy-add.gif" width="41" height="15" alt="주소복사" class="copy"></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id="sendPost_9" class="m-tcol-c" align="right"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="h-10"></div>
+                    <div class="tbody m-tcol-c" id="tbody">
+                        <div ng-bind="article.content"></div>
+                    </div>
+                    <table cellspacing="0" class="tag_n_id tag_list_area">
+                        <tbody>
+                        <tr>
+
+                            <td class="tagarea">
+
+
+
+
+                                <div id="tagview" class="tag m-tcol-c">
+                                    <div id="tagListArea">&nbsp;<a href="#" class="_click(TagProcessor|EditTag) _stopDefault _rosRestrict"><img src=http://cafeimgs.naver.net/img/btn_pedittag.gif></a></div>
+                                    <div id="tagInputArea" style="display:none;">
+                                        <input type="text" id="tagnames" name="tagnames" size="95" class="_keyup(TagValidator|ValidateTagNames) _blur(TagValidator|ValidateTagNames)" style="width:420px;"><br>
+                                        <a href="#" class="m-tcol-c _click(TagProcessor|ModifyTag) _stopDefault _rosRestrict">태그저장</a> &#124; <a href="#" class="m-tcol-c _click(TagProcessor|ShowTag) _stopDefault _rosRestrict">취소</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+
+                    <table cellspacing="0" class="tag_n_id">
+                        <tbody>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td class="idarea">
+
+                                <div class="other_view m-tcol-c">
+                                    <a href="/CafeMemberNetworkView.nhn?m=view&clubid=10000001&memberid=kielhong" class="more m-tcol-c _rosRestrict" onclick="clickcr(this, 'art.profile', '', '', event)">이 작성자의 게시글 더보기</a>
+                                </div>
+
+                                <table cellspacing="0" cellpadding="0" align="right">
+                                    <colgroup><col><col width="55"></colgroup>
+                                    <tbody>
+                                    <tr><td height="1" valign="top" colspan="2"><div class="per-info board-box-line"></div></td></tr>
+                                    </tbody>
+                                </table>
+
+
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="h-35"></div>
+
+                    <div class="reply-box" id="cmtMenu">
+                        <div class="fl reply_sort">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tbody><tr style="vertical-align:top">
+
+                                    <td class="reply">
+                                        <a href="javascript:;" class="reply_btn b m-tcol-c m-tcol-p _totalCnt" id="comment">댓글 0
+
+                                        </a>
+                                    </td>
+                                    <td class="m-tcol-c filter-30">&#124;</td>
+                                    <td class="_sortList" style="padding:0;">
+                                        <div style="position:relative;_top:3px;"><a href="#" class="b m-tcol-c"><span>등록순</span><span style="display:none">최신순</span><span id="cafe-menu"><span class="cafe-menu-tit" style="background:none; width:13px; height:13px; margin:0;"><span class="down-btn" style="background-position:0 0; background-repeat:no-repeat; vertical-align:top"><img height="13" width="13" alt="" src="http://cafeimgs.naver.net/cafe4/hidden.gif"></span></span></span></a>
+                                            <div class="perid-layer2" style="display:none;">
+                                                <ul>
+                                                    <li class="asc"><a href="#"><span>등록순</span></a></li>
+                                                    <li class="desc"><a href="#"><span>최신순</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="m-tcol-c filter-30">&#124;</td>
+
+                                    <td><span class="b m-tcol-c reply ">조회수 </span><span class="b m-tcol-c reply _rosReadcount">0</span></td>
+
+                                    <td class="m-tcol-c filter-30">&#124;</td>
+                                    <td>
+                                        <a href="#" class="b m-tcol-c like like_lst_btn _click(LikeItMember|LikeItMember|10000001|9) _stopDefault" id="likeItMemberBtn" onclick="clickcr(this, '', '', ''); return false;">좋아요<span id="cafe-menu"><span class="cafe-menu-tit" style="background:none; width:13px; height:13px; margin:0;"><span id="likeItArrow" class="down-btn" style="background-position:0 0; *background-position:0 0; background-repeat:no-repeat; vertical-align:top"><img height="13" width="13" alt="" src="http://cafeimgs.naver.net/cafe4/hidden.gif"></span></span></span></a>
+
+
+                                        <div class="u_likeit_list_module _reactionModule" data-sid="CAFE" data-cid="10000001_cafeno1_9" data-did="CAFE" data-catgid="10000001">
+                                            <a href="#" class="u_likeit_list_btn _button" data-type="like" data-log="art.like|art.unlike">
+                                                <span class="u_ico _icon"></span>
+                                                <em class="u_cnt _count"></em>
+                                            </a>
+                                        </div>
+
+
+
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="fr cafe_spi">
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td>
+
+
+
+
+
+
+                                        <div id="spiButton" data-style="type_c"
+                                             class="naver-splugin"
+                                             data-url="http://cafe.naver.com/cafeno1/9"
+                                             data-title="이미지"
+                                             data-option="{textClass: 'm-tcol-c', align: 'right', onLoginRedirect: parent.openLoginLayer}"
+                                             data-cafe-source-type="111"
+                                             data-cafe-source-title="이미지"
+                                             data-blog-source-type="111"
+                                             data-blog-source-title="이미지"
+                                             data-blog-proxy-url="http://cafe.naver.com/CafeScrapContent.nhn?clubid=10000001&articleid=9&type=blog"
+                                             data-cafe-proxy-url="http://cafe.naver.com/CafeScrapContent.nhn?clubid=10000001&articleid=9&type=cafe"
+                                             data-me-oninitialize="openSubscribe();"
+                                             data-oninitialize="splugin_oninitialize();">
+                                        </div>
+
+                                    </td>
+
+
+                                    <td class="m-tcol-c filter-30">&#124;</td>
+                                    <td><a href="#" onClick="oCL.show('article_scraplayer', event, 19, -178); saveScrapArticleId('9', '3', 'Y'); return false;" class="m-tcol-c _rosRestrict btn_ly_open"><span class="blind"></span></a></td>
+
+
+
+
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="box-reply2 bg-color u_cbox" id="inpBE" style="display:none;">
+                        <!-- 댓글 리스트  -->
+                        <ul class="cmlist" id="cmt_list"></ul>
+                        <div style="clear: both; height: 0pt; font: 0pt/0pt arial;"></div>
+                        <div style="display:none;" class="cc_paginate cmt" id="cmt_paginate"></div>
+
+
+
+
+                        <table cellspacing="0" class="cminput">
+                            <tbody>
+                            <tr>
+                                <td class="i1">
+                                    <div class="reply-write-ico" id="refCmt_emoticon">
+                                        <img src='http://itemimgs.naver.net/personacon/16/37/1433716.gif' style='cursor:pointer;' width='19' height='19' alt='' class='myemoticon'/>
+                                    </div>
+                                    <span style="display:none;"></span>
+                                </td>
+                                <td class="i2">
+                                    <div class="comm_write_wrap border-sub skin-bgcolor">
+                                        <textarea id="comment_text" cols="50" rows="2" class="textarea m-tcol-c" maxlength="6000" style="overflow: hidden; line-height: 14px; height: 39px;" title="댓글입력"></textarea>
+
+                                        <div class="u_cbox_upload_image" style="display:none">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="i3">
+
+                                    <div class="u_cbox_btn_upload _submitBtn">
+                                        <a href="#" class="u_cbox_txt_upload _submitCmt">등록</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+
+
+
+
+                                    <ul class="u_cbox_addition">
+                                        <li>
+                                            <div class="_stickerBtn u_cbox_btn_upload_sticker">
+                                                <span class="u_cbox_ico_upload_sticker"></span>
+                                                <span class="m-tcol-c u_cbox_txt_upload_sticker">스티커</span>
+                                                <a href="#" class="u_cbox_link_wrap" onclick="clickcr(this,'cmt.sticker', '', '', event)">스티커 레이어 팝업</a>
+                                            </div>
+
+                                            <div class="line_stc_sec">
+                                                <div class="se2_line_layer">
+                                                    <div class="se2_in_layer">
+                                                        <div class="se2_line_sticker">
+                                                            <button type="button" title="이전" class="se2_prev" disabled=""><span>이전</span></button>
+                                                            <ul class="se2_line_sticker_set">
+                                                            </ul>
+                                                            <button type="button" title="다음" class="se2_next"><span>다음</span></button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="u_cbox_btn_upload_photo">
+                                                <div class="_imageBtn u_cbox_btn_file"><label for="attachImageBtn9" onclick="clickcr(this,'cmt.image', '', '', event);">업로드</label><input type="file" id="attachImageBtn9" accept="Image/*"></input></div>
+                                                <span class="u_cbox_ico_upload_photo"></span>
+                                                <span class="m-tcol-c u_cbox_txt_upload_photo">사진</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="list-btn-nor">
+                <div class="fr">
+
+                    <div id="writeFormBtn" class="btn _rosRestrict"><span></span><p><strong><a href="#" class="m-tcol-c b" onclick="clickcr(this,'abt.wrtlist', '', '', event);"><img src="http://cafeimgs.naver.net/cafe4/ico-btn-write.gif" width="10" height="10" alt="">글쓰기</a></strong></p></div>
+
+
+                    <div id="replyFormBtn" class="btn _rosRestrict"><span></span><p><a href="#" class="m-tcol-c" ><img src="http://cafeimgs.naver.net/cafe4/ico-btn-check.gif" width="9" height="8" alt="">답글</a></p></div>
+
+
+                    <div id="modifyFormBtn" class="btn _rosRestrict"><span></span><p><a href="#" class="m-tcol-c" onclick="clickcr(this,'abt.edit', '', '', event);">수정</a></p></div>
+
+
+                    <div class="btn _rosRestrict" onclick="javascript:checkLogin('move');"><span></span><p><a href="#" class="m-tcol-c" >이동</a></p></div>
+
+
+                    <div class="btn _rosRestrict" onclick="javascript:checkLogin('delete');"><span></span><p><a href="#" class="m-tcol-c" >삭제</a></p></div>
+
+                    <div class="btn" onclick="goList();"><span></span><p><a href="#" class="m-tcol-c" >목록</a></p></div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="h-20"></div>
+            <div class="btn-top"><a href="#" onclick="parent.setTopInIframe();" class="m-tcol-c filter-50 display-inblock"><span>▲</span> top</a></div>
+            <div class="h-35"></div>
+
+
+
+
+
+
+            <div class="article-board article_prenet">
+                <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <col width="81"><col width="*"><col width="120"><col width="92">
+                    <tr><td colspan="4" class="board-line"></td></tr>
+
+
+
+
+
+
+
+
+                    <tr align="center">
+                        <td class="prev_btn"><a href="#" onclick="goNext();clickcr(this,'art.next','','',event);" class="m-tcol-c"><img	src="http://cafeimgs.naver.net/cafe4/ico-btn-net2_.gif" alt="">다음글</a></td>
+                        <td align="left" class="board-list">
+
+
+
+
+
+					<span class="aaa">
+
+						<a href="#" onclick="goNext();clickcr(this,'art.next','','',event);" class="m-tcol-c">첨부 테스트</a>
+
+
+
+
+
+							<input type="text" class="list-i-upload" readonly="readonly" title="파일">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					</span>
+                        </td>
+                        <td align="left"><div class="pers_nick_area"><table cellspacing="0"><caption><span class="blind">퍼스나콘/아이디 영역</span></caption><tr><td class="pc"><a href="http://item.naver.com/personacon/PersonaconShop.jsp?Redirect=PersonaconSub.jsp?type=itemdetail%26itemseq=1433716" target="itemshop"><img src="http://itemimgs.naver.net/personacon/16/37/s_1433716.gif" width="13" height="13" alt="" class="p-border"></a></td><td class="p-nick"><a href="#" class="m-tcol-c" ><span class="wordbreak" id="refarticle_nextSiblingContent" ng-bind="article.writer.nickname"></span></a></td></tr></table></div></td>
+                        <td class="view-count m-tcol-c">2016.08.25.
+                        </td>
+                    </tr>
+                    <tr><td colspan="4" class="board-line"></td></tr>
+
+
+                </table>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <div id="sendPostLayer_9" class="introduction_list" style="top:0;left:-999px;position:absolute">
+                <ul id="sendPostLayerDiv_9">
+                </ul>
+                <a onclick="Element.hide('sendPostLayer_9');return false;" href="#" class="layer_close"><img src="http://cafeimgs.naver.net/editor/btn_layer_close2.gif" width="13" height="12" alt="레이어 닫기"></a>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div id="divScrapForm" style="display:none"></div>
+    <iframe name="frameArticleScrap" title="스크랩영역" id="frameArticleScrap" src="" width=0 height=0 frameborder=0 scrolling=no style="display:inline"></iframe>
+    <iframe name="frameArticleMain" title="대문등록영역" id="frameArticleMain" src="" width=0 height=0 frameborder=0 scrolling=no style="display:none"></iframe>
+
+
+    <div id="divSavedScrapClubId" style="display:none"></div>
+    <div id="divSavedScrapArticleId" style="display:none"></div>
+    <div id="divSavedScrapMenuId" style="display:none"></div>
+    <div id="divSavedScrapReplyYn" style="display:none"></div>
+
+
+    <div style="display: none; width:342px; position:absolute; left:100px ; top: 0px; overflow:hidden" id="emoticon">
+        <table width="342" cellspacing="1" cellpadding="1" border="0" style="background-color:#C7C7C9;">
+            <col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><tr align="center" style="background-color:#FFFFFF;">
+            <td><img src="http://itemimgs.naver.net/personacon/16/37/1433716.gif" style="cursor:pointer;" width="19" height="19"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td></tr>
+            <tr align="center" style="background-color:#FFFFFF;">
+                <td><img id="emo11" src="http://cafeimgs.naver.net/img/emot/emo11.gif" style="cursor:pointer;" width="16" height="17"></td>
+                <td><img id="emo13" src="http://cafeimgs.naver.net/img/emot/emo13.gif" style="cursor:pointer;" width="16" height="17"></td>
+                <td><img id="emo15" src="http://cafeimgs.naver.net/img/emot/emo15.gif" style="cursor:pointer;" width="16" height="17"></td>
+                <td><img id="emo17" src="http://cafeimgs.naver.net/img/emot/emo17.gif" style="cursor:pointer;" width="16" height="17"></td>
+                <td><img id="emo19" src="http://cafeimgs.naver.net/img/emot/emo19.gif" style="cursor:pointer;" width="16" height="17"></td>
+                <td><img id="emo21" src="http://cafeimgs.naver.net/img/emot/emo21.gif" style="cursor:pointer;" width="16" height="17"></td>
+                <td><img id="emo23" src="http://cafeimgs.naver.net/img/emot/emo23.gif" style="cursor:pointer;" width="16" height="17"></td>
+                <td><img id="emo25" src="http://cafeimgs.naver.net/img/emot/emo25.gif" style="cursor:pointer;" width="16" height="17"></td>
+                <td><img id="emo30" src="http://cafeimgs.naver.net/img/emot/emo30.gif" style="cursor:pointer;" width="16" height="17"></td>
+                <td><img id="emo32" src="http://cafeimgs.naver.net/img/emot/emo32.gif" style="cursor:pointer;" width="16" height="17"></td>
+                <td><img id="emo27" src="http://cafeimgs.naver.net/img/emot/emo27.gif" style="cursor:pointer;" width="16" height="17"></td></tr>  <tr align="center" style="background-color:#FFFFFF;">
+            <td><img id="emo12" src="http://cafeimgs.naver.net/img/emot/emo12.gif" style="cursor:pointer;" width="16" height="17"></td>
+            <td><img id="emo14" src="http://cafeimgs.naver.net/img/emot/emo14.gif" style="cursor:pointer;" width="16" height="17"></td>
+            <td><img id="emo16" src="http://cafeimgs.naver.net/img/emot/emo16.gif" style="cursor:pointer;" width="16" height="17"></td>
+            <td><img id="emo18" src="http://cafeimgs.naver.net/img/emot/emo18.gif" style="cursor:pointer;" width="16" height="17"></td>
+            <td><img id="emo20" src="http://cafeimgs.naver.net/img/emot/emo20.gif" style="cursor:pointer;" width="16" height="17"></td>
+            <td><img id="emo22" src="http://cafeimgs.naver.net/img/emot/emo22.gif" style="cursor:pointer;" width="16" height="17"></td>
+            <td><img id="emo24" src="http://cafeimgs.naver.net/img/emot/emo24.gif" style="cursor:pointer;" width="16" height="17"></td>
+            <td><img id="emo26" src="http://cafeimgs.naver.net/img/emot/emo26.gif" style="cursor:pointer;" width="16" height="17"></td>
+            <td><img id="emo31" src="http://cafeimgs.naver.net/img/emot/emo31.gif" style="cursor:pointer;" width="16" height="17"></td>
+            <td><img id="emo29" src="http://cafeimgs.naver.net/img/emot/emo29.gif" style="cursor:pointer;" width="16" height="17"></td>
+            <td><img id="emo28" src="http://cafeimgs.naver.net/img/emot/emo28.gif" style="cursor:pointer;" width="16" height="17"></td></tr>
+        </table>
+    </div>
+</div>
+
+<div style="height: 210px;">&nbsp;</div>

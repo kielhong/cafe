@@ -1,4 +1,4 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.api;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;

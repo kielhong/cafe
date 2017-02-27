@@ -10,9 +10,13 @@ cafeApp.config(function($routeProvider, $locationProvider) {
         templateUrl : "/view/board.html",
         controller : "cafeArticleCtrl"
     })
-    .when("/boards/:boardId/articles", {
+    .when("/boards/:boardId", {
         templateUrl : "/view/board.html",
         controller : "boardArticleCtrl"
     })
+    .when("/articles/:articleId", {
+            templateUrl : "/view/article.html",
+            controller : "articleViewCtrl"
+        })
     .otherwise({redirectTo:"/"})
 });

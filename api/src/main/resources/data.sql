@@ -22,6 +22,12 @@ INSERT INTO member(id, nickname) VALUES (1, 'kiel');
 
 /** CafeMember **/
 INSERT INTO cafe_member(cafe_id, member_id, role, join_date) VALUES (1, 1, 'MANAGER', now());
+INSERT INTO cafe_member(cafe_id, member_id, role, join_date) VALUES (2, 1, 'MANAGER', now());
+INSERT INTO cafe_member(cafe_id, member_id, role, join_date) VALUES (3, 1, 'MANAGER', now());
+INSERT INTO cafe_member(cafe_id, member_id, role, join_date) VALUES (4, 1, 'MANAGER', now());
+INSERT INTO cafe_member(cafe_id, member_id, role, join_date) VALUES (5, 1, 'MANAGER', now());
+INSERT INTO cafe_member(cafe_id, member_id, role, join_date) VALUES (6, 1, 'MANAGER', now());
+
 
 /** Board **/
 INSERT INTO board(cafe_id, name, list_order) VALUES (1, 'test board1', 1);

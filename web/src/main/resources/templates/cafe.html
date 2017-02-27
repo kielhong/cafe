@@ -25,21 +25,18 @@
 
         <div id="naver-gnb">
             <div id="gnb-menu">
-                <p class="naver-h" id="naver-h"><a href=" http://www.naver.com">네이버</a><img src="http://cafeimgs.naver.com/cafe4/ico-blank.gif" width="1" height="10" alt="" class="tcol-c"/></p>
-                <div class="m-cafe"><a href="http://section.cafe.naver.com">카페</a><a id="au_go" href="#"><img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="13" height="13" alt="바로가기" class="btn-cafe down-gnb"/></a><img src="http://cafeimgs.naver.net/cafe4/ico-blank.gif" width="1" height="10" alt="" class="tcol-c"/>
+                <p class="naver-h" id="naver-h"><a href="http://www.naver.com">네이버</a><img src="http://cafeimgs.naver.com/cafe4/ico-blank.gif" width="1" height="10" alt="" class="tcol-c"/></p>
+                <div class="m-cafe"><a href="/">카페</a><a id="au_go" href="#"><img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="13" height="13" alt="바로가기" class="btn-cafe down-gnb"/></a><img src="http://cafeimgs.naver.net/cafe4/ico-blank.gif" width="1" height="10" alt="" class="tcol-c"/>
                 </div>
                 <div class="join-cafe" id="au_join-cafe"><a href="#">가입카페</a><a href="#"><img id="joincafeimg" src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="13" height="13" alt="가입카페" class="btn-join down-gnb"/></a><img src="http://cafeimgs.naver.net/cafe4/ico-blank.gif" width="1" height="10" alt="" class="tcol-c"/></div>
-                <!-- GNB 템플릿 적용부 -->
                 <div id="gnb">
                     <script type="text/javascript" src="http://static.gn.naver.net/template/gnb_euckr.nhn?1484205677000" charset="euc-kr"></script>
-
                 </div>
-                <!--//GNB 템플릿 적용부 -->
             </div>
         </div>
         <div id="front-img">
             <div id="front-cafe"  style="cursor:hand;cursor:pointer;background-image:none;width:956px">
-                <a name="myCafeUrlLink" onclick="updateMoveMenu()" href="/MyCafeIntro.nhn?clubid=10000001" target="cafe_main" >
+                <a href="#" >
                     <img src="http://cafefiles.naver.nethttp://cafeimgs.naver.com/img/skin/img_80/skin80_46.gif" alt="{{ cafeName }}" onload="resizeTopSkin(this)" />
                 </a>
             </div>
@@ -248,7 +245,7 @@
                         <ul class="cafe-menu-list">
                             <li ng-repeat="board in boards">
                                 <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" class="ico-list" alt=""/>
-                                <a href="#boards/{{ board.id }}/articles" class="gm-tcol-c " id="menuLink3" ng-bind="board.name"></a>
+                                <a href="#boards/{{ board.id }}" class="gm-tcol-c " id="menuLink3" ng-bind="board.name"></a>
                             </li>
                         </ul>
                     </div>

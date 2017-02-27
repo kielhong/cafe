@@ -1,5 +1,6 @@
 package com.widehouse.cafe.service;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.data.domain.Sort.Direction.DESC;
@@ -8,7 +9,11 @@ import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.cafe.CafeVisibility;
+import com.widehouse.cafe.domain.cafe.Category;
+import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.exception.NoAuthorityException;
 import com.widehouse.cafe.projection.ArticleProjection;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +37,8 @@ import java.util.List;
 public class ArticleServiceTest {
     @MockBean
     private ArticleRepository articleRepository;
+    @MockBean
+    private CafeMemberRepository cafeMemberRepository;
     @Autowired
     private ArticleService articleService;
 
@@ -52,6 +59,9 @@ public class ArticleServiceTest {
     @Mock
     private ArticleProjection articleMock3;
 
+    @Mock
+    private Article articleMock;
+
     @Before
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
@@ -59,10 +69,10 @@ public class ArticleServiceTest {
         board2 = new Board(cafe, "board2");
         writer = new Member("writer");
 
-        Article article1 = new Article(board1, writer, "test article1", "test1");
-        Article article2 = new Article(board1, writer, "test article2", "test2");
-        Article article3 = new Article(board2, writer, "test article3", "test3");
-        Article article4 = new Article(board2, writer, "test article3", "test3");
+        article1 = new Article(board1, writer, "test article1", "test1");
+        article2 = new Article(board1, writer, "test article2", "test2");
+        article3 = new Article(board2, writer, "test article3", "test3");
+        article4 = new Article(board2, writer, "test article3", "test3");
     }
 
     @Test
@@ -87,5 +97,39 @@ public class ArticleServiceTest {
         // then
         then(articles)
                 .containsExactly(article2, article1);
+    }
+
+    @Test
+    public void getArticle_WithArticleId_Should_Return_Article() {
+        // given
+        Member reader = new Member("reader");
+        given(articleRepository.findOne(1L))
+                .willReturn(articleMock);
+        given(articleMock.getCafe())
+                .willReturn(cafe);
+        given(articleMock.getTitle())
+                .willReturn("article title");
+        // when
+        Article article = articleService.getArticle(1L, reader);
+        // then
+        then(article)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("title", "article title");
+    }
+
+    @Test
+    public void getArticle_WithPrivateCafe_WithNonCafeMember_Should_Throw_NoAuthroityException() {
+        // given
+        Cafe cafe1 = new Cafe("private", "private cafe", "", CafeVisibility.PRIVATE, new Category());
+        Member reader = new Member("reader");
+        given(articleRepository.findOne(1L))
+                .willReturn(articleMock);
+        given(articleMock.getCafe())
+                .willReturn(cafe1);
+        given(cafeMemberRepository.existsByCafeMember(cafe, reader))
+                .willReturn(false);
+        // then
+        assertThatThrownBy(() -> articleService.getArticle(1L, reader))
+                .isInstanceOf(NoAuthorityException.class);
     }
 }

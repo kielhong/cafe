@@ -1,4 +1,4 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

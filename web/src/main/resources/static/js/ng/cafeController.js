@@ -59,3 +59,11 @@ cafeApp.controller('boardArticleCtrl', function($scope, $http, $routeParams) {
             $scope.articles = response.data;
         });
 });
+
+cafeApp.controller('articleViewCtrl', function($scope, $http, $routeParams) {
+    console.log('articleViewCtrl');
+    $http.get("http://localhost:8080/cafes/" + $scope.$parent.cafeUrl + "/articles/" + $routeParams.articleId)
+        .then(function(response) {
+            $scope.article = response.data;
+        });
+});
