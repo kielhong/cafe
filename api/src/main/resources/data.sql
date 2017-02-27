@@ -58,3 +58,15 @@ INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count,
 VALUES (1, 2, 1, '테스트 1010번째 보드 2글', '테스트 글 내용 10', 0, now(), now());
 INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
 VALUES (1, 2, 1, '테스트 11번째 보드 2글', '테스트 글 내용 11', 0, now(), now());
+
+/** Comment **/
+INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다1', now(), now());
+INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다2', now(), now());
+INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다3', now(), now());
+INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다4', now(), now());
+INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다5', now(), now());
+INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다6', now(), now());
+INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다7', now(), now());
+INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다8', now(), now());
+INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다9', now(), now());
+INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다10', now(), now());

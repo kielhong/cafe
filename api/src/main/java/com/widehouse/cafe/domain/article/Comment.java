@@ -1,9 +1,11 @@
 package com.widehouse.cafe.domain.article;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -19,10 +21,12 @@ import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @Getter
+@ToString
 public class Comment {
     @Id @GeneratedValue
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     private Article article;
 

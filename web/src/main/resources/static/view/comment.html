@@ -1,0 +1,69 @@
+<ul class="cmlist" id="cmt_list">
+    <li style="border-bottom:1px dotted #c1c0c1" ng-repeat="comment in comments">
+        <div class="comm_cont">
+            <div class="h">
+                <div class="pers_nick_area">
+                    <table cellspacing="0" summary="퍼스나콘/아이디 영역">
+                        <tbody>
+                        <tr>
+                            <td class="pc2w"><a target="itemshop" href="http://item.naver.com/personacon/PersonaconShop.jsp?Redirect=PersonaconSub.jsp?type=itemdetail%26itemseq=1433716"><img width="19" height="19" alt="" src="http://itemimgs.naver.net/personacon/16/37/1433716.gif"></a></td>
+                            <td class="p-nick"><a href="#" class="m-tcol-c _rosRestrict _nickUI" style="">{{ comment.commenter.nickname }}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <span class="date m-tcol-c filter-50" ng-bind="comment.createDateTime | date:'yyyy.MM.dd HH:mm'"></span>
+                <span class="dsc_comm"><a href="#" class="m-tcol-c  _btnReply">답글</a></span>
+                <p class="btn_edit m-tcol-c"><a href="#" class="filter-70 m-tcol-c _btnEdit">수정</a><span class="filter-30 m-tcol-c">|</span><a href="#" class="filter-70 m-tcol-c _btnDelete">삭제</a></p>
+            </div>
+            <p class="comm m-tcol-c"><span class="comm_body">{{ comment.comment }}<br></span></p>
+        </div>
+    </li>
+</ul>
+<div style="clear: both; height: 0pt; font: 0pt/0pt arial;"></div>
+<div style="display:none;" class="cc_paginate cmt" id="cmt_paginate"></div>
+
+<form ng-submit="submitComment()" ng-controller="commentWriteCtrl">
+<table cellspacing="0" class="cminput">
+    <tbody>
+    <tr>
+        <td class="i1">
+            <div class="reply-write-ico" id="refCmt_emoticon">
+                <img src='http://itemimgs.naver.net/personacon/16/37/1433716.gif' style='cursor:pointer;' width='19' height='19' alt='' class='myemoticon'/>
+            </div>
+            <span style="display:none;"></span>
+        </td>
+        <td class="i2">
+            <div class="comm_write_wrap border-sub skin-bgcolor">
+                <textarea ng-model="text" id="comment_text" cols="50" rows="2" class="textarea m-tcol-c" maxlength="6000" style="overflow: hidden; line-height: 14px; height: 39px;" title="댓글입력"></textarea>
+                <div class="u_cbox_upload_image" style="display:none">
+                </div>
+            </div>
+        </td>
+        <td class="i3">
+            <button type="submit" class="u_cbox_btn_upload _submitBtn"><span class="u_cbox_txt_upload _submitCmt">등록</span></button>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <ul class="u_cbox_addition">
+                <li>
+                    <div class="_stickerBtn u_cbox_btn_upload_sticker">
+                        <span class="u_cbox_ico_upload_sticker"></span>
+                        <span class="m-tcol-c u_cbox_txt_upload_sticker">스티커</span>
+                        <a href="#" class="u_cbox_link_wrap">스티커 레이어 팝업</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="u_cbox_btn_upload_photo">
+                        <div class="_imageBtn u_cbox_btn_file"><label for="attachImageBtn9">업로드</label><input type="file" id="attachImageBtn9" accept="Image/*"></input></div>
+                        <span class="u_cbox_ico_upload_photo"></span>
+                        <span class="m-tcol-c u_cbox_txt_upload_photo">사진</span>
+                    </div>
+                </li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</form>

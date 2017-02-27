@@ -4,11 +4,12 @@ import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.domain.member.MemberRepository;
 import com.widehouse.cafe.service.CommentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +22,14 @@ import java.util.List;
  * Created by kiel on 2017. 2. 20..
  */
 @RestController
+@Slf4j
 public class CommentController {
     @Autowired
     private CommentService commentService;
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
     @GetMapping(value = "/articles/{articleId}/comments", params = {"page", "size"})
     public List<Comment> getComments(@PathVariable Long articleId,
@@ -40,9 +44,9 @@ public class CommentController {
 
     @PostMapping(value = "/articles/{articleId}/comments", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Comment write(@PathVariable Long articleId,
-                         @ModelAttribute Comment input) {
+                         @RequestBody Comment input) {
         // TODO : member 코드 처리
-        Member member = new Member("member");
+        Member member = memberRepository.findOne(input.getCommenter().getId());
         Article article = articleRepository.findOne(articleId);
 
         return commentService.writeComment(article, member, input.getComment());
