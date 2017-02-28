@@ -3,9 +3,9 @@ package com.widehouse.cafe.api;
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -13,7 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.widehouse.cafe.api.CommentController;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
@@ -21,6 +20,8 @@ import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.domain.member.MemberRepository;
+import com.widehouse.cafe.exception.NoAuthorityException;
 import com.widehouse.cafe.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -49,6 +50,8 @@ public class CommentControllerTest {
     private CommentService commentService;
     @MockBean
     private ArticleRepository articleRepository;
+    @MockBean
+    private MemberRepository memberRepository;
 
     private Cafe cafe;
     private Board board;
@@ -96,7 +99,20 @@ public class CommentControllerTest {
     }
 
     @Test
-    public void writebyNonCafeMember_Shoul_Fail() throws Exception {
+    public void writebyNonCafeMember_Shoul_403Forbidden() throws Exception {
+        // given
+        Comment comment = new Comment(article, member, "new comment");
+        given(memberRepository.findOne(anyLong()))
+                .willReturn(member);
+        given(articleRepository.findOne(1L))
+                .willReturn(article);
+        given(commentService.writeComment(article, member, comment.getComment()))
+                .willThrow(NoAuthorityException.class);
+        // then
+        mvc.perform(post("/articles/1/comments")
+                    .contentType(APPLICATION_JSON)
+                    .content(mapper.writeValueAsString(comment)))
+                .andExpect(status().isForbidden());
 
     }
 }
