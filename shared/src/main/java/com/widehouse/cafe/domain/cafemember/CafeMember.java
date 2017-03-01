@@ -3,6 +3,7 @@ package com.widehouse.cafe.domain.cafemember;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 @IdClass(CafeMemberId.class)
+
+@NoArgsConstructor
 @Getter
 public class CafeMember {
     @Id
