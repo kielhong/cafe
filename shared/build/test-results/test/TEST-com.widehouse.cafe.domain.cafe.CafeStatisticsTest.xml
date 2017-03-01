@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.widehouse.cafe.domain.cafe.CafeStatisticsTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-03-01T01:00:00" hostname="Kiel-MBP-2.fios-router.home" time="0.002">
-  <properties/>
-  <testcase name="decreaseCommentCount_should_set_commentCount_minimum_zero" classname="com.widehouse.cafe.domain.cafe.CafeStatisticsTest" time="0.002"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

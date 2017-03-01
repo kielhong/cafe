@@ -3,6 +3,8 @@
 /gradle
 /web/build/
 /api/build/
+/shared/build/
 
 ### IntelliJ IDEA ###
 .idea
+
