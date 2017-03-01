@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class com.widehouse.cafe.service.MemberServiceTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class com.widehouse.cafe.service.MemberServiceTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.widehouse.cafe.service.html">com.widehouse.cafe.service</a> &gt; MemberServiceTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.006s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">getCafesByMemeber_should_return_cafelist</td>
+<td>0.006s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2017-02-28 20:00:12.640  INFO 3618 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.widehouse.cafe.service.MemberServiceTest], using SpringBootContextLoader
+2017-02-28 20:00:12.641  INFO 3618 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.widehouse.cafe.service.MemberServiceTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2017-02-28 20:00:12.641  INFO 3618 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.widehouse.cafe.service.MemberServiceTest]: MemberServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2017-02-28 20:00:12.644  INFO 3618 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.widehouse.cafe.CafeApplication for test class com.widehouse.cafe.service.MemberServiceTest
+2017-02-28 20:00:12.647  INFO 3618 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2017-02-28 20:00:12.650  INFO 3618 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@7d4a37ce, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@494cd0a3, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@6a7d6934, org.springframework.test.context.support.DirtiesContextTestExecutionListener@d67245e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@213f867b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@e598337, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@fec6f01, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@3b1dff76, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@66ccba30, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@24cecde5, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@48363a1a, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@1c849a25]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.5.1.RELEASE)
+
+2017-02-28 20:00:12.711  INFO 3618 --- [    Test worker] c.w.cafe.service.MemberServiceTest       : Starting MemberServiceTest on Kiel-MBP-2.fios-router.home with PID 3618 (started by kiel in /Users/kiel/Development/workspace/cafe/shared)
+2017-02-28 20:00:12.711 DEBUG 3618 --- [    Test worker] c.w.cafe.service.MemberServiceTest       : Running with Spring Boot v1.5.1.RELEASE, Spring v4.3.6.RELEASE
+2017-02-28 20:00:12.711  INFO 3618 --- [    Test worker] c.w.cafe.service.MemberServiceTest       : No active profile set, falling back to default profiles: default
+2017-02-28 20:00:12.715  INFO 3618 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@5008a266: startup date [Tue Feb 28 20:00:12 EST 2017]; root of context hierarchy
+2017-02-28 20:00:13.136  INFO 3618 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration' of type [class org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2017-02-28 20:00:13.147  INFO 3618 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'validator' of type [class org.springframework.validation.beanvalidation.LocalValidatorFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2017-02-28 20:00:13.156  INFO 3618 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [class org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$48a8aefe] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2017-02-28 20:00:13.352  INFO 3618 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2017-02-28 20:00:13.352  INFO 3618 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2017-02-28 20:00:13.365  INFO 3618 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2017-02-28 20:00:13.392  INFO 3618 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-28 20:00:13.419  INFO 3618 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-28 20:00:13.419  INFO 3618 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-28 20:00:13.420  INFO 3618 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-28 20:00:13.421  INFO 3618 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-28 20:00:13.421  INFO 3618 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-28 20:00:13.422  INFO 3618 --- [    Test worker] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.widehouse.cafe.domain.cafemember.CafeMember (class must be instantiated by Interceptor)
+2017-02-28 20:00:13.456  INFO 3618 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000227: Running hbm2ddl schema export
+Hibernate: 
+    alter table article 
+        drop 
+        foreign key FK2y7w132xb5xp1aiouig87aqjo
+Hibernate: 
+    alter table article 
+        drop 
+        foreign key FK5f6cq4n0pw2m9qjvsggq0g8n3
+Hibernate: 
+    alter table article 
+        drop 
+        foreign key FKnb2hbmy476nrjmhb5qa2j3gxl
+Hibernate: 
+    alter table board 
+        drop 
+        foreign key FKb4mbnyvplmrnhrowpmh68vygy
+Hibernate: 
+    alter table cafe 
+        drop 
+        foreign key FK3ogxcjbcw5u4wq5vxswp1q5mw
+Hibernate: 
+    alter table cafe_member 
+        drop 
+        foreign key FK6wfe3rrg8veu24j9flwp6av7p
+Hibernate: 
+    alter table cafe_member 
+        drop 
+        foreign key FKp4vtm2u9e6j1kjkvm7amp2h60
+Hibernate: 
+    alter table comment 
+        drop 
+        foreign key FK5yx0uphgjc6ik6hb82kkw501y
+Hibernate: 
+    alter table comment 
+        drop 
+        foreign key FKkkdf3y7qctevtw918afg82uw7
+Hibernate: 
+    drop table if exists article
+Hibernate: 
+    drop table if exists board
+Hibernate: 
+    drop table if exists cafe
+Hibernate: 
+    drop table if exists cafe_member
+Hibernate: 
+    drop table if exists category
+Hibernate: 
+    drop table if exists comment
+Hibernate: 
+    drop table if exists member
+Hibernate: 
+    create table article (
+        id bigint not null auto_increment,
+        comment_count integer not null,
+        content longtext,
+        create_date_time datetime,
+        title longtext,
+        update_date_time datetime,
+        board_id bigint,
+        cafe_id bigint,
+        writer_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table board (
+        id bigint not null auto_increment,
+        list_order integer not null check (list_order&gt;=1),
+        name varchar(50),
+        cafe_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table cafe (
+        id bigint not null auto_increment,
+        create_date_time datetime,
+        description longtext,
+        name varchar(100),
+        cafe_article_count bigint,
+        cafe_comment_count bigint,
+        cafe_member_count bigint,
+        cafe_visit_count bigint,
+        url varchar(30),
+        visibility varchar(255) not null,
+        category_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table cafe_member (
+        join_date datetime,
+        role varchar(255),
+        member_id bigint not null,
+        cafe_id bigint not null,
+        primary key (cafe_id, member_id)
+    )
+Hibernate: 
+    create table category (
+        id bigint not null auto_increment,
+        create_date_time datetime,
+        list_order integer not null,
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table comment (
+        id bigint not null auto_increment,
+        comment longtext,
+        create_date_time datetime,
+        update_date_time datetime,
+        article_id bigint,
+        commenter_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    create table member (
+        id bigint not null auto_increment,
+        nickname varchar(30),
+        primary key (id)
+    )
+Hibernate: 
+    alter table cafe 
+        add constraint UKit98p4n4mjd3i1642wipaufan unique (url)
+Hibernate: 
+    alter table article 
+        add constraint FK2y7w132xb5xp1aiouig87aqjo 
+        foreign key (board_id) 
+        references board (id)
+Hibernate: 
+    alter table article 
+        add constraint FK5f6cq4n0pw2m9qjvsggq0g8n3 
+        foreign key (cafe_id) 
+        references cafe (id)
+Hibernate: 
+    alter table article 
+        add constraint FKnb2hbmy476nrjmhb5qa2j3gxl 
+        foreign key (writer_id) 
+        references member (id)
+Hibernate: 
+    alter table board 
+        add constraint FKb4mbnyvplmrnhrowpmh68vygy 
+        foreign key (cafe_id) 
+        references cafe (id)
+Hibernate: 
+    alter table cafe 
+        add constraint FK3ogxcjbcw5u4wq5vxswp1q5mw 
+        foreign key (category_id) 
+        references category (id)
+Hibernate: 
+    alter table cafe_member 
+        add constraint FK6wfe3rrg8veu24j9flwp6av7p 
+        foreign key (member_id) 
+        references member (id)
+Hibernate: 
+    alter table cafe_member 
+        add constraint FKp4vtm2u9e6j1kjkvm7amp2h60 
+        foreign key (cafe_id) 
+        references cafe (id)
+Hibernate: 
+    alter table comment 
+        add constraint FK5yx0uphgjc6ik6hb82kkw501y 
+        foreign key (article_id) 
+        references article (id)
+Hibernate: 
+    alter table comment 
+        add constraint FKkkdf3y7qctevtw918afg82uw7 
+        foreign key (commenter_id) 
+        references member (id)
+2017-02-28 20:00:13.495  INFO 3618 --- [    Test worker] org.hibernate.tool.hbm2ddl.SchemaExport  : HHH000230: Schema export complete
+2017-02-28 20:00:13.503  WARN 3618 --- [    Test worker] o.h.j.i.EntityManagerFactoryRegistry     : HHH000436: Entity manager factory name (default) is already registered.  If entity manager will be clustered or passivated, specify a unique value for property 'hibernate.ejb.entitymanager_factory_name'
+2017-02-28 20:00:13.504  INFO 3618 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2017-02-28 20:00:13.840  INFO 3618 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@5008a266: startup date [Tue Feb 28 20:00:12 EST 2017]; root of context hierarchy
+2017-02-28 20:00:13.857  INFO 3618 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;{[/error]}&quot; onto public org.springframework.http.ResponseEntity&lt;java.util.Map&lt;java.lang.String, java.lang.Object&gt;&gt; org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2017-02-28 20:00:13.857  INFO 3618 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;{[/error],produces=[text/html]}&quot; onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2017-02-28 20:00:13.877  INFO 3618 --- [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-02-28 20:00:13.877  INFO 3618 --- [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-02-28 20:00:13.901  INFO 3618 --- [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-02-28 20:00:14.128  INFO 3618 --- [    Test worker] c.w.cafe.service.MemberServiceTest       : Started MemberServiceTest in 1.472 seconds (JVM running for 26.931)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 3.3</a> at 2017. 2. 28 오후 8:00:17</p>
+</div>
+</div>
+</body>
+</html>

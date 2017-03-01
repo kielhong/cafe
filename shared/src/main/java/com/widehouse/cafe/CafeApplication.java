@@ -4,11 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Created by kiel on 2017. 2. 21..
+ * Created by kiel on 2017. 2. 28..
  */
 @SpringBootApplication
-public class CafeWebApplication {
+public class CafeApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CafeWebApplication.class, args);
+        SpringApplication.run(CafeApplication.class, args);
     }
 }

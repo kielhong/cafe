@@ -19,11 +19,19 @@ import org.springframework.test.web.servlet.MockMvc;
 public class CafeControllerTest {
     @Autowired
     private MockMvc mvc;
+//    @MockBean
+//    private CafeService cafeService;
 
     @Test
-    public void cafe_Should_CafeInfo() throws Exception {
+    public void getCafe_Should_CafeInfo() throws Exception {
+        // given
+//        Cafe cafe = new Cafe("cafetest", "cafename");
+//        given(cafeService.getCafe("cafetest"))
+//                .willReturn(cafe);
+        // then
         mvc.perform(get("/cafes/cafetest"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("cafe"));
+//                .andExpect(model().attribute("cafe", cafe));
     }
 }

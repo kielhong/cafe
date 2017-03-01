@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.widehouse.cafe.domain.article.CommentRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-03-01T00:59:58" hostname="Kiel-MBP-2.fios-router.home" time="0.117">
+  <properties/>
+  <testcase name="findByArticle_Should_ListComments" classname="com.widehouse.cafe.domain.article.CommentRepositoryTest" time="0.117"/>
+  <system-out><![CDATA[2017-02-28 19:59:58.625  INFO 3618 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.widehouse.cafe.domain.article.CommentRepositoryTest], using SpringBootContextLoader
+2017-02-28 19:59:58.627  INFO 3618 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.widehouse.cafe.domain.article.CommentRepositoryTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2017-02-28 19:59:58.627  INFO 3618 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.widehouse.cafe.domain.article.CommentRepositoryTest]: CommentRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2017-02-28 19:59:58.654  INFO 3618 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.widehouse.cafe.CafeApplication for test class com.widehouse.cafe.domain.article.CommentRepositoryTest
+2017-02-28 19:59:58.658  INFO 3618 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2017-02-28 19:59:58.667  INFO 3618 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@ba1c112, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@504c9e41, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@1d323d1, org.springframework.test.context.support.DirtiesContextTestExecutionListener@5e4961ce, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5be59244, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6fefb1ef, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@773aca68, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@62688250, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@15685beb, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@79ae060, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@26d20371, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@e7ff9]
+2017-02-28 19:59:58.692  INFO 3618 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@3d2f94d0 testClass = CommentRepositoryTest, testInstance = com.widehouse.cafe.domain.article.CommentRepositoryTest@501968c8, testMethod = findByArticle_Should_ListComments@CommentRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@576edb10 testClass = CommentRepositoryTest, locations = '{}', classes = '{class com.widehouse.cafe.CafeApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@727a87d key = [Package Import com.widehouse.cafe.domain.article, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@1b1bfc58, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@53f1b31c, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@2ec77400, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@5cb24dfb], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@3ce086f8]; rollback [true]
+Hibernate: 
+    insert 
+    into
+        cafe
+        (category_id, create_date_time, description, name, cafe_article_count, cafe_comment_count, cafe_member_count, cafe_visit_count, url, visibility) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        board
+        (cafe_id, list_order, name) 
+    values
+        (?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        member
+        (nickname) 
+    values
+        (?)
+Hibernate: 
+    insert 
+    into
+        article
+        (board_id, cafe_id, comment_count, content, create_date_time, title, update_date_time, writer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        member
+        (nickname) 
+    values
+        (?)
+Hibernate: 
+    insert 
+    into
+        article
+        (board_id, cafe_id, comment_count, content, create_date_time, title, update_date_time, writer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        comment
+        (article_id, comment, commenter_id, create_date_time, update_date_time) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        comment
+        (article_id, comment, commenter_id, create_date_time, update_date_time) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        comment
+        (article_id, comment, commenter_id, create_date_time, update_date_time) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        comment
+        (article_id, comment, commenter_id, create_date_time, update_date_time) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        comment
+        (article_id, comment, commenter_id, create_date_time, update_date_time) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        comment0_.id as id1_5_,
+        comment0_.article_id as article_5_5_,
+        comment0_.comment as comment2_5_,
+        comment0_.commenter_id as commente6_5_,
+        comment0_.create_date_time as create_d3_5_,
+        comment0_.update_date_time as update_d4_5_ 
+    from
+        comment comment0_ 
+    left outer join
+        article article1_ 
+            on comment0_.article_id=article1_.id 
+    where
+        article1_.id=? 
+    order by
+        comment0_.id asc limit ?
+2017-02-28 19:59:58.805  INFO 3618 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test context [DefaultTestContext@3d2f94d0 testClass = CommentRepositoryTest, testInstance = com.widehouse.cafe.domain.article.CommentRepositoryTest@501968c8, testMethod = findByArticle_Should_ListComments@CommentRepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@576edb10 testClass = CommentRepositoryTest, locations = '{}', classes = '{class com.widehouse.cafe.CafeApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@727a87d key = [Package Import com.widehouse.cafe.domain.article, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@1b1bfc58, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@53f1b31c, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@2ec77400, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@5cb24dfb], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]].
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

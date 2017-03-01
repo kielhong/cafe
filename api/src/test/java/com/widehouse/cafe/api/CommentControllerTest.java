@@ -107,12 +107,11 @@ public class CommentControllerTest {
         given(articleRepository.findOne(1L))
                 .willReturn(article);
         given(commentService.writeComment(article, member, comment.getComment()))
-                .willThrow(NoAuthorityException.class);
+                .willThrow(new NoAuthorityException());
         // then
         mvc.perform(post("/articles/1/comments")
                     .contentType(APPLICATION_JSON)
                     .content(mapper.writeValueAsString(comment)))
                 .andExpect(status().isForbidden());
-
     }
 }

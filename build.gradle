@@ -57,6 +57,26 @@ subprojects() {
             })
         }
     }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Werror"
+    }
+}
+
+project(':shared') {
+    jar {
+        baseName = 'cafe-shared'
+        version = '0.0.1-SNAPSHOT'
+    }
+
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-data-jpa')
+        compile("org.hibernate:hibernate-java8:${hibernateVersion}")
+
+        runtime('com.h2database:h2')
+        runtime('mysql:mysql-connector-java')
+    }
+
 }
 
 project(':api') {
@@ -66,7 +86,7 @@ project(':api') {
     }
 
     dependencies {
-        compile('org.springframework.boot:spring-boot-starter-data-jpa')
+        compile project(':shared')
         compile("org.hibernate:hibernate-java8:${hibernateVersion}")
 
         runtime('com.h2database:h2')
@@ -82,10 +102,11 @@ project(':web') {
     }
 
     dependencies {
+        compile project(':shared')
         compile("org.springframework.boot:spring-boot-starter-thymeleaf")
         compile("org.springframework.boot:spring-boot-devtools")
 
-        compile("org.webjars:webjars-locator:0.30")
+        runtime("org.webjars:webjars-locator:0.30")
         runtime("org.webjars:angularjs:1.6.1")
         runtime("org.webjars:bootstrap:3.3.7")
     }
