@@ -105,10 +105,15 @@ project(':web') {
         compile project(':shared')
         compile("org.springframework.boot:spring-boot-starter-security")
         compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+        compile('org.thymeleaf.extras:thymeleaf-extras-java8time:2.1.0.RELEASE')
         compile("org.springframework.boot:spring-boot-devtools")
 
         runtime("org.webjars:webjars-locator:0.30")
         runtime("org.webjars:angularjs:1.6.1")
         runtime("org.webjars:bootstrap:3.3.7")
+    }
+
+    bootRun {
+        addResources = true
     }
 }

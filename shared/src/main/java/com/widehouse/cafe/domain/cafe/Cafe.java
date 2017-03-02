@@ -1,9 +1,6 @@
 package com.widehouse.cafe.domain.cafe;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.widehouse.cafe.domain.cafemember.CafeMember;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
-import com.widehouse.cafe.domain.member.Member;
 import lombok.Getter;
 import lombok.NonNull;
 

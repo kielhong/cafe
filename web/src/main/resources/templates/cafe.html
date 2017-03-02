@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <title>마이 카페</title>
+    <title th:text="${cafe.name + ' : 마이 카페'}"></title>
 
     <link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/mycafe-common-1487314414000-57562.css" type="text/css"/>
     <link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/mycafe-layout-1485413655000-59862.css" type="text/css"/>
@@ -19,9 +21,9 @@
 
 <body ng-app="cafeApp">
 
-<h1 class="d-none">{{ cafeName }}</h1>
+<h1 class="d-none" th:text="${cafe.name}"></h1>
 <div id="cafe-body-skin">
-    <div id="cafe-body" ng-controller="cafeCtrl" data-ng-init="init()">
+    <div id="cafe-body" ng-controller="cafeCtrl">
 
         <div id="naver-gnb">
             <div id="gnb-menu">
@@ -37,7 +39,7 @@
         <div id="front-img">
             <div id="front-cafe"  style="cursor:hand;cursor:pointer;background-image:none;width:956px">
                 <a href="#" >
-                    <img src="http://cafefiles.naver.nethttp://cafeimgs.naver.com/img/skin/img_80/skin80_46.gif" alt="{{ cafeName }}" onload="resizeTopSkin(this)" />
+                    <img src="http://cafeimgs.naver.com/img/skin/img_80/skin80_46.gif" th:alt="${cafe.name}"/>
                 </a>
             </div>
         </div>
@@ -105,7 +107,7 @@
                                         </a>
                                     </li>
                                     <li class="gm-tcol-c">
-                                        <div class="thm"><a href="/CafeHistoryView.nhn?clubid=10000001" class="gm-tcol-c" target="cafe_main" ng-bind="'since ' + (createDateTime | date:'yyyy.MM.dd.')"></a></div>
+                                        <div class="thm"><a href="/CafeHistoryView.nhn?clubid=10000001" class="gm-tcol-c" target="cafe_main" th:text="'since ' + ${#temporals.format(cafe.createDateTime, 'yyyy.MM.dd.')}"></a></div>
                                         <div class="info-view"><a href="#" onclick="cafeProfile();" class="u gm-tcol-c">카페소개</a></div>
                                     </li>
 
@@ -131,7 +133,7 @@
                                     </li>
                                     <li class="mem-cnt-info"  style="cursor:pointer;">
                                         <strong class="d-none">카페멤버수</strong>
-                                        <a href="#" class="gm-tcol-c"><span class="ico"></span><br></br><em ng-bind="cafeMemberCount | number:0">0</em></a>
+                                        <a href="#" class="gm-tcol-c"><span class="ico"></span><br></br><em th:text="${#numbers.formatInteger(cafe.statistics.cafeMemberCount, 3, 'COMMA')}"></em></a>
                                         <div class="ly_info_dsc" style="font-weight:normal;top:31px;left:5px;display:none;" id="hiddenCafeApplyLayer">
                                             <div class="cont cont_v1" style="width:60px">
                                                 <p><a href="/ManageJoinApplication.nhn?search.clubid=10000001" >가입대기 <span>0</span></a></p>
@@ -140,25 +142,8 @@
                                         </div>
                                     </li>
                                 </ul>
-
-                                <div class="ly_info_dsc" style="top:31px;left:5px;display:none;" id="hiddenCafeDescLayer">
-                                    <div class="cont">
-                                        <p>초대를 통해서만<br></br>가입할 수 있는 비공개카페</p>
-                                        <span class="tail" style="left:31px"></span>
-                                    </div>
-                                </div>
-
-                                <div class="ly_info_dsc" style="top:33px;right:29px;display:none;" id="hiddenOpenMemberInfoLayer">
-                                    <div class="cont cont_v2">
-                                        <p>멤버목록 비공개 카페</p>
-                                        <span class="tail" style="right:3px"></span>
-                                    </div>
-                                    <a href="#" onclick="$('hiddenOpenMemberInfoLayer').style.display = 'none';" class="clse" role="button">닫기</a>
-                                </div>
                             </div>
 
-                            <div class="ia-info-data3" id="cafePopularityLog">
-                            </div>
                             <div class="ia-info-btn">
                                 <ul class="ia-info-list">
                                     <li>
@@ -234,18 +219,18 @@
                             <li>
                                 <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" class="ico-list" alt=""/>
                                 <a href="#articles" class="gm-tcol-c" id="menuLink0">전체글보기</a>
-                                <span class="gm-tcol-c p11" style="padding-right:2px;">(<strong ng-bind="cafeArticleCount">0</strong>)</span>
+                                <span class="gm-tcol-c p11" style="padding-right:2px;">(<strong th:text="${#numbers.formatInteger(cafe.statistics.cafeArticleCount, 3, 'COMMA')}"></strong>)</span>
                             </li>
-                            <li ng-repeat="board in specialBoards">
-                                <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" class="ico-{{ board.type }}" alt=""/>
-                                <a href="/CafeTagCloudList.nhn?search.clubId=10000001" class="gm-tcol-c" id="menuLink-10" ng-bind="board.name"></a>
+                            <li th:each="board : ${specialBoards}">
+                                <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" th:class="'ico-' + ${board.type}" th:alt="${board.type}"/>
+                                <a href="/CafeTagCloudList.nhn?search.clubId=10000001" class="gm-tcol-c" id="menuLink-10" th:text="${board.name}"></a>
                             </li>
                         </ul>
                         <div class="cafe-menu-space"></div>
                         <ul class="cafe-menu-list">
-                            <li ng-repeat="board in boards">
+                            <li th:each="board : ${boards}">
                                 <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" class="ico-list" alt=""/>
-                                <a href="#boards/{{ board.id }}" class="gm-tcol-c " id="menuLink3" ng-bind="board.name"></a>
+                                <a th:href="'#boards/' + ${board.id}" class="gm-tcol-c " th:text="${board.name}"></a>
                             </li>
                         </ul>
                     </div>
@@ -285,7 +270,7 @@
 
         </div>
         <div id="cafe-footer">
-            <p class="cafe-name m-tcol-c">마이 카페 <span class="m-tcol-p">{{ cafeName }}</span></p>
+            <p class="cafe-name m-tcol-c">마이 카페 <span class="m-tcol-p" th:text="${cafe.name}"></span></p>
         </div>
     </div>
 
