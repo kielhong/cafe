@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.service.CafeService;
+import com.widehouse.cafe.service.CafeUserDetailsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class CafeControllerTest {
     private MockMvc mvc;
     @MockBean
     private CafeService cafeService;
+    @MockBean
+    private CafeUserDetailsService userDetailsService;
 
     @Test
     public void getCafe_Should_CafeInfo() throws Exception {

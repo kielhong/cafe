@@ -33,12 +33,13 @@ subprojects() {
     targetCompatibility = 1.8
 
     dependencies {
-//	compile('org.springframework.boot:spring-boot-starter-security')
         compile('org.springframework.boot:spring-boot-starter-web')
+        compile('org.springframework.boot:spring-boot-starter-security')
         compile('org.projectlombok:lombok')
         compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.6')
 
         testCompile('org.springframework.boot:spring-boot-starter-test')
+        testCompile('org.springframework.security:spring-security-test:4.2.1.RELEASE')
         testCompile('org.assertj:assertj-core:3.6.2')
     }
 
@@ -72,7 +73,6 @@ project(':shared') {
     dependencies {
         compile('org.springframework.boot:spring-boot-starter-data-jpa')
         compile("org.hibernate:hibernate-java8:${hibernateVersion}")
-        compile("org.springframework.boot:spring-boot-starter-security")
 
         runtime('com.h2database:h2')
         runtime('mysql:mysql-connector-java')
