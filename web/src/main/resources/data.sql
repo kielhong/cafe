@@ -18,7 +18,8 @@ INSERT INTO cafe(category_id, url, name, description, visibility, cafe_article_c
 INSERT INTO cafe(category_id, url, name, description, visibility, cafe_article_count, cafe_comment_count, cafe_member_count, cafe_visit_count, create_date_time) values (1,'gamecafe13','샌드박스 팬 카페','샌드박스 팬 카페입니다','PUBLIC', 898790, 1231312, 58582, 123123, '2014-03-21 01:02:03');
 
 /** Member **/
-INSERT INTO member(id, nickname) VALUES (1, 'kiel');
+INSERT INTO member(username, nickname, password) VALUES ('kiel', '키엘', '0331');
+INSERT INTO member(username, nickname, password) VALUES ('user', '테스트유저', 'password');
 
 /** CafeMember **/
 INSERT INTO cafe_member(cafe_id, member_id, role, join_date) VALUES (1, 1, 'MANAGER', now());

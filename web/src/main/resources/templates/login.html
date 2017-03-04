@@ -1,56 +1,43 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
     <title>로그인</title>
     <link rel="stylesheet" type="text/css" href="https://nid.naver.com/login/css/global/desktop/w_20161104.css?dt=20161214"/>
     <link rel="stylesheet" type="text/css" href="https://nid.naver.com/login/css/global/desktop/e_20161104.css?dt=20161214"/>
 </head>
 <body class="chrome">
-
 <div id="wrap">
-    <!-- header -->
     <div id="header">
         <h1><a href="/" class="sp h_logo" tabindex="1">NAVER</a></h1>
     </div>
-    <!-- //header -->
-    <!-- container -->
     <div id="container">
-        <!-- content -->
         <div id="content">
-            <div class="title">
-                <p></p>
-            </div>
-            <form id="frmNIDLogin" name='f' action='/login' method='POST'>
+            <form name='f' th:action="@{/login}" method='post'>
                 <fieldset class="login_form">
                     <legend class="blind">로그인</legend>
                     <div class="input_row" id="id_area">
 						<span class="input_box">
-							<label for="id" id="label_id_area" class="lbl"   >아이디</label>
-							<input type="text" id="id" name="username" tabindex="7" accesskey="L" placeholder="아이디" class="int" maxlength="41" value=""/>
+							<label for="username" class="lbl">아이디</label>
+							<input type="text" id="username" name="username" tabindex="7" accesskey="L" placeholder="아이디" class="int" maxlength="41" autofocus="autofocus"/>
 						</span>
-                        <button type="button" disabled="" title="delete" id="id_clear" class="wrg">삭제</button>
                     </div>
-                    <div id="err_empty_id" class="error" style="display:none;">아이디를 입력해주세요.</div>
                     <div class="input_row" id="pw_area">
 						<span class="input_box">
-							<label for="pw" id="label_pw_area"  class="lbl">비밀번호</label>
-							<input type="password" id="pw" name="password" tabindex="8" placeholder="비밀번호" class="int" maxlength="16" onkeypress="capslockevt(event);getKeysv2();" onkeyup="checkShiftUp(event);" onkeydown="checkShiftDown(event);" />
+							<label for="password" class="lbl">비밀번호</label>
+							<input type="password" id="password" name="password" tabindex="8" placeholder="비밀번호" class="int" maxlength="16" />
 						</span>
-                        <button type="button" disabled="" title="delete" id="pw_clear" class="wrg">삭제</button>
-                        <div class="ly_v2" id="err_capslock" style="display:none;">
-                            <div class="ly_box">
-                                <p><strong>Caps Lock</strong>이 켜져 있습니다.</p>							</div>
-                            <span class="sp ly_point"></span>
-                        </div>
                     </div>
-                    <div class="error" id="err_empty_pw" style="display:none;">비밀번호를 입력해주세요.</div>
-                    <input type="submit" title="로그인" alt="로그인" tabindex="12" value="로그인" class="btn_global" onclick="nclks('log.login',this,event)"/>
+                    <div th:if="${param.error}" class="alert alert-error">
+                        아이디 혹은 비밀번호가 잘못되었습니다.
+                    </div>
+                    <input type="submit" title="로그인" alt="로그인" tabindex="12" value="로그인" class="btn_global"/>
                     <div class="check_info" >
                         <div class="login_check">
 							<span class="login_check_box">
-								<input type="checkbox" id="login_chk" name="nvlong" class="" tabindex="9"  value="off"  onchange="savedLong(this);nclks_chk('login_chk', 'log.keepon', 'log.keepoff',this,event)" onclick="msieblur(this);"/>
+								<input type="checkbox" id="login_chk" name="nvlong" class="" tabindex="9"  value="off"/>
 								<label for="login_chk" id="label_login_chk" class="sp">로그인 상태 유지</label>
 							</span>
                             <div class="ly_v2" id="persist_usage" style="display:none;">
@@ -60,23 +47,12 @@
                                 <span class="sp ly_point"></span>
                             </div>
                         </div>
-                        <div class="pc_check">
-							<span class="ip_check">
-								<a href="/login/ext/help_ip3.html" target="_blank" onclick="window.open(this.href, 'IPGUIDE', 'titlebar=1, resizable=1, scrollbars=yes, width=537, height=750'); return false;" title="" tabindex="10">IP보안</a>
-								<span class="ip_ch">
-									<input type="checkbox" id="ip_on" checked="checked" tabindex="11" onchange="ipCheck(this,event);nclks_chk('ip_on', 'log.iponset', 'log.ipoffset',this,event)" onclick="msieblur(this);" class=""/>
-									<label for="ip_on" id="label_ip_on" class="sp">on</label>
-								</span>
-							</span>
-                        </div>
                     </div>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 </fieldset>
             </form>
-            <!-- tg-lang -->
         </div>
-        <!-- //content -->
     </div>
-    <!-- //container -->
 </div>
 </body>
 </html>

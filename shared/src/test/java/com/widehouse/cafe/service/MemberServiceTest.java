@@ -1,6 +1,7 @@
 package com.widehouse.cafe.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
@@ -16,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -33,11 +36,6 @@ public class MemberServiceTest {
     private CafeMemberRepository cafeMemberRepository;
     @Autowired
     private MemberService memberService;
-
-    @Before
-    public void setUp() {
-
-    }
 
 
     @Test
@@ -61,9 +59,5 @@ public class MemberServiceTest {
         // then
         assertThat(cafes)
                 .contains(cafe1, cafe2, cafe3, cafe4, cafe5);
-
-
-
-
     }
 }

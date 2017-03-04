@@ -31,7 +31,7 @@ import java.util.Arrays;
  * Created by kiel on 2017. 2. 15..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(CategoryController.class)
+@WebMvcTest(value = CategoryController.class, secure = false)
 @EnableSpringDataWebSupport
 public class CategoryControllerTest {
     @Autowired

@@ -24,11 +24,11 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/members/{memberId}/cafes")
-    public List<Cafe> getCafesByMember(@PathVariable Long memberId,
+    @GetMapping("/members/{username}/cafes")
+    public List<Cafe> getCafesByMember(@PathVariable String username,
                                        @PageableDefault(sort = "cafe.createDateTime",
                                                direction = Sort.Direction.DESC) Pageable pageable) {
-        Member member = memberRepository.findOne(memberId);
+        Member member = memberRepository.findByUsername(username);
 
         return memberService.getCafesByMember(member, pageable);
     }

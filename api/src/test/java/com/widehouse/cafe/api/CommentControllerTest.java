@@ -39,7 +39,7 @@ import java.util.Arrays;
  * Created by kiel on 2017. 2. 20..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(CommentController.class)
+@WebMvcTest(value = CommentController.class, secure = false)
 @Slf4j
 public class CommentControllerTest {
     @Autowired

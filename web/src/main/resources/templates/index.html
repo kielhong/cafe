@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>Cafe</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
@@ -243,7 +246,7 @@
 
     <!-- aside -->
     <div id="aside" class="aside" role="complementary">
-        <div class="login">
+        <div class="login" sec:authorize="!isAuthenticated()">
             <h2 class="blind"><a id="account_h" name="account_h" href="#account_h">로그인</a></h2>
             <div class="btn_login">
                 <div class="bl_inner">
@@ -253,6 +256,25 @@
                         <a href="https://nid.naver.com/nidregister.form" class="btn_join">회원가입</a>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="login" sec:authorize="isAuthenticated()">
+            <h2 class="blind">사용자 정보</h2>
+            <p class="user lkbtn"><span class="lkbtn"><strong sec:authentication="name"></strong> 님</span></p>
+            <div style="float:right;margin-right:20px;">
+                <form action="#" th:action="@{/logout}" method="post">
+                    <!--<input type="submit" value="Logout" />-->
+                    <input type="image" src="http://cafeimgs.naver.net/img/section/btn_logout.gif" width="51" height="18" alt="로그아웃"/>
+                </form>
+            </div>
+<!--            <a href="/logout" class="btn_logout"><img src="http://cafeimgs.naver.net/img/section/btn_logout.gif" width="51" height="18" alt="로그아웃"/></a>-->
+            <div class="user_count">
+                <a href="http://mail.naver.com" class="N=a:ida.mail"><span class="n_mail">메일</span>
+                    <strong>2</strong></a><span class="ico_new">new</span>
+                <span class="hr"></span>
+                <a href="http://note.naver.com" class="N=a:ida.memo"><span class="n_message">쪽지</span>
+                    <strong>19</strong>
+                </a><span class="ico_new">new</span>
             </div>
         </div>
 
@@ -281,22 +303,7 @@
     </div>
     <!-- //aside -->
 </div>
-<div id="footer" role="contentinfo">
-    <ul>
-        <li class="first"><a href="http://section.cafe.naver.com/CafeTerms.nhn" target="_blank" class="N=a:fot.agreement">카페 이용약관</a></li>
-        <li><a href="http://section.cafe.naver.com/CafeOperatingRules.nhn" target="_blank" class="N=a:fot.rule">카페 운영원칙</a></li>
-        <li><a href="http://www.naver.com/rules/privacy.html" target="_blank" class="N=a:fot.privacy"><strong>개인정보처리방침</strong></a></li>
-        <li><a href="http://www.naver.com/rules/disclaimer.html" target="_blank" class="N=a:fot.discalimer">책임의 한계와 법적고지</a></li>
-        <li><a href="https://inoti.naver.com" target="_blank" class="N=a:fot.claim">게시중단요청서비스</a></li>
-        <li><a href="https://help.naver.com/support/service/main.nhn?serviceNo=522" target="_blank" class="N=a:fot.help">카페 고객센터</a></li>
-    </ul>
-    <address>
-        <a href="http://www.navercorp.com/" target="_blank" class="logo"><img src="http://static.naver.net/common/footer/ci_naver.gif" width="63" height="11" alt="NAVER Corp."/></a>
-        <em>Copyright &copy;</em>
-        <a href="http://www.navercorp.com/" target="_blank">NAVER Corp.</a>
-        <span>All Rights Reserved.</span>
-    </address>
-</div>
+<div id="footer" role="contentinfo"></div>
 
 </div>
 <!-- angularjs -->

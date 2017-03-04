@@ -29,7 +29,7 @@ import java.util.Arrays;
  * Created by kiel on 2017. 2. 15..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(MemberController.class)
+@WebMvcTest(value = MemberController.class, secure = false)
 @EnableSpringDataWebSupport
 public class MemberControllerTest {
     @Autowired
@@ -42,15 +42,15 @@ public class MemberControllerTest {
 
     @Test
     public void getCafesByMember() throws Exception {
-        Long memberId = 1L;
-        Member member = new Member(memberId, "tester");
-        given(this.memberRepository.findOne(memberId))
+        String username = "tester";
+        Member member = new Member(username);
+        given(this.memberRepository.findByUsername(username))
                 .willReturn(member);
         given(this.memberService.getCafesByMember(member, new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),
                         new Cafe("url3", "name3"), new Cafe("url4", "name4")));
         // then
-        this.mockMvc.perform(get("/members/" + memberId + "/cafes"))
+        this.mockMvc.perform(get("/members/" + username + "/cafes"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.length()").value(4))
@@ -66,16 +66,16 @@ public class MemberControllerTest {
 
     @Test
     public void getCafesByMemberWithPaging() throws Exception {
-        Long memberId = 1L;
-        Member member = new Member(memberId, "tester");
-        given(this.memberRepository.findOne(memberId))
+        String username = "tester";
+        Member member = new Member(username);
+        given(this.memberRepository.findByUsername(username))
                 .willReturn(member);
         given(this.memberService.getCafesByMember(member,
                 new PageRequest(0, 3, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),
                         new Cafe("url3", "name3")));
         // then
-        this.mockMvc.perform(get("/members/" + memberId + "/cafes?page=0&size=3&sort=cafe.createDateTime,desc"))
+        this.mockMvc.perform(get("/members/" + username + "/cafes?page=0&size=3&sort=cafe.createDateTime,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.length()").value(3))

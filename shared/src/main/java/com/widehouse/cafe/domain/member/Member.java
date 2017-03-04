@@ -4,9 +4,11 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Email;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,11 +29,20 @@ public class Member {
     @Id @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    private String password;
+
     @Size(max = 30)
     private String nickname;
 
-    public Member(String nickname) {
-        this();
-        this.nickname = nickname;
+    @Email
+    private String email;
+
+    public Member(String username) {
+        this.username = username;
+        this.nickname = username;
+        this.password = "";
     }
 }

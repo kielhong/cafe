@@ -1,11 +1,8 @@
 package com.widehouse.cafe.service;
 
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,16 +14,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kiel on 2017. 2. 15..
+ * Created by kiel on 2017. 3. 3..
  */
 @Service
-public class MemberService {
+public class CafeUserDetailsService implements UserDetailsService {
     @Autowired
     private MemberRepository memberRepository;
-    @Autowired
-    private CafeMemberRepository cafeMemberRepository;
 
-    public List<Cafe> getCafesByMember(Member member, Pageable pageable) {
-        return cafeMemberRepository.findCafeByMember(member, pageable);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Member member = memberRepository.findByUsername(username);
+        if (member == null) {
+            throw new UsernameNotFoundException("Member Not Exists");
+        }
+
+        List< SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+        return new User(member.getUsername(), member.getPassword(), authorities);
     }
 }

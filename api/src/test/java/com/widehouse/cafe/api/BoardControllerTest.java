@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * Created by kiel on 2017. 2. 25..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(BoardController.class)
+@WebMvcTest(value = BoardController.class, secure = false)
 public class BoardControllerTest {
     @Autowired
     private MockMvc mvc;
