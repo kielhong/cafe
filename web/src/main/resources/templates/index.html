@@ -161,21 +161,15 @@
         <h2 class="blind">주제별 카페</h2>
         <ul class="tab_cafe">
             <li class="t1 on"><a id="focusTop" href="/SectionHome.nhn?t=1" class="N=a:cnt.tab1"><span>주제별 카페</span><em class="blind">선택됨</em><em>7,994,822</em></a></li>
-            <li class="t2 "><a href="/AreaCafeHome.nhn?t=2" class="N=a:cnt.tab2"><span>지역별 카페</span><em>2,478,763</em></a></li>
+            <li class="t2"><a href="/AreaCafeHome.nhn?t=2" class="N=a:cnt.tab2"><span>지역별 카페</span><em>2,478,763</em></a></li>
             <li class="t3" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|ShowLogInLayer) _stopDefault N=a:cnt.tab3,t:1"><span>가입카페 새글 소식</span></a></li>
         </ul>
-        <div class="layer_type news_login" style="display:none;" id="LoginLayer">
-            <h4>로그인 후 사용 가능합니다.</h4>
-            <p>우측 로그인 영역에서 로그인 후<br/>사용해 주세요.</p>
-            <a class="close _click(LayerManager|CloseLayer|LoginLayer) _stopDefault" href="#"><img height="19" width="19" alt="닫기" src="http://static.naver.net/kin/09renewal/btn_close_layer3.gif"/></a>
-        </div>
-
-        <div class="category" ng-controller="categoryCtrl" data-ng-init="init()">
+        <div class="category" ng-controller="categoryCtrl" ng-init="cafeByCategory(1)">
             <ul>
-                <li id="category_{{ category.id }}" ng-repeat="category in categories" ng-class="{'firstchild select':$first}" ng-click="cafeByCategory(category.id)" ng-init="isFirst($first, category)">
+                <li th:each="category,iter : ${categories}" th:id="'category_' + ${category.id}" th:class="${iter.first}? 'firstchild'" th:attr="ng-click=${'cafeByCategory(' + category.id + ')'}">
                     <div>
                         <button class="_click(CategoryCafe|ToggleNode|1) _stopDefault" aria-expanded="false">열기</button>
-                        <a href="#" class="N=a:cnt_thm.dir1,i:1,t:1 _click(CategoryCafe|SelectNode|1) _stopDefault" id="theme1">{{ category.name }}</a>
+                        <a href="#" class="N=a:cnt_thm.dir1,i:1,t:1 _click(CategoryCafe|SelectNode|1) _stopDefault" id="theme1" th:text="${category.name}"></a>
                     </div>
                 </li>
             </ul>
@@ -204,7 +198,7 @@
                 </ul>
             </div>
             <div id="CategoryCafeHideArea" ng-controller="categoryCafeCtrl">
-                <ul id="ListArea" class="list ranking2"  style="display:block;">
+                <ul id="ListArea" class="list ranking2">
                     <li ng-repeat="cafe in cafes" ng-class="{'fc':$first}">
                         <div class="thmb_cafe_ty1 cafe_thumb_32">
                             <a href="http://cafe.naver.com/shadowversekorea" target="_blank">
@@ -212,23 +206,23 @@
                                 <span class="border"></span>
                             </a>
                         </div>
-                        <h5><a class="ellipsis N=a:cnt_thm.cafe" href="cafes/{{ cafe.url }}" target="_blank" title="{{ cafe.name }}" style="width:315px">{{ cafe.name }}</a>
+                        <h5><a class="ellipsis N=a:cnt_thm.cafe" href="/cafes/{{ cafe.url }}/" title="{{ cafe.name }}" style="width:315px" ng-bind="cafe.name"></a>
                             <i class="icon_offgame">공식게임카페</i>
                         </h5>
-                        <p class="ellipsis" title="{{ cafe.description }}" style="width:345px">{{ cafe.description }}</p>
+                        <p class="ellipsis" title="{{ cafe.description }}" style="width:345px" ng-bind="cafe.description"></p>
                         <dl class="option">
                             <dt class="blind">랭킹</dt>
                             <dd class="level"><span>새싹3단계</span> (<span class="up">증가</span><em>762,156</em>)</dd>
                             <dt class="manager">매니저</dt>
                             <dd class="manager"><span class="gray05 ellipsis">섀도우버스</span></dd>
                             <dt class="since">since</dt>
-                            <dd class="since">{{ cafe.createDateTime | date:'yyyy.MM.dd' }}</dd>
+                            <dd class="since" ng-bind="cafe.createDateTime | date:'yyyy.MM.dd'"></dd>
                         </dl>
                         <dl class="count">
                             <dt class="member">멤버수</dt>
-                            <dd class="member">{{ cafe.cafeMemberCount | number:0 }}</dd>
+                            <dd class="member" ng-bind="cafe.cafeMemberCount | number:0"></dd>
                             <dt class="board">게시글</dt>
-                            <dd class="board">{{ cafe.articleCount | number:0 }}</dd>
+                            <dd class="board" ng-bind="cafe.articleCount | number:0"></dd>
                             <dt class="new">New</dt>
                             <dd class="new">4,222</dd>
                         </dl>
