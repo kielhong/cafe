@@ -3,6 +3,7 @@ package com.widehouse.cafe.domain.article;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,7 @@ import javax.validation.constraints.Size;
 @Entity
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class Article {
     @Id @GeneratedValue

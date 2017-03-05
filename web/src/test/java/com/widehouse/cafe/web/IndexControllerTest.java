@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
-import com.widehouse.cafe.service.CafeUserDetailsService;
+import com.widehouse.cafe.service.MemberDetailsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class IndexControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
-    private CafeUserDetailsService userDetailsService;
+    private MemberDetailsService userDetailsService;
     @MockBean
     private CategoryRepository categoryRepository;
 

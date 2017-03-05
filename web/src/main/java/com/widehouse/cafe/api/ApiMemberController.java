@@ -18,7 +18,7 @@ import java.util.List;
  * Created by kiel on 2017. 2. 15..
  */
 @RestController
-public class MemberController {
+public class ApiMemberController {
     @Autowired
     private MemberRepository memberRepository;
     @Autowired

@@ -4,6 +4,7 @@ import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +18,7 @@ import java.util.List;
  * Created by kiel on 2017. 3. 3..
  */
 @Service
-public class CafeUserDetailsService implements UserDetailsService {
+public class MemberDetailsService implements UserDetailsService {
     @Autowired
     private MemberRepository memberRepository;
 
@@ -28,9 +29,16 @@ public class CafeUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Member Not Exists");
         }
 
-        List< SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        return member;
+    }
 
-        return new User(member.getUsername(), member.getPassword(), authorities);
+    public Member getCurrentMember() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof Member) {
+            return (Member)principal;
+        } else {
+            return null;
+        }
     }
 }

@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.api.CategoryController;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.projection.CafeProjection;
@@ -31,9 +30,9 @@ import java.util.Arrays;
  * Created by kiel on 2017. 2. 15..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = CategoryController.class, secure = false)
+@WebMvcTest(value = ApiCategoryController.class, secure = false)
 @EnableSpringDataWebSupport
-public class CategoryControllerTest {
+public class ApiCategoryControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
@@ -55,7 +54,7 @@ public class CategoryControllerTest {
                         new Category("Comics", 2),
                         new Category("Broadcasts", 3)
                 ));
-        mvc.perform(get("/categories"))
+        mvc.perform(get("/api/categories"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(3))
                 .andExpect(jsonPath("$.[0].listOrder").value(1))
@@ -70,7 +69,7 @@ public class CategoryControllerTest {
                 new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock1, cafeMock2));
         // then
-        this.mvc.perform(get("/categories/1/cafes"))
+        this.mvc.perform(get("/api/categories/1/cafes"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.length()").value(2));
@@ -83,7 +82,7 @@ public class CategoryControllerTest {
                 new PageRequest(0, 4, new Sort(DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock1, cafeMock2, cafeMock3, cafeMock4));
         // then
-        this.mvc.perform(get("/categories/1/cafes?page=0&size=4"))
+        this.mvc.perform(get("/api/categories/1/cafes?page=0&size=4"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.length()").value(4));

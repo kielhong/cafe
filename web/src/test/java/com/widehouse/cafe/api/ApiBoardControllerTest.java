@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.api.BoardController;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
@@ -21,8 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
  * Created by kiel on 2017. 2. 25..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = BoardController.class, secure = false)
-public class BoardControllerTest {
+@WebMvcTest(value = ApiBoardController.class, secure = false)
+public class ApiBoardControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
@@ -35,7 +34,7 @@ public class BoardControllerTest {
         given(boardRepository.findOne(1L))
                 .willReturn(board);
         // then
-        mvc.perform(get("/cafes/" + cafe.getUrl() + "/boards/" + board.getId()))
+        mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/boards/" + board.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("board"));

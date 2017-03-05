@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.api.ArticleController;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
@@ -18,6 +17,7 @@ import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
+import com.widehouse.cafe.service.MemberDetailsService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,9 +34,9 @@ import java.util.Arrays;
  * Created by kiel on 2017. 2. 19..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = ArticleController.class, secure = false)
+@WebMvcTest(value = ApiArticleController.class, secure = false)
 @EnableSpringDataWebSupport
-public class ArticleControllerTest {
+public class ApiArticleControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
@@ -45,6 +45,8 @@ public class ArticleControllerTest {
     private CafeRepository cafeRepository;
     @MockBean
     private BoardRepository boardRepository;
+    @MockBean
+    private MemberDetailsService memberDetailsService;
 
     private Cafe cafe;
     private Board board;
@@ -70,7 +72,7 @@ public class ArticleControllerTest {
         given(articleService.getArticlesByCafe(cafe, 0, 3))
                 .willReturn(Arrays.asList(articleProjection3, articleProjection2, articleProjection1));
         // then
-        mvc.perform(get("/cafes/" + cafe.getUrl() + "/articles?page=0&size=3"))
+        mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/articles?page=0&size=3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(3));
     }
@@ -89,7 +91,7 @@ public class ArticleControllerTest {
                         new Article(board, writer, "test article3", "test3"))
                 );
         // then
-        mvc.perform(get("/cafes/" + cafe.getUrl() + "/boards/" + board.getId() + "/articles?page=0&size=3"))
+        mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/boards/" + board.getId() + "/articles?page=0&size=3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(3))
                 .andExpect(jsonPath("$.[0].cafe.url").value(cafe.getUrl()))
@@ -106,10 +108,12 @@ public class ArticleControllerTest {
     @Test
     public void getArticle_Should_ReturnArticle() throws Exception {
         // given
+        given(memberDetailsService.getCurrentMember())
+                .willReturn(new Member("reader"));
         given(articleService.getArticle(anyLong(), any(Member.class)))
                 .willReturn(new Article(new Board(new Cafe("testurl", "testname"), "board"), new Member("writer"), "title", "content"));
         // when
-        mvc.perform(get("/cafes/testurl/articles/1"))
+        mvc.perform(get("/api/cafes/testurl/articles/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("title"))
                 .andExpect(jsonPath("$.content").value("content"))
@@ -122,7 +126,7 @@ public class ArticleControllerTest {
         given(articleService.getArticle(anyLong(), any(Member.class)))
                 .willThrow(new NoAuthorityException());
         // when
-        mvc.perform(get("/cafes/testurl/articles/1"))
+        mvc.perform(get("/api/cafes/testurl/articles/1"))
                 .andExpect(status().isForbidden());
     }
 

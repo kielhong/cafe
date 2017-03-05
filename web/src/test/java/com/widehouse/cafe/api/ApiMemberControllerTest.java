@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.api.MemberController;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
@@ -29,9 +28,9 @@ import java.util.Arrays;
  * Created by kiel on 2017. 2. 15..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = MemberController.class, secure = false)
+@WebMvcTest(value = ApiMemberController.class, secure = false)
 @EnableSpringDataWebSupport
-public class MemberControllerTest {
+public class ApiMemberControllerTest {
     @Autowired
     private MockMvc mockMvc;
 

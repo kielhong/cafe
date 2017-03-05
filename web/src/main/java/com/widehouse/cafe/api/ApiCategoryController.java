@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,8 +22,8 @@ import java.util.List;
  * Created by kiel on 2017. 2. 15..
  */
 @RestController
-@Slf4j
-public class CategoryController {
+@RequestMapping("api")
+public class ApiCategoryController {
     @Autowired
     private CafeService cafeService;
     @Autowired

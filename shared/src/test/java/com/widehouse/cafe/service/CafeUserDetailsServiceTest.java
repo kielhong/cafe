@@ -22,7 +22,7 @@ public class CafeUserDetailsServiceTest {
     @MockBean
     private MemberRepository memberRepository;
     @Autowired
-    private CafeUserDetailsService cafeUserDetailsService;
+    private MemberDetailsService cafeUserDetailsService;
 
     @Test
     public void loadUserByUsername_Should_Return_User() {

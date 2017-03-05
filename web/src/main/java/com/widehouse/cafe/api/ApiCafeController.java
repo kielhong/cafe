@@ -13,19 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by kiel on 2017. 2. 18..
  */
 @RestController
-@Slf4j
-public class CafeController {
+public class ApiCafeController {
     @Autowired
     private CafeService cafeService;
 
-    @GetMapping(name = "/cafes", params = "id")
-    public Cafe getCafeById(@RequestParam Long id) {
-        Cafe cafe = cafeService.getCafe(id);
+//    @GetMapping(name = "/api/cafes/", params = "id")
+//    public Cafe getCafeById(@RequestParam Long id) {
+//        Cafe cafe = cafeService.getCafe(id);
+//
+//        return cafe;
+//    }
 
-        return cafe;
-    }
-
-    @GetMapping("/cafes/{cafeUrl}")
+    @GetMapping("/api/cafes/{cafeUrl}")
     public Cafe getCafeByUrl(@PathVariable String cafeUrl) {
         Cafe cafe = cafeService.getCafe(cafeUrl);
 

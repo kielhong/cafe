@@ -14,6 +14,7 @@ import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -27,6 +28,7 @@ import javax.transaction.Transactional;
  * Created by kiel on 2017. 2. 12..
  */
 @Service
+@Slf4j
 public class CommentService {
     @Autowired
     private CommentRepository commentRepository;

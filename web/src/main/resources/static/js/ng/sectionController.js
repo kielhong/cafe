@@ -12,7 +12,7 @@ sectionApp.controller('categoryCtrl', function($scope) {
 
 sectionApp.controller('categoryCafeCtrl', function($scope, $http) {
     $scope.$on('cafe_by_category', function(event, category) {
-        $http.get("http://localhost:8080/categories/" + category.id + "/cafes")
+        $http.get("http://localhost:8080/api/categories/" + category.id + "/cafes")
             .then(function(response) {
                 $scope.cafes = response.data;
         });
