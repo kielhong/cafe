@@ -55,16 +55,19 @@ cafeApp.controller('commentWriteCtrl', function($scope, $http, $routeParams) {
         };
         var config = {
             headers : {
-                'Content-Type': 'application/json;charset=utf-8;'
+                'Content-Type': 'application/json;charset=utf-8;',
             }
         };
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $http.defaults.headers.common[header] = token;
 
         $http.post(url, data, config)
             .then(function(response) {
                 $scope.comments.push(response.data);
             })
             .catch(function(response) {
-                if (status == 403) {
+                if (response.status == 403) {
                     alert('댓글 작성 권한이 없습니다');
                 } else {
                     alert('댓글 작성에 실패했습니다')
