@@ -30,6 +30,7 @@ public class ApiMemberController {
                                                direction = Sort.Direction.DESC) Pageable pageable) {
         Member member = memberDetailsService.getCurrentMember();
 
-        return memberService.getCafesByMember(member, pageable);
+        List<Cafe> mycafes = memberService.getCafesByMember(member, pageable);
+        return mycafes;
     }
 }

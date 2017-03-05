@@ -9,8 +9,6 @@ import com.widehouse.cafe.service.CommentService;
 import com.widehouse.cafe.service.MemberDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,25 +35,22 @@ public class ApiCommentController {
     @Autowired
     private MemberDetailsService memberDetailsService;
 
-    @GetMapping(value = "/articles/{articleId}/comments", params = {"page", "size"})
+    @GetMapping("/articles/{articleId}/comments")
     public List<Comment> getComments(@PathVariable Long articleId,
                                      @RequestParam(defaultValue = "0") int page,
                                      @RequestParam(defaultValue = "10") int size) {
-        // TODO : member 코드 처리
-        Member member = new Member("member");
+        Member member = memberDetailsService.getCurrentMember();
+
         List<Comment> comments = commentService.getComments(member, articleId, page, size);
 
         return comments;
     }
 
-    @PostMapping(value = "/articles/{articleId}/comments", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/articles/{articleId}/comments")
     public Comment write(@PathVariable Long articleId,
                          @RequestBody Comment input) {
         Member member = memberDetailsService.getCurrentMember();
         Article article = articleRepository.findOne(articleId);
-
-        log.debug("member :{}", member);
-        log.debug("article: {}", article);
 
         return commentService.writeComment(article, member, input.getComment());
     }

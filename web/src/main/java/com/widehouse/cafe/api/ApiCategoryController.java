@@ -6,7 +6,6 @@ import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.projection.CafeProjection;
 import com.widehouse.cafe.service.CafeService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

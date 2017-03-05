@@ -10,7 +10,6 @@ import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
 import com.widehouse.cafe.service.MemberDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,18 +34,17 @@ public class ApiArticleController {
     private MemberDetailsService memberDetailsService;
 
 
-    @GetMapping(value = "/cafes/{cafeUrl}/articles", params = {"page", "size"})
+    @GetMapping("/cafes/{cafeUrl}/articles")
     public List<ArticleProjection> getArticlesByCafe(@PathVariable String cafeUrl,
                                                      @RequestParam(defaultValue = "0") int page,
                                                      @RequestParam(defaultValue = "10") int size) {
-        // TODO : artcleService 가 url을 받도록 하는게 좋을지?
         Cafe cafe = cafeRepository.findByUrl(cafeUrl);
         List<ArticleProjection> articles = articleService.getArticlesByCafe(cafe, page, size);
 
         return articles;
     }
 
-    @GetMapping(value = "/cafes/{cafeUrl}/boards/{boardId}/articles", params = {"page", "size"})
+    @GetMapping("/cafes/{cafeUrl}/boards/{boardId}/articles")
     public List<Article> getArticlesByCafe(@PathVariable String cafeUrl,
                                            @PathVariable Long boardId,
                                            @RequestParam(defaultValue = "0") int page,
