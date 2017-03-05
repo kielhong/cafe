@@ -1,0 +1,71 @@
+<div ng-controller="categoryCtrl" ng-init="cafeByCategory(1)">
+    <div class="category" >
+        <ul>
+            <li ng-repeat="category in categories" id="{{ 'category_' + category.id }}" ng-class="{ 'select firstchild' : $first }" >
+                <div ng-click="cafeByCategory(category.id)">
+                    <button class="_click(CategoryCafe|ToggleNode|1) _stopDefault" aria-expanded="false">열기</button>
+                    <a href="#" class="N=a:cnt_thm.dir1,i:1,t:1 _click(CategoryCafe|SelectNode|1) _stopDefault" id="theme1" ng-bind="category.name"></a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="category_list">
+        <div class="tit_area">
+            <h3>게임</h3>
+            <em>1,480,039</em>
+        </div>
+        <div class="list_order">
+            <h4 class="blind">대표 카페</h4>
+            <ul class="bg_tab_categorylist" role="tablist">
+                <li class="t1 _PC on" role="tab" aria-selected="true"><a href="#" class="_click(CategoryCafe|SelectType|PC) _stopDefault N=a:cnt_thm.keycafe,t:1">대표 카페</a></li>
+                <li class="t2 _AT" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|SelectType|AT) _stopDefault N=a:cnt_thm.rank,t:1">랭킹 Top 100</a></li>
+                <li class="t3 _AR" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|SelectType|AR) _stopDefault N=a:cnt_thm.hot,t:1">급상승 Top 100</a></li>
+                <li class="t4 _AC" role="tab" aria-selected="false"><a href="#" class="_click(CategoryCafe|SelectType|AC) _stopDefault N=a:cnt_thm.all">전체</a></li>
+            </ul>
+            <ul class="sorting">
+                <li class="t1"><a href="#" class="_3 _click(CategoryCafe|SelectSortType|3) _stopDefault N=a:cnt_thm.bymember,t:1">멤버</a></li>
+                <li class="t2"><a href="#" class="_4 _click(CategoryCafe|SelectSortType|4) _stopDefault N=a:cnt_thm.byarticle,t:1">게시글</a></li>
+                <li class="t4"><a href="#" class="_1 on _click(CategoryCafe|SelectSortType|1) _stopDefault N=a:cnt_thm.byrankup,t:1">상승폭</a></li>
+            </ul>
+        </div>
+        <div id="CategoryCafeHideArea">
+            <ul id="ListArea" class="list ranking2">
+                <li ng-repeat="cafe in cafes" ng-class="{'fc':$first}">
+                    <div class="thmb_cafe_ty1 cafe_thumb_32">
+                        <a href="http://cafe.naver.com/shadowversekorea" target="_blank">
+                            <img src="http://cafeptthumb4.phinf.naver.net/MjAxNjEyMTdfOSAg/MDAxNDgxOTAyMzE4ODk2.FNgIaPKuFRFODNcd5AffFwkZ1nuCac80LSeOSHmFEkIg._dLdD9FiaEsTxHvGdxa3dJYs4m1YZ5PHfka21b3-l1Qg.PNG.handyblog/game_icon.PNG?type=f40_40_mask" width="32" height="32" alt="카페아이콘"/>
+                            <span class="border"></span>
+                        </a>
+                    </div>
+                    <h5><a class="ellipsis N=a:cnt_thm.cafe" href="/cafes/{{ cafe.url }}/" title="{{ cafe.name }}" style="width:315px" ng-bind="cafe.name"></a>
+                        <i class="icon_offgame">공식게임카페</i>
+                    </h5>
+                    <p class="ellipsis" title="{{ cafe.description }}" style="width:345px" ng-bind="cafe.description"></p>
+                    <dl class="option">
+                        <dt class="blind">랭킹</dt>
+                        <dd class="level"><span>새싹3단계</span> (<span class="up">증가</span><em>762,156</em>)</dd>
+                        <dt class="manager">매니저</dt>
+                        <dd class="manager"><span class="gray05 ellipsis">섀도우버스</span></dd>
+                        <dt class="since">since</dt>
+                        <dd class="since" ng-bind="cafe.createDateTime | date:'yyyy.MM.dd'"></dd>
+                    </dl>
+                    <dl class="count">
+                        <dt class="member">멤버수</dt>
+                        <dd class="member" ng-bind="cafe.cafeMemberCount | number:0"></dd>
+                        <dt class="board">게시글</dt>
+                        <dd class="board" ng-bind="cafe.articleCount | number:0"></dd>
+                        <dt class="new">New</dt>
+                        <dd class="new">4,222</dd>
+                    </dl>
+                </li>
+            </ul>
+            <p class="txt_cate_nolist3" style="display:none">선택하신 디렉토리에는 급상승 Top100 카페가 없습니다.</p>
+        </div>
+
+        <div id="PageArea" class="more_view" style="display:block;">
+            <a href="#" class="btn_view N=a:cnt_thm.morecafe,t:1 _click(CategoryCafe|ListMore) _stopDefault">카페리스트 더보기</a>
+            <a href="#" class="btn_up _click(CategoryCafe|FocusTop) _stopDefault N=a:cnt_thm.top">위로</a>
+        </div>
+    </div>
+</div>

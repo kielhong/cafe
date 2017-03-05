@@ -1,0 +1,44 @@
+<div class="joincafe_category" ng-controller="mycafeCtrl">
+    <h3 id="NoticeHeaderArea">
+        <img src="http://cafeimgs.naver.net/img/section/h_allcafe.gif" width="81" height="20" alt="전체카페">
+        <em ng-bind="mycafes.length"></em>
+    </h3>
+    <div id="smartMyCafeListNotiLayer" class="alarm_layer layer_type" style="display:none;z-index:100;top:36px;left:136px">
+        <div class="ly_cont">
+            <p>내가 자주 활동하는 카페순으로 노출됩니다.</p>
+            <a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000025672853" class="more">자세히보기</a>
+        </div>
+        <a href="#" class="close _click(MyCafeNotice|CloseSmartMyCafeListNotiLayer) _stopDefault"><img src="http://static.naver.net/kin/09renewal/btn_close_layer3.gif" width="19" height="19" alt="닫기"></a>
+    </div>
+
+    <div id="MyCafeNoticeHideArea">
+        <ul class="cafe_nlist" id="CafeNoticeArea">
+            <li ng-repeat="mycafe in mycafes">
+                <div class="list_content">
+                    <a class="ico_interest" title="즐겨찾는 카페 등록" href="#">즐겨찾는 카페 등록</a>
+                    <div class="thmb_cafe_ty1 cafe_thumb_32">
+                        <a href="/cafes/{{mycafe.url}}">
+                            <img src="http://static.naver.net/cafe/thumb/cafe_thumb_noimg_32.png" width="32" height="32" alt="카페아이콘"/>
+                            <span class="border"></span>
+                        </a>
+                    </div>
+                    <!--<span class="manage _click(MyCafeNotice|ToggleCafeView|10000001)">운영 카페</span>-->
+                    <p class="tit">
+                        <a href="/cafes/{{mycafe.url}}" class="ellipsis" title="{{mycafe.name}}" ng-bind="mycafe.name"></a>
+                    </p>
+                    <p class="count count_v1"></p>
+                    <span class="date thm" ng-bind="mycafe.createDateTime | date:'yyyy.MM.dd.'"></span>
+                    <a href="#" class="close" >열기</a>
+                </div>
+            </li>
+        </ul>
+
+        <div id="PageArea" class="more_view" style="">
+            <a href="#" class="btn_view">카페리스트 더보기</a>
+            <a href="#" class="btn_up">위로</a>
+        </div>
+    </div>
+</div>
+<style>
+    #container:after {content: none;}
+</style>
