@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+
+<div th:fragment="aside" id="aside" class="aside" role="complementary">
+    <div class="login" sec:authorize="!isAuthenticated()">
+        <h2 class="blind"><a id="account_h" name="account_h" href="#account_h">로그인</a></h2>
+        <div class="btn_login">
+            <div class="bl_inner">
+                <a href="/login" class="bl_btn">로그인</a>
+                <div class="find_info">
+                    <a href="https://nid.naver.com/user2/help/idInquiry.nhn?menu=idinquiry" class="btn_id">아이디 찾기</a><span class="vt">|</span><a href="https://nid.naver.com/user2/help/pwInquiry.nhn?menu=pwinquiry" class="btn_pw">비밀번호 찾기</a>
+                    <a href="https://nid.naver.com/nidregister.form" class="btn_join">회원가입</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="login" sec:authorize="isAuthenticated()">
+        <h2 class="blind">사용자 정보</h2>
+        <p class="user lkbtn"><span class="lkbtn"><strong sec:authentication="name"></strong> 님</span></p>
+        <div style="float:right;margin-right:20px;">
+            <form action="#" th:action="@{/logout}" method="post">
+                <input type="image" src="http://cafeimgs.naver.net/img/section/btn_logout.gif" width="51" height="18" alt="로그아웃"/>
+            </form>
+        </div>
+        <div class="user_count">
+            <a href="http://mail.naver.com" class="N=a:ida.mail"><span class="n_mail">메일</span>
+                <strong>2</strong></a><span class="ico_new">new</span>
+            <span class="hr"></span>
+            <a href="http://note.naver.com" class="N=a:ida.memo"><span class="n_message">쪽지</span>
+                <strong>19</strong>
+            </a><span class="ico_new">new</span>
+        </div>
+    </div>
+
+    <div class="cafemake">
+        <a href="/createCafe"><img src="http://cafeimgs.naver.net/img/section/btn_cafemake_20150623.gif" width="250" height="42" alt="카페 만들기"/></a>
+        <div id="_AppInstall" class="cafemake_sublink_wrap">
+            <a href="/CafeWhitePaper.nhn" class="cafemake_sublink">카페앱 백서</a>
+        </div>
+    </div>
+    <div id="cafeNoticeSideArea" class="notice">
+        <h2><img height="11" width="94" alt="카페서비스 공지사항" src="http://cafeimgs.naver.net/img/section/h_service_notice.gif"/></h2>
+        <ul>
+            <li th:each="i : ${#numbers.sequence(1, 10)}"><a href="http://section.cafe.naver.com/notice/read/1000003528/10000000000030651437" class="ellipsis" style="width: 225px;"><strong>[안내] 네이버페이 안전거래 사칭 사기에 주의하세요!</strong></a></li>
+        </ul>
+        <a href="/SectionNoticeList.nhn" class="btn_more" title="카페서비스 공지사항 더보기">더보기</a>
+    </div>
+    <div id="cafeSupportSideArea" class="notice">
+        <h2><img src="http://cafeimgs.naver.net/img/section/h_center_notice.gif" width="105" height="11" alt="카페지원센터 공지사항"/></h2>
+        <ul>
+            <li th:each="i : ${#numbers.sequence(1, 10)}"><a href="http://cafe.naver.com/cafesupport/112944" class="ellipsis" style="width: 225px;">[발표] 2월 카페 창작활동 지원</a></li>
+        </ul>
+    </div>
+    <div id="cafeReportSideArea" class="report">
+        <a href="https://help.naver.com/support/reportCenter/home.nhn" class="btn_rpt">신고센터</a>
+    </div>
+</div>
+
+</body>
+</html>
