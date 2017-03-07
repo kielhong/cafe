@@ -6,12 +6,17 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.groups.Tuple.tuple;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
+import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
@@ -45,6 +50,10 @@ public class CafeServiceTest {
     @MockBean
     private CafeMemberRepository cafeMemberRepository;
     @MockBean
+    private BoardRepository boardRepository;
+    @MockBean
+    private CategoryRepository categoryRepository;
+    @MockBean
     private Cafe mockCafe;
     @Autowired
     private CafeService cafeService;
@@ -71,19 +80,23 @@ public class CafeServiceTest {
     }
 
     @Test
-    public void createCafe_should_create_cafe_and_assign_cafeManager() {
+    public void createCafe_Should_CreateCafe_and_AssignCafeManager() {
+        // given
+        given(categoryRepository.findOne(category.getId()))
+                .willReturn(category);
+        given(cafeRepository.save(new Cafe("testurl", "testname", "desc", PUBLIC, any(Category.class))))
+                .willReturn(cafe);
         // When
-        Cafe cafe = cafeService.createCafe(member, "cafeurl", "cafename", "cafedescription",
-                CafeVisibility.PUBLIC, category);
+        Cafe cafe = cafeService.createCafe(member, "testurl", "testname", "desc", PUBLIC, category.getId());
         // Then
         assertThat(cafe)
                 .isNotNull()
-                .hasFieldOrPropertyWithValue("url", "cafeurl")
-                .hasFieldOrPropertyWithValue("name", "cafename")
-                .hasFieldOrPropertyWithValue("description", "cafedescription")
-                .hasFieldOrPropertyWithValue("visibility", CafeVisibility.PUBLIC)
+                .hasFieldOrPropertyWithValue("url", "testurl")
+                .hasFieldOrPropertyWithValue("name", "testname")
+                .hasFieldOrPropertyWithValue("description", "desc")
+                .hasFieldOrPropertyWithValue("visibility", PUBLIC)
                 .hasFieldOrPropertyWithValue("category", category);
-        verify(cafeRepository).save(cafe);
+        verify(cafeRepository).save(any(Cafe.class));
         verify(cafeMemberRepository).save(any(CafeMember.class));
     }
 
@@ -102,53 +115,42 @@ public class CafeServiceTest {
 
     @Test
     public void addBoard_should_attach_board_sort() {
-        // given
-        cafe.getBoards().add(new Board(cafe, "test board1", 1));
-        cafe.getBoards().add(new Board(cafe, "test board2", 3));
-        cafe.getBoards().add(new Board(cafe, "test board3", 4));
         // when
         cafeService.addBoard(cafe, "test board3", 2);
         // then
-        then(cafe.getBoards())
-                .hasSize(4)
-                .extracting("listOrder")
-                .containsExactly(1, 2, 3, 4);
-        verify(cafeRepository).save(cafe);
+        verify(boardRepository).save(any(Board.class));
     }
 
     @Test
     public void addBoard_without_listOrder_should_append_board_with_last_order() {
         // given
-        cafe.getBoards().add(new Board(cafe, "board1", 1));
-        cafe.getBoards().add(new Board(cafe, "board3", 3));
+        List<Board> boards = Arrays.asList(new Board(cafe, "board1", 1), new Board(cafe, "board3", 3));
+        given(boardRepository.findAllByCafe(eq(cafe), any(Sort.class)))
+                .willReturn(boards);
         // when
         cafeService.addBoard(cafe, "new test board");
         // then
-        then(cafe.getBoards())
-                .hasSize(3)
-                .extracting("name", "listOrder")
-                .containsExactly(
-                        tuple("board1", 1),
-                        tuple("board3", 3),
-                        tuple("new test board", 4));
-        verify(cafeRepository).save(cafe);
+//        then(boardRepository.findAllByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder")))
+//                .hasSize(3)
+//                .extracting("name", "listOrder")
+//                .containsExactly(
+//                        tuple("board1", 1),
+//                        tuple("board3", 3),
+//                        tuple("new test board", 4));
+        verify(boardRepository).save(any(Board.class));
     }
 
     @Test
-    public void removeBoard_should_detach_and_remove_board_from_cafe() {
+    public void removeBoard_should_remove_board() {
         // given
-        cafe.getBoards().add(new Board(cafe, "board1", 1));
-        cafe.getBoards().add(new Board(cafe, "board2", 3));
-        cafe.getBoards().add(new Board(cafe, "board3", 4));
-        cafe.getBoards().add(new Board(cafe, "board4", 2));
-        Board board = cafe.getBoards().get(1);
+        List<Board> boards = Arrays.asList(new Board(cafe, "board1", 1), new Board(cafe, "board3", 3), new Board(cafe, "board3", 4), new Board(cafe, "board4", 2));
+        given(boardRepository.findAllByCafe(eq(cafe), any(Sort.class)))
+                .willReturn(boards);
+        Board board = boards.get(1);
         // when
         cafeService.removeBoard(cafe, board);
         // then
-        then(cafe.getBoards())
-                .hasSize(3)
-                .extracting("listOrder")
-                .containsExactly(1, 2, 4);
+        verify(boardRepository).delete(board);
     }
 
     @Test
@@ -156,16 +158,16 @@ public class CafeServiceTest {
         // given
         Board board1 = new Board(1L, cafe, "board1", 1);
         Board board2 = new Board(2L, cafe, "board2", 2);
-        cafe.getBoards().add(board1);
-        cafe.getBoards().add(board2);
+        given(boardRepository.findAllByCafe(eq(cafe), any(Sort.class)))
+                .willReturn(Arrays.asList(board1, board2));
         // when
         board1.update("update board1", 1);
         cafeService.updateBoard(cafe, board1);
         // then
-        assertThat(cafe.getBoards())
+        assertThat(boardRepository.findAllByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder")))
                 .filteredOn("name", "update board1")
                 .containsOnly(board1);
-        verify(cafeRepository).save(cafe);
+        verify(boardRepository).save(anyListOf(Board.class));
     }
 
     @Test
@@ -173,16 +175,13 @@ public class CafeServiceTest {
         // given
         Board board1 = new Board(1L, cafe, "board1", 1);
         Board board2 = new Board(2L, cafe, "board2", 2);
-        cafe.getBoards().add(board1);
-        cafe.getBoards().add(board2);
+        given(boardRepository.findAllByCafe(eq(cafe), any(Sort.class)))
+                .willReturn(Arrays.asList(board1, board2));
         // when
         Board board3 = new Board(3L, cafe, "new board", 3);
         cafeService.updateBoard(cafe, board3);
         // then
-        assertThat(cafe.getBoards())
-                .hasSize(2)
-                .containsOnly(board1, board2);
-        verify(cafeRepository, times(0)).save(cafe);
+        verify(boardRepository, times(0)).save(board3);
     }
 
     @Test
@@ -191,17 +190,29 @@ public class CafeServiceTest {
         Board board1 = new Board(1L, cafe, "board1", 1);
         Board board2 = new Board(2L, cafe, "board2", 2);
         Board board3 = new Board(3L, cafe, "new board", 3);
-        cafe.getBoards().add(board1);
-        cafe.getBoards().add(board2);
-        cafe.getBoards().add(board3);
+        given(boardRepository.findAllByCafe(eq(cafe), any(Sort.class)))
+                .willReturn(Arrays.asList(board1, board2, board3));
         // when
         board1.update("update board1", 4);
         cafeService.updateBoard(cafe, board1);
         // then
-        assertThat(cafe.getBoards())
+        verify(boardRepository).save(Arrays.asList(board1, board2, board3));
+    }
+
+    @Test
+    public void listBoards_Should_ReturnListOfBoard() {
+        // given
+        Board board1 = new Board(1L, cafe, "board1", 1);
+        Board board2 = new Board(2L, cafe, "board2", 2);
+        Board board3 = new Board(3L, cafe, "new board", 3);
+        given(boardRepository.findAllByCafe(cafe, new Sort(ASC, "listOrder")))
+                .willReturn(Arrays.asList(board1, board2, board3));
+        // when
+        List<Board> boards = cafeService.listBoard(cafe);
+        // then
+        then(boards)
                 .hasSize(3)
-                .containsOnly(board2, board3, board1);
-        verify(cafeRepository).save(cafe);
+                .containsExactly(board1, board2, board3);
     }
 
     @Test

@@ -32,4 +32,9 @@ public class IndexController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("/createCafe")
+    public String createCafe() {
+        return "create_cafe";
+    }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.transaction.Transactional;
 
 /**
  * Created by kiel on 2017. 3. 3..
@@ -32,6 +33,7 @@ public class MemberDetailsService implements UserDetailsService {
         return member;
     }
 
+    @Transactional
     public Member getCurrentMember() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

@@ -3,6 +3,7 @@ package com.widehouse.cafe.domain.cafe;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import javax.validation.constraints.Size;
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "url")})
 
 @Getter
+@ToString
 public class Cafe {
     @Id @GeneratedValue
     private Long id;
@@ -59,14 +61,8 @@ public class Cafe {
     @Embedded
     private CafeStatistics statistics;
 
-    @OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("listOrder ASC")
-    @JsonManagedReference
-    private List<Board> boards;
-
     public Cafe() {
         this.statistics = new CafeStatistics();
-        this.boards = new ArrayList<>();
         this.createDateTime = LocalDateTime.now();
     }
 
@@ -98,17 +94,6 @@ public class Cafe {
         this.visibility = visibility;
         this.category = category;
     }
-
-//
-//    public void removeCafeMember(CafeMember cafeMember) {
-//        this.cafeMembers.remove(cafeMember);
-//        this.statistics.decreaseCafeMemberCount();
-//    }
-
-//    public boolean isCafeMember(Member member) {
-//        return cafeMembers.stream()
-//                .anyMatch(x -> x.getMember().equals(member));
-//    }
 //
 //    public CafeMember getCafeManager() {
 //        // TODO : cafeManager는 필수이다. 없으면 안되도록 코드 수정

@@ -1,17 +1,25 @@
 package com.widehouse.cafe.service;
 
+import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.springframework.data.domain.Sort.Direction.DESC;
+
 import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.cafe.Category;
+import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.projection.CafeProjection;
+import javassist.runtime.Desc;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -23,18 +31,24 @@ import javax.transaction.Transactional;
  * Created by kiel on 2017. 2. 11..
  */
 @Service
+@Slf4j
 public class CafeService {
     @Autowired
     private CafeRepository cafeRepository;
     @Autowired
     private CafeMemberRepository cafeMemberRepository;
+    @Autowired
+    private BoardRepository boardRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Transactional
     public Cafe createCafe(Member member, String url, String name, String description,
-                           CafeVisibility visibility, Category category) {
-        Cafe cafe = new Cafe(url, name, description, visibility, category);
-        cafeRepository.save(cafe);
-
+                           CafeVisibility visibility, Long categoryId) {
+        Category category = categoryRepository.findOne(categoryId);
+        Cafe cafe = cafeRepository.save(new Cafe(url, name, description, visibility, category));
+        log.debug("cafe : {}", cafe);
+        log.debug("member : {}", member);
         CafeMember cafeMember = new CafeMember(cafe, member, CafeMemberRole.MANAGER);
         cafeMemberRepository.save(cafeMember);
 
@@ -46,13 +60,13 @@ public class CafeService {
     }
 
     public void addBoard(Cafe cafe, String boardName, int listOrder) {
-        cafe.getBoards().add(new Board(cafe, boardName, listOrder));
-        cafe.getBoards().sort(Comparator.comparing(Board::getListOrder));
-        cafeRepository.save(cafe);
+        Board board = new Board(cafe, boardName, listOrder);
+        boardRepository.save(board);
     }
 
     public void addBoard(Cafe cafe, String boardName) {
-        int lastOrder = cafe.getBoards().stream()
+        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(DESC, "listOrder"));
+        int lastOrder = boards.stream()
                 .sorted(Comparator.comparing(Board::getListOrder))
                 .mapToInt(Board::getListOrder)
                 .reduce((a, b) -> b)
@@ -61,23 +75,27 @@ public class CafeService {
     }
 
     public void removeBoard(Cafe cafe, Board board) {
-        cafe.getBoards().remove(board);
-        cafe.getBoards().sort(Comparator.comparing(Board::getListOrder));
-        cafeRepository.save(cafe);
+        boardRepository.delete(board);
     }
 
     public void updateBoard(Cafe cafe, Board board) {
-        Optional<Board> boardOptional = cafe.getBoards().stream()
+        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(ASC, "listOrder"));
+        Optional<Board> boardOptional = boards.stream()
                 .filter(o -> o.getId() == board.getId())
                 .findFirst();
         if (boardOptional.isPresent()) {
             Board oldBoard = boardOptional.get();
-            int index = cafe.getBoards().indexOf(oldBoard);
-            cafe.getBoards().set(index, board);
+            int index = boards.indexOf(oldBoard);
+            boards.set(index, board);
 
-            cafe.getBoards().sort(Comparator.comparing(Board::getListOrder));
-            cafeRepository.save(cafe);
+            boardRepository.save(boards);
         }
+    }
+
+    public List<Board> listBoard(Cafe cafe) {
+        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(ASC, "listOrder"));
+
+        return boards;
     }
 
     /**

@@ -20,6 +20,7 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.cafe.Category;
+import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
@@ -52,6 +53,8 @@ public class CommentServiceTest {
     private ArticleRepository articleRepository;
     @MockBean
     private CafeMemberRepository cafeMemberRepository;
+    @MockBean
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private CafeService cafeService;
@@ -67,8 +70,7 @@ public class CommentServiceTest {
     @Before
     public void setUp() {
         manager = new Member("manager");
-        cafe = cafeService.createCafe(manager, "url", "name" , "", CafeVisibility.PUBLIC, new Category());
-        reset(cafeRepository);
+        cafe = new Cafe("testurl", "testname", "", CafeVisibility.PUBLIC, new Category(1L, "test"));
         board = new Board(cafe,"article");
         Member writer = new Member("writer");
         article = new Article(board, writer, "title", "content");

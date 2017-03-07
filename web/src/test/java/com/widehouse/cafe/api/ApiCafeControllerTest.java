@@ -20,6 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
+
 /**
  * Created by kiel on 2017. 2. 18..
  */
@@ -37,8 +39,6 @@ public class ApiCafeControllerTest {
         // given
         Category category = new Category(1L, "category");
         Cafe cafe = new Cafe("cafeurl", "cafename", "", PUBLIC, category);
-        cafe.getBoards().add(new Board(cafe, "board1", 1));
-        cafe.getBoards().add(new Board(cafe, "board2", 2));
         given(cafeService.getCafe("cafeurl"))
                 .willReturn(cafe);
         // then
@@ -48,13 +48,10 @@ public class ApiCafeControllerTest {
                 .andExpect(jsonPath("$.url").value("cafeurl"))
                 .andExpect(jsonPath("$.name").value("cafename"))
                 .andExpect(jsonPath("$.visibility").value(PUBLIC.toString()))
-                .andExpect(jsonPath("$.boards").isArray())
                 .andExpect(jsonPath("$.category.id").value(category.getId()))
                 .andExpect(jsonPath("$.category.name").value(category.getName()))
                 .andExpect(jsonPath("$.statistics.cafeMemberCount").value(0))
-                .andExpect(jsonPath("$.statistics.cafeArticleCount").value(0))
-                .andExpect(jsonPath("$.boards.[0].name").value("board1"))
-                .andExpect(jsonPath("$.boards.[1].name").value("board2"));
+                .andExpect(jsonPath("$.statistics.cafeArticleCount").value(0));
     }
 
 //    @Test

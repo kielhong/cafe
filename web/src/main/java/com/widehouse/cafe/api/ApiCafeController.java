@@ -2,11 +2,9 @@ package com.widehouse.cafe.api;
 
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.service.CafeService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**

@@ -109,30 +109,30 @@ public class CafeRepositoryTest {
                 .hasSize(3);
     }
 
-    @Test
-    public void boards_list_by_listOrder() {
-        // given
-        Board board1 = new Board(cafe1, "board1", 4);
-        entityManager.persist(board1);
-        Board board2 = new Board(cafe1, "board2", 3);
-        entityManager.persist(board2);
-        Board board3 = new Board(cafe1, "board3", 2);
-        entityManager.persist(board3);
-        Board board4 = new Board(cafe1, "board4", 1);
-        entityManager.persist(board4);
-        cafe1.getBoards().add(board1);
-        cafe1.getBoards().add(board2);
-        cafe1.getBoards().add(board3);
-        cafe1.getBoards().add(board4);
-        entityManager.persist(cafe1);
-        entityManager.refresh(cafe1);
-        // when
-        List<Board> boards = cafe1.getBoards();
-        // then
-        then(boards)
-                .hasSize(4)
-                .containsExactly(board4, board3, board2, board1);
-    }
+//    @Test
+//    public void boards_list_by_listOrder() {
+//        // given
+//        Board board1 = new Board(cafe1, "board1", 4);
+//        entityManager.persist(board1);
+//        Board board2 = new Board(cafe1, "board2", 3);
+//        entityManager.persist(board2);
+//        Board board3 = new Board(cafe1, "board3", 2);
+//        entityManager.persist(board3);
+//        Board board4 = new Board(cafe1, "board4", 1);
+//        entityManager.persist(board4);
+//        cafe1.getBoards().add(board1);
+//        cafe1.getBoards().add(board2);
+//        cafe1.getBoards().add(board3);
+//        cafe1.getBoards().add(board4);
+//        entityManager.persist(cafe1);
+//        entityManager.refresh(cafe1);
+//        // when
+//        List<Board> boards = cafe1.getBoards();
+//        // then
+//        then(boards)
+//                .hasSize(4)
+//                .containsExactly(board4, board3, board2, board1);
+//    }
 
     @Test
     public void findCafeByUrl_Should_findCafe() {

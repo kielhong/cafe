@@ -6,27 +6,25 @@
 <head>
     <title>카페만들기</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" href="http://section.cafe.naver.com/static/css/section/Layout-1487210204000-250344.css" type="text/css"/>
 </head>
 <body ng-app="sectionApp">
 
-<div id="u_skip">
-    <a href="#gnbMenu" onclick="var t=document.getElementById('gnbMenu');t.tabIndex=-1;t.focus();return false;" class="skip">메뉴 바로가기</a>
-    <a href="#container" onclick="var t=document.getElementById('container');t.tabIndex=-1;t.focus();return false;" class="skip">본문 바로가기</a>
-</div>
 <div id="wrap">
 
     <div th:replace="fragments/section_header :: header"></div>
 
     <div id="container">
-        <div id="content">
+        <div id="content" >
             <div class="section_create">
                 <div class="create" role="rowheader">
                     <h2 class="blind">카페 만들기</h2>
                     <p class="blind">나와 같은 관심사를 가진 멤버를 모집하고 열심히 운영하여 카페를 성장시켜보세요.</p>
                 </div>
 
-                <form name="frm" method="post" action="/CafeCreate.nhn">
+                <form name="frm" ng-controller="cafeCreateCtrl" ng-submit="submit()">
                     <table cellspacing="0" border="1" class="cafe_input">
                         <caption><span class="blind">카페 만들기 입력 양식</span></caption>
                         <colgroup><col width="114"/><col width="545"/></colgroup>
@@ -37,8 +35,8 @@
                             </th>
                             <td>
                                 <div class="input_area">
-                                    <input type="text" name="name" title="카페 이름" class="input_txt" style="width:515px;" maxlength="120"/>
-                                    <span class="byte"><strong>0</strong> / 60 bytes</span>
+                                    <input type="text" name="name" title="카페 이름" class="input_txt" style="width:515px;" maxlength="120" ng-model="cafe.name"/>
+                                    <span class="byte"><strong ng-bind="cafe.name.length">0</strong> / 60 bytes</span>
                                 </div>
                                 <p class="txt">카페주제와 어울리는 이름으로 입력하면 많은 사람들이 카페를 찾기가 쉬워집니다.</p>
                                 <p class="txt" style="display:none" id="MSG_CLUBNAME"></p><!-- 카페이름 검증 메시지 출력 -->
@@ -51,8 +49,8 @@
                             <td>
                                 <div class="input_area">
                                     <label for="url">http://cafe.naver.com/</label>
-                                    <input type="text" name="url" id="url" title="카페 주소" class="input_txt" style="width:381px;" maxlength="40"/>
-                                    <span class="byte"><strong>0</strong> / 20 bytes</span>
+                                    <input type="text" name="url" id="url" title="카페 주소" class="input_txt" style="width:381px;" maxlength="40" ng-model="cafe.url" ng-pattern="/^[a-z][a-z0-9]*$/"/>
+                                    <span class="byte"><strong ng-bind="cafe.url.length">0</strong> / 20 bytes</span>
                                 </div>
                                 <p class="txt" style="display:none" id="MSG_CLUBURL"></p>
                             </td>
@@ -61,51 +59,22 @@
                             <th scope="row" class="th_priv"><div class="stit">카페성격</div></th>
                             <td class="th_priv">
                                 <div class="txt_area">
-                                    <input type="radio" id="type_public" name="type" class="input_rdo" checked="checked" value="PUBLIC"/><label for="type_public">공개</label>
-                                    <input type="radio" id="type_private" name="type" class="input_rdo" value="PRIVATE"/><label for="type_private">비공개</label>
+                                    <input type="radio" id="type_public" name="type" class="input_rdo" checked="checked" value="PUBLIC" ng-model="cafe.visibility"/><label for="type_public">공개</label>
+                                    <input type="radio" id="type_private" name="type" class="input_rdo" value="PRIVATE" ng-model="cafe.visibility"/><label for="type_private">비공개</label>
                                     <p class="txt" id="openCafeDescription" style="display:none"><span class="note">비공개 카페는 검색에 노출되지 않고, 카페 주소를 통해서도 방문할 수 없습니다.</span></p>
                                     <p class="txt" id="hiddenCafeDescription" style="display:block"><span class="note note_v1">신규 카페의 경우 개설 후 24시간 경과 후에 검색에 반영됩니다.</span></p>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <th scope="row" class="th_maddr">
-                                <div id="maddr" class="stit off">이름사용여부</div>
-                            </th>
-                            <td class="th_maddr">
-                                <div class="txt_area">
-                                    <input type="radio" id="use_nick" name="club.realnameyn" class="input_rdo _click(CafeCreate|ChangeRealnameyn) _keydown(CafeCreate|Submit)" value="N" checked="checked" disabled="disabled"/><label for="use_nick">별명사용</label>
-                                    <input type="radio" id="use_name" name="club.realnameyn" class="input_rdo _click(CafeCreate|ChangeRealnameyn) _keydown(CafeCreate|Submit)" value="Y" disabled="disabled"/><label for="use_name">이름사용</label>
-                                    <span id="realnameyndesc" class="note" style="display:none">멤버관리메뉴에 이름이 공개됩니다.</span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="th_minfo"><div id="minfo" class="stit">멤버목록</div></th>
-                            <td class="th_priv">
-                                <div class="txt_area">
-                                    <input type="radio" id="openMemberInfoY" name="club.openMemberInfo" class="input_rdo _click(CafeCreate|ChangeOpenMemberInfo) _keydown(CafeCreate|Submit)" value="1"/><label for="openMemberInfoY">공개</label>
-                                    <input type="radio" id="openMemberInfoN" name="club.openMemberInfo" class="input_rdo _click(CafeCreate|ChangeOpenMemberInfo) _keydown(CafeCreate|Submit)" value="0" checked="checked"/><label for="openMemberInfoN">비공개</label>
-                                    <p id="openMemberInfoYDescription" class="txt" style="display:none">멤버목록을 모든 멤버가 열람할 수 있습니다.</p>
-                                    <p id="openMemberInfoNDescription" class="txt">멤버목록을 매니저, 부매니저, 멤버등급스탭 이상만 열람할 수 있습니다.</p>
-                                </div>
-                            </td>
-                        </tr>
+
                         <tr id="directoryArea">
-                            <th scope="row" class="th_dir"><div class="stit">디렉토리 <span class="help _click(CafeCreate|ToggleHelpLayer|CafeDirectoryHelpLayer)">도움말</span>
-                                <div class="layer_pop" id="CafeDirectoryHelpLayer" style="display:none;">
-                                    <div class="cont">
-                                        <p>디렉토리는 마지막 변경일을 기준으로 <br></br>3개월 이후에 수정할 수 있습니다. <br></br>단, 카페 개설 후 최초 2회는 기간에 관계없이 <br></br>변경 가능합니다.</p>
-                                    </div>
-                                    <a href="#" class="btn_close _click(LayerManager|CloseLayer|CafeDirectoryHelpLayer) _stopDefault">닫기</a>
-                                    <span class="arr"></span>
-                                    <iframe frameborder="0" scrolling="no"></iframe>
-                                </div>
-                            </div></th>
+                            <th scope="row" class="th_dir">
+                                <div class="stit">디렉토리 <span class="help">도움말</span></div>
+                            </th>
                             <td id="directoryAreaTd">
                                 <div class="rel">
                                     <label for="group1">주제</label>
-                                    <select name="category" id="group1" style="width:240px" title="대분류 선택">
+                                    <select name="category" id="group1" style="width:240px" title="대분류 선택" ng-model="cafe.category.id">
                                         <option value="-1">대분류 선택</option>
                                         <option value="1" >게임</option>
                                         <option value="2" >만화/애니메이션</option>
@@ -139,64 +108,14 @@
                                 </p>
                             </td>
                         </tr>
-                        <tr id="cafeKeywordArea">
-                            <th scope="row" class="th_keyword"><div class="stit">카페검색어 <span class="help _click(CafeCreate|ToggleHelpLayer|CafeKeywordHelpLayer)">도움말</span>
-                                <div class="layer_pop" id="CafeKeywordHelpLayer" style="display:none;">
-                                    <div class="cont">
-                                        <p>카페검색어는 네이버 검색에 반영됩니다. <br></br>카페별 최대 10개까지 등록이 가능합니다.</p>
-                                    </div>
-                                    <a href="#" class="btn_close _click(LayerManager|CloseLayer|CafeKeywordHelpLayer) _stopDefault">닫기</a>
-                                    <span class="arr" style="left:71px"></span>
-                                </div>
-                            </div></th>
-                            <td>
-                                <p class="txt" style="margin-bottom:6px">공백은 자동으로 붙여쓰기 하여 한 키워드로 등록됩니다.</p>
-                                <input type="text" name="cafeKeyword" title="카페검색어" class="input_txt2 __byte(1~20) _keydown(CafeCreate|AddKeyword)" style="width:205px" maxlength="40"/>
-                                <button type="button" title="검색어 등록" class="btn_srch _click(CafeCreate|AddKeyword)"></button>
-                                <span class="byte"><strong class="vm">0</strong> / 20 bytes</span>
-                                <p class="txt" style="display:none" id="MSG_KEYWORD"><strong>잘못된 형식입니다. 한글, 영문, 숫자만 입력해주세요.</strong></p>
-                                <div class="srch_word_area" id="CafeKeywordListArea">
-                                    <ul>
-                                        <li><em>1</em><input type="hidden" name="cafeKeywords" value=""/></li>
-                                        <li><em>2</em><input type="hidden" name="cafeKeywords" value=""/></li>
-                                        <li><em>3</em><input type="hidden" name="cafeKeywords" value=""/></li>
-                                        <li><em>4</em><input type="hidden" name="cafeKeywords" value=""/></li>
-                                        <li><em>5</em><input type="hidden" name="cafeKeywords" value=""/></li>
-                                    </ul>
-
-                                    <ul>
-                                        <li><em>6</em><input type="hidden" name="cafeKeywords" value=""/></li>
-                                        <li><em>7</em><input type="hidden" name="cafeKeywords" value=""/></li>
-                                        <li><em>8</em><input type="hidden" name="cafeKeywords" value=""/></li>
-                                        <li><em>9</em><input type="hidden" name="cafeKeywords" value=""/></li>
-                                        <li><em>10</em><input type="hidden" name="cafeKeywords" value=""/></li>
-                                    </ul>
-
-                                </div>
-                                <p class="txt">검색결과에 중요한 영향을 미치므로 카페와 연관성 있는 정확한 키워드를 입력해 주세요.</p>
-                            </td>
-                        </tr>
                         <tr id="introductionArea">
                             <th scope="row" class="th_dsc"><div class="stit">카페설명</div></th>
                             <td>
                                 <div class="input_area">
-                                    <textarea name="description" cols="30" rows="5" title="카페설명" class="input_txt3" maxlength="200"></textarea>
+                                    <textarea name="description" cols="30" rows="5" title="카페설명" class="input_txt3" maxlength="200" ng-model="cafe.description"></textarea>
                                     <span class="byte"><strong>0</strong> / 100 bytes</span>
                                 </div>
                                 <p class="txt">입력한 내용이 카페 메인, 검색결과 등의 카페리스트에 반영됩니다.</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="th_shortcut"><label for="groupIdSelect" class="stit">지름길 설정</label></th>
-                            <td>
-                                <div class="group_select">
-                                    <select name="groupid" style="width:202px" id="groupIdSelect">
-                                        <option value="999">기본 그룹</option>
-                                        <option value="1">업무 카페</option>
-                                        <option value="5">친목 모임</option>
-                                    </select>
-                                </div>
-                                <p class="txt">원하는 그룹에 바로 추가하여 사용하시면 편리합니다.</p>
                             </td>
                         </tr>
                         <tr>
@@ -227,7 +146,7 @@
 <script src="/webjars/angularjs/angular-resource.js"></script>
 <script src="/webjars/angularjs/angular-route.js"></script>
 <script src="/js/ng/sectionApp.js"></script>
-<script src="/js/ng/sectionController.js"></script>
+<script src="/js/ng/cafeCreateController.js"></script>
 <!-- // angularjs -->
 
 </body>

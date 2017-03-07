@@ -4,6 +4,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.logout;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -14,6 +15,7 @@ import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.service.MemberDetailsService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 
@@ -36,11 +41,20 @@ import java.util.Arrays;
 @Import(WebSecurityConfig.class)
 public class IndexControllerTest {
     @Autowired
+    private WebApplicationContext context;
     private MockMvc mvc;
     @MockBean
     private MemberDetailsService userDetailsService;
     @MockBean
     private CategoryRepository categoryRepository;
+
+    @Before
+    public void setup() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
 
     @Test
     public void index_Should_IndexPage() throws Exception {
@@ -79,5 +93,19 @@ public class IndexControllerTest {
         mvc.perform(logout())
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("/"));
+    }
+
+    @Test
+    @WithMockUser
+    public void createCafeForm_WithLoginUser_Should_CafeCreationForm() throws Exception {
+        mvc.perform(get("/createCafe"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("create_cafe"));
+    }
+
+    @Test
+    public void createCafeForm_WithNonLogin_Should_RedirectToLoginForm() throws Exception {
+        mvc.perform(get("/createCafe"))
+                .andExpect(status().is3xxRedirection());
     }
 }

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
@@ -17,16 +18,16 @@ import javax.persistence.ManyToOne;
  * Created by kiel on 2017. 2. 10..
  */
 @Entity
-@IdClass(CafeMemberId.class)
 
 @NoArgsConstructor
 @Getter
 public class CafeMember {
-    @Id
+    @Id @GeneratedValue
+    Long id;
+
     @ManyToOne
     private Cafe cafe;
 
-    @Id
     @ManyToOne
     private Member member;
 

@@ -63,15 +63,16 @@ cafeApp.controller('commentWriteCtrl', function($scope, $http, $routeParams) {
         $http.defaults.headers.common[header] = token;
 
         $http.post(url, data, config)
-            .then(function(response) {
-                $scope.comments.push(response.data);
-            })
-            .catch(function(response) {
-                if (response.status == 403) {
-                    alert('댓글 작성 권한이 없습니다');
-                } else {
-                    alert('댓글 작성에 실패했습니다')
-                }
-            });
+            .then(
+                function(response) {
+                    $scope.comments.push(response.data);
+                },
+                function(response) {
+                    if (response.status == 403) {
+                        alert('댓글 작성 권한이 없습니다');
+                    } else {
+                        alert('댓글 작성에 실패했습니다')
+                    }
+                });
     };
 });
