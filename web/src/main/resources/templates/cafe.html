@@ -133,13 +133,17 @@
 
                             <div class="ia-info-data2">
                                 <ul>
-                                    <!-- [D] 비공개 카페 -->
-                                    <li class="level-info border-sub">
-                                        <span class="ico_lock"></span><br></br><span class="txt_lock gm-tcol-c"><em>비공개카페</em></span>
+                                    <li class="level-info border-sub" th:switch="${cafe.visibility}">
+                                        <div th:case="${T(com.widehouse.cafe.domain.cafe.CafeVisibility).PRIVATE}">
+                                            <span class="ico_lock"></span><br></br><span class="txt_lock gm-tcol-c"><em>비공개카페</em></span>
+                                        </div>
+                                        <div th:case="${T(com.widehouse.cafe.domain.cafe.CafeVisibility).PUBLIC}">
+                                            <span class="txt_lock gm-tcol-c"><em>공개카페</em></span>
+                                        </div>
                                     </li>
                                     <li class="mem-cnt-info"  style="cursor:pointer;">
                                         <strong class="d-none">카페멤버수</strong>
-                                        <a href="#" class="gm-tcol-c"><span class="ico"></span><br></br><em th:text="${#numbers.formatInteger(cafe.statistics.cafeMemberCount, 3, 'COMMA')}"></em></a>
+                                        <a href="#" class="gm-tcol-c"><span class="ico"></span><br></br><em th:text="${#numbers.formatInteger(cafe.statistics.cafeMemberCount, 0, 'COMMA')}"></em></a>
                                         <div class="ly_info_dsc" style="font-weight:normal;top:31px;left:5px;display:none;" id="hiddenCafeApplyLayer">
                                             <div class="cont cont_v1" style="width:60px">
                                                 <p><a href="/ManageJoinApplication.nhn?search.clubid=10000001" >가입대기 <span>0</span></a></p>
@@ -225,7 +229,7 @@
                             <li>
                                 <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" class="ico-list" alt=""/>
                                 <a href="#articles" class="gm-tcol-c" id="menuLink0">전체글보기</a>
-                                <span class="gm-tcol-c p11" style="padding-right:2px;">(<strong th:text="${#numbers.formatInteger(cafe.statistics.cafeArticleCount, 3, 'COMMA')}"></strong>)</span>
+                                <span class="gm-tcol-c p11" style="padding-right:2px;">(<strong th:text="${#numbers.formatInteger(cafe.statistics.cafeArticleCount, 0, 'COMMA')}"></strong>)</span>
                             </li>
                             <li th:each="board : ${specialBoards}">
                                 <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" th:class="'ico-' + ${board.type}" th:alt="${board.type}"/>

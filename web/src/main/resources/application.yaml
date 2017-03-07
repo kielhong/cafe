@@ -10,7 +10,7 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
     show-sql: true
-    hibertnate.ddl-auto: create-drop
+    hibertnate.ddl-auto: update
   jackson:
     serialization.write-dates-as-timestamps: false
   output.ansi.enabled: ALWAYS

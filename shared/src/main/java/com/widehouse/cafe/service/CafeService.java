@@ -18,14 +18,15 @@ import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.projection.CafeProjection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import javax.transaction.Transactional;
 
 /**
  * Created by kiel on 2017. 2. 11..
@@ -42,18 +43,20 @@ public class CafeService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Cacheable(value = "cafes", key = "#url")
     @Transactional
     public Cafe createCafe(Member member, String url, String name, String description,
                            CafeVisibility visibility, Long categoryId) {
         Category category = categoryRepository.findOne(categoryId);
         Cafe cafe = cafeRepository.save(new Cafe(url, name, description, visibility, category));
-        log.debug("cafe : {}", cafe);
-        log.debug("member : {}", member);
+
         CafeMember cafeMember = new CafeMember(cafe, member, CafeMemberRole.MANAGER);
         cafeMemberRepository.save(cafeMember);
+        cafe.getStatistics().increaseCafeMemberCount();
+        cafeRepository.save(cafe);
 
         for (int i = 0; i < 4; i++) {
-            boardRepository.save(new Board(cafe, "일반 게시판" + i, (i+1)));
+            addBoard(cafe, "일반 게시판" + i, (i + 1));
         }
 
         return cafe;
@@ -116,6 +119,8 @@ public class CafeService {
      * @param cafeUrl cafe url
      * @return Cafe Info
      */
+    @Cacheable(value = "cafes", key = "#cafeUrl")
+    @Transactional
     public Cafe getCafe(String cafeUrl) {
         Cafe cafe = cafeRepository.findByUrl(cafeUrl);
         if (cafe == null) {

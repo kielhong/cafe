@@ -1,1 +1,1 @@
-var sectionApp = angular.module('sectionApp', ['ngRoute', 'ngResource', 'ngMessages']);
+var sectionApp = angular.module('sectionApp', ['ngRoute', 'ngResource']);
