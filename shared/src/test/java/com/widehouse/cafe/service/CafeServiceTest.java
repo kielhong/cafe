@@ -98,6 +98,7 @@ public class CafeServiceTest {
                 .hasFieldOrPropertyWithValue("category", category);
         verify(cafeRepository).save(any(Cafe.class));
         verify(cafeMemberRepository).save(any(CafeMember.class));
+        verify(boardRepository ,times(4)).save(any(Board.class));
     }
 
     @Test

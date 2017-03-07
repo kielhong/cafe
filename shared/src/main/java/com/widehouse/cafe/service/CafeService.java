@@ -14,8 +14,8 @@ import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.projection.CafeProjection;
-import javassist.runtime.Desc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -51,6 +51,10 @@ public class CafeService {
         log.debug("member : {}", member);
         CafeMember cafeMember = new CafeMember(cafe, member, CafeMemberRole.MANAGER);
         cafeMemberRepository.save(cafeMember);
+
+        for (int i = 0; i < 4; i++) {
+            boardRepository.save(new Board(cafe, "일반 게시판" + i, (i+1)));
+        }
 
         return cafe;
     }
@@ -113,7 +117,12 @@ public class CafeService {
      * @return Cafe Info
      */
     public Cafe getCafe(String cafeUrl) {
-        return cafeRepository.findByUrl(cafeUrl);
+        Cafe cafe = cafeRepository.findByUrl(cafeUrl);
+        if (cafe == null) {
+            throw new CafeNotFoundException();
+        }
+
+        return cafe;
     }
 
 }

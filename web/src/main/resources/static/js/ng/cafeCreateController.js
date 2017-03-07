@@ -6,6 +6,19 @@ sectionApp.controller('cafeCreateCtrl', function($scope, $http, $window) {
         }
     };
 
+    $scope.checkUrl = function() {
+        $http.get("http://localhost:8080/api/cafes/" + $scope.cafe.url)
+            .then(
+                function(response) {
+                    $scope.frm.url.$error.unique = true;
+                },
+                function(response) {
+                    if (response.status == 404) {
+                        $scope.frm.url.$error.unique = false;
+                    }
+                });
+    };
+
     $scope.submit = function() {
         if ($scope.cafe.category.id == '-1') {
             alert('카테고리를 선택해 주세요.');

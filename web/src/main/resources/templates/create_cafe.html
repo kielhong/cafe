@@ -49,10 +49,20 @@
                             <td>
                                 <div class="input_area">
                                     <label for="url">http://cafe.naver.com/</label>
-                                    <input type="text" name="url" id="url" title="카페 주소" class="input_txt" style="width:381px;" maxlength="40" ng-model="cafe.url" ng-pattern="/^[a-z][a-z0-9]*$/"/>
-                                    <span class="byte"><strong ng-bind="cafe.url.length">0</strong> / 20 bytes</span>
+                                    <input type="text" name="url" id="url" title="카페 주소" class="input_txt" style="width:381px;" maxlength="30"
+                                           ng-model="cafe.url"
+                                           ng-pattern="/^[a-z][a-z0-9]*$/"
+                                           ng-minlength="5"
+                                           ng-maxlength="30"
+                                           ng-change="checkUrl()"/>
+                                    <span class="byte"><strong ng-bind="cafe.url.length">0</strong> / 30 bytes</span>
                                 </div>
-                                <p class="txt" style="display:none" id="MSG_CLUBURL"></p>
+                                <div ng-messages="frm.url.$error" style="color:maroon;margin-top:5px" role="alert">
+                                    <div ng-message="pattern">카페 주소는 영문, 수자만 사용 가능합니다</div>
+                                    <div ng-message="minlength">주소 길이는 5자 이상이어야 합니다</div>
+                                    <div ng-message="maxlength">주소 길이는 30자 이내여야 합니다</div>
+                                    <div ng-message="unique">이미 해당 주소를 사용 중인 카페가 있습니다</div>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -145,6 +155,7 @@
 <script src="/webjars/angularjs/angular.js"></script>
 <script src="/webjars/angularjs/angular-resource.js"></script>
 <script src="/webjars/angularjs/angular-route.js"></script>
+<script src="/webjars/angularjs/angular-messages.js"></script>
 <script src="/js/ng/sectionApp.js"></script>
 <script src="/js/ng/cafeCreateController.js"></script>
 <!-- // angularjs -->

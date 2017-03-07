@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
+import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.service.CafeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,6 +53,16 @@ public class ApiCafeControllerTest {
                 .andExpect(jsonPath("$.category.name").value(category.getName()))
                 .andExpect(jsonPath("$.statistics.cafeMemberCount").value(0))
                 .andExpect(jsonPath("$.statistics.cafeArticleCount").value(0));
+    }
+
+    @Test
+    public void getCafeByUrl_WithNotExistCafe_Should_404NotFound() throws Exception {
+        // given
+        given(cafeService.getCafe("cafeurl"))
+                .willThrow(new CafeNotFoundException());
+        // then
+        this.mvc.perform(get("/api/cafes/cafeurl"))
+                .andExpect(status().isNotFound());
     }
 
 //    @Test
