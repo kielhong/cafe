@@ -26,7 +26,6 @@ public class ApiCafeCommandController {
     public Cafe createCafe(@RequestBody Cafe cafeForm) {
         Member member = memberDetailsService.getCurrentMember();
 
-        log.debug("member@controller : {}", member);
         Cafe cafe = cafeService.createCafe(member, cafeForm.getUrl(), cafeForm.getName(),
                 cafeForm.getDescription(), cafeForm.getVisibility(), cafeForm.getCategory().getId());
 

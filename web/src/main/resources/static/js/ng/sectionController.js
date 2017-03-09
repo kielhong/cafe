@@ -1,3 +1,5 @@
+var sectionApp = angular.module('sectionApp', ['ngRoute', 'ngResource']);
+
 sectionApp.controller('contentCtrl', function($scope) {
     $scope.templateUrl = function() {
         switch ($scope.tab) {

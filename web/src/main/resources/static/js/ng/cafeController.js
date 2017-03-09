@@ -1,3 +1,30 @@
+var cafeApp = angular.module('cafeApp', ['ngRoute']);
+cafeApp.config(function($routeProvider, $locationProvider) {
+    $locationProvider.hashPrefix('');
+    $routeProvider
+    .when("/", {
+        templateUrl : "/view/board.html",
+        controller : "mainCtrl"
+    })
+    .when("/articles", {
+        templateUrl : "/view/board.html",
+        controller : "cafeArticleCtrl"
+    })
+    .when("/boards/:boardId", {
+        templateUrl : "/view/board.html",
+        controller : "boardArticleCtrl"
+    })
+    .when("/articles/post", {
+        templateUrl : "/view/article_post.html",
+        controller : "articlePostCtrl"
+    })
+    .when("/articles/:articleId", {
+        templateUrl : "/view/article.html",
+        controller : "articleViewCtrl"
+    })
+    .otherwise({redirectTo:"/"})
+});
+
 cafeApp.controller('cafeCtrl', function($scope, $location) {
     $scope.cafeUrl = $location.absUrl().split('/')[4];
 });
@@ -72,6 +99,46 @@ cafeApp.controller('commentWriteCtrl', function($scope, $http, $routeParams) {
                         alert('댓글 작성 권한이 없습니다');
                     } else {
                         alert('댓글 작성에 실패했습니다')
+                    }
+                });
+    };
+});
+
+
+cafeApp.controller('articlePostCtrl', function($scope, $http, $location) {
+    $http.get("http://localhost:8080/api/cafes/" + $scope.$parent.cafeUrl + "/boards")
+        .then(function(response) {
+            $scope.boards = response.data;
+        });
+    $scope.article = { title : '', content : ''};
+
+    $scope.submit = function() {
+        var url = "http://localhost:8080/api/cafes/" + $scope.$parent.cafeUrl + "/articles/";
+        var data = $scope.article;
+        var config = {
+            headers : {
+                'Content-Type': 'application/json;charset=utf-8;',
+            }
+        };
+        $(document).ready(function () {
+                console.log('ready');
+            });
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $http.defaults.headers.common[header] = token;
+
+console.log($scope.article);
+        $http.post(url, data, config)
+            .then(
+                function(response) {
+                    $location.path("/articles/" + response.data.id);
+                },
+                function(response) {
+                    if (response.status == 401 || response.status == 403) {
+                        alert('게시물 작성 권한이 없습니다');
+                    } else {
+                        alert('게시물 작성에 실패했습니다')
                     }
                 });
     };

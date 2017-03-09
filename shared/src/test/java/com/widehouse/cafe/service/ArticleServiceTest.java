@@ -3,12 +3,16 @@ package com.widehouse.cafe.service;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
@@ -39,8 +43,11 @@ public class ArticleServiceTest {
     private ArticleRepository articleRepository;
     @MockBean
     private CafeMemberRepository cafeMemberRepository;
+    @MockBean
+    private CafeRepository cafeRepository;
     @Autowired
     private ArticleService articleService;
+
 
     private Cafe cafe;
     private Board board1;
@@ -131,5 +138,41 @@ public class ArticleServiceTest {
         // then
         assertThatThrownBy(() -> articleService.getArticle(1L, reader))
                 .isInstanceOf(NoAuthorityException.class);
+    }
+
+    @Test
+    public void writeArticle_WithCafeMember_Should_Success() {
+        // given
+        given(cafeMemberRepository.existsByCafeMember(board1.getCafe(), writer))
+                .willReturn(true);
+        given(articleRepository.save(any(Article.class)))
+                .willReturn(new Article(board1, writer, "title", "content"));
+        // when
+        Article article = articleService.writeArticle(board1, writer, "title", "content");
+        // then
+        then(article)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("board.id", board1.getId())
+                .hasFieldOrPropertyWithValue("title", "title")
+                .hasFieldOrPropertyWithValue("content", "content");
+        verify(cafeMemberRepository).existsByCafeMember(any(Cafe.class), any(Member.class));
+        verify(articleRepository).save(any(Article.class));
+        verify(cafeRepository).save(any(Cafe.class));
+    }
+
+    @Test
+    public void writeArticle_WithNoCafeMember_Should_ThrowNoAuthorityException() {
+        // given
+        given(cafeMemberRepository.existsByCafeMember(board1.getCafe(), writer))
+                .willReturn(false);
+        given(articleRepository.save(any(Article.class)))
+                .willReturn(new Article(board1, writer, "title", "content"));
+        // when
+        assertThatThrownBy(() -> articleService.writeArticle(board1, writer, "title", "content"))
+                .isInstanceOf(NoAuthorityException.class);
+        // then
+        verify(cafeMemberRepository).existsByCafeMember(any(Cafe.class), any(Member.class));
+        verify(articleRepository, never()).save(any(Article.class));
+        verify(cafeRepository, never()).save(any(Cafe.class));
     }
 }

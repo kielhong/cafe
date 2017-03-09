@@ -1,1 +1,0 @@
-var sectionApp = angular.module('sectionApp', ['ngMessages']);

@@ -7,6 +7,7 @@ import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
@@ -28,6 +29,8 @@ public class ArticleService {
     private ArticleRepository articleRepository;
     @Autowired
     private CafeMemberRepository cafeMemberRepository;
+    @Autowired
+    private CafeRepository cafeRepository;
 
     public List<ArticleProjection> getArticlesByCafe(Cafe cafe, int page, int size) {
         List<ArticleProjection> articles = articleRepository.findByCafe(cafe,
@@ -51,6 +54,20 @@ public class ArticleService {
         } else {
             throw new NoAuthorityException();
         }
+    }
+
+    public Article writeArticle(Board board, Member writer, String title, String content) {
+        if (!cafeMemberRepository.existsByCafeMember(board.getCafe(), writer)) {
+            throw new NoAuthorityException();
+        }
+
+        Article article =  articleRepository.save(new Article(board, writer, title, content));
+
+        Cafe cafe = article.getBoard().getCafe();
+        cafe.getStatistics().increaseArticleCount();
+        cafeRepository.save(cafe);
+
+        return article;
     }
 
     private boolean isArticleReadable(Cafe cafe, Member reader) {

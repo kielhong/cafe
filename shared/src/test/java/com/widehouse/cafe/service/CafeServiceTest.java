@@ -96,7 +96,7 @@ public class CafeServiceTest {
                 .hasFieldOrPropertyWithValue("description", "desc")
                 .hasFieldOrPropertyWithValue("visibility", PUBLIC)
                 .hasFieldOrPropertyWithValue("category", category);
-        verify(cafeRepository).save(any(Cafe.class));
+        verify(cafeRepository, times(2)).save(any(Cafe.class));
         verify(cafeMemberRepository).save(any(CafeMember.class));
         verify(boardRepository ,times(4)).save(any(Board.class));
     }

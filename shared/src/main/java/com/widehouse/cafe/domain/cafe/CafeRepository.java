@@ -1,8 +1,6 @@
 package com.widehouse.cafe.domain.cafe;
 
 import com.widehouse.cafe.projection.CafeProjection;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

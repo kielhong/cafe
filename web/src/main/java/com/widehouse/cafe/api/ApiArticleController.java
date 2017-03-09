@@ -9,9 +9,12 @@ import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
 import com.widehouse.cafe.service.MemberDetailsService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,6 +66,27 @@ public class ApiArticleController {
         Article article = articleService.getArticle(articleId, reader);
 
         return article;
+    }
 
+    @PostMapping(value = "/cafes/{cafeUrl}/articles")
+    public Article writeArticle(@PathVariable String cafeUrl,
+                                @RequestBody ArticleForm articleForm) {
+        Member member = memberDetailsService.getCurrentMember();
+        Board board = boardRepository.findOne(articleForm.getBoard().getId());
+
+        return articleService.writeArticle(board, member, articleForm.getTitle(), articleForm.getContent());
+    }
+
+
+    @Data
+    public static class ArticleForm {
+        String title;
+        String content;
+        BoardForm board;
+    }
+
+    @Data
+    public static class BoardForm {
+        Long id;
     }
 }

@@ -3,11 +3,16 @@ package com.widehouse.cafe.api;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.anyString;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
@@ -24,9 +29,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 
@@ -34,11 +43,14 @@ import java.util.Arrays;
  * Created by kiel on 2017. 2. 19..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = ApiArticleController.class, secure = false)
+@WebMvcTest(value = ApiArticleController.class)
+@Import(WebSecurityConfig.class)
 @EnableSpringDataWebSupport
 public class ApiArticleControllerTest {
     @Autowired
+    private WebApplicationContext context;
     private MockMvc mvc;
+
     @MockBean
     private ArticleService articleService;
     @MockBean
@@ -56,9 +68,13 @@ public class ApiArticleControllerTest {
     private ArticleProjection articleProjection2;
     private ArticleProjection articleProjection3;
 
-
     @Before
     public void setUp() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", 1);
         writer = new Member("writer");
@@ -130,4 +146,17 @@ public class ApiArticleControllerTest {
                 .andExpect(status().isForbidden());
     }
 
+    @Test
+    public void writeArticle_WithCafeMember_Should_Success() throws Exception {
+        // given
+        given(articleService.writeArticle(any(Board.class), any(Member.class), anyString(), anyString()))
+                .willReturn(new Article(board, writer, "title", "content"));
+        // then
+        mvc.perform(post("/api/cafes/" + cafe.getUrl() + "/articles/")
+                    .with(user(writer))
+                    .with(csrf().asHeader())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"title\":\"test title\", \"content\":\"test content\", \"board\": {\"id\" : 1} }"))
+                .andExpect(status().isOk());
+    }
 }

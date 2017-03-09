@@ -1,3 +1,5 @@
+var sectionApp = angular.module('sectionApp', ['ngMessages']);
+
 sectionApp.controller('cafeCreateCtrl', function($scope, $http, $window) {
     $scope.cafe = {
         visibility : 'PUBLIC',

@@ -42,5 +42,9 @@ public class CafeStatistics {
     public void decreaseCommentCount() {
         cafeCommentCount = cafeCommentCount > 0 ? cafeCommentCount - 1 : 0;
     }
+
+    public void increaseArticleCount() {
+        cafeArticleCount++;
+    }
 }
 

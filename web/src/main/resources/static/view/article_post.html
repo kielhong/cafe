@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="http://cafe.naver.com//static/css/main/css/mycafe_write-1463630909000-29934.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com//static/css/main/common/editor/common_editor-1485997217000-40890.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com//static/css/main/css/template-1459945953000-26096.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com//static/css/main/common/editor/common_editor_tool-1485997217000-49081.css" type="text/css"/>
+
+<form ng-submit="submit()">
+    <div id="nboard" style="width: 773px; text-align: left;">
+        <div id="editer_border">
+            <div id="naver_common_editor">
+                <ul class="subject">
+                    <li><label class="item" for="boardCategory">카테고리</label>
+                        <div>
+                            <select name="board" class="step01" style="width: 156px;" id="boardCategory" ng-model="article.board" ng-options="board.name for board in boards">
+                                <option value="">게시판선택</option>
+                            </select>
+                            <span id="noticeAreaMain">
+                                <input type="checkbox" id="typeClubNotice" name="typeClubNotice" value="N" class="box_check2" id="main-notice">
+                                <label for="main-notice" class="notice-1">카페메인에 공지</label>
+                            </span>
+                            <span id="noticeArea">
+                                <input type="checkbox" id="typeMenuNotice" name="typeMenuNotice" value="M" class="box_check2" id="list-notice">
+                                <label for="list-notice" class="notice-2">게시판 공지</label>
+                            </span>
+                        </div>
+                    </li>
+                    <li class="post_subject">
+                        <label class="item" for="subject">제목</label>
+                        <div>
+                            <input type="text" name="title" placeholder="게시글 제목을 입력하세요" id="subject" class="box_input" ng-model="article.title">
+                        </div>
+                    </li>
+                </ul>
+
+                <table width="740" cellspacing="0" cellpadding="0" class="wrap" id="toolbox">
+                    <tr>
+                        <td id="tool_bg" colspan="2" class="tool_bg2" >
+                            <!-- 692~759px -->
+                            <table width="100%" cellspacing="0" cellpadding="0">
+                                <tr valign="top">
+                                    <td class="item _editorPlugin"><span class="family"><img src="http://cafeimgs.naver.net/editor/btn_n_font.gif" alt="command:fontname" width="47" height="21"></span> <span
+                                            class="size"><img src="http://cafeimgs.naver.net/editor/btn_n_size.gif" alt="command:fontsize" width="47" height="21"></span> <span class="make01"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_bold.gif" alt="command:bold" width="22" height="21"><img src="http://cafeimgs.naver.net/editor/btn_n_underline.gif"
+                                                                                                                                                 alt="command:underline" width="21" height="21"><img src="http://cafeimgs.naver.net/editor/btn_n_Italic.gif" alt="command:italic" width="21" height="21"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_strike2.gif" alt="command:strikethrough" width="21" height="21"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_color2.gif" alt="command:fontcolor" width="21" height="21"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_bgcolor.gif" alt="command:fontbackgroundcolor" width="21" height="21"></span> <span class="make02"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_alignleft.gif" alt="command:justifyleft" width="22" height="21"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_aligncenter.gif" alt="command:justifycenter" width="21" height="21"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_alignright.gif" alt="command:justifyright" width="21" height="21"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_alignjustify.gif" alt="command:justifyfull" width="21" height="21"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_numberset.gif" width="20" height="21" alt="command:insertorderedlist"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_markset.gif" width="20" height="21" alt="command:insertunorderedlist"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_outdent.gif" width="21" height="21" alt="command:outdent"><img src="http://cafeimgs.naver.net/editor/btn_n_indent.gif"
+                                                                                                                                                       width="21" height="21" alt="command:indent"></span> <span class="make03"><img src="http://cafeimgs.naver.net/editor/btn_n_quotation.gif" alt="command:quote"
+                                                                                                                                                                                                                                     width="21" height="21"><img src="http://cafeimgs.naver.net/editor/btn_n_lineheight.gif" alt="command:lineheight" width="20" height="21"></span> <span
+                                            class="make03"><img src="http://cafeimgs.naver.net/editor/btn_n_url.gif" alt="command:hyperlink" width="28" height="21"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_emoticon.gif" width="20" height="21" alt="command:emoticoninsertion"><img
+                                            src="http://cafeimgs.naver.net/editor/btn_n_table.gif" width="22" height="21" alt="command:inserttable"><img src="http://cafeimgs.naver.net/editor/btn_n_sign.gif"
+                                                                                                                                                         width="20" height="21" alt="command:scharinsertion"><img src="http://cafeimgs.naver.net/editor/btn_n_enlarged.gif" width="19" height="21"
+                                                                                                                                                                                                                  alt="command:searchkeyword"><img src="http://cafeimgs.naver.net/editor/btn_n_spelling.gif" alt="command:spellcheck" width="21" height="21"></span>
+                                        <div class="line_sticker" style="width: 55px">
+                                            <img width="55" height="21" title="스티커" style="cursor: pointer;" alt="command:linesticker" src="http://cafeimgs.naver.net/editor/linesticker/btn_n_sticker.gif">
+                                            <img src="http://cafeimgs.naver.net/cafe4/ico-new.gif" class="ico_new" alt="NEW" width="10" height="9">
+                                        </div> <span class="form"><img width="21" height="21" style="cursor: pointer;" alt="command:layoutmanager" src="http://cafeimgs.naver.net/editor/btn_n_layout_s.gif"><img
+                                                width="21" height="21" style="cursor: pointer;" alt="command:writeformmanager" src="http://cafeimgs.naver.net/editor/btn_n_writeform_s.gif"></span></td>
+                                    <!-- td width="58" class="tool_option3"></td-->
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="b_tool_bg"></td>
+                    </tr>
+                    <tr valign="top">
+                        <td class="read">
+                            <textarea id="textbox" name="content" cols="93" rows="28" ng-model="article.content"></textarea>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td colspan="2" class="size_more">
+                            <div id="size_grip"></div>
+                        </td>
+                    </tr>
+                </table>
+                <ul class="post">
+                    <li><label class="item" for="tagnames">태그달기</label>
+                        <div>
+                            <input type="text" name="tagnames" id="tagnames" class="box_input">
+                            <a href="#" id="tageditonclick" name="tageditonclick" role="button" aria-expanded="false" aria-haspopup="true">
+                                <img src="http://cafeimgs.naver.net/cafe4/w_btn_mytag.gif" width="83" height="20" alt="나의 태그보기" class="mytag">
+                            </a>
+                        </div>
+                        <div id="tageditstack" style="display: none;">
+                            <div class="cafe_tag" id="cafetagdiv" style="word-break: break-all;">
+                                <div class="tag">
+                                    <strong>카페</strong> 태그
+                                </div>
+                                <div class="tag_list" id="cafetag"></div>
+                            </div>
+                        </div>
+                        <p style="clear: both;"></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="warning_message">&nbsp;&nbsp;저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시글은 이용약관 및 관련법률에 의해 제재를 받으실 수 있습니다.</div>
+
+        <div class="btn_post">
+            <button style="background: url(http://cafeimgs.naver.net/cafe4/btn_btemporarysave.gif);border:none;width:67px;height:25px;cursor:pointer;"/>
+            <button style="background: url(http://cafeimgs.naver.net/cafe4/btn_bpreview.gif);border:none;width:67px;height:25px;cursor:pointer;" />
+            <button type="submit" style="background: url(http://cafeimgs.naver.net/cafe4/btn_bconfirm.gif);border:none;width:57px;height:27px;cursor:pointer;" />
+            <div class="rbtn"></div>
+        </div>
+    </div>
+</form>
