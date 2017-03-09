@@ -128,7 +128,6 @@ cafeApp.controller('articlePostCtrl', function($scope, $http, $location) {
         var header = $("meta[name='_csrf_header']").attr("content");
         $http.defaults.headers.common[header] = token;
 
-console.log($scope.article);
         $http.post(url, data, config)
             .then(
                 function(response) {

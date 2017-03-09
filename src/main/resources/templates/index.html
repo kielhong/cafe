@@ -5,14 +5,14 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>Cafe</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
-    <meta name="viewport" content="width=1024"></meta>
-    <meta http-equiv="X-UA-Compatible" content="requiresActiveX=true"></meta>
-    <meta http-equiv="Content-Script-Type" content="text/javascript"></meta>
-    <meta http-equiv="Content-Style-Type" content="text/css"></meta>
-
     <link rel="stylesheet" href="/css/Layout.css" type="text/css"/>
-    <script type="text/javascript" src="/js/CommonTopScript.js" charset="utf-8"></script>
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <!-- angularjs -->
+    <script src="/webjars/angularjs/angular.js"></script>
+    <script src="/webjars/angularjs/angular-resource.js"></script>
+    <script src="/webjars/angularjs/angular-route.js"></script>
+    <script src="/js/ng/sectionController.js"></script>
+    <!-- // angularjs -->
 </head>
 
 <body ng-app="sectionApp">
@@ -22,22 +22,12 @@
 
     <div id="container" class="main" role="main">
         <!-- spot -->
-        <div class="spot" id="cafestoryArea">
+        <div class="spot" id="cafestoryArea" ng-controller="storyCtrl">
             <h2><img src="http://cafeimgs.naver.net/img/section/h_cafestory.gif" width="117" height="24" alt="cafe story"/></h2>
             <div class="date_control">
-                <span class="n2 _date">2</span>
-                <span class="n0 _date">0</span>
-                <span class="n1 _date">1</span>
-                <span class="n7 _date">7</span>
-                <span class="dot">.</span>
-                <span class="n0 _date">0</span>
-                <span class="n2 _date">2</span>
-                <span class="dot">.</span>
-                <span class="n2 _date">2</span>
-                <span class="n2 _date">2</span>
-                <span class="dot">.</span>
-                <button class="btn_prev N=a:cvr.prev _click(CafeStory|PrevDate)">이전</button>
-                <button class="btn_next_off N=a:cvr.next _click(CafeStory|NextDate) _disabled" disabled="disabled" style="cursor:default;">다음</button>
+                <span ng-repeat="n in dateList track by $index" ng-class="dateStyle(n)" ng-bind="n"></span>
+                <button class="btn_prev" ng-click="prev()">이전</button>
+                <button ng-class="nextDateStyle()" ng-disabled="isLastDay()" ng-click="next()">다음</button>
             </div>
             <div class="_CafeStoryContent" id="cafeStory">
                 <div class="type1" style="background:url(http://cafefiles.naver.net/MjAxNzAyMTVfNTQg/MDAxNDg3MTQxMDM2Nzgy.PCNj1DAQY4ilgDRbyaOV1T4xRUxg0H28pzlUjI06bmsg.PhtDIgNegGTvkuvj-ObEivOK4W_HuXFDLs1iRJF0NGMg.JPEG.cafesupport/default.jpg) no-repeat">
@@ -90,13 +80,5 @@
 
     <div id="footer" role="contentinfo"></div>
 </div>
-
-<script src="/js/jquery-3.1.1.min.js"></script>
-<!-- angularjs -->
-<script src="/webjars/angularjs/angular.js"></script>
-<script src="/webjars/angularjs/angular-resource.js"></script>
-<script src="/webjars/angularjs/angular-route.js"></script>
-<script src="/js/ng/sectionController.js"></script>
-<!-- // angularjs -->
 </body>
 </html>

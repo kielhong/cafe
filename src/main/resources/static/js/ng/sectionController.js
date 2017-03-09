@@ -1,5 +1,39 @@
 var sectionApp = angular.module('sectionApp', ['ngRoute', 'ngResource']);
 
+sectionApp.controller('storyCtrl', function($scope, $http, $filter) {
+    $scope.toDateList = function(date) {
+        return $filter('date')($scope.date, 'yyyy.MM.dd.').split('');
+    };
+    $scope.toDateString = function(date) {
+        return date.toISOString().substring(0, 10);
+    };
+    $scope.displayDate = function(date) {
+        $scope.dateList = $scope.toDateList(date);
+    };
+    $scope.prev = function() {
+        $scope.date.setDate($scope.date.getDate() - 1);
+        $scope.displayDate($scope.date);
+    };
+    $scope.next = function() {
+        $scope.date.setDate($scope.date.getDate() + 1);
+        $scope.displayDate($scope.date);
+
+    };
+    $scope.isLastDay = function() {
+        return $scope.toDateString($scope.date) == $scope.toDateString(new Date());
+    };
+
+    $scope.dateStyle = function(n) {
+        return (n == '.') ? "dot" : "n" + n + " _date";
+    };
+    $scope.nextDateStyle = function() {
+        return $scope.isLastDay() ? "btn_next_off" : "btn_next";
+    }
+
+    $scope.date = new Date();
+    $scope.displayDate($scope.date);
+});
+
 sectionApp.controller('contentCtrl', function($scope) {
     $scope.templateUrl = function() {
         switch ($scope.tab) {
@@ -48,3 +82,4 @@ sectionApp.controller('mycafeCtrl', function($scope, $http) {
         });
 
 });
+

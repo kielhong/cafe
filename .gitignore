@@ -2,10 +2,9 @@
 /build/
 /out/
 /gradle
-/web/build/
-/api/build/
-/shared/build/
 
 ### IntelliJ IDEA ###
 .idea
 
+### Mac Files ###
+.DS_Store
