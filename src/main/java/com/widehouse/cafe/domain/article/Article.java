@@ -1,5 +1,6 @@
 package com.widehouse.cafe.domain.article;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
@@ -8,10 +9,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
 /**
@@ -41,6 +46,10 @@ public class Article {
     @Size(max = 5000)
     private String content;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "article")
+    private List<ArticleTag> articleTags;
+
     private int commentCount;
 
     private LocalDateTime createDateTime;
@@ -54,6 +63,7 @@ public class Article {
         this.title = title;
         this.content = content;
         this.commentCount = 0;
+        this.articleTags = new ArrayList<>();
         this.createDateTime = this.updateDateTime = LocalDateTime.now();
     }
 
@@ -75,4 +85,9 @@ public class Article {
         this.commentCount--;
     }
 
+    public List<Tag> getTags() {
+        return articleTags.stream()
+                .map(x -> x.getTag())
+                .collect(Collectors.toList());
+    }
 }

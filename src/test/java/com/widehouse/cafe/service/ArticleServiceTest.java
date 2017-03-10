@@ -1,5 +1,6 @@
 package com.widehouse.cafe.service;
 
+import static org.assertj.core.api.Assertions.anyOf;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
@@ -10,6 +11,10 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
+import com.widehouse.cafe.domain.article.ArticleTag;
+import com.widehouse.cafe.domain.article.ArticleTagRepository;
+import com.widehouse.cafe.domain.article.Tag;
+import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
@@ -45,6 +50,10 @@ public class ArticleServiceTest {
     private CafeMemberRepository cafeMemberRepository;
     @MockBean
     private CafeRepository cafeRepository;
+    @MockBean
+    private TagRepository tagRepository;
+    @MockBean
+    private ArticleTagRepository atRepository;
     @Autowired
     private ArticleService articleService;
 
@@ -174,5 +183,23 @@ public class ArticleServiceTest {
         verify(cafeMemberRepository).existsByCafeMember(any(Cafe.class), any(Member.class));
         verify(articleRepository, never()).save(any(Article.class));
         verify(cafeRepository, never()).save(any(Cafe.class));
+    }
+
+    @Test
+    public void addTag_WithTag_Should_AddRelationToTag() {
+        // given
+        Tag tag = new Tag("tag");
+        // when
+        articleService.addTag(article1, tag);
+        // then
+        then(article1.getArticleTags())
+                .extracting("tag")
+                .contains(tag);
+        then(tag.getArticleTags())
+                .extracting("article")
+                .contains(article1);
+        verify(articleRepository).save(article1);
+        verify(tagRepository).save(tag);
+        verify(atRepository).save(any(ArticleTag.class));
     }
 }

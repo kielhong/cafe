@@ -4,6 +4,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -14,6 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.article.Article;
+import com.widehouse.cafe.domain.article.ArticleTag;
+import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
@@ -158,5 +161,21 @@ public class ApiArticleControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\"title\":\"test title\", \"content\":\"test content\", \"board\": {\"id\" : 1} }"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void getTags_Should_ListTags() throws Exception {
+        // given
+        Article article = new Article(board, writer, "title", "content");
+        article.getArticleTags().add(new ArticleTag(article, new Tag("tag1")));
+        article.getArticleTags().add(new ArticleTag(article, new Tag("tag2")));
+        given(articleService.getArticle(eq(1L), any(Member.class)))
+                .willReturn(article);
+        // then
+        mvc.perform(get("/api/articles/1/tags"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$.[0].name").value("tag1"))
+                .andExpect(jsonPath("$.[1].name").value("tag2"));
     }
 }

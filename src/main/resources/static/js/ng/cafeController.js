@@ -60,6 +60,37 @@ cafeApp.controller('boardArticleCtrl', function($scope, $http, $routeParams) {
 });
 
 cafeApp.controller('articleViewCtrl', function($scope, $http, $routeParams) {
+    $scope.tagEditMode = false;
+    $scope.changeTagMode = function (mode) {
+        $scope.tagEditMode = (mode == 'edit');
+    };
+    $scope.saveTag = function () {
+        $scope.tags = [];
+        $scope.tagNames.split(',').forEach(function(tagName) {
+            tagName = tagName.trim();
+            if (tagName != '' && !$scope.isDuplicateTag(tagName)) {
+                $scope.tags.push({name : tagName});
+            }
+        });
+        $scope.tag2tagNames();
+        $scope.changeTagMode('list');
+    }
+    $scope.tag2tagNames = function() {
+        var list = [];
+        angular.forEach($scope.tags, function(tag) {
+            list.push(tag.name);
+        });
+        $scope.tagNames = list.join(',');
+    };
+    $scope.isDuplicateTag = function(tagName) {
+        for (var i = 0, len = $scope.tags.length; i < len; i++) {
+            if ($scope.tags[i].name == tagName) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     $http.get("http://localhost:8080/api/cafes/" + $scope.$parent.cafeUrl + "/articles/" + $routeParams.articleId)
         .then(function(response) {
             $scope.article = response.data;
@@ -68,6 +99,12 @@ cafeApp.controller('articleViewCtrl', function($scope, $http, $routeParams) {
     $http.get("http://localhost:8080/api/articles/" + $routeParams.articleId + "/comments?page=0&size=20")
         .then(function(response) {
             $scope.comments = response.data;
+        });
+
+    $http.get("http://localhost:8080/api/articles/" + $routeParams.articleId + "/tags")
+        .then(function(response) {
+            $scope.tags = response.data;
+            $scope.tag2tagNames();
         });
 });
 

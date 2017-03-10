@@ -69,7 +69,7 @@
                             <table cellspacing="0" cellpadding="0" border="0">
                                 <tr>
                                     <td class="m-tcol-c b nick">
-                                        <table cellspacing="0"><caption><span class="blind">퍼스나콘/아이디 영역</span></caption><tr><td class="pc2w"><a href="http://item.naver.com/personacon/PersonaconShop.jsp?Redirect=PersonaconSub.jsp?type=itemdetail%26itemseq=1433716" target="itemshop"><img src="http://itemimgs.naver.net/personacon/16/37/1433716.gif" width="19" height="19" alt=""></a></td><td class="p-nick"><a href="#" class="m-tcol-c b" ng-bind="article.writer.nickname + '(' + article.writer.id + ')'"></a></td></tr></table>
+                                        <table cellspacing="0"><caption><span class="blind">퍼스나콘/아이디 영역</span></caption><tr><td class="pc2w"><a href="http://item.naver.com/personacon/PersonaconShop.jsp?Redirect=PersonaconSub.jsp?type=itemdetail%26itemseq=1433716" target="itemshop"><img src="http://itemimgs.naver.net/personacon/16/37/1433716.gif" width="19" height="19" alt=""></a></td><td class="p-nick"><a href="#" class="m-tcol-c b" ng-bind="article.writer.nickname + '(' + article.writer.username + ')'"></a></td></tr></table>
                                     </td>
                                     <td class="m-tcol-c step">
                                     </td>
@@ -97,46 +97,40 @@
                     <table cellspacing="0" class="tag_n_id tag_list_area">
                         <tbody>
                         <tr>
-
                             <td class="tagarea">
-
-
-
-
                                 <div id="tagview" class="tag m-tcol-c">
-                                    <div id="tagListArea">&nbsp;<a href="#" class="_click(TagProcessor|EditTag) _stopDefault _rosRestrict"><img src=http://cafeimgs.naver.net/img/btn_pedittag.gif></a></div>
-                                    <div id="tagInputArea" style="display:none;">
-                                        <input type="text" id="tagnames" name="tagnames" size="95" class="_keyup(TagValidator|ValidateTagNames) _blur(TagValidator|ValidateTagNames)" style="width:420px;"><br>
-                                        <a href="#" class="m-tcol-c _click(TagProcessor|ModifyTag) _stopDefault _rosRestrict">태그저장</a> &#124; <a href="#" class="m-tcol-c _click(TagProcessor|ShowTag) _stopDefault _rosRestrict">취소</a>
+                                    <div id="tagListArea" ng-show="!tagEditMode">
+                                        <a ng-repeat="tag in tags" href="#tags/{{ tag.name }}" class="tag_item m-tcol-t"><span>#</span>{{ tag.name }}<span class="bg_tx"></span></a>
+                                        &nbsp;
+                                        <img src="http://cafeimgs.naver.net/img/btn_pedittag.gif" ng-click="changeTagMode('edit')" style="cursor:pointer;"/>
+                                    </div>
+                                    <div id="tagInputArea" ng-show="tagEditMode">
+                                        <input type="text" name="tagnames" size="95" style="width:420px;" ng-model="tagNames"><br/>
+                                        <span class="m-tcol-c" style="cursor:pointer;" ng-click="saveTag()">태그저장</span> |
+                                        <span class="m-tcol-c" style="cursor:pointer;" ng-click="changeTagMode('list')">취소</span>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-
-
-
                     <table cellspacing="0" class="tag_n_id">
                         <tbody>
                         <tr>
                             <td>&nbsp;</td>
                             <td class="idarea">
-
                                 <div class="other_view m-tcol-c">
-                                    <a href="/CafeMemberNetworkView.nhn?m=view&clubid=10000001&memberid=kielhong" class="more m-tcol-c _rosRestrict" onclick="clickcr(this, 'art.profile', '', '', event)">이 작성자의 게시글 더보기</a>
+                                    <a href="/CafeMemberNetworkView.nhn?m=view&clubid=10000001&memberid=kielhong" class="more m-tcol-c">이 작성자의 게시글 더보기</a>
                                 </div>
-
                                 <table cellspacing="0" cellpadding="0" align="right">
                                     <colgroup><col><col width="55"></colgroup>
                                     <tbody>
                                     <tr><td height="1" valign="top" colspan="2"><div class="per-info board-box-line"></div></td></tr>
                                     </tbody>
                                 </table>
-
-
                             </td>
                         </tr>
+                        </tbody>
                     </table>
                     <div class="h-35"></div>
 
@@ -152,7 +146,7 @@
                                     </td>
                                     <td class="m-tcol-c filter-30">&#124;</td>
                                     <td class="_sortList" style="padding:0;">
-                                        <div style="position:relative;_top:3px;"><a href="#" class="b m-tcol-c"><span>등록순</span><span style="display:none">최신순</span><span id="cafe-menu"><span class="cafe-menu-tit" style="background:none; width:13px; height:13px; margin:0;"><span class="down-btn" style="background-position:0 0; background-repeat:no-repeat; vertical-align:top"><img height="13" width="13" alt="" src="http://cafeimgs.naver.net/cafe4/hidden.gif"></span></span></span></a>
+                                        <div style="position:relative;_top:3px;"><a href="#" class="b m-tcol-c"><span>등록순</span><span style="display:none">최신순</span><span id="cafe-menu"><span class="cafe-menu-tit" style="background:none; width:13px; height:13px; margin:0;"><span class="down-btn" style="background-position:0 0; background-repeat:no-repeat; vertical-align:top"><img height="13" width="13" alt="" src="http://cafeimgs.naver.net/cafe4/hidden.gif"/></span></span></span></a>
                                             <div class="perid-layer2" style="display:none;">
                                                 <ul>
                                                     <li class="asc"><a href="#"><span>등록순</span></a></li>
@@ -167,7 +161,7 @@
 
                                     <td class="m-tcol-c filter-30">&#124;</td>
                                     <td>
-                                        <a href="#" class="b m-tcol-c like like_lst_btn _click(LikeItMember|LikeItMember|10000001|9) _stopDefault" id="likeItMemberBtn" onclick="clickcr(this, '', '', ''); return false;">좋아요<span id="cafe-menu"><span class="cafe-menu-tit" style="background:none; width:13px; height:13px; margin:0;"><span id="likeItArrow" class="down-btn" style="background-position:0 0; *background-position:0 0; background-repeat:no-repeat; vertical-align:top"><img height="13" width="13" alt="" src="http://cafeimgs.naver.net/cafe4/hidden.gif"></span></span></span></a>
+                                        <a href="#" class="b m-tcol-c like like_lst_btn" id="likeItMemberBtn"">좋아요<span id="cafe-menu"><span class="cafe-menu-tit" style="background:none; width:13px; height:13px; margin:0;"><span id="likeItArrow" class="down-btn" style="background-position:0 0; *background-position:0 0; background-repeat:no-repeat; vertical-align:top"><img height="13" width="13" alt="" src="http://cafeimgs.naver.net/cafe4/hidden.gif"/></span></span></span></a>
 
 
                                         <div class="u_likeit_list_module _reactionModule" data-sid="CAFE" data-cid="10000001_cafeno1_9" data-did="CAFE" data-catgid="10000001">

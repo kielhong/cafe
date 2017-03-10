@@ -18,7 +18,7 @@ INSERT INTO cafe(category_id, url, name, description, visibility, cafe_article_c
 INSERT INTO cafe(category_id, url, name, description, visibility, cafe_article_count, cafe_comment_count, cafe_member_count, cafe_visit_count, create_date_time) values (1,'gamecafe13','샌드박스 팬 카페','샌드박스 팬 카페입니다','PUBLIC', 898790, 1231312, 58582, 123123, '2014-03-21 01:02:03');
 
 /** Member **/
-INSERT INTO member(id, username, nickname, password) VALUES (1, 'kiel', '키엘', '0331');
+INSERT INTO member(id, username, nickname, password) VALUES (1, 'kiel', '키엘', '1234');
 INSERT INTO member(id, username, nickname, password) VALUES (2, 'user', '테스트유저', 'password');
 
 /** CafeMember **/
@@ -57,8 +57,6 @@ INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count,
 VALUES (1, 2, 1, '테스트 99번째 보드2 글', '테스트 글 내용 9', 0, now(), now());
 INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
 VALUES (1, 2, 1, '테스트 1010번째 보드 2글', '테스트 글 내용 10', 0, now(), now());
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 2, 1, '테스트 11번째 보드 2글', '테스트 글 내용 11', 0, now(), now());
 
 /** Comment **/
 INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다1', now(), now());
@@ -71,3 +69,13 @@ INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_
 INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다8', now(), now());
 INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다9', now(), now());
 INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다10', now(), now());
+
+/** Tag **/
+INSERT INTO tag(id, name, create_date_time) VALUES (1, '태그', now());
+INSERT INTO tag(id, name, create_date_time) VALUES (2, '스타워즈', now());
+INSERT INTO tag(id, name, create_date_time) VALUES (3, '반지의제왕', now());
+
+/*** Article-Tag **/
+INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 1, now());
+INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 2, now());
+INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 3, now());

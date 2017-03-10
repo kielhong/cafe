@@ -2,6 +2,7 @@ package com.widehouse.cafe.domain.article;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.mockito.BDDMockito.given;
 
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
@@ -9,6 +10,11 @@ import com.widehouse.cafe.domain.member.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by kiel on 2017. 2. 11..
@@ -97,5 +103,18 @@ public class ArticleTest {
         // then
         then(article.getCommentCount())
                 .isEqualTo(commentCount - 1);
+    }
+
+    @Test
+    public void getTags_Should_ListTags() {
+        // given
+        Tag tag1 = new Tag("tag1");
+        Tag tag2 = new Tag("tag2");
+        // when
+        article.getArticleTags()
+                .addAll(Arrays.asList(new ArticleTag(article, tag1), new ArticleTag(article, tag2)));
+        // then
+        then(article.getTags())
+                .contains(tag1, tag2);
     }
 }

@@ -34,7 +34,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Created by kiel on 2017. 2. 20..
@@ -66,7 +68,7 @@ public class ApiCommentControllerTest {
         cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category"));
         board = new Board(cafe, "board");
         member = new Member("member");
-        article = new Article(1L, cafe, board, member, "title", "content", 0, LocalDateTime.now(), LocalDateTime.now());
+        article = new Article(1L, cafe, board, member, "title", "content", new ArrayList<>(), 0, LocalDateTime.now(), LocalDateTime.now());
     }
 
     @Test
