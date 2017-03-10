@@ -74,8 +74,13 @@ INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_
 INSERT INTO tag(id, name, create_date_time) VALUES (1, '태그', now());
 INSERT INTO tag(id, name, create_date_time) VALUES (2, '스타워즈', now());
 INSERT INTO tag(id, name, create_date_time) VALUES (3, '반지의제왕', now());
+INSERT INTO tag(id, name, create_date_time) VALUES (4, '어벤져스', now());
+INSERT INTO tag(id, name, create_date_time) VALUES (5, '아이언맨', now());
 
 /*** Article-Tag **/
 INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 1, now());
 INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 2, now());
 INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 3, now());
+INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 3, now());
+INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 4, now());
+INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 5, now());

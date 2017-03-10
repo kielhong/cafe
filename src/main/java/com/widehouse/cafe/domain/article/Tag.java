@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +35,7 @@ public class Tag {
     private LocalDateTime createDateTime;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "tag")
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<ArticleTag> articleTags;
 
     public Tag() {

@@ -1,6 +1,5 @@
 package com.widehouse.cafe.service;
 
-import static org.assertj.core.api.Assertions.anyOf;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;

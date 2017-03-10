@@ -213,16 +213,6 @@
                 <div id="cafe-menu">
                     <div class="box-g-t"></div>
                     <div class="box-g-m">
-                        <!-- 즐겨찾는 게시판 그룹 -->
-                        <div class="cafe-menu-tit frst">
-                            <h3><img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="14" height="13" class="ico-bookmark"/><a href="#" onclick="toggleFavoriteMenuGroup();" title="즐겨찾는 게시판" class="gm-tcol-t">즐겨찾는 게시판</a></h3>
-                            <p id="favoriteMenuGroupBtn" class="down-btn"><a onclick="toggleFavoriteMenuGroup();return false;" href="#"><img width="13" height="13" alt="" src="http://cafeimgs.naver.net/cafe4/hidden.gif"/></a></p>
-                        </div>
-                        <ul id="favoriteMenuGroup" style="display:none" class="cafe-menu-list">
-                        </ul>
-                        <div class="cafe-menu-space" id="gend141"></div>
-                        <!-- //즐겨찾는 게시판 그룹 -->
-
                         <ul class="cafe-menu-list">
                             <li>
                                 <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" class="ico-list" alt=""/>
@@ -231,7 +221,7 @@
                             </li>
                             <li th:each="board : ${specialBoards}">
                                 <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" th:class="'ico-' + ${board.type}" th:alt="${board.type}"/>
-                                <a href="/CafeTagCloudList.nhn?search.clubId=10000001" class="gm-tcol-c" id="menuLink-10" th:text="${board.name}"></a>
+                                <a href="#tags" class="gm-tcol-c" id="menuLink-10" th:text="${board.name}"></a>
                             </li>
                         </ul>
                         <div class="cafe-menu-space"></div>

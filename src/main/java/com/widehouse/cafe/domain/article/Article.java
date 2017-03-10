@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -47,7 +48,7 @@ public class Article {
     private String content;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ArticleTag> articleTags;
 
     private int commentCount;
