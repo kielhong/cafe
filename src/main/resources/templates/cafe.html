@@ -4,11 +4,11 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta charset="UTF-8"/>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
-    <title th:text="${cafe.name + ' : 마이 카페'}"></title>
+    <title th:text="${cafe.name + ' : 로컬 카페'}"></title>
 
     <link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/mycafe-common-1487314414000-57562.css" type="text/css"/>
     <link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/mycafe-layout-1485413655000-59862.css" type="text/css"/>

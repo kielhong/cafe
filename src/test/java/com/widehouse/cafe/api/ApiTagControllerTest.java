@@ -1,12 +1,16 @@
 package com.widehouse.cafe.api;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.Tag;
+import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.CafeService;
 import com.widehouse.cafe.service.TagService;
 import org.junit.Test;
@@ -44,6 +48,26 @@ public class ApiTagControllerTest {
         mvc.perform(get("/api/cafes/testurl/tags"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
+    }
 
+    @Test
+    public void getArticlesByCafe_Should_Success() throws Exception {
+        // given
+        Cafe cafe = new Cafe("testurl", "testcafe");
+        Board board = new Board(cafe, "board");
+        Member member = new Member("testmember");
+        Tag tag = new Tag("testtag");
+        given(cafeService.getCafe("testurl"))
+                .willReturn(cafe);
+        given(tagService.getTagByName("testtag"))
+                .willReturn(tag);
+        given(tagService.getArticlesByTag(cafe, tag))
+                .willReturn(Arrays.asList(
+                        new Article(board, member, "title1", "content1"),
+                        new Article(board, member, "title2", "content2")));
+        // then
+        mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/tags/" + tag.getName() + "/articles"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2));
     }
 }

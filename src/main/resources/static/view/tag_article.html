@@ -1,0 +1,78 @@
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/mycafe-common-1487314414000-57562.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/mycafe-layout-1485413655000-59862.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/comment-1463630909000-16252.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/mycafe-main-1486728022000-202870.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/message_box-1459945953000-2175.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/search/sa-1485413655000-3280.css" type="text/css"/>
+<link rel="stylesheet" href="http://cafe.naver.com/static/css/main/css/ip_layer_2-1459945953000-2882.css" type="text/css">
+
+<div id="content-area">
+    <div id="main-area" class="fl">
+        <div id="sub-tit">
+            <h3 class="sub-tit-color" ng-bind="'태그 : ' + tagName + '(' + articles.length + ')'"></h3>
+            <p class="m-tcol-c">선택한 태그를 사용한 우리 카페 글 목록 입니다</p>
+        </div>
+        <div class="sub-tit-bottom"></div>
+        <div class="h-20"></div>
+        <div class="list-style">
+            <div class="fr p11 m-tcol-c">
+                <a href="#tags" class="m-tcol-c">우리 카페 태그 전체보기</a>
+            </div>
+        </div>
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tr><td class="board-line" style="height:3px !important; "></td></tr>
+        </table>
+        <!-- list-webzine -->
+        <ul class="article-webzine-sub">
+            <li class="border-sub" ng-repeat="article in articles">
+                <dl style="width:743px !important;">
+                    <dt>
+                        <a href="#articles/{{ article.id }}" class="m-tcol-c" ng-bind="article.title"></a>
+                    </dt>
+                    <dd class="board-box-line-dashed"></dd>
+                    <dd class="txt">
+                        <a href="#articles/{{ article.id }}" class="m-tcol-c" ng-bind="article.content"></a>
+                    </dd>
+                    <dd>
+                        <span class="persnacon"><img src="http://itemimgs.naver.net/personacon/16/37/s_1433716.gif" width="13" height="13"/></span>
+                        <a href="#" class="m-tcol-c" ng-bind="article.writer.nickname + '(' + article.writer.username + ')'"></a>
+                        <span class="date m-tcol-c">&#124;</span>
+                        <span class="date-in m-tcol-c">{{ article.createDateTime | date:'yyyy.MM.dd HH:mm' }}</span>
+                    </dd>
+                    <!--
+                    <dd class="tag">
+                        <p class="m-tcol-c">
+                            <a href='/CafeTagArticleList.nhn?search.clubId=10000001&search.tagName=%C0%CC%B9%CC%C1%F6' class="m-tcol-c">이미지</a>
+                            ,
+
+                            <a href='/CafeTagArticleList.nhn?search.clubId=10000001&search.tagName=TV' class="m-tcol-c">TV</a>
+                        </p>
+                    </dd>
+                    -->
+                </dl>
+            </li>
+        </ul>
+        <!-- //list-webzine -->
+        <!-- line -->
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tr><td class="board-line" style="height:3px !important; "></td></tr>
+        </table>
+        <!-- //line -->
+        <!-- prev_next -->
+        <div class="prev-next">
+            <table class="Nnavi" align="center">
+                <caption><span class="blind">페이지 네비게이션</span></caption>
+                <tbody>
+                <tr>
+                    <td class="on"><a href="/CafeTagArticleList.nhn?search.clubId=10000001&search.tagName=%C0%CC%B9%CC%C1%F6&search.page=1" class="m-tcol-p">1</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- //prev_next -->
+    </div>
+</div>
+<!-- //main-area -->
+
+<div style="height: 230px;">&nbsp;</div>
+

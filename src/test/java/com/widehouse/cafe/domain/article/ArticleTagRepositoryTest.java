@@ -30,6 +30,8 @@ public class ArticleTagRepositoryTest {
     private Board board;
     private Member member;
     private Article article;
+    private Tag tag1;
+    private Tag tag2;
 
     @Before
     public void setup() {
@@ -41,13 +43,9 @@ public class ArticleTagRepositoryTest {
         entityManager.persist(member);
         article = new Article(board, member, "title", "content");
         entityManager.persist(article);
-    }
 
-    @Test
-    public void findAllByCafe_Should_ListAllTagsByCafe() {
-        // given
-        Tag tag1 = new Tag("tag1");
-        Tag tag2 = new Tag("tag2");
+        tag1 = new Tag("tag1");
+        tag2 = new Tag("tag2");
         ArticleTag at1 = new ArticleTag(article, tag1);
         ArticleTag at2 = new ArticleTag(article, tag2);
 
@@ -59,10 +57,31 @@ public class ArticleTagRepositoryTest {
         tag2.getArticleTags().add(at2);
         entityManager.persist(tag1);
         entityManager.persist(tag2);
+    }
+
+    @Test
+    public void findAllByCafe_Should_ListAllTagsByCafe() {
         // when
-        List<Tag> tags = articleTagRepository.findAllByCafe(cafe);
+        List<Tag> tags = articleTagRepository.findTagsByCafe(cafe);
         // then
         then(tags)
                 .contains(tag1, tag2);
+    }
+
+    @Test
+    public void findArticlesByCafeAndTag_Should_ListArticlesByCafeandTag() {
+        // given
+        Article article3 = new Article(board, member, "title", "content");
+        entityManager.persist(article3);
+        ArticleTag at3 = new ArticleTag(article3, tag1);
+        tag1.getArticleTags().add(at3);
+        entityManager.persist(at3);
+        entityManager.persist(tag1);
+
+        // when
+        List<Article> articles = articleTagRepository.findArticlesByCafeAndTag(cafe, tag1);
+        // then
+        then(articles)
+                .contains(article, article3);
     }
 }

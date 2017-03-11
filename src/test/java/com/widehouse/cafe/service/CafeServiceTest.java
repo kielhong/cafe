@@ -129,7 +129,7 @@ public class CafeServiceTest {
         // when
         cafeService.addBoard(cafe, "new test board");
         // then
-//        then(boardRepository.findAllByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder")))
+//        then(boardRepository.findTagsByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder")))
 //                .hasSize(3)
 //                .extracting("name", "listOrder")
 //                .containsExactly(

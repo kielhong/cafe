@@ -26,6 +26,10 @@ cafeApp.config(function($routeProvider, $locationProvider) {
         templateUrl : "/view/tag.html",
         controller : "tagViewCtrl"
     })
+    .when("/tags/:tagName", {
+        templateUrl : "/view/tag_article.html",
+        controller : "tagArticleViewCtrl"
+    })
     .otherwise({redirectTo:"/"})
 });
 
@@ -184,9 +188,21 @@ cafeApp.controller('articlePostCtrl', function($scope, $http, $location) {
     };
 });
 
-cafeApp.controller('tagViewCtrl', function($scope, $http) {
+cafeApp.controller('tagViewCtrl', function($scope, $http, $location) {
+    $scope.searchTag = function() {
+        $location.path("/tags/" + $scope.searchTagName);
+    }
+
     $http.get("http://localhost:8080/api/cafes/" + $scope.$parent.cafeUrl + "/tags")
         .then(function(response) {
             $scope.tags = response.data;
+        });
+});
+
+cafeApp.controller('tagArticleViewCtrl', function($scope, $http, $routeParams) {
+    $scope.tagName = $routeParams.tagName;
+    $http.get("http://localhost:8080/api/cafes/" + $scope.$parent.cafeUrl + "/tags/" + $scope.tagName + "/articles")
+        .then(function(response) {
+            $scope.articles = response.data;
         });
 });

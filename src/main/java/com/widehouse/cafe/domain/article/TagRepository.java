@@ -10,5 +10,5 @@ import java.util.List;
  * Created by kiel on 2017. 3. 9..
  */
 public interface TagRepository extends JpaRepository<Tag, Long> {
-
+    Tag findByName(String name);
 }
