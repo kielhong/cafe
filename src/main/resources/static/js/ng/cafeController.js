@@ -81,8 +81,10 @@ cafeApp.controller('articleViewCtrl', function($scope, $http, $routeParams) {
             }
         });
         $scope.tag2tagNames();
+        $scope.postTags();
         $scope.changeTagMode('list');
     }
+
     $scope.tag2tagNames = function() {
         var list = [];
         angular.forEach($scope.tags, function(tag) {
@@ -97,6 +99,27 @@ cafeApp.controller('articleViewCtrl', function($scope, $http, $routeParams) {
             }
         }
         return false;
+    };
+    $scope.postTags = function() {
+        var url = "http://localhost:8080/api/articles/" + $scope.article.id + "/tags";
+        var data = [];
+        angular.forEach($scope.tags, function(tag) {
+            data.push({name : tag.name});
+        });
+        var config = {
+            headers : {
+                'Content-Type': 'application/json;charset=utf-8;',
+            }
+        };
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $http.defaults.headers.common[header] = token;
+
+        $http.post(url, data, config)
+            .then(
+                function(response) {
+                    $scope.tags = response.data;
+                });
     };
 
     $http.get("http://localhost:8080/api/cafes/" + $scope.$parent.cafeUrl + "/articles/" + $routeParams.articleId)

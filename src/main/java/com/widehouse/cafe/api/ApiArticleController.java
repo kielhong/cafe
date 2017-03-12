@@ -1,7 +1,6 @@
 package com.widehouse.cafe.api;
 
 import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
@@ -77,16 +76,6 @@ public class ApiArticleController {
 
         return articleService.writeArticle(board, member, articleForm.getTitle(), articleForm.getContent());
     }
-
-    @RequestMapping("/articles/{articleId}/tags")
-    public List<Tag> getTags(@PathVariable Long articleId) {
-        Member member = memberDetailsService.getCurrentMember();
-
-        Article article = articleService.getArticle(articleId, member);
-
-        return article.getTags();
-    }
-
 
     @Data
     public static class ArticleForm {

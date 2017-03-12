@@ -162,20 +162,4 @@ public class ApiArticleControllerTest {
                     .content("{\"title\":\"test title\", \"content\":\"test content\", \"board\": {\"id\" : 1} }"))
                 .andExpect(status().isOk());
     }
-
-    @Test
-    public void getTags_Should_ListTags() throws Exception {
-        // given
-        Article article = new Article(board, writer, "title", "content");
-        article.getArticleTags().add(new ArticleTag(article, new Tag("tag1")));
-        article.getArticleTags().add(new ArticleTag(article, new Tag("tag2")));
-        given(articleService.getArticle(eq(1L), any(Member.class)))
-                .willReturn(article);
-        // then
-        mvc.perform(get("/api/articles/1/tags"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$.[0].name").value("tag1"))
-                .andExpect(jsonPath("$.[1].name").value("tag2"));
-    }
 }
