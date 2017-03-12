@@ -16,19 +16,19 @@ import javax.persistence.PrimaryKeyJoinColumn;
 /**
  * Created by kiel on 2017. 3. 9..
  */
-@Entity
+//@Entity
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArticleTag {
-    @Id @GeneratedValue
+//    @Id @GeneratedValue
     private Long id;
 
-    @ManyToOne
+//    @ManyToOne
     private Article article;
 
-    @ManyToOne
+//    @ManyToOne
     private Tag tag;
 
     private LocalDateTime createDateTime;

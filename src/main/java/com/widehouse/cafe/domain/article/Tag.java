@@ -1,21 +1,17 @@
 package com.widehouse.cafe.domain.article;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Cleanup;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -34,12 +30,12 @@ public class Tag {
 
     private LocalDateTime createDateTime;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "tag", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private Set<ArticleTag> articleTags;
+    @JsonBackReference
+    @ManyToMany(mappedBy = "tags")
+    private Set<Article> articles;
 
     public Tag() {
-        this.articleTags = new HashSet<>();
+        this.articles = new HashSet<>();
         this.createDateTime = LocalDateTime.now();
     }
 

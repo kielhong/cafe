@@ -111,8 +111,8 @@ public class ArticleTest {
         Tag tag1 = new Tag("tag1");
         Tag tag2 = new Tag("tag2");
         // when
-        article.getArticleTags()
-                .addAll(Arrays.asList(new ArticleTag(article, tag1), new ArticleTag(article, tag2)));
+        article.getTags()
+                .addAll(Arrays.asList(tag1, tag2));
         // then
         then(article.getTags())
                 .contains(tag1, tag2);

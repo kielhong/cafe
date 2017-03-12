@@ -17,6 +17,7 @@ import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleTag;
 import com.widehouse.cafe.domain.article.Tag;
+import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
@@ -51,7 +52,6 @@ import java.util.List;
 public class ApiTagControllerTest {
     @Autowired
     private WebApplicationContext context;
-
     private MockMvc mvc;
     @MockBean
     private CafeService cafeService;
@@ -63,6 +63,8 @@ public class ApiTagControllerTest {
     private MemberService memberService;
     @MockBean
     private MemberRepository memberRepository;
+    @MockBean
+    private TagRepository tagRepository;
 
     private Cafe cafe;
     private Board board;
@@ -120,8 +122,8 @@ public class ApiTagControllerTest {
         Board board = new Board(1L, cafe, "board", 1);
         Member writer = new Member("writer");
         Article article = new Article(board, writer, "title", "content");
-        article.getArticleTags().add(new ArticleTag(article, new Tag("tag1")));
-        article.getArticleTags().add(new ArticleTag(article, new Tag("tag2")));
+        article.getTags().add(new Tag("tag1"));
+        article.getTags().add(new Tag("tag2"));
         given(articleService.getArticle(eq(1L), any(Member.class)))
                 .willReturn(article);
         // then
@@ -144,14 +146,18 @@ public class ApiTagControllerTest {
         ArticleTag at2 = new ArticleTag(article, tag2);
         ArticleTag at3 = new ArticleTag(article, tag3);
         ArticleTag at4 = new ArticleTag(article, tag4);
-        article.getArticleTags().add(at1);
-        article.getArticleTags().add(at3);
-        article.getArticleTags().add(at4);
-        tag1.getArticleTags().add(at1);
-        tag3.getArticleTags().add(at3);
-        tag4.getArticleTags().add(at4);
+        article.getTags().addAll(Arrays.asList(tag1, tag3, tag4));
+        tag1.getArticles().add(article);
+        tag3.getArticles().add(article);
+        tag4.getArticles().add(article);
         given(articleService.getArticle(1L, writer))
                 .willReturn(article);
+        given(tagRepository.findByName("testtag1"))
+                .willReturn(tag1);
+        given(tagRepository.findByName("testtag3"))
+                .willReturn(tag3);
+        given(tagRepository.findByName("testtag4"))
+                .willReturn(tag4);
         // then
         mvc.perform(post("/api/articles/1/tags")
                     .with(user(writer))

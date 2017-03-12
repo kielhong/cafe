@@ -1,6 +1,7 @@
 package com.widehouse.cafe.domain.article;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
@@ -16,6 +17,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
@@ -33,9 +37,6 @@ public class Article {
     private Long id;
 
     @ManyToOne
-    private Cafe cafe;
-
-    @ManyToOne
     private Board board;
 
     @ManyToOne
@@ -47,9 +48,12 @@ public class Article {
     @Size(max = 5000)
     private String content;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "article", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<ArticleTag> articleTags;
+    @JsonManagedReference
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "article_tag",
+            joinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+    private List<Tag> tags;
 
     private int commentCount;
 
@@ -58,13 +62,12 @@ public class Article {
     private LocalDateTime updateDateTime;
 
     public Article(Board board, Member writer, String title, String content) {
-        this.cafe = board.getCafe();
         this.board = board;
         this.writer = writer;
         this.title = title;
         this.content = content;
         this.commentCount = 0;
-        this.articleTags = new ArrayList<>();
+        this.tags = new ArrayList<>();
         this.createDateTime = this.updateDateTime = LocalDateTime.now();
     }
 
@@ -86,9 +89,12 @@ public class Article {
         this.commentCount--;
     }
 
-    public List<Tag> getTags() {
-        return articleTags.stream()
-                .map(x -> x.getTag())
-                .collect(Collectors.toList());
+    public Cafe getCafe() {
+        return this.board.getCafe();
     }
+//    public List<Tag> getTags() {
+//        return articleTags.stream()
+//                .map(x -> x.getTag())
+//                .collect(Collectors.toList());
+//    }
 }

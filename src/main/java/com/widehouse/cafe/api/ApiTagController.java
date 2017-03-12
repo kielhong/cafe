@@ -2,12 +2,14 @@ package com.widehouse.cafe.api;
 
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.Tag;
+import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.ArticleService;
 import com.widehouse.cafe.service.CafeService;
 import com.widehouse.cafe.service.MemberDetailsService;
 import com.widehouse.cafe.service.TagService;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +31,8 @@ import java.util.List;
 public class ApiTagController {
     @Autowired
     public CafeService cafeService;
+    @Autowired
+    public TagRepository tagRepository;
     @Autowired
     private TagService tagService;
     @Autowired
@@ -65,13 +70,26 @@ public class ApiTagController {
 
     @PostMapping("/articles/{articleId}/tags")
     public List<Tag> postTags(@PathVariable Long articleId,
-                              @RequestBody List<Tag> tagForms) {
+                              @RequestBody List<TagForm> tagForms) {
         Member member = memberDetailsService.getCurrentMember();
 
         Article article = articleService.getArticle(articleId, member);
-        tagService.updateTagsOfArticle(article, tagForms);
+        List<Tag> tags = new ArrayList<>();
+        for (TagForm tagForm : tagForms) {
+            Tag tag = tagService.getTagByName(tagForm.getName());
+            if (tag == null) {
+                tag = tagRepository.save(new Tag(tagForm.getName()));
+            }
+            tags.add(tag);
+        }
+
+        tagService.updateTagsOfArticle(article, tags);
 
         return article.getTags();
     }
 
+    @Data
+    public static class TagForm {
+        String name;
+    }
 }

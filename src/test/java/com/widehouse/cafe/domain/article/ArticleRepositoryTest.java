@@ -18,6 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,11 +43,6 @@ public class ArticleRepositoryTest {
     private Article article2;
     private Article article3;
 
-    @Mock
-    private ArticleProjection articleMock1;
-    @Mock
-    private ArticleProjection articleMock2;
-
     @Before
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
@@ -68,7 +65,7 @@ public class ArticleRepositoryTest {
     @Test
     public void findByCafe_Should_Return_ListArticle() {
         // when
-        List<ArticleProjection> articles = articleRepository.findByCafe(cafe, new PageRequest(0, 2, new Sort(DESC, "id")));
+        List<ArticleProjection> articles = articleRepository.findByBoardCafe(cafe, new PageRequest(0, 2, new Sort(DESC, "id")));
         // then
         then(articles)
                 .hasSize(2)
@@ -83,5 +80,25 @@ public class ArticleRepositoryTest {
         // then
         then(articles)
                 .containsExactly(article2, article1);
+    }
+
+    @Test
+    public void saveArticle_WhenAddTag_Should_SaveTag() {
+        // given
+        Article article = new Article(board1, writer, "test article1", "test1");
+        entityManager.persist(article);
+        Tag tag = new Tag("tag");
+        tag = entityManager.persist(tag);
+        // when
+        article.getTags().add(tag);
+        articleRepository.save(article);
+        tag.getArticles().add(article);
+        entityManager.persist(tag);
+        // then
+        Tag result = entityManager.find(Tag.class, tag.getId());
+        then(result.getArticles())
+                .contains(article);
+
+
     }
 }

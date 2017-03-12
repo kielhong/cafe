@@ -10,8 +10,6 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
-import com.widehouse.cafe.domain.article.ArticleTag;
-import com.widehouse.cafe.domain.article.ArticleTagRepository;
 import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Board;
@@ -51,8 +49,6 @@ public class ArticleServiceTest {
     private CafeRepository cafeRepository;
     @MockBean
     private TagRepository tagRepository;
-    @MockBean
-    private ArticleTagRepository atRepository;
     @Autowired
     private ArticleService articleService;
 
@@ -93,7 +89,7 @@ public class ArticleServiceTest {
     @Test
     public void getArticlesByCafe_Should_Return_ListArticleInCafeWithIdOrderDesc() {
         // given
-        given(articleRepository.findByCafe(cafe, new PageRequest(0, 3, new Sort(DESC, "id"))))
+        given(articleRepository.findByBoardCafe(cafe, new PageRequest(0, 3, new Sort(DESC, "id"))))
                 .willReturn(Arrays.asList(articleMock3, articleMock2, articleMock1));
         // when
         List<ArticleProjection> articles = articleService.getArticlesByCafe(cafe, 0, 3);
@@ -191,14 +187,8 @@ public class ArticleServiceTest {
         // when
         articleService.addTag(article1, tag);
         // then
-        then(article1.getArticleTags())
-                .extracting("tag")
+        then(article1.getTags())
                 .contains(tag);
-        then(tag.getArticleTags())
-                .extracting("article")
-                .contains(article1);
         verify(articleRepository).save(article1);
-        verify(tagRepository).save(tag);
-        verify(atRepository).save(any(ArticleTag.class));
     }
 }

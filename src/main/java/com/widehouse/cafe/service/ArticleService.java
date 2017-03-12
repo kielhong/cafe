@@ -5,8 +5,6 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
-import com.widehouse.cafe.domain.article.ArticleTag;
-import com.widehouse.cafe.domain.article.ArticleTagRepository;
 import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Board;
@@ -36,13 +34,11 @@ public class ArticleService {
     @Autowired
     private CafeRepository cafeRepository;
     @Autowired
-    private ArticleTagRepository articleTagRepository;
-    @Autowired
     private TagRepository tagRepository;
 
 
     public List<ArticleProjection> getArticlesByCafe(Cafe cafe, int page, int size) {
-        List<ArticleProjection> articles = articleRepository.findByCafe(cafe,
+        List<ArticleProjection> articles = articleRepository.findByBoardCafe(cafe,
                 new PageRequest(page, size, new Sort(DESC, "id")));
 
         return articles;
@@ -81,13 +77,10 @@ public class ArticleService {
 
     @Transactional
     public void addTag(Article article, Tag tag) {
-        ArticleTag at = new ArticleTag(article, tag);
-        article.getArticleTags().add(at);
-        tag.getArticleTags().add(at);
-
-        tagRepository.save(tag);
+        article.getTags().add(tag);
         articleRepository.save(article);
-        articleTagRepository.save(at);
+        tag.getArticles().add(article);
+        tagRepository.save(tag);
     }
 
     private boolean isArticleReadable(Cafe cafe, Member reader) {

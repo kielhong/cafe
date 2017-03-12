@@ -37,26 +37,26 @@ INSERT INTO board(cafe_id, name, list_order) VALUES (1, 'test board3', 2);
 INSERT INTO board(cafe_id, name, list_order) VALUES (1, 'test board4', 4);
 
 /** Article **/
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, 1, '테스트 첫번째 글', '테스트 글 내용 1', 0, now(), now());
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, 1, '테스트 두번째 글', '테스트 글 내용 2', 0, now(), now());
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, 1, '테스트 3번째 글', '테스트 글 내용 3', 0, now(), now());
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, 1, '테스트 44번째 글', '테스트 글 내용 4', 0, now(), now());
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, 1, '테스트 555번째 글', '테스트 글 내용 5', 0, now(), now());
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, 1, '테스트 6666번째 글', '테스트 글 내용 6', 0, now(), now());
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, 1, '테스트 7*7번째 글', '테스트 글 내용 7', 0, now(), now());
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, 1, '테스트 888번째 글', '테스트 글 내용 8', 0, now(), now());
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 2, 1, '테스트 99번째 보드2 글', '테스트 글 내용 9', 0, now(), now());
-INSERT INTO article(cafe_id, board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 2, 1, '테스트 1010번째 보드 2글', '테스트 글 내용 10', 0, now(), now());
+INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 1, '테스트 첫번째 글', '테스트 글 내용 1', 0, now(), now());
+INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 1, '테스트 두번째 글', '테스트 글 내용 2', 0, now(), now());
+INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 1, '테스트 3번째 글', '테스트 글 내용 3', 0, now(), now());
+INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 1, '테스트 44번째 글', '테스트 글 내용 4', 0, now(), now());
+INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 1, '테스트 555번째 글', '테스트 글 내용 5', 0, now(), now());
+INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 1, '테스트 6666번째 글', '테스트 글 내용 6', 0, now(), now());
+INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 1, '테스트 7*7번째 글', '테스트 글 내용 7', 0, now(), now());
+INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (1, 1, '테스트 888번째 글', '테스트 글 내용 8', 0, now(), now());
+INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (2, 1, '테스트 99번째 보드2 글', '테스트 글 내용 9', 0, now(), now());
+INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
+VALUES (2, 1, '테스트 1010번째 보드 2글', '테스트 글 내용 10', 0, now(), now());
 
 /** Comment **/
 INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다1', now(), now());
@@ -78,9 +78,9 @@ INSERT INTO tag(id, name, create_date_time) VALUES (4, '어벤져스', now());
 INSERT INTO tag(id, name, create_date_time) VALUES (5, '아이언맨', now());
 
 /*** Article-Tag **/
-INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 1, now());
-INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 2, now());
-INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 3, now());
-INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 3, now());
-INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 4, now());
-INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 5, now());
+--INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 1, now());
+--INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 2, now());
+--INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 3, now());
+--INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 3, now());
+--INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 4, now());
+--INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 5, now());
