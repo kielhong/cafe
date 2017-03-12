@@ -2,6 +2,7 @@ package com.widehouse.cafe.service;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.widehouse.cafe.domain.article.Article;
@@ -131,12 +132,14 @@ public class TagServiceTest {
         tag1.getArticleTags().add(at1);
         given(tagRepository.findByName("tag2"))
                 .willReturn(null);
+        given(tagRepository.save(tag2))
+                .willReturn(tag2);
         // when
         tagService.updateTagsOfArticle(article, Arrays.asList(tag2));
         // then
         then(article.getTags())
                 .contains(tag2);
-        verify(tagRepository).save(tag2);
+        verify(tagRepository,times(2)).save(tag2);
         verify(articleRepository).save(article);
     }
 }
