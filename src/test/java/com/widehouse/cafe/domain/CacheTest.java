@@ -1,4 +1,4 @@
-package com.widehouse.cafe.config;
+package com.widehouse.cafe.domain;
 
 import static org.assertj.core.api.BDDAssertions.then;
 

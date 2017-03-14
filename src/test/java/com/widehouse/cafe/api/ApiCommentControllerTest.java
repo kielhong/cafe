@@ -103,7 +103,7 @@ public class ApiCommentControllerTest {
                     .content("{\"comment\":\"new comment\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.comment").value("new comment"))
-                .andExpect(jsonPath("$.commenter.username").value(member.getUsername()));
+                .andExpect(jsonPath("$.memberId").value(member.getId()));
     }
 
     @Test

@@ -76,7 +76,7 @@ public class CommentListServiceTest {
                 .willReturn(true);
         given(articleRepository.findOne(article.getId()))
                 .willReturn(article);
-        given(commentRepository.findByArticle(article, new PageRequest(0, 5, new Sort(ASC, "id"))))
+        given(commentRepository.findByArticleId(article.getId(), new PageRequest(0, 5, new Sort(ASC, "id"))))
                 .willReturn(Arrays.asList(comment1, comment2, comment3, comment4, comment5));
         // when
         List<Comment> comments = commentService.getComments(commenter, article.getId(), 0, 5);
@@ -94,7 +94,7 @@ public class CommentListServiceTest {
                 .willReturn(false);
         given(articleRepository.findOne(article.getId()))
                 .willReturn(article);
-        given(commentRepository.findByArticle(article, new PageRequest(0, 5, new Sort(ASC, "id"))))
+        given(commentRepository.findByArticleId(article.getId(), new PageRequest(0, 5, new Sort(ASC, "id"))))
                 .willReturn(Arrays.asList(comment1, comment2, comment3, comment4, comment5));
         // when
         List<Comment> comments = commentService.getComments(nonCafeMember, article.getId(), 0, 5);

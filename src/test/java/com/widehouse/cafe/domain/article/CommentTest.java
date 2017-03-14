@@ -36,8 +36,8 @@ public class CommentTest {
         // Then
         assertThat(comment)
                 .isNotNull()
-                .hasFieldOrPropertyWithValue("article", article)
-                .hasFieldOrPropertyWithValue("commenter", commenter)
+                .hasFieldOrPropertyWithValue("articleId", article.getId())
+                .hasFieldOrPropertyWithValue("memberId", commenter.getId())
                 .hasFieldOrPropertyWithValue("comment", "test comment");
         assertThat(comment.getCreateDateTime())
                 .isNotNull();
@@ -46,15 +46,15 @@ public class CommentTest {
     @Test
     public void modifyComment_should_update_comment() {
         // Given
-        Member commenter = new Member("commenter");
+        Member commenter = new Member(1L, "commenter");
         Comment comment = new Comment(article, commenter, "test comment");
         // When
         comment.modify(commenter, "another comment");
         // Then
         assertThat(comment)
                 .isNotNull()
-                .hasFieldOrPropertyWithValue("article", article)
-                .hasFieldOrPropertyWithValue("commenter", commenter)
+                .hasFieldOrPropertyWithValue("articleId", article.getId())
+                .hasFieldOrPropertyWithValue("memberId", commenter.getId())
                 .hasFieldOrPropertyWithValue("comment", "another comment");
         assertThat(comment.getUpdateDateTime())
                 .isNotNull()
@@ -64,8 +64,8 @@ public class CommentTest {
     @Test
     public void modifyComment_not_commenter_throws_NoAuthroityException() {
         // Given
-        Member commenter = new Member("commenter");
-        Member anotherCommenter = new Member("another");
+        Member commenter = new Member(1L, "commenter");
+        Member anotherCommenter = new Member(2L, "another");
         Comment comment = new Comment(article, commenter, "test comment");
         // Then
         Assertions.assertThatThrownBy(() -> comment.modify(anotherCommenter, "new comment"))

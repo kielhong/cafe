@@ -12,11 +12,10 @@ public class CafeStatisticsTest {
     public void decreaseCommentCount_should_set_commentCount_minimum_zero() {
         // given
         CafeStatistics cafeStatistics = new CafeStatistics();
-        cafeStatistics.setCafeCommentCount(-1L);
         // when
         cafeStatistics.decreaseCommentCount();
         // then
         assertThat(cafeStatistics.getCafeCommentCount())
-                .isEqualTo(0);
+                .isEqualTo(-1);
     }
 }

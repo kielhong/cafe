@@ -11,8 +11,8 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 
-@Setter
 @Getter
+@Setter
 public class CafeStatistics {
     private Long cafeMemberCount;
     private Long cafeArticleCount;
@@ -40,7 +40,7 @@ public class CafeStatistics {
     }
 
     public void decreaseCommentCount() {
-        cafeCommentCount = cafeCommentCount > 0 ? cafeCommentCount - 1 : 0;
+        cafeCommentCount--;
     }
 
     public void increaseArticleCount() {

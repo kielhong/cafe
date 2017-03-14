@@ -30,13 +30,16 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by kiel on 2017. 2. 12..
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@Import(CommentService.class)
 public class CommentServiceTest {
     @MockBean
     private CommentRepository commentRepository;
@@ -48,9 +51,6 @@ public class CommentServiceTest {
     private CafeMemberRepository cafeMemberRepository;
     @MockBean
     private CategoryRepository categoryRepository;
-
-    @Autowired
-    private CafeService cafeService;
     @Autowired
     private CommentService commentService;
 
@@ -68,7 +68,7 @@ public class CommentServiceTest {
         Member writer = new Member("writer");
         article = new Article(board, writer, "title", "content");
 
-        commenter = new Member("commenter");
+        commenter = new Member(1L, "commenter");
     }
 
     @Test
@@ -87,8 +87,8 @@ public class CommentServiceTest {
         verify(articleRepository).save(article);
         assertThat(comment)
                 .isNotNull()
-                .hasFieldOrPropertyWithValue("article", article)
-                .hasFieldOrPropertyWithValue("commenter", commenter)
+                .hasFieldOrPropertyWithValue("articleId", article.getId())
+                .hasFieldOrPropertyWithValue("memberId", commenter.getId())
                 .hasFieldOrPropertyWithValue("comment", commentText);
         assertThat(cafe.getStatistics().getCafeCommentCount())
                 .isEqualTo(cafeCommentCount + 1);
@@ -118,8 +118,8 @@ public class CommentServiceTest {
         verify(commentRepository).save(comment);
         assertThat(comment)
                 .isNotNull()
-                .hasFieldOrPropertyWithValue("article", article)
-                .hasFieldOrPropertyWithValue("commenter", commenter)
+                .hasFieldOrPropertyWithValue("articleId", article.getId())
+                .hasFieldOrPropertyWithValue("memberId", commenter.getId())
                 .hasFieldOrPropertyWithValue("comment", "another comment");
         assertThat(comment.getUpdateDateTime())
                 .isAfterOrEqualTo(comment.getCreateDateTime());
@@ -140,14 +140,13 @@ public class CommentServiceTest {
     @Test
     public void deleteComment_ByCommenter_Should_Success_DecreaseCafeCommentCount_DecreaseArticleCommentCount() {
         // given
-        given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
-                .willReturn(true);
-        Comment comment = commentService.writeComment(article, commenter, "comment");
-        Mockito.reset(commentRepository);
-        Mockito.reset(cafeRepository);
-        Mockito.reset(articleRepository);
+        Comment comment = new Comment("testcomment", article.getId(), commenter.getId(), "comment", LocalDateTime.now(), LocalDateTime.now());
         Long cafeCommentCount = cafe.getStatistics().getCafeCommentCount();
         int articleCommentCount = article.getCommentCount();
+        given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
+                .willReturn(true);
+        given(articleRepository.findOne(comment.getArticleId()))
+                .willReturn(article);
         given(commentRepository.findOne(comment.getId()))
                 .willReturn(comment);
         // when
@@ -165,14 +164,12 @@ public class CommentServiceTest {
     @Test
     public void deleteComment_ByCafeManager_Should_Success_DecreaseCommentCount() {
         // given
+        Comment comment = new Comment("testcomment", article.getId(), commenter.getId(), "comment", LocalDateTime.now(), LocalDateTime.now());
+        Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
         given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
                 .willReturn(true);
-        Comment comment = commentService.writeComment(article, commenter, "comment");
-        Mockito.reset(commentRepository);
-        Mockito.reset(cafeRepository);
-        Mockito.reset(articleRepository);
-
-        Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
+        given(articleRepository.findOne(comment.getArticleId()))
+                .willReturn(article);
         given(commentRepository.findOne(comment.getId()))
                 .willReturn(comment);
         given(cafeMemberRepository.findByCafeAndMember(cafe, manager))
@@ -190,13 +187,15 @@ public class CommentServiceTest {
     @Test
     public void deleteComment_ByNotCafeManagerNorNotCommenter_Throw_NoAuthorityException() {
         // given
+        Comment comment = new Comment("testcomment", article.getId(), commenter.getId(), "comment", LocalDateTime.now(), LocalDateTime.now());
+        Member member1 = new Member(2L, "another writer");
+        Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
         given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
                 .willReturn(true);
-        Comment comment = commentService.writeComment(article, commenter, "comment");
-        Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
         given(commentRepository.findOne(comment.getId()))
                 .willReturn(comment);
-        Member member1 = new Member("another writer");
+        given(articleRepository.findOne(comment.getArticleId()))
+                .willReturn(article);
         given(cafeMemberRepository.findByCafeAndMember(cafe, member1))
                 .willReturn(new CafeMember(cafe, member1, MEMBER));
         // then

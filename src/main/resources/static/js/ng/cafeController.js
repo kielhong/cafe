@@ -161,6 +161,7 @@ cafeApp.controller('commentWriteCtrl', function($scope, $http, $routeParams) {
             .then(
                 function(response) {
                     $scope.comments.push(response.data);
+                    $scope.text = "";
                 },
                 function(response) {
                     if (response.status == 403) {

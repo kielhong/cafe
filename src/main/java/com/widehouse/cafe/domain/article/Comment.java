@@ -3,8 +3,10 @@ package com.widehouse.cafe.domain.article;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -16,20 +18,18 @@ import javax.validation.constraints.Size;
 /**
  * Created by kiel on 2017. 2. 11..
  */
-@Entity
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString
 public class Comment {
-    @Id @GeneratedValue
-    private Long id;
+    @Id
+    private String id;
 
-    @JsonIgnore
-    @ManyToOne
-    private Article article;
+    private Long articleId;
 
-    @ManyToOne
-    private Member commenter;
+    private Long memberId;
 
     @Size(max = 2000)
     private String comment;
@@ -38,15 +38,19 @@ public class Comment {
 
     private LocalDateTime updateDateTime;
 
-    public Comment(Article article, Member commenter, String comment) {
-        this.article = article;
-        this.commenter = commenter;
+    public Comment(Long articleId, Long memberId, String comment) {
+        this.articleId = articleId;
+        this.memberId = memberId;
         this.comment = comment;
         this.createDateTime = this.updateDateTime = LocalDateTime.now();
     }
 
-    public void modify(Member commenter, String comment) {
-        if (this.commenter.equals(commenter)) {
+    public Comment(Article article, Member member, String comment) {
+        this(article.getId(), member.getId(), comment);
+    }
+
+    public void modify(Member member, String comment) {
+        if (this.memberId.equals(member.getId())) {
             this.comment = comment;
             this.updateDateTime = LocalDateTime.now();
         } else {

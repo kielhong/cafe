@@ -59,7 +59,7 @@ public class CommentService {
     }
 
     public void modifyComment(Comment comment, Member member, String newComment) {
-        if (comment.getCommenter().equals(member)) {
+        if (comment.getMemberId().equals(member.getId())) {
             comment.modify(member, newComment);
             commentRepository.save(comment);
         } else {
@@ -68,12 +68,12 @@ public class CommentService {
     }
 
     @Transactional
-    public void deleteComment(Long commentId, Member deleter) {
+    public void deleteComment(String commentId, Member deleter) {
         Comment comment = commentRepository.findOne(commentId);
-        Article article = comment.getArticle();
-        Cafe cafe = comment.getArticle().getCafe();
+        Article article = articleRepository.findOne(comment.getArticleId());
+        Cafe cafe = article.getCafe();
         CafeMember cafeMember = cafeMemberRepository.findByCafeAndMember(cafe, deleter);
-        if (comment.getCommenter().equals(deleter)
+        if (comment.getMemberId().equals(deleter.getId())
                 || cafeMember.getRole() == CafeMemberRole.MANAGER) {
             commentRepository.delete(comment);
 
@@ -92,8 +92,7 @@ public class CommentService {
         Cafe cafe = article.getCafe();
         List<Comment> comments;
         if (cafe != null && isCommentReadable(cafe, member)) {
-            comments = commentRepository.findByArticle(article,
-                    new PageRequest(page, size, new Sort(ASC, "id")));
+            comments = commentRepository.findByArticleId(articleId, new PageRequest(page, size, new Sort(ASC, "id")));
         } else {
             comments = Collections.emptyList();
         }

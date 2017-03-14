@@ -39,6 +39,13 @@ public class Member implements UserDetails {
     @Email
     private String email;
 
+    public Member(Long id, String username) {
+        this.id = id;
+        this.username = username;
+        this.nickname = username;
+        this.password = "";
+    }
+
     public Member(String username) {
         this.username = username;
         this.nickname = username;
