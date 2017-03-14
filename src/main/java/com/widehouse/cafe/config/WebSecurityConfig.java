@@ -19,6 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/cafes/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -27,6 +28,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
                 .permitAll()
                 .logoutSuccessUrl("/");
+//                .and()
+//            .headers().frameOptions().disable()  // H2 console
+//                .and()
+//            .csrf().disable();
     }
 
     @Bean
