@@ -1,5 +1,6 @@
 package com.widehouse.cafe.api;
 
+import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyListOf;
@@ -15,14 +16,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.article.ArticleTag;
 import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
-import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
 import com.widehouse.cafe.service.CafeService;
 import com.widehouse.cafe.service.MemberService;
@@ -41,7 +40,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by kiel on 2017. 3. 10..
@@ -78,7 +76,7 @@ public class ApiTagControllerTest {
                 .build();
 
         cafe = new Cafe("testurl", "testcafe");
-        board = new Board(1L, cafe, "board", 1);
+        board = new Board(1L, cafe, "board", LIST, 1);
         writer = new Member("writer");
     }
 
@@ -119,7 +117,7 @@ public class ApiTagControllerTest {
     public void getTags_Should_ListTags() throws Exception {
         // given
         Cafe cafe = new Cafe("testurl", "testcafe");
-        Board board = new Board(1L, cafe, "board", 1);
+        Board board = new Board(1L, cafe, "board", LIST, 1);
         Member writer = new Member("writer");
         Article article = new Article(board, writer, "title", "content");
         article.getTags().add(new Tag("tag1"));
@@ -142,10 +140,6 @@ public class ApiTagControllerTest {
         Tag tag2 = new Tag("testtag2");
         Tag tag3 = new Tag("testtag3");
         Tag tag4 = new Tag("testtag4");
-        ArticleTag at1 = new ArticleTag(article, tag1);
-        ArticleTag at2 = new ArticleTag(article, tag2);
-        ArticleTag at3 = new ArticleTag(article, tag3);
-        ArticleTag at4 = new ArticleTag(article, tag4);
         article.getTags().addAll(Arrays.asList(tag1, tag3, tag4));
         tag1.getArticles().add(article);
         tag3.getArticles().add(article);

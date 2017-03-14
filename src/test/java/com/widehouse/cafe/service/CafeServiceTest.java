@@ -1,7 +1,9 @@
 package com.widehouse.cafe.service;
 
+import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
@@ -20,6 +22,7 @@ import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.projection.CafeProjection;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -29,6 +32,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -40,7 +44,7 @@ import java.util.List;
  * Created by kiel on 2017. 2. 11..
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@Import(CafeService.class)
 @Slf4j
 public class CafeServiceTest {
     @MockBean
@@ -96,7 +100,7 @@ public class CafeServiceTest {
                 .hasFieldOrPropertyWithValue("category", category);
         verify(cafeRepository, times(2)).save(any(Cafe.class));
         verify(cafeMemberRepository).save(any(CafeMember.class));
-        verify(boardRepository ,times(4)).save(any(Board.class));
+        verify(boardRepository ,times(8)).save(any(Board.class));
     }
 
     @Test
@@ -129,13 +133,6 @@ public class CafeServiceTest {
         // when
         cafeService.addBoard(cafe, "new test board");
         // then
-//        then(boardRepository.findTagsByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder")))
-//                .hasSize(3)
-//                .extracting("name", "listOrder")
-//                .containsExactly(
-//                        tuple("board1", 1),
-//                        tuple("board3", 3),
-//                        tuple("new test board", 4));
         verify(boardRepository).save(any(Board.class));
     }
 
@@ -155,8 +152,8 @@ public class CafeServiceTest {
     @Test
     public void changeBoard_should_change_board() {
         // given
-        Board board1 = new Board(1L, cafe, "board1", 1);
-        Board board2 = new Board(2L, cafe, "board2", 2);
+        Board board1 = new Board(1L, cafe, "board1", LIST, 1);
+        Board board2 = new Board(2L, cafe, "board2", LIST, 2);
         given(boardRepository.findAllByCafe(eq(cafe), any(Sort.class)))
                 .willReturn(Arrays.asList(board1, board2));
         // when
@@ -172,12 +169,12 @@ public class CafeServiceTest {
     @Test
     public void changeBoard_not_contained_board_do_nothing() {
         // given
-        Board board1 = new Board(1L, cafe, "board1", 1);
-        Board board2 = new Board(2L, cafe, "board2", 2);
+        Board board1 = new Board(1L, cafe, "board1", LIST, 1);
+        Board board2 = new Board(2L, cafe, "board2", LIST, 2);
         given(boardRepository.findAllByCafe(eq(cafe), any(Sort.class)))
                 .willReturn(Arrays.asList(board1, board2));
         // when
-        Board board3 = new Board(3L, cafe, "new board", 3);
+        Board board3 = new Board(3L, cafe, "new board", LIST, 3);
         cafeService.updateBoard(cafe, board3);
         // then
         verify(boardRepository, times(0)).save(board3);
@@ -186,9 +183,9 @@ public class CafeServiceTest {
     @Test
     public void changeBoard_Should_changeBoardsListOrder() {
         // given
-        Board board1 = new Board(1L, cafe, "board1", 1);
-        Board board2 = new Board(2L, cafe, "board2", 2);
-        Board board3 = new Board(3L, cafe, "new board", 3);
+        Board board1 = new Board(1L, cafe, "board1", LIST, 1);
+        Board board2 = new Board(2L, cafe, "board2", LIST, 2);
+        Board board3 = new Board(3L, cafe, "new board", LIST, 3);
         given(boardRepository.findAllByCafe(eq(cafe), any(Sort.class)))
                 .willReturn(Arrays.asList(board1, board2, board3));
         // when
@@ -201,9 +198,9 @@ public class CafeServiceTest {
     @Test
     public void listBoards_Should_ReturnListOfBoard() {
         // given
-        Board board1 = new Board(1L, cafe, "board1", 1);
-        Board board2 = new Board(2L, cafe, "board2", 2);
-        Board board3 = new Board(3L, cafe, "new board", 3);
+        Board board1 = new Board(1L, cafe, "board1", LIST, 1);
+        Board board2 = new Board(2L, cafe, "board2", LIST, 2);
+        Board board3 = new Board(3L, cafe, "new board", LIST, 3);
         given(boardRepository.findAllByCafe(cafe, new Sort(ASC, "listOrder")))
                 .willReturn(Arrays.asList(board1, board2, board3));
         // when
@@ -215,7 +212,7 @@ public class CafeServiceTest {
     }
 
     @Test
-    public void getCafeById_Should_CafeInfo() {
+    public void getCafe_WhenCafeId_Should_CafeInfo() {
         // given
         given(cafeRepository.findOne(1L))
                 .willReturn(new Cafe("testurl", "testname"));
@@ -230,20 +227,27 @@ public class CafeServiceTest {
     }
 
     @Test
-    public void getCafeByUrl_Should_CafeInfo() {
+    public void getCafe_WhenCafeUrl_Should_CafeInfo() {
         // given
         Cafe givenCafe = new Cafe(1L, "testurl", "testname");
         given(cafeRepository.findByUrl("testurl"))
                 .willReturn(givenCafe);
-        given(cafeRepository.findOne(1L))
-                .willReturn(givenCafe);
         // when
-        Cafe cafe = cafeService.getCafe(1L);
+        Cafe cafe = cafeService.getCafe("testurl");
         // then
         assertThat(cafe)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("url", "testurl")
                 .hasFieldOrPropertyWithValue("name", "testname");
+    }
 
+    @Test
+    public void getCafe_WhenNotExistCafe_Should_ThrowCafeNotFoundException() {
+        // given
+        given(cafeRepository.findByUrl("testurl"))
+                .willReturn(null);
+        // when
+        assertThatThrownBy(() -> cafeService.getCafe("testurl"))
+                .isInstanceOf(CafeNotFoundException.class);
     }
 }

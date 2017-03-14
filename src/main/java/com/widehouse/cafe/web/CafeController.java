@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 /**
@@ -27,28 +28,18 @@ public class CafeController {
     @Transactional
     public String cafe(@PathVariable String url, Model model) throws Exception {
         Cafe cafe = cafeService.getCafe(url);
-        List<Board> boards = cafeService.listBoard(cafe);
         model.addAttribute("cafe", cafe);
-        model.addAttribute("boards", boards);
 
-        List<Map<String, String>> specialBoards = new ArrayList<>();
-        Map<String, String> map1 = new HashMap<>();
-        map1.put("name", "카페태그보기");
-        map1.put("type", "tag");
-        specialBoards.add(map1);
-        Map<String, String> map2 = new HashMap<>();
-        map2.put("name", "베스트게시물");
-        map2.put("type", "list");
-        specialBoards.add(map2);
-        Map<String, String> map3 = new HashMap<>();
-        map3.put("name", "카페 캘린더");
-        map3.put("type", "calendar");
-        specialBoards.add(map3);
-        Map<String, String> map4 = new HashMap<>();
-        map4.put("name", "카페북 책꽂이");
-        map4.put("type", "book");
-        specialBoards.add(map4);
+        List<Board> boards = cafeService.listBoard(cafe);
+        List<Board> specialBoards = boards.stream()
+                .filter(b -> b.isSpecialType())
+                .collect(Collectors.toList());
         model.addAttribute("specialBoards", specialBoards);
+
+        List<Board> generalBoards = boards.stream()
+                .filter(b -> !b.isSpecialType())
+                .collect(Collectors.toList());
+        model.addAttribute("boards", generalBoards);
 
         return "cafe";
     }

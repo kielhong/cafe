@@ -1,5 +1,6 @@
 package com.widehouse.cafe.api;
 
+import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -36,7 +37,7 @@ public class ApiBoardControllerTest {
     @Test
     public void getBoard_Should_ReturnBoard() throws Exception {
         Cafe cafe = new Cafe("testurl", "testcafe");
-        Board board = new Board(1L, cafe, "board", 1);
+        Board board = new Board(1L, cafe, "board", LIST, 1);
         given(boardRepository.findOne(1L))
                 .willReturn(board);
         // then

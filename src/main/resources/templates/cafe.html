@@ -220,7 +220,7 @@
                                 <span class="gm-tcol-c p11" style="padding-right:2px;">(<strong th:text="${#numbers.formatInteger(cafe.statistics.cafeArticleCount, 0, 'COMMA')}"></strong>)</span>
                             </li>
                             <li th:each="board : ${specialBoards}">
-                                <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" th:class="'ico-' + ${board.type}" th:alt="${board.type}"/>
+                                <img src="http://cafeimgs.naver.net/cafe4/hidden.gif" width="10" height="11" th:class="'ico-' + ${#strings.toLowerCase(board.type)}" th:alt="${board.type}"/>
                                 <a href="#tags" class="gm-tcol-c" id="menuLink-10" th:text="${board.name}"></a>
                             </li>
                         </ul>

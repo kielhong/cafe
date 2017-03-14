@@ -2,7 +2,6 @@ package com.widehouse.cafe.domain.cafe;
 
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 import javax.persistence.Embedded;
@@ -26,7 +25,6 @@ import javax.validation.constraints.Size;
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "url")})
 
 @Getter
-@ToString
 public class Cafe {
     @Id @GeneratedValue
     private Long id;

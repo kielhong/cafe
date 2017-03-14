@@ -31,10 +31,15 @@ INSERT INTO cafe_member(cafe_id, member_id, role, join_date) VALUES (6, 1, 'MANA
 
 
 /** Board **/
-INSERT INTO board(cafe_id, name, list_order) VALUES (1, 'test board1', 1);
-INSERT INTO board(cafe_id, name, list_order) VALUES (1, 'test board2', 3);
-INSERT INTO board(cafe_id, name, list_order) VALUES (1, 'test board3', 2);
-INSERT INTO board(cafe_id, name, list_order) VALUES (1, 'test board4', 4);
+INSERT INTO board(cafe_id, name, type, list_order) VALUES (1, '카페태그보기', 'TAG', 1);
+INSERT INTO board(cafe_id, name, type, list_order) VALUES (1, '베스트게시물', 'BEST', 2);
+INSERT INTO board(cafe_id, name, type, list_order) VALUES (1, '카페 캘린더', 'CALENDAR', 3);
+INSERT INTO board(cafe_id, name, type, list_order) VALUES (1, '카페북 책꽂이', 'BOOK', 4);
+
+INSERT INTO board(cafe_id, name, type, list_order) VALUES (1, 'test board1', 'LIST', 11);
+INSERT INTO board(cafe_id, name, type, list_order) VALUES (1, 'test board2', 'LIST', 13);
+INSERT INTO board(cafe_id, name, type, list_order) VALUES (1, 'test board3', 'LIST', 12);
+INSERT INTO board(cafe_id, name, type, list_order) VALUES (1, 'test board4', 'LIST', 14);
 
 /** Article **/
 INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
@@ -78,9 +83,9 @@ INSERT INTO tag(id, name, create_date_time) VALUES (4, '어벤져스', now());
 INSERT INTO tag(id, name, create_date_time) VALUES (5, '아이언맨', now());
 
 /*** Article-Tag **/
---INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 1, now());
---INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 2, now());
---INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (1, 3, now());
---INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 3, now());
---INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 4, now());
---INSERT INTO article_tag(article_id, tag_id, create_date_time) VALUES (2, 5, now());
+INSERT INTO article_tag(article_id, tag_id) VALUES (1, 1);
+INSERT INTO article_tag(article_id, tag_id) VALUES (1, 2);
+INSERT INTO article_tag(article_id, tag_id) VALUES (1, 3);
+INSERT INTO article_tag(article_id, tag_id) VALUES (2, 3);
+INSERT INTO article_tag(article_id, tag_id) VALUES (2, 4);
+INSERT INTO article_tag(article_id, tag_id) VALUES (2, 5);

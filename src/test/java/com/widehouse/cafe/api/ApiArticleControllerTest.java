@@ -1,5 +1,6 @@
 package com.widehouse.cafe.api;
 
+import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
@@ -15,8 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.article.ArticleTag;
-import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
@@ -79,7 +78,7 @@ public class ApiArticleControllerTest {
                 .build();
 
         cafe = new Cafe("testurl", "testcafe");
-        board = new Board(1L, cafe, "board", 1);
+        board = new Board(1L, cafe, "board", LIST, 1);
         writer = new Member("writer");
     }
 

@@ -1,10 +1,16 @@
 package com.widehouse.cafe.service;
 
+import static com.widehouse.cafe.domain.cafe.BoardType.BEST;
+import static com.widehouse.cafe.domain.cafe.BoardType.BOOK;
+import static com.widehouse.cafe.domain.cafe.BoardType.CALENDAR;
+import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
+import static com.widehouse.cafe.domain.cafe.BoardType.TAG;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
+import com.widehouse.cafe.domain.cafe.BoardType;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
@@ -54,7 +60,12 @@ public class CafeService {
         cafe.getStatistics().increaseCafeMemberCount();
         cafeRepository.save(cafe);
 
-        for (int i = 0; i < 4; i++) {
+        addBoard(cafe, "카페태그보기", TAG, 1);
+        addBoard(cafe, "베스트게시물", BEST, 2);
+        addBoard(cafe, "카페 캘린더", CALENDAR, 3);
+        addBoard(cafe, "카페북 책꽂이", BOOK, 4);
+
+        for (int i = 4; i < 8; i++) {
             addBoard(cafe, "일반 게시판" + i, (i + 1));
         }
 
@@ -65,9 +76,13 @@ public class CafeService {
         return cafeRepository.findByCategoryId(categoryId, pageable);
     }
 
-    public void addBoard(Cafe cafe, String boardName, int listOrder) {
-        Board board = new Board(cafe, boardName, listOrder);
+    public void addBoard(Cafe cafe, String boardName, BoardType type, int listOrder) {
+        Board board = new Board(cafe, boardName, type, listOrder);
         boardRepository.save(board);
+    }
+
+    public void addBoard(Cafe cafe, String boardName, int listOrder) {
+        addBoard(cafe, boardName, LIST, listOrder);
     }
 
     public void addBoard(Cafe cafe, String boardName) {
