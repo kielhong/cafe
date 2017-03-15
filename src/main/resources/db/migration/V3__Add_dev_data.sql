@@ -43,19 +43,19 @@ INSERT INTO board(cafe_id, name, type, list_order) VALUES (1, 'test board4', 'LI
 
 /** Article **/
 INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, '테스트 첫번째 글', '테스트 글 내용 1', 0, now(), now());
+VALUES (1, 1, '테스트 첫번째 글', '테스트 글 내용 1', 4, now(), now());
 INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
 VALUES (1, 1, '테스트 두번째 글', '테스트 글 내용 2', 0, now(), now());
 INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
 VALUES (1, 1, '테스트 3번째 글', '테스트 글 내용 3', 0, now(), now());
 INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, '테스트 44번째 글', '테스트 글 내용 4', 0, now(), now());
+VALUES (1, 1, '테스트 44번째 글', '테스트 글 내용 4', 11, now(), now());
 INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
 VALUES (1, 1, '테스트 555번째 글', '테스트 글 내용 5', 0, now(), now());
 INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
 VALUES (1, 1, '테스트 6666번째 글', '테스트 글 내용 6', 0, now(), now());
 INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
-VALUES (1, 1, '테스트 7*7번째 글', '테스트 글 내용 7', 0, now(), now());
+VALUES (1, 1, '테스트 7*7번째 글', '테스트 글 내용 7', 12, now(), now());
 INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)
 VALUES (1, 1, '테스트 888번째 글', '테스트 글 내용 8', 0, now(), now());
 INSERT INTO article(board_id, writer_id, title, content, comment_count, create_date_time, update_date_time)

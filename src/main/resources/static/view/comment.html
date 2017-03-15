@@ -3,20 +3,46 @@
         <div class="comm_cont">
             <div class="h">
                 <div class="pers_nick_area">
-                    <table cellspacing="0" summary="퍼스나콘/아이디 영역">
+                    <table cellspacing="0">
                         <tbody>
                         <tr>
-                            <td class="pc2w"><a target="itemshop" href="http://item.naver.com/personacon/PersonaconShop.jsp?Redirect=PersonaconSub.jsp?type=itemdetail%26itemseq=1433716"><img width="19" height="19" alt="" src="http://itemimgs.naver.net/personacon/16/37/1433716.gif"></a></td>
-                            <td class="p-nick"><a href="#" class="m-tcol-c _rosRestrict _nickUI" style="">{{ comment.commenter.nickname }}</a></td>
+                            <td class="pc2w"><a href="#"><img width="19" height="19" alt="" src="http://itemimgs.naver.net/personacon/16/37/1433716.gif"></a></td>
+                            <td class="p-nick"><a href="#" class="m-tcol-c">{{ comment.member.nickname }}</a></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <span class="date m-tcol-c filter-50" ng-bind="comment.createDateTime | date:'yyyy.MM.dd HH:mm'"></span>
-                <span class="dsc_comm"><a href="#" class="m-tcol-c  _btnReply">답글</a></span>
+                <span class="dsc_comm"><a href="#" class="m-tcol-c" ng-click="showReplyForm(comment.id)">답글</a></span>
                 <p class="btn_edit m-tcol-c"><a href="#" class="filter-70 m-tcol-c _btnEdit">수정</a><span class="filter-30 m-tcol-c">|</span><a href="#" class="filter-70 m-tcol-c _btnDelete">삭제</a></p>
             </div>
             <p class="comm m-tcol-c"><span class="comm_body">{{ comment.comment }}<br></span></p>
+    <!--
+            <li class="reply">
+                <div class="comm_cont comm_cont_input">
+                    <table cellspacing="0" class="cminput">
+                        <tbody>
+                        <tr>
+                            <td class="i1">
+                                <div id="refCmt_emoticon" class="reply-write-ico"><img src="http://itemimgs.naver.net/personacon/16/37/1433716.gif" style="cursor:pointer;" width="19" height="19" alt="" class="myemoticon"></div>
+                            </td>
+                            <td class="i2">
+                                <div class="comm_write_wrap border-sub skin-bgcolor">
+                                    <textarea maxlength="6000" class="textarea m-tcol-c" rows="2" cols="50" id="comment_text" style="overflow: hidden; line-height: 14px; height: 41px;" title="댓글입력"></textarea>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="i3">
+                                <div class="u_cbox_btn_upload _submitBtn">
+                                    <a href="#" class="u_cbox_txt_upload _submitCmtRef" alt="답글입력" name="">등록</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+            -->
         </div>
     </li>
 </ul>

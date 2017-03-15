@@ -30,7 +30,8 @@
                             <table cellspacing="0" cellpadding="0" border="0">
                                 <tr valign="top">
                                     <td>
-                                        <span class="b m-tcol-c" ng-bind="article.title"></span></td>
+                                        <span class="b m-tcol-c" ng-bind="article.title"></span>
+                                    </td>
                                     <td nowrap class="m-tcol-c filter-30">&#124;</td>
                                     <td nowrap class="m-tcol-c"><a href="#boards/{{ article.board.id }}" class="m-tcol-c" ng-bind="article.board.name"></a></td>
                                 </tr>
@@ -138,9 +139,7 @@
                                 <tbody><tr style="vertical-align:top">
 
                                     <td class="reply">
-                                        <a href="javascript:;" class="reply_btn b m-tcol-c m-tcol-p _totalCnt" id="comment">댓글 0
-
-                                        </a>
+                                        <span class="reply_btn b m-tcol-c m-tcol-p _totalCnt">댓글 {{ article.commentCount }}</span>
                                     </td>
                                     <td class="m-tcol-c filter-30">&#124;</td>
                                     <td class="_sortList" style="padding:0;">
@@ -182,12 +181,6 @@
                             <table cellspacing="0" cellpadding="0" border="0">
                                 <tr>
                                     <td>
-
-
-
-
-
-
                                         <div id="spiButton" data-style="type_c"
                                              class="naver-splugin"
                                              data-url="http://cafe.naver.com/cafeno1/9"
@@ -244,92 +237,28 @@
                     <div class="btn" onclick="goList();"><span></span><p><a href="#" class="m-tcol-c" >목록</a></p></div>
                 </div>
             </div>
-
-
-
-
-
             <div class="h-20"></div>
             <div class="btn-top"><a href="#" onclick="parent.setTopInIframe();" class="m-tcol-c filter-50 display-inblock"><span>▲</span> top</a></div>
             <div class="h-35"></div>
-
-
-
-
-
-
             <div class="article-board article_prenet">
                 <table cellspacing="0" cellpadding="0" border="0" width="100%">
                     <col width="81"><col width="*"><col width="120"><col width="92">
                     <tr><td colspan="4" class="board-line"></td></tr>
-
-
-
-
-
-
-
-
                     <tr align="center">
                         <td class="prev_btn"><a href="#" onclick="goNext();clickcr(this,'art.next','','',event);" class="m-tcol-c"><img	src="http://cafeimgs.naver.net/cafe4/ico-btn-net2_.gif" alt="">다음글</a></td>
                         <td align="left" class="board-list">
-
-
-
-
-
-					<span class="aaa">
-
-						<a href="#" onclick="goNext();clickcr(this,'art.next','','',event);" class="m-tcol-c">첨부 테스트</a>
-
-
-
-
-
-							<input type="text" class="list-i-upload" readonly="readonly" title="파일">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-					</span>
+        					<span class="aaa">
+						        <a href="#" onclick="goNext();clickcr(this,'art.next','','',event);" class="m-tcol-c">첨부 테스트</a>
+							    <input type="text" class="list-i-upload" readonly="readonly" title="파일">
+					        </span>
                         </td>
                         <td align="left"><div class="pers_nick_area"><table cellspacing="0"><caption><span class="blind">퍼스나콘/아이디 영역</span></caption><tr><td class="pc"><a href="http://item.naver.com/personacon/PersonaconShop.jsp?Redirect=PersonaconSub.jsp?type=itemdetail%26itemseq=1433716" target="itemshop"><img src="http://itemimgs.naver.net/personacon/16/37/s_1433716.gif" width="13" height="13" alt="" class="p-border"></a></td><td class="p-nick"><a href="#" class="m-tcol-c" ><span class="wordbreak" id="refarticle_nextSiblingContent" ng-bind="article.writer.nickname"></span></a></td></tr></table></div></td>
                         <td class="view-count m-tcol-c">2016.08.25.
                         </td>
                     </tr>
                     <tr><td colspan="4" class="board-line"></td></tr>
-
-
                 </table>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <div id="sendPostLayer_9" class="introduction_list" style="top:0;left:-999px;position:absolute">
@@ -338,69 +267,6 @@
                 <a onclick="Element.hide('sendPostLayer_9');return false;" href="#" class="layer_close"><img src="http://cafeimgs.naver.net/editor/btn_layer_close2.gif" width="13" height="12" alt="레이어 닫기"></a>
             </div>
         </div>
-
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-    <div id="divScrapForm" style="display:none"></div>
-    <iframe name="frameArticleScrap" title="스크랩영역" id="frameArticleScrap" src="" width=0 height=0 frameborder=0 scrolling=no style="display:inline"></iframe>
-    <iframe name="frameArticleMain" title="대문등록영역" id="frameArticleMain" src="" width=0 height=0 frameborder=0 scrolling=no style="display:none"></iframe>
-
-
-    <div id="divSavedScrapClubId" style="display:none"></div>
-    <div id="divSavedScrapArticleId" style="display:none"></div>
-    <div id="divSavedScrapMenuId" style="display:none"></div>
-    <div id="divSavedScrapReplyYn" style="display:none"></div>
-
-
-    <div style="display: none; width:342px; position:absolute; left:100px ; top: 0px; overflow:hidden" id="emoticon">
-        <table width="342" cellspacing="1" cellpadding="1" border="0" style="background-color:#C7C7C9;">
-            <col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><col width="9%"><tr align="center" style="background-color:#FFFFFF;">
-            <td><img src="http://itemimgs.naver.net/personacon/16/37/1433716.gif" style="cursor:pointer;" width="19" height="19"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td></tr>
-            <tr align="center" style="background-color:#FFFFFF;">
-                <td><img id="emo11" src="http://cafeimgs.naver.net/img/emot/emo11.gif" style="cursor:pointer;" width="16" height="17"></td>
-                <td><img id="emo13" src="http://cafeimgs.naver.net/img/emot/emo13.gif" style="cursor:pointer;" width="16" height="17"></td>
-                <td><img id="emo15" src="http://cafeimgs.naver.net/img/emot/emo15.gif" style="cursor:pointer;" width="16" height="17"></td>
-                <td><img id="emo17" src="http://cafeimgs.naver.net/img/emot/emo17.gif" style="cursor:pointer;" width="16" height="17"></td>
-                <td><img id="emo19" src="http://cafeimgs.naver.net/img/emot/emo19.gif" style="cursor:pointer;" width="16" height="17"></td>
-                <td><img id="emo21" src="http://cafeimgs.naver.net/img/emot/emo21.gif" style="cursor:pointer;" width="16" height="17"></td>
-                <td><img id="emo23" src="http://cafeimgs.naver.net/img/emot/emo23.gif" style="cursor:pointer;" width="16" height="17"></td>
-                <td><img id="emo25" src="http://cafeimgs.naver.net/img/emot/emo25.gif" style="cursor:pointer;" width="16" height="17"></td>
-                <td><img id="emo30" src="http://cafeimgs.naver.net/img/emot/emo30.gif" style="cursor:pointer;" width="16" height="17"></td>
-                <td><img id="emo32" src="http://cafeimgs.naver.net/img/emot/emo32.gif" style="cursor:pointer;" width="16" height="17"></td>
-                <td><img id="emo27" src="http://cafeimgs.naver.net/img/emot/emo27.gif" style="cursor:pointer;" width="16" height="17"></td></tr>  <tr align="center" style="background-color:#FFFFFF;">
-            <td><img id="emo12" src="http://cafeimgs.naver.net/img/emot/emo12.gif" style="cursor:pointer;" width="16" height="17"></td>
-            <td><img id="emo14" src="http://cafeimgs.naver.net/img/emot/emo14.gif" style="cursor:pointer;" width="16" height="17"></td>
-            <td><img id="emo16" src="http://cafeimgs.naver.net/img/emot/emo16.gif" style="cursor:pointer;" width="16" height="17"></td>
-            <td><img id="emo18" src="http://cafeimgs.naver.net/img/emot/emo18.gif" style="cursor:pointer;" width="16" height="17"></td>
-            <td><img id="emo20" src="http://cafeimgs.naver.net/img/emot/emo20.gif" style="cursor:pointer;" width="16" height="17"></td>
-            <td><img id="emo22" src="http://cafeimgs.naver.net/img/emot/emo22.gif" style="cursor:pointer;" width="16" height="17"></td>
-            <td><img id="emo24" src="http://cafeimgs.naver.net/img/emot/emo24.gif" style="cursor:pointer;" width="16" height="17"></td>
-            <td><img id="emo26" src="http://cafeimgs.naver.net/img/emot/emo26.gif" style="cursor:pointer;" width="16" height="17"></td>
-            <td><img id="emo31" src="http://cafeimgs.naver.net/img/emot/emo31.gif" style="cursor:pointer;" width="16" height="17"></td>
-            <td><img id="emo29" src="http://cafeimgs.naver.net/img/emot/emo29.gif" style="cursor:pointer;" width="16" height="17"></td>
-            <td><img id="emo28" src="http://cafeimgs.naver.net/img/emot/emo28.gif" style="cursor:pointer;" width="16" height="17"></td></tr>
-        </table>
     </div>
 </div>
 

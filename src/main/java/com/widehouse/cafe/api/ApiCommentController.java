@@ -3,10 +3,13 @@ package com.widehouse.cafe.api;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
+import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
 import com.widehouse.cafe.service.CommentService;
 import com.widehouse.cafe.service.MemberDetailsService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +32,8 @@ public class ApiCommentController {
     @Autowired
     private CommentService commentService;
     @Autowired
+    private CommentRepository commentRepository;
+    @Autowired
     private ArticleRepository articleRepository;
     @Autowired
     private MemberRepository memberRepository;
@@ -48,10 +53,27 @@ public class ApiCommentController {
 
     @PostMapping("/articles/{articleId}/comments")
     public Comment write(@PathVariable Long articleId,
-                         @RequestBody Comment input) {
+                         @RequestBody CommentForm input) {
         Member member = memberDetailsService.getCurrentMember();
         Article article = articleRepository.findOne(articleId);
 
         return commentService.writeComment(article, member, input.getComment());
+    }
+
+    @PostMapping("/comments/{commentId}/comments")
+    public Comment writeSubComment(@PathVariable String commentId,
+                                    @RequestBody CommentForm input) {
+        Member member = memberDetailsService.getCurrentMember();
+        Comment comment = commentRepository.findOne(commentId);
+        Comment subComment = commentService.writeSubComment(comment, member, input.getComment());
+
+        log.debug("return : {}", subComment);
+        return subComment;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class CommentForm {
+        private String comment;
     }
 }

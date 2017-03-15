@@ -58,8 +58,17 @@ public class CommentService {
         }
     }
 
+    @Transactional
+    public Comment writeSubComment(Comment comment, Member commenter, String commentText) {
+        comment.getComments().add(new Comment(comment.getArticleId(), commenter, commentText));
+        commentRepository.save(comment);
+
+        return comment.getComments().get(comment.getComments().size() - 1);
+    }
+
+    @Transactional
     public void modifyComment(Comment comment, Member member, String newComment) {
-        if (comment.getMemberId().equals(member.getId())) {
+        if (comment.getMember().getId().equals(member.getId())) {
             comment.modify(member, newComment);
             commentRepository.save(comment);
         } else {
@@ -73,7 +82,7 @@ public class CommentService {
         Article article = articleRepository.findOne(comment.getArticleId());
         Cafe cafe = article.getCafe();
         CafeMember cafeMember = cafeMemberRepository.findByCafeAndMember(cafe, deleter);
-        if (comment.getMemberId().equals(deleter.getId())
+        if (comment.getMember().getId().equals(deleter.getId())
                 || cafeMember.getRole() == CafeMemberRole.MANAGER) {
             commentRepository.delete(comment);
 
@@ -85,6 +94,10 @@ public class CommentService {
         } else {
             throw new NoAuthorityException();
         }
+    }
+
+    public Comment getComment(String id) {
+        return null;
     }
 
     public List<Comment> getComments(Member member, Long articleId, int page, int size) {

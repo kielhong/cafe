@@ -5,6 +5,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -15,11 +16,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
+import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
+import com.widehouse.cafe.domain.member.SimpleMember;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import com.widehouse.cafe.service.CommentService;
 import com.widehouse.cafe.service.MemberDetailsService;
@@ -36,7 +39,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collections;
 
 /**
  * Created by kiel on 2017. 2. 20..
@@ -51,6 +54,8 @@ public class ApiCommentControllerTest {
     ObjectMapper mapper;
     @MockBean
     private CommentService commentService;
+    @MockBean
+    private CommentRepository commentRepository;
     @MockBean
     private ArticleRepository articleRepository;
     @MockBean
@@ -67,7 +72,7 @@ public class ApiCommentControllerTest {
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category"));
         board = new Board(cafe, "board");
-        member = new Member("member");
+        member = new Member(1L, "member");
         article = new Article(1L, board, member, "title", "content", new ArrayList<>(), 0, LocalDateTime.now(), LocalDateTime.now());
     }
 
@@ -103,11 +108,11 @@ public class ApiCommentControllerTest {
                     .content("{\"comment\":\"new comment\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.comment").value("new comment"))
-                .andExpect(jsonPath("$.memberId").value(member.getId()));
+                .andExpect(jsonPath("$.member.id").value(member.getId()));
     }
 
     @Test
-    public void writebyNonCafeMember_Shoul_403Forbidden() throws Exception {
+    public void writebyNonCafeMember_Should_403Forbidden() throws Exception {
         // given
         Comment comment = new Comment(article, member, "new comment");
         given(memberDetailsService.getCurrentMember())
@@ -121,5 +126,27 @@ public class ApiCommentControllerTest {
                     .contentType(APPLICATION_JSON)
                     .content("{\"comment\":\"new comment\"}"))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void write_WhenSubComment_Shoud_Success() throws Exception {
+        // given
+        Comment comment = new Comment("1", article.getId(), new SimpleMember(member), "comment",
+                Collections.emptyList(), LocalDateTime.now(), LocalDateTime.now());
+        String subCommentText = "sub comment";
+        given(memberDetailsService.getCurrentMember())
+                .willReturn(member);
+        given(commentRepository.findOne("1"))
+                .willReturn(comment);
+        given(commentService.writeSubComment(comment, member, subCommentText))
+                .willReturn(new Comment(article.getId(), member, subCommentText));
+        // then
+        mvc.perform(post("/api/comments/1/comments")
+                    .contentType(APPLICATION_JSON)
+                    .content("{\"comment\":\"" + subCommentText + "\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.comment").value(subCommentText))
+                .andExpect(jsonPath("$.member.id").value(member.getId()));
+        verify(commentService).writeSubComment(any(Comment.class), any(Member.class), anyString());
     }
 }

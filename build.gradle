@@ -51,7 +51,6 @@ dependencies {
 
 
     // view : thymeleaf, angularjs, json
-    compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile('org.thymeleaf.extras:thymeleaf-extras-java8time:2.1.0.RELEASE')
     compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.3.RELEASE')
     compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.6')

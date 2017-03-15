@@ -37,7 +37,7 @@ public class CommentTest {
         assertThat(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
-                .hasFieldOrPropertyWithValue("memberId", commenter.getId())
+                .hasFieldOrPropertyWithValue("member.id", commenter.getId())
                 .hasFieldOrPropertyWithValue("comment", "test comment");
         assertThat(comment.getCreateDateTime())
                 .isNotNull();
@@ -54,7 +54,7 @@ public class CommentTest {
         assertThat(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
-                .hasFieldOrPropertyWithValue("memberId", commenter.getId())
+                .hasFieldOrPropertyWithValue("member.id", commenter.getId())
                 .hasFieldOrPropertyWithValue("comment", "another comment");
         assertThat(comment.getUpdateDateTime())
                 .isNotNull()
