@@ -1,6 +1,7 @@
 package com.widehouse.cafe.domain.cafe;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 import org.junit.Test;
 
@@ -9,13 +10,26 @@ import org.junit.Test;
  */
 public class CafeStatisticsTest {
     @Test
-    public void decreaseCommentCount_should_set_commentCount_minimum_zero() {
+    public void decreaseCommentCount_Should_DescreaseCommentCount_ByOne() {
         // given
         CafeStatistics cafeStatistics = new CafeStatistics();
+        Long count = cafeStatistics.getCafeCommentCount();
         // when
         cafeStatistics.decreaseCommentCount();
         // then
-        assertThat(cafeStatistics.getCafeCommentCount())
-                .isEqualTo(-1);
+        then(cafeStatistics.getCafeCommentCount())
+                .isEqualTo(count - 1);
+    }
+
+    @Test
+    public void decreaseCafeMemberCount_Shoud_DescreaseCafeMemberCount_ByOne() {
+        // given
+        CafeStatistics cafeStatistics = new CafeStatistics();
+        Long count = cafeStatistics.getCafeMemberCount();
+        // when
+        cafeStatistics.decreaseCafeMemberCount();
+        // then
+        then(cafeStatistics.getCafeMemberCount())
+                .isEqualTo(count - 1);
     }
 }

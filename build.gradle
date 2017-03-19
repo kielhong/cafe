@@ -21,6 +21,8 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'jacoco'
+apply plugin: 'pmd'
+apply plugin: 'checkstyle'
 
 ext {
     hibernateVersion = '5.1.1.Final'
@@ -67,6 +69,14 @@ dependencies {
     testCompile('org.assertj:assertj-core:3.6.2')
 }
 
+bootRun {
+    addResources = true
+}
+
+flyway {
+    url = 'jdbc:h2:file:./target/cafe'
+}
+
 jacocoTestReport {
     reports {
         xml.enabled false
@@ -88,10 +98,21 @@ tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:unchecked" << "-Werror"
 }
 
-bootRun {
-    addResources = true
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
 }
 
-flyway {
-    url = 'jdbc:h2:file:./target/cafe'
+checkstyle {
+    toolVersion = '7.6'
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+        html.stylesheet resources.text.fromFile('config/xsl/checkstyle-noframes-sorted.xsl')
+    }
 }

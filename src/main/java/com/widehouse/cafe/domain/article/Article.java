@@ -1,6 +1,5 @@
 package com.widehouse.cafe.domain.article;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
 /**
@@ -92,9 +89,4 @@ public class Article {
     public Cafe getCafe() {
         return this.board.getCafe();
     }
-//    public List<Tag> getTags() {
-//        return articleTags.stream()
-//                .map(x -> x.getTag())
-//                .collect(Collectors.toList());
-//    }
 }

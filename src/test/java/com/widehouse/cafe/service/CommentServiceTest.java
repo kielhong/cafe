@@ -113,15 +113,19 @@ public class CommentServiceTest {
     public void writeReplyComment_Should_Success() {
         // given
         Comment comment = new Comment(1L, commenter, "comment");
+        Comment writeResult = new Comment(1L, commenter, "comment");
+        writeResult.getComments().add(new Comment(1L, commenter, "reply comment"));
         given(commentRepository.findOne(anyString()))
                 .willReturn(comment);
+        given(commentRepository.save(comment))
+                .willReturn(writeResult);
         // when
-        Comment result = commentService.writeReplyComment(comment, commenter, "sub comment");
+        Comment result = commentService.writeReplyComment(comment, commenter, "reply comment");
         // then
         then(comment.getComments())
                 .hasSize(1);
         then(result)
-                .hasFieldOrPropertyWithValue("comment", "sub comment");
+                .hasFieldOrPropertyWithValue("comment", "reply comment");
         verify(commentRepository).save(any(Comment.class));
     }
 
