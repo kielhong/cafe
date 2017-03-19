@@ -129,7 +129,7 @@ public class ApiCommentControllerTest {
     }
 
     @Test
-    public void write_WhenSubComment_Shoud_Success() throws Exception {
+    public void writeReplyComment_WhenSubComment_Shoud_Success() throws Exception {
         // given
         Comment comment = new Comment("1", article.getId(), new SimpleMember(member), "comment",
                 Collections.emptyList(), LocalDateTime.now(), LocalDateTime.now());
@@ -138,7 +138,7 @@ public class ApiCommentControllerTest {
                 .willReturn(member);
         given(commentRepository.findOne("1"))
                 .willReturn(comment);
-        given(commentService.writeSubComment(comment, member, subCommentText))
+        given(commentService.writeReplyComment(comment, member, subCommentText))
                 .willReturn(new Comment(article.getId(), member, subCommentText));
         // then
         mvc.perform(post("/api/comments/1/comments")
@@ -147,6 +147,6 @@ public class ApiCommentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.comment").value(subCommentText))
                 .andExpect(jsonPath("$.member.id").value(member.getId()));
-        verify(commentService).writeSubComment(any(Comment.class), any(Member.class), anyString());
+        verify(commentService).writeReplyComment(any(Comment.class), any(Member.class), anyString());
     }
 }

@@ -1,55 +1,76 @@
 <ul class="cmlist" id="cmt_list">
     <li style="border-bottom:1px dotted #c1c0c1" ng-repeat="comment in comments">
-        <div class="comm_cont">
+        <div class="comm_cont" id="comment_{{comment.id}}">
             <div class="h">
                 <div class="pers_nick_area">
                     <table cellspacing="0">
                         <tbody>
                         <tr>
                             <td class="pc2w"><a href="#"><img width="19" height="19" alt="" src="http://itemimgs.naver.net/personacon/16/37/1433716.gif"></a></td>
-                            <td class="p-nick"><a href="#" class="m-tcol-c">{{ comment.member.nickname }}</a></td>
+                            <td class="p-nick"><a href="" class="m-tcol-c">{{ comment.member.nickname }}</a></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <span class="date m-tcol-c filter-50" ng-bind="comment.createDateTime | date:'yyyy.MM.dd HH:mm'"></span>
-                <span class="dsc_comm"><a href="#" class="m-tcol-c" ng-click="showReplyForm(comment.id)">답글</a></span>
-                <p class="btn_edit m-tcol-c"><a href="#" class="filter-70 m-tcol-c _btnEdit">수정</a><span class="filter-30 m-tcol-c">|</span><a href="#" class="filter-70 m-tcol-c _btnDelete">삭제</a></p>
+                <span class="dsc_comm"><a href="" class="m-tcol-c" ng-click="replyForm[comment.id] = !replyForm[comment.id]">답글</a></span>
+                <p class="btn_edit m-tcol-c"><a href="" class="filter-70 m-tcol-c">수정</a><span class="filter-30 m-tcol-c">|</span><a href="" class="filter-70 m-tcol-c">삭제</a></p>
             </div>
             <p class="comm m-tcol-c"><span class="comm_body">{{ comment.comment }}<br></span></p>
-    <!--
-            <li class="reply">
+            <ul>
+                <li ng-repeat="reply in comment.comments" class="reply">
+                    <div class="comm_cont">
+                        <div class="h">
+                            <div class="pers_nick_area">
+                                <table cellspacing="0" summary="퍼스나콘/아이디 영역">
+                                    <tr>
+                                        <td class="pc2w"><img width="19" height="19" alt="" src="http://itemimgs.naver.net/personacon/16/37/1433716.gif"></td>
+                                        <td class="p-nick"><a href="#" class="m-tcol-c">{{ reply.member.nickname }}</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <span class="date m-tcol-c filter-50">{{ reply.createDateTime | date:'yyyy.MM.dd HH:mm' }}</span>
+                            <span class="dsc_comm"><a href="#" class="m-tcol-c reply m-tcol-p">답글 취소</a></span>
+                            <p class="btn_edit m-tcol-c"><a href="" class="filter-70 m-tcol-c _btnEdit">수정</a><span class="filter-30 m-tcol-c">|</span><a href="#" class="filter-70 m-tcol-c _btnDelete">삭제</a></p>
+                        </div>
+                        <p class="comm m-tcol-c" style="">
+                            <span class="comm_body">{{ reply.comment }}</span>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <div class="reply" ng-show="replyForm[comment.id]">
                 <div class="comm_cont comm_cont_input">
-                    <table cellspacing="0" class="cminput">
-                        <tbody>
+                    <form ng-submit="submitReply(comment.id)">
+                    <table class="cminput">
                         <tr>
                             <td class="i1">
-                                <div id="refCmt_emoticon" class="reply-write-ico"><img src="http://itemimgs.naver.net/personacon/16/37/1433716.gif" style="cursor:pointer;" width="19" height="19" alt="" class="myemoticon"></div>
+                                <div class="reply-write-ico">
+                                    <img src="http://itemimgs.naver.net/personacon/16/37/1433716.gif" style="cursor:pointer;" width="19" height="19" alt="" class="myemoticon">
+                                </div>
                             </td>
                             <td class="i2">
                                 <div class="comm_write_wrap border-sub skin-bgcolor">
-                                    <textarea maxlength="6000" class="textarea m-tcol-c" rows="2" cols="50" id="comment_text" style="overflow: hidden; line-height: 14px; height: 41px;" title="댓글입력"></textarea>
-                                    </div>
+                                    <textarea ng-model="replyText[comment.id]" maxlength="6000" class="textarea m-tcol-c" rows="2" cols="50" style="overflow: hidden; line-height: 14px; height: 41px;" title="댓글입력"></textarea>
                                 </div>
                             </td>
                             <td class="i3">
-                                <div class="u_cbox_btn_upload _submitBtn">
-                                    <a href="#" class="u_cbox_txt_upload _submitCmtRef" alt="답글입력" name="">등록</a>
-                                </div>
+                                <button type="submit" class="u_cbox_btn_upload">
+                                    <span class="u_cbox_txt_upload" alt="답글입력">등록</span>
+                                </button>
                             </td>
                         </tr>
-                        </tbody>
                     </table>
+                    </form>
                 </div>
-            </li>
-            -->
+            </div>
         </div>
     </li>
 </ul>
 <div style="clear: both; height: 0pt; font: 0pt/0pt arial;"></div>
 <div style="display:none;" class="cc_paginate cmt" id="cmt_paginate"></div>
 
-<form ng-submit="submitComment()" ng-controller="commentWriteCtrl">
+<form ng-submit="submitComment()">
 <table cellspacing="0" class="cminput">
     <tbody>
     <tr>
@@ -61,7 +82,7 @@
         </td>
         <td class="i2">
             <div class="comm_write_wrap border-sub skin-bgcolor">
-                <textarea ng-model="text" id="comment_text" cols="50" rows="2" class="textarea m-tcol-c" maxlength="6000" style="overflow: hidden; line-height: 14px; height: 39px;" title="댓글입력"></textarea>
+                <textarea ng-model="$parent.text" cols="50" rows="2" class="textarea m-tcol-c" maxlength="6000" style="overflow: hidden; line-height: 14px; height: 39px;" title="댓글입력"></textarea>
                 <div class="u_cbox_upload_image" style="display:none">
                 </div>
             </div>

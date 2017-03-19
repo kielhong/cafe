@@ -94,7 +94,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    public void save_WhenSubComments_Should_Success() throws Exception {
+    public void save_WhenReplyComments_Should_Success() throws Exception {
         // given
         Comment comment = new Comment(1L, new Member(1L, "member"), "comment");
         comment.getComments().addAll(

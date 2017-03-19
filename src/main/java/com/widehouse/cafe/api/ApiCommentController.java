@@ -61,13 +61,12 @@ public class ApiCommentController {
     }
 
     @PostMapping("/comments/{commentId}/comments")
-    public Comment writeSubComment(@PathVariable String commentId,
-                                    @RequestBody CommentForm input) {
+    public Comment writeReplyComment(@PathVariable String commentId,
+                                     @RequestBody CommentForm input) {
         Member member = memberDetailsService.getCurrentMember();
         Comment comment = commentRepository.findOne(commentId);
-        Comment subComment = commentService.writeSubComment(comment, member, input.getComment());
+        Comment subComment = commentService.writeReplyComment(comment, member, input.getComment());
 
-        log.debug("return : {}", subComment);
         return subComment;
     }
 

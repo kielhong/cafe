@@ -139,19 +139,19 @@ cafeApp.controller('articleViewCtrl', function($scope, $http, $routeParams) {
         });
 });
 
-cafeApp.controller('commentWriteCtrl', function($scope, $http, $routeParams) {
-    $scope.submitComment = function() {
-        if ($scope.text == "") {
+cafeApp.controller('commentCtrl', function($scope, $http, $routeParams) {
+    $scope.text = "";
+    $scope.replyText = {};
+
+    $scope.postComment = function(url, commentText, successCallback) {
+        if (commentText == "") {
             alert('내용을 입력하세요.')
         }
-        var url = "http://localhost:8080/api/articles/" + $routeParams.articleId + "/comments";
         var data = {
-            comment: $scope.text
+            comment: commentText
         };
         var config = {
-            headers : {
-                'Content-Type': 'application/json;charset=utf-8;',
-            }
+            headers : {'Content-Type': 'application/json;charset=utf-8;'}
         };
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
@@ -160,8 +160,7 @@ cafeApp.controller('commentWriteCtrl', function($scope, $http, $routeParams) {
         $http.post(url, data, config)
             .then(
                 function(response) {
-                    $scope.comments.push(response.data);
-                    $scope.text = "";
+                    successCallback(response);
                 },
                 function(response) {
                     if (response.status == 403) {
@@ -170,6 +169,25 @@ cafeApp.controller('commentWriteCtrl', function($scope, $http, $routeParams) {
                         alert('댓글 작성에 실패했습니다')
                     }
                 });
+    }
+    $scope.submitComment = function() {
+        var url = "http://localhost:8080/api/articles/" + $routeParams.articleId + "/comments";
+        $scope.postComment(url, $scope.text, function(response) {
+            $scope.comments.push(response.data);
+            $scope.text = "";
+        });
+    };
+
+    $scope.submitReply = function(parentCommentId) {
+        var url = "http://localhost:8080/api/comments/" + parentCommentId + "/comments/";
+        $scope.postComment(url, $scope.replyText[parentCommentId], function(response) {
+            for(var i = 0; i < $scope.comments.length; i++) {
+                if ($scope.comments[i].id == parentCommentId) {
+                    $scope.comments[i].comments.push(response.data);
+                    break;
+                }
+            }
+        });
     };
 });
 
@@ -185,13 +203,8 @@ cafeApp.controller('articlePostCtrl', function($scope, $http, $location) {
         var url = "http://localhost:8080/api/cafes/" + $scope.$parent.cafeUrl + "/articles/";
         var data = $scope.article;
         var config = {
-            headers : {
-                'Content-Type': 'application/json;charset=utf-8;',
-            }
+            headers : {'Content-Type': 'application/json;charset=utf-8;'}
         };
-        $(document).ready(function () {
-                console.log('ready');
-            });
 
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");

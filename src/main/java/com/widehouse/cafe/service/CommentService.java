@@ -59,11 +59,12 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment writeSubComment(Comment comment, Member commenter, String commentText) {
+    public Comment writeReplyComment(Comment comment, Member commenter, String commentText) {
         comment.getComments().add(new Comment(comment.getArticleId(), commenter, commentText));
-        commentRepository.save(comment);
+        Comment writeResult = commentRepository.save(comment);
 
-        return comment.getComments().get(comment.getComments().size() - 1);
+        log.debug("writeResult : {}", writeResult);
+        return writeResult.getComments().get(writeResult.getComments().size() - 1);
     }
 
     @Transactional

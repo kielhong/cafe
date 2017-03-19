@@ -29,9 +29,7 @@ import com.widehouse.cafe.exception.NoAuthorityException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -112,13 +110,13 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void writeSubComment_Should_Success() {
+    public void writeReplyComment_Should_Success() {
         // given
-        Comment comment = new Comment(1L, new Member(1L, "member"), "comment");
+        Comment comment = new Comment(1L, commenter, "comment");
         given(commentRepository.findOne(anyString()))
                 .willReturn(comment);
         // when
-        Comment result = commentService.writeSubComment(comment, commenter, "sub comment");
+        Comment result = commentService.writeReplyComment(comment, commenter, "sub comment");
         // then
         then(comment.getComments())
                 .hasSize(1);
