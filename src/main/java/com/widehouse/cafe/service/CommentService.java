@@ -79,8 +79,8 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(String commentId, Member deleter) {
-        Comment comment = commentRepository.findOne(commentId);
-        Article article = articleRepository.findOne(comment.getArticleId());
+        Comment comment = commentRepository.findById(commentId).get();
+        Article article = articleRepository.findById(comment.getArticleId()).get();
         Cafe cafe = article.getCafe();
         CafeMember cafeMember = cafeMemberRepository.findByCafeAndMember(cafe, deleter);
         if (comment.getMember().getId().equals(deleter.getId())
@@ -102,7 +102,7 @@ public class CommentService {
     }
 
     public List<Comment> getComments(Member member, Long articleId, int page, int size) {
-        Article article = articleRepository.findOne(articleId);
+        Article article = articleRepository.findById(articleId).get();
         Cafe cafe = article.getCafe();
         List<Comment> comments;
         if (cafe != null && isCommentReadable(cafe, member)) {

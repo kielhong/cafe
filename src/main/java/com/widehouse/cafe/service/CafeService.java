@@ -52,7 +52,7 @@ public class CafeService {
     @Transactional
     public Cafe createCafe(Member member, String url, String name, String description,
                            CafeVisibility visibility, Long categoryId) {
-        Category category = categoryRepository.findOne(categoryId);
+        Category category = categoryRepository.findById(categoryId).get();
         Cafe cafe = cafeRepository.save(new Cafe(url, name, description, visibility, category));
 
         CafeMember cafeMember = new CafeMember(cafe, member, CafeMemberRole.MANAGER);
@@ -109,7 +109,7 @@ public class CafeService {
             int index = boards.indexOf(oldBoard);
             boards.set(index, board);
 
-            boardRepository.save(boards);
+            boardRepository.saveAll(boards);
         }
     }
 
@@ -125,7 +125,7 @@ public class CafeService {
      * @return Cafe Info
      */
     public Cafe getCafe(Long cafeId) {
-        return cafeRepository.findOne(cafeId);
+        return cafeRepository.findById(cafeId).get();
     }
 
     /**

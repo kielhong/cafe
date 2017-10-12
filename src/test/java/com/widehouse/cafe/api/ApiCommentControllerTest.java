@@ -98,7 +98,7 @@ public class ApiCommentControllerTest {
         Comment comment = new Comment(article, member, "new comment");
         given(memberDetailsService.getCurrentMember())
                 .willReturn(member);
-        given(articleRepository.findOne(1L))
+        given(articleRepository.findById(1L).get())
                 .willReturn(article);
         given(commentService.writeComment(eq(article), any(Member.class), anyString()))
                 .willReturn(comment);
@@ -117,7 +117,7 @@ public class ApiCommentControllerTest {
         Comment comment = new Comment(article, member, "new comment");
         given(memberDetailsService.getCurrentMember())
                 .willReturn(member);
-        given(articleRepository.findOne(1L))
+        given(articleRepository.findById(1L).get())
                 .willReturn(article);
         given(commentService.writeComment(article, member, comment.getComment()))
                 .willThrow(new NoAuthorityException());
@@ -136,7 +136,7 @@ public class ApiCommentControllerTest {
         String subCommentText = "sub comment";
         given(memberDetailsService.getCurrentMember())
                 .willReturn(member);
-        given(commentRepository.findOne("1"))
+        given(commentRepository.findById("1").get())
                 .willReturn(comment);
         given(commentService.writeReplyComment(comment, member, subCommentText))
                 .willReturn(new Comment(article.getId(), member, subCommentText));

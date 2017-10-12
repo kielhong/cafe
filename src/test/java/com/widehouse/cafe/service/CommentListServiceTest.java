@@ -74,7 +74,7 @@ public class CommentListServiceTest {
         // given
         given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
                 .willReturn(true);
-        given(articleRepository.findOne(article.getId()))
+        given(articleRepository.findById(article.getId()).get())
                 .willReturn(article);
         given(commentRepository.findByArticleId(article.getId(), new PageRequest(0, 5, new Sort(ASC, "id"))))
                 .willReturn(Arrays.asList(comment1, comment2, comment3, comment4, comment5));
@@ -92,7 +92,7 @@ public class CommentListServiceTest {
         cafe.updateInfo(cafe.getName(), "", CafeVisibility.PRIVATE, cafe.getCategory());
         given(cafeMemberRepository.existsByCafeMember(cafe, nonCafeMember))
                 .willReturn(false);
-        given(articleRepository.findOne(article.getId()))
+        given(articleRepository.findById(article.getId()).get())
                 .willReturn(article);
         given(commentRepository.findByArticleId(article.getId(), new PageRequest(0, 5, new Sort(ASC, "id"))))
                 .willReturn(Arrays.asList(comment1, comment2, comment3, comment4, comment5));

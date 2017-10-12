@@ -114,7 +114,7 @@ public class ArticleServiceTest {
     public void getArticle_WithArticleId_Should_Return_Article() {
         // given
         Member reader = new Member("reader");
-        given(articleRepository.findOne(1L))
+        given(articleRepository.findById(1L).get())
                 .willReturn(articleMock);
         given(articleMock.getCafe())
                 .willReturn(cafe);
@@ -133,7 +133,7 @@ public class ArticleServiceTest {
         // given
         Cafe cafe1 = new Cafe("private", "private cafe", "", CafeVisibility.PRIVATE, new Category());
         Member reader = new Member("reader");
-        given(articleRepository.findOne(1L))
+        given(articleRepository.findById(1L).get())
                 .willReturn(articleMock);
         given(articleMock.getCafe())
                 .willReturn(cafe1);

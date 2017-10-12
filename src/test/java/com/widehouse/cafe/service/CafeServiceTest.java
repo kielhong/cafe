@@ -84,7 +84,7 @@ public class CafeServiceTest {
     @Test
     public void createCafe_Should_CreateCafe_and_AssignCafeManager() {
         // given
-        given(categoryRepository.findOne(category.getId()))
+        given(categoryRepository.findById(category.getId()).get())
                 .willReturn(category);
         given(cafeRepository.save(new Cafe("testurl", "testname", "desc", PUBLIC, any(Category.class))))
                 .willReturn(cafe);
@@ -163,7 +163,7 @@ public class CafeServiceTest {
         assertThat(boardRepository.findAllByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder")))
                 .filteredOn("name", "update board1")
                 .containsOnly(board1);
-        verify(boardRepository).save(anyListOf(Board.class));
+        verify(boardRepository).saveAll(anyListOf(Board.class));
     }
 
     @Test
@@ -192,7 +192,7 @@ public class CafeServiceTest {
         board1.update("update board1", 4);
         cafeService.updateBoard(cafe, board1);
         // then
-        verify(boardRepository).save(Arrays.asList(board1, board2, board3));
+        verify(boardRepository).saveAll(Arrays.asList(board1, board2, board3));
     }
 
     @Test
@@ -214,7 +214,7 @@ public class CafeServiceTest {
     @Test
     public void getCafe_WhenCafeId_Should_CafeInfo() {
         // given
-        given(cafeRepository.findOne(1L))
+        given(cafeRepository.findById(1L).get())
                 .willReturn(new Cafe("testurl", "testname"));
         // when
         Cafe cafe = cafeService.getCafe(1L);

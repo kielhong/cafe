@@ -115,7 +115,7 @@ public class CommentServiceTest {
         Comment comment = new Comment(1L, commenter, "comment");
         Comment writeResult = new Comment(1L, commenter, "comment");
         writeResult.getComments().add(new Comment(1L, commenter, "reply comment"));
-        given(commentRepository.findOne(anyString()))
+        given(commentRepository.findById(anyString()).get())
                 .willReturn(comment);
         given(commentRepository.save(comment))
                 .willReturn(writeResult);
@@ -168,9 +168,9 @@ public class CommentServiceTest {
         int articleCommentCount = article.getCommentCount();
         given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
                 .willReturn(true);
-        given(articleRepository.findOne(comment.getArticleId()))
+        given(articleRepository.findById(comment.getArticleId()).get())
                 .willReturn(article);
-        given(commentRepository.findOne(comment.getId()))
+        given(commentRepository.findById(comment.getId()).get())
                 .willReturn(comment);
         // when
         commentService.deleteComment(comment.getId(), commenter);
@@ -192,9 +192,9 @@ public class CommentServiceTest {
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
         given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
                 .willReturn(true);
-        given(articleRepository.findOne(comment.getArticleId()))
+        given(articleRepository.findById(comment.getArticleId()).get())
                 .willReturn(article);
-        given(commentRepository.findOne(comment.getId()))
+        given(commentRepository.findById(comment.getId()).get())
                 .willReturn(comment);
         given(cafeMemberRepository.findByCafeAndMember(cafe, manager))
                 .willReturn(new CafeMember(cafe, manager, MANAGER));
@@ -217,9 +217,9 @@ public class CommentServiceTest {
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
         given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
                 .willReturn(true);
-        given(commentRepository.findOne(comment.getId()))
+        given(commentRepository.findById(comment.getId()).get())
                 .willReturn(comment);
-        given(articleRepository.findOne(comment.getArticleId()))
+        given(articleRepository.findById(comment.getArticleId()).get())
                 .willReturn(article);
         given(cafeMemberRepository.findByCafeAndMember(cafe, member1))
                 .willReturn(new CafeMember(cafe, member1, MEMBER));

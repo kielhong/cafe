@@ -53,7 +53,7 @@ public class ApiArticleController {
                                            @RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "10") int size) {
         // TODO : artcleService 가 boardId을 받도록 하는게 좋을지?
-        Board board = boardRepository.findOne(boardId);
+        Board board = boardRepository.findById(boardId).get();
         List<Article> articles = articleService.getArticlesByBoard(board, page, size);
 
         return articles;
@@ -72,7 +72,7 @@ public class ApiArticleController {
     public Article writeArticle(@PathVariable String cafeUrl,
                                 @RequestBody ArticleForm articleForm) {
         Member member = memberDetailsService.getCurrentMember();
-        Board board = boardRepository.findOne(articleForm.getBoard().getId());
+        Board board = boardRepository.findById(articleForm.getBoard().getId()).get();
 
         return articleService.writeArticle(board, member, articleForm.getTitle(), articleForm.getContent());
     }

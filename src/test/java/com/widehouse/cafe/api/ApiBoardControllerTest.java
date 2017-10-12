@@ -38,7 +38,7 @@ public class ApiBoardControllerTest {
     public void getBoard_Should_ReturnBoard() throws Exception {
         Cafe cafe = new Cafe("testurl", "testcafe");
         Board board = new Board(1L, cafe, "board", LIST, 1);
-        given(boardRepository.findOne(1L))
+        given(boardRepository.findById(1L).get())
                 .willReturn(board);
         // then
         mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/boards/" + board.getId()))

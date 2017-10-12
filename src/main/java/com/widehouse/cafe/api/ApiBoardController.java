@@ -28,7 +28,7 @@ public class ApiBoardController {
     @GetMapping("/cafes/{cafeUrl}/boards/{boardId}")
     public Board getBoard(@PathVariable String cafeUrl,
                           @PathVariable Long boardId) {
-        return boardRepository.findOne(boardId);
+        return boardRepository.findById(boardId).get();
     }
 
     @GetMapping("/cafes/{cafeUrl}/boards")

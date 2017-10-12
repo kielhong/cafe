@@ -52,7 +52,7 @@ public class ArticleService {
     }
 
     public Article getArticle(Long id, Member reader) {
-        Article article = articleRepository.findOne(id);
+        Article article = articleRepository.findById(id).get();
 
         if (isArticleReadable(article.getCafe(), reader)) {
             return article;

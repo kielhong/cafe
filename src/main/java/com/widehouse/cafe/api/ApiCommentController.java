@@ -55,7 +55,7 @@ public class ApiCommentController {
     public Comment write(@PathVariable Long articleId,
                          @RequestBody CommentForm input) {
         Member member = memberDetailsService.getCurrentMember();
-        Article article = articleRepository.findOne(articleId);
+        Article article = articleRepository.findById(articleId).get();
 
         return commentService.writeComment(article, member, input.getComment());
     }
@@ -64,7 +64,7 @@ public class ApiCommentController {
     public Comment writeReplyComment(@PathVariable String commentId,
                                      @RequestBody CommentForm input) {
         Member member = memberDetailsService.getCurrentMember();
-        Comment comment = commentRepository.findOne(commentId);
+        Comment comment = commentRepository.findById(commentId).get();
         Comment subComment = commentService.writeReplyComment(comment, member, input.getComment());
 
         return subComment;

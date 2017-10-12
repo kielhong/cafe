@@ -100,7 +100,7 @@ public class ApiArticleControllerTest {
         // given
         given(cafeRepository.findByUrl(cafe.getUrl()))
                 .willReturn(cafe);
-        given(boardRepository.findOne(board.getId()))
+        given(boardRepository.findById(board.getId()).get())
                 .willReturn(board);
         given(articleService.getArticlesByBoard(board, 0, 3))
                 .willReturn(Arrays.asList(
