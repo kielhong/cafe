@@ -40,6 +40,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 19..
@@ -100,8 +101,8 @@ public class ApiArticleControllerTest {
         // given
         given(cafeRepository.findByUrl(cafe.getUrl()))
                 .willReturn(cafe);
-        given(boardRepository.findById(board.getId()).get())
-                .willReturn(board);
+        given(boardRepository.findById(board.getId()))
+                .willReturn(Optional.of(board));
         given(articleService.getArticlesByBoard(board, 0, 3))
                 .willReturn(Arrays.asList(
                         new Article(board, writer, "test article1", "test1"),
@@ -153,6 +154,8 @@ public class ApiArticleControllerTest {
         // given
         given(articleService.writeArticle(any(Board.class), any(Member.class), anyString(), anyString()))
                 .willReturn(new Article(board, writer, "title", "content"));
+        given(boardRepository.findById(anyLong()))
+                .willReturn(Optional.of(board));
         // then
         mvc.perform(post("/api/cafes/" + cafe.getUrl() + "/articles/")
                     .with(user(writer))

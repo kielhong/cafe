@@ -39,6 +39,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 11..
@@ -84,8 +85,8 @@ public class CafeServiceTest {
     @Test
     public void createCafe_Should_CreateCafe_and_AssignCafeManager() {
         // given
-        given(categoryRepository.findById(category.getId()).get())
-                .willReturn(category);
+        given(categoryRepository.findById(category.getId()))
+                .willReturn(Optional.of(category));
         given(cafeRepository.save(new Cafe("testurl", "testname", "desc", PUBLIC, any(Category.class))))
                 .willReturn(cafe);
         // When

@@ -36,6 +36,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 12..
@@ -115,8 +116,8 @@ public class CommentServiceTest {
         Comment comment = new Comment(1L, commenter, "comment");
         Comment writeResult = new Comment(1L, commenter, "comment");
         writeResult.getComments().add(new Comment(1L, commenter, "reply comment"));
-        given(commentRepository.findById(anyString()).get())
-                .willReturn(comment);
+        given(commentRepository.findById(anyString()))
+                .willReturn(Optional.of(comment));
         given(commentRepository.save(comment))
                 .willReturn(writeResult);
         // when
@@ -168,10 +169,10 @@ public class CommentServiceTest {
         int articleCommentCount = article.getCommentCount();
         given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
                 .willReturn(true);
-        given(articleRepository.findById(comment.getArticleId()).get())
-                .willReturn(article);
-        given(commentRepository.findById(comment.getId()).get())
-                .willReturn(comment);
+        given(articleRepository.findById(comment.getArticleId()))
+                .willReturn(Optional.of(article));
+        given(commentRepository.findById(comment.getId()))
+                .willReturn(Optional.of(comment));
         // when
         commentService.deleteComment(comment.getId(), commenter);
         // then
@@ -192,10 +193,10 @@ public class CommentServiceTest {
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
         given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
                 .willReturn(true);
-        given(articleRepository.findById(comment.getArticleId()).get())
-                .willReturn(article);
-        given(commentRepository.findById(comment.getId()).get())
-                .willReturn(comment);
+        given(articleRepository.findById(comment.getArticleId()))
+                .willReturn(Optional.of(article));
+        given(commentRepository.findById(comment.getId()))
+                .willReturn(Optional.of(comment));
         given(cafeMemberRepository.findByCafeAndMember(cafe, manager))
                 .willReturn(new CafeMember(cafe, manager, MANAGER));
         // when

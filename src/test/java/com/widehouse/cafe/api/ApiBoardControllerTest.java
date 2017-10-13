@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 25..
@@ -38,8 +39,8 @@ public class ApiBoardControllerTest {
     public void getBoard_Should_ReturnBoard() throws Exception {
         Cafe cafe = new Cafe("testurl", "testcafe");
         Board board = new Board(1L, cafe, "board", LIST, 1);
-        given(boardRepository.findById(1L).get())
-                .willReturn(board);
+        given(boardRepository.findById(1L))
+                .willReturn(Optional.of(board));
         // then
         mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/boards/" + board.getId()))
                 .andExpect(status().isOk())
