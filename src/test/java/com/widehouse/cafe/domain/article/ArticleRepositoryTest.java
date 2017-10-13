@@ -65,7 +65,7 @@ public class ArticleRepositoryTest {
     @Test
     public void findByCafe_Should_Return_ListArticle() {
         // when
-        List<ArticleProjection> articles = articleRepository.findByBoardCafe(cafe, new PageRequest(0, 2, new Sort(DESC, "id")));
+        List<ArticleProjection> articles = articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 2, new Sort(DESC, "id")));
         // then
         then(articles)
                 .hasSize(2)
@@ -76,7 +76,7 @@ public class ArticleRepositoryTest {
     @Test
     public void findByBoard_Should_Return_ListArticle() {
         // when
-        List<Article> articles = articleRepository.findByBoard(board1, new PageRequest(0, 3, new Sort(DESC, "id")));
+        List<Article> articles = articleRepository.findByBoard(board1, PageRequest.of(0, 3, new Sort(DESC, "id")));
         // then
         then(articles)
                 .containsExactly(article2, article1);
@@ -98,7 +98,5 @@ public class ArticleRepositoryTest {
         Tag result = entityManager.find(Tag.class, tag.getId());
         then(result.getArticles())
                 .contains(article);
-
-
     }
 }

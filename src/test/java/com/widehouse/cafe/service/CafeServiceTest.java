@@ -6,9 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.data.domain.Sort.Direction.ASC;
@@ -16,6 +16,7 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
@@ -87,7 +88,7 @@ public class CafeServiceTest {
         // given
         given(categoryRepository.findById(category.getId()))
                 .willReturn(Optional.of(category));
-        given(cafeRepository.save(new Cafe("testurl", "testname", "desc", PUBLIC, any(Category.class))))
+        given(cafeRepository.save(any(Cafe.class)))
                 .willReturn(cafe);
         // When
         Cafe cafe = cafeService.createCafe(member, "testurl", "testname", "desc", PUBLIC, category.getId());
@@ -108,10 +109,10 @@ public class CafeServiceTest {
     public void getCafesByCategory_should_return_cafes_by_category() {
         // given
         given(cafeRepository.findByCategoryId(category.getId(),
-                new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
+                PageRequest.of(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock4, cafeMock3, cafeMock2, cafeMock1));
         // when
-        List<CafeProjection> cafes = cafeService.getCafeByCategory(category.getId(), new PageRequest(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
+        List<CafeProjection> cafes = cafeService.getCafeByCategory(category.getId(), PageRequest.of(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
         // then
         assertThat(cafes)
                 .contains(cafeMock4, cafeMock3, cafeMock2, cafeMock1);
@@ -164,7 +165,7 @@ public class CafeServiceTest {
         assertThat(boardRepository.findAllByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder")))
                 .filteredOn("name", "update board1")
                 .containsOnly(board1);
-        verify(boardRepository).saveAll(anyListOf(Board.class));
+        verify(boardRepository).saveAll(anyList());
     }
 
     @Test
@@ -215,8 +216,8 @@ public class CafeServiceTest {
     @Test
     public void getCafe_WhenCafeId_Should_CafeInfo() {
         // given
-        given(cafeRepository.findById(1L).get())
-                .willReturn(new Cafe("testurl", "testname"));
+        given(cafeRepository.findById(1L))
+                .willReturn(Optional.of(new Cafe("testurl", "testname")));
         // when
         Cafe cafe = cafeService.getCafe(1L);
         // then

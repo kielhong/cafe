@@ -22,3 +22,4 @@ spring:
 logging:
   level:
     com.widehouse: DEBUG
+    org.springframework: ERROR

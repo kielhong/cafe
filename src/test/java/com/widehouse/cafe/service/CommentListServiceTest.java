@@ -25,6 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 20..
@@ -74,9 +75,9 @@ public class CommentListServiceTest {
         // given
         given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
                 .willReturn(true);
-        given(articleRepository.findById(article.getId()).get())
-                .willReturn(article);
-        given(commentRepository.findByArticleId(article.getId(), new PageRequest(0, 5, new Sort(ASC, "id"))))
+        given(articleRepository.findById(article.getId()))
+                .willReturn(Optional.of(article));
+        given(commentRepository.findByArticleId(article.getId(), PageRequest.of(0, 5, new Sort(ASC, "id"))))
                 .willReturn(Arrays.asList(comment1, comment2, comment3, comment4, comment5));
         // when
         List<Comment> comments = commentService.getComments(commenter, article.getId(), 0, 5);
@@ -92,9 +93,9 @@ public class CommentListServiceTest {
         cafe.updateInfo(cafe.getName(), "", CafeVisibility.PRIVATE, cafe.getCategory());
         given(cafeMemberRepository.existsByCafeMember(cafe, nonCafeMember))
                 .willReturn(false);
-        given(articleRepository.findById(article.getId()).get())
-                .willReturn(article);
-        given(commentRepository.findByArticleId(article.getId(), new PageRequest(0, 5, new Sort(ASC, "id"))))
+        given(articleRepository.findById(article.getId()))
+                .willReturn(Optional.of(article));
+        given(commentRepository.findByArticleId(article.getId(), PageRequest.of(0, 5, new Sort(ASC, "id"))))
                 .willReturn(Arrays.asList(comment1, comment2, comment3, comment4, comment5));
         // when
         List<Comment> comments = commentService.getComments(nonCafeMember, article.getId(), 0, 5);

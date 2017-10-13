@@ -54,7 +54,6 @@ public class CafeService {
                            CafeVisibility visibility, Long categoryId) {
         Category category = categoryRepository.findById(categoryId).get();
         Cafe cafe = cafeRepository.save(new Cafe(url, name, description, visibility, category));
-
         CafeMember cafeMember = new CafeMember(cafe, member, CafeMemberRole.MANAGER);
         cafeMemberRepository.save(cafeMember);
         cafe.getStatistics().increaseCafeMemberCount();

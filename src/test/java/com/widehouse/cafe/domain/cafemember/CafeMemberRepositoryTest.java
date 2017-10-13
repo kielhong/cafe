@@ -59,7 +59,7 @@ public class CafeMemberRepositoryTest {
         entityManager.persist(new CafeMember(cafe4, member));
         entityManager.persist(new CafeMember(cafe5, member));
         // when
-        List<Cafe> cafes = cafeMemberRepository.findCafeByMember(member, new PageRequest(0, 5));
+        List<Cafe> cafes = cafeMemberRepository.findCafeByMember(member, PageRequest.of(0, 5));
         // then
         assertThat(cafes)
                 .contains(cafe1, cafe2, cafe3, cafe4, cafe5);

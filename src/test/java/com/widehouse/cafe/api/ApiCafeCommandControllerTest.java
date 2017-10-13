@@ -2,7 +2,6 @@ package com.widehouse.cafe.api;
 
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.eq;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;

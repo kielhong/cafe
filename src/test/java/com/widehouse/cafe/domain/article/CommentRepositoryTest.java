@@ -128,7 +128,7 @@ public class CommentRepositoryTest {
         Comment comment4 = new Comment(article, commenter, "comment4");
         template.insert(comment4);
         // when
-        List<Comment> comments = commentRepository.findByArticleId(article.getId(), new PageRequest(0, 5, new Sort(ASC, "id")));
+        List<Comment> comments = commentRepository.findByArticleId(article.getId(), PageRequest.of(0, 5, new Sort(ASC, "id")));
         // then
         then(comments)
                 .extracting("comment")

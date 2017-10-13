@@ -3,7 +3,7 @@ package com.widehouse.cafe.service;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.data.domain.Sort.Direction.DESC;
@@ -34,6 +34,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 19..
@@ -89,7 +90,7 @@ public class ArticleServiceTest {
     @Test
     public void getArticlesByCafe_Should_Return_ListArticleInCafeWithIdOrderDesc() {
         // given
-        given(articleRepository.findByBoardCafe(cafe, new PageRequest(0, 3, new Sort(DESC, "id"))))
+        given(articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 3, new Sort(DESC, "id"))))
                 .willReturn(Arrays.asList(articleMock3, articleMock2, articleMock1));
         // when
         List<ArticleProjection> articles = articleService.getArticlesByCafe(cafe, 0, 3);
@@ -101,7 +102,7 @@ public class ArticleServiceTest {
     @Test
     public void getArticlesByBoard_Should_Return_ListArticleInBoardWithIdOrderDesc() {
         // given
-        given(articleRepository.findByBoard(board1, new PageRequest(0, 3, new Sort(DESC, "id"))))
+        given(articleRepository.findByBoard(board1, PageRequest.of(0, 3, new Sort(DESC, "id"))))
                 .willReturn(Arrays.asList(article2, article1));
         // when
         List<Article> articles = articleService.getArticlesByBoard(board1, 0, 3);
@@ -114,8 +115,8 @@ public class ArticleServiceTest {
     public void getArticle_WithArticleId_Should_Return_Article() {
         // given
         Member reader = new Member("reader");
-        given(articleRepository.findById(1L).get())
-                .willReturn(articleMock);
+        given(articleRepository.findById(1L))
+                .willReturn(Optional.of(articleMock));
         given(articleMock.getCafe())
                 .willReturn(cafe);
         given(articleMock.getTitle())
@@ -133,8 +134,8 @@ public class ArticleServiceTest {
         // given
         Cafe cafe1 = new Cafe("private", "private cafe", "", CafeVisibility.PRIVATE, new Category());
         Member reader = new Member("reader");
-        given(articleRepository.findById(1L).get())
-                .willReturn(articleMock);
+        given(articleRepository.findById(1L))
+                .willReturn(Optional.of(articleMock));
         given(articleMock.getCafe())
                 .willReturn(cafe1);
         given(cafeMemberRepository.existsByCafeMember(cafe, reader))

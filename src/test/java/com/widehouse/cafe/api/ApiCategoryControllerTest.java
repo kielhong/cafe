@@ -66,7 +66,7 @@ public class ApiCategoryControllerTest {
     public void getCafesByCategory() throws Exception {
         // given
         given(this.cafeService.getCafeByCategory(1L,
-                new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
+                PageRequest.of(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock1, cafeMock2));
         // then
         this.mvc.perform(get("/api/categories/1/cafes"))
@@ -79,7 +79,7 @@ public class ApiCategoryControllerTest {
     public void getCafesByCategoryWithPaging() throws Exception {
         // given
         given(this.cafeService.getCafeByCategory(1L,
-                new PageRequest(0, 4, new Sort(DESC, "statistics.cafeMemberCount"))))
+                PageRequest.of(0, 4, new Sort(DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock1, cafeMock2, cafeMock3, cafeMock4));
         // then
         this.mvc.perform(get("/api/categories/1/cafes?page=0&size=4"))

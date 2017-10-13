@@ -47,10 +47,10 @@ public class MemberServiceTest {
         CafeMember cafeMember3 = new CafeMember(cafe3, member);
         CafeMember cafeMember4 = new CafeMember(cafe4, member);
         CafeMember cafeMember5 = new CafeMember(cafe5, member);
-        given(cafeMemberRepository.findCafeByMember(member, new PageRequest(0, 5)))
+        given(cafeMemberRepository.findCafeByMember(member, PageRequest.of(0, 5)))
                 .willReturn(Arrays.asList(cafe1, cafe2, cafe3, cafe4, cafe5));
         // when
-        List<Cafe> cafes = memberService.getCafesByMember(member, new PageRequest(0, 5));
+        List<Cafe> cafes = memberService.getCafesByMember(member, PageRequest.of(0, 5));
         // then
         assertThat(cafes)
                 .contains(cafe1, cafe2, cafe3, cafe4, cafe5);

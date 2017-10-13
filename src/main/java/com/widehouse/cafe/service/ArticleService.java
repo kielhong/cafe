@@ -39,14 +39,14 @@ public class ArticleService {
 
     public List<ArticleProjection> getArticlesByCafe(Cafe cafe, int page, int size) {
         List<ArticleProjection> articles = articleRepository.findByBoardCafe(cafe,
-                new PageRequest(page, size, new Sort(DESC, "id")));
+                PageRequest.of(page, size, new Sort(DESC, "id")));
 
         return articles;
     }
 
     public List<Article> getArticlesByBoard(Board board, int page, int size) {
         List<Article> articles = articleRepository.findByBoard(board,
-                new PageRequest(page, size, new Sort(DESC, "id")));
+                PageRequest.of(page, size, new Sort(DESC, "id")));
 
         return articles;
     }

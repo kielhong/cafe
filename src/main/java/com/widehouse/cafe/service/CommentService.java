@@ -106,7 +106,7 @@ public class CommentService {
         Cafe cafe = article.getCafe();
         List<Comment> comments;
         if (cafe != null && isCommentReadable(cafe, member)) {
-            comments = commentRepository.findByArticleId(articleId, new PageRequest(page, size, new Sort(ASC, "id")));
+            comments = commentRepository.findByArticleId(articleId, PageRequest.of(page, size, new Sort(ASC, "id")));
         } else {
             comments = Collections.emptyList();
         }

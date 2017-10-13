@@ -44,7 +44,7 @@ public class ApiMemberControllerTest {
         Member member = new Member("tester");
         given(this.memberDetailsService.getCurrentMember())
                 .willReturn(member);
-        given(this.memberService.getCafesByMember(member, new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
+        given(this.memberService.getCafesByMember(member, PageRequest.of(0, 10, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),
                         new Cafe("url3", "name3"), new Cafe("url4", "name4")));
         // then
@@ -64,7 +64,7 @@ public class ApiMemberControllerTest {
         given(this.memberDetailsService.getCurrentMember())
                 .willReturn(member);
         given(this.memberService.getCafesByMember(member,
-                new PageRequest(0, 3, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
+                PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),
                         new Cafe("url3", "name3")));
         // then

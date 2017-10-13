@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -218,10 +218,10 @@ public class CommentServiceTest {
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
         given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
                 .willReturn(true);
-        given(commentRepository.findById(comment.getId()).get())
-                .willReturn(comment);
-        given(articleRepository.findById(comment.getArticleId()).get())
-                .willReturn(article);
+        given(commentRepository.findById(comment.getId()))
+                .willReturn(Optional.of(comment));
+        given(articleRepository.findById(comment.getArticleId()))
+                .willReturn(Optional.of(article));
         given(cafeMemberRepository.findByCafeAndMember(cafe, member1))
                 .willReturn(new CafeMember(cafe, member1, MEMBER));
         // then

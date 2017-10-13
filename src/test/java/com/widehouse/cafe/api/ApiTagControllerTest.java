@@ -1,10 +1,11 @@
 package com.widehouse.cafe.api;
 
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
+
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -24,6 +25,7 @@ import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
 import com.widehouse.cafe.service.ArticleService;
 import com.widehouse.cafe.service.CafeService;
+import com.widehouse.cafe.service.MemberDetailsService;
 import com.widehouse.cafe.service.MemberService;
 import com.widehouse.cafe.service.TagService;
 import org.junit.Before;
@@ -112,7 +114,6 @@ public class ApiTagControllerTest {
                 .andExpect(jsonPath("$.length()").value(2));
     }
 
-
     @Test
     public void getTags_Should_ListTags() throws Exception {
         // given
@@ -122,7 +123,7 @@ public class ApiTagControllerTest {
         Article article = new Article(board, writer, "title", "content");
         article.getTags().add(new Tag("tag1"));
         article.getTags().add(new Tag("tag2"));
-        given(articleService.getArticle(eq(1L), any(Member.class)))
+        given(articleService.getArticle(eq(1L), any()))
                 .willReturn(article);
         // then
         mvc.perform(get("/api/articles/1/tags"))
@@ -163,6 +164,6 @@ public class ApiTagControllerTest {
                 .andExpect(jsonPath("$.[?(@.name == 'testtag2')]").doesNotExist())  // not include
                 .andExpect(jsonPath("$.[?(@.name == 'testtag3')]").exists())        // include
                 .andExpect(jsonPath("$.[?(@.name == 'testtag4')]").exists());       // include
-        verify(tagService).updateTagsOfArticle(eq(article), anyListOf(Tag.class));
+        verify(tagService).updateTagsOfArticle(eq(article), anyList());
     }
 }

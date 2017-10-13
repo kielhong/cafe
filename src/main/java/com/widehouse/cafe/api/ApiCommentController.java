@@ -42,8 +42,8 @@ public class ApiCommentController {
 
     @GetMapping("/articles/{articleId}/comments")
     public List<Comment> getComments(@PathVariable Long articleId,
-                                     @RequestParam(defaultValue = "0") int page,
-                                     @RequestParam(defaultValue = "10") int size) {
+                                     @RequestParam(defaultValue = "0") Integer page,
+                                     @RequestParam(defaultValue = "10") Integer size) {
         Member member = memberDetailsService.getCurrentMember();
 
         List<Comment> comments = commentService.getComments(member, articleId, page, size);

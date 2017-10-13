@@ -1,10 +1,12 @@
 package com.widehouse.cafe.api;
 
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -40,6 +42,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 20..
@@ -84,7 +87,9 @@ public class ApiCommentControllerTest {
         Comment comment3 = new Comment(article, member, "comment3");
         Comment comment4 = new Comment(article, member, "comment4");
         Comment comment5 = new Comment(article, member, "comment5");
-        given(commentService.getComments(any(Member.class), eq(1L), eq(0), eq(5)))
+        given(memberDetailsService.getCurrentMember())
+                .willReturn(member);
+        given(commentService.getComments(any(Member.class), anyLong(), anyInt(), anyInt()))
                 .willReturn(Arrays.asList(comment1, comment2, comment3, comment4, comment5));
         // then
         mvc.perform(get("/api/articles/1/comments?page=0&size=5"))
@@ -98,8 +103,8 @@ public class ApiCommentControllerTest {
         Comment comment = new Comment(article, member, "new comment");
         given(memberDetailsService.getCurrentMember())
                 .willReturn(member);
-        given(articleRepository.findById(1L).get())
-                .willReturn(article);
+        given(articleRepository.findById(1L))
+                .willReturn(Optional.of(article));
         given(commentService.writeComment(eq(article), any(Member.class), anyString()))
                 .willReturn(comment);
         // then
@@ -117,8 +122,8 @@ public class ApiCommentControllerTest {
         Comment comment = new Comment(article, member, "new comment");
         given(memberDetailsService.getCurrentMember())
                 .willReturn(member);
-        given(articleRepository.findById(1L).get())
-                .willReturn(article);
+        given(articleRepository.findById(1L))
+                .willReturn(Optional.of(article));
         given(commentService.writeComment(article, member, comment.getComment()))
                 .willThrow(new NoAuthorityException());
         // then
@@ -136,8 +141,8 @@ public class ApiCommentControllerTest {
         String subCommentText = "sub comment";
         given(memberDetailsService.getCurrentMember())
                 .willReturn(member);
-        given(commentRepository.findById("1").get())
-                .willReturn(comment);
+        given(commentRepository.findById("1"))
+                .willReturn(Optional.of(comment));
         given(commentService.writeReplyComment(comment, member, subCommentText))
                 .willReturn(new Comment(article.getId(), member, subCommentText));
         // then

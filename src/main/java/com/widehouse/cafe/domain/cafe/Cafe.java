@@ -1,7 +1,9 @@
 package com.widehouse.cafe.domain.cafe;
 
+import groovy.util.logging.Slf4j;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import javax.persistence.Embedded;
@@ -26,6 +28,7 @@ import javax.validation.constraints.Size;
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "url")})
 
 @Getter
+@ToString
 public class Cafe {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -74,6 +77,7 @@ public class Cafe {
 
     public Cafe(String url, String name, String description, CafeVisibility visibility, Category category) {
         this();
+        System.out.println("Cafe()");
         this.url = url;
         this.name = name;
         this.description = description;

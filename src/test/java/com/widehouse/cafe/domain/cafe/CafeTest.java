@@ -3,12 +3,14 @@ package com.widehouse.cafe.domain.cafe;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
+import groovy.util.logging.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Created by kiel on 2017. 2. 10..
  */
+@Slf4j
 public class CafeTest {
     private Cafe cafe;
 
@@ -29,7 +31,9 @@ public class CafeTest {
                 .hasFieldOrPropertyWithValue("name", "cafename")
                 .hasFieldOrPropertyWithValue("description", "desc")
                 .hasFieldOrPropertyWithValue("visibility", CafeVisibility.PUBLIC)
-                .hasFieldOrPropertyWithValue("category", category);
+                .hasFieldOrPropertyWithValue("category", category)
+                .hasFieldOrProperty("statistics");
+        System.out.println("cafe" + cafe);
     }
 
     @Test

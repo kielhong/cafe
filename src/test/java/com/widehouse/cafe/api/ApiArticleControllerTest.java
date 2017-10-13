@@ -1,11 +1,10 @@
 package com.widehouse.cafe.api;
 
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -142,7 +141,7 @@ public class ApiArticleControllerTest {
     @Test
     public void getArticle_WithNoAuthorityMember_Should_Error_403Forbidden() throws Exception {
         // given
-        given(articleService.getArticle(anyLong(), any(Member.class)))
+        given(articleService.getArticle(anyLong(), any()))
                 .willThrow(new NoAuthorityException());
         // when
         mvc.perform(get("/api/cafes/testurl/articles/1"))
