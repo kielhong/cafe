@@ -7,6 +7,7 @@ buildscript {
 	}
     dependencies {
         classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.0.M5'
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
     }
 }
 
@@ -17,12 +18,16 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'jacoco'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 
 ext {
     hibernateVersion = '5.1.1.Final'
+    junit4Version        = '4.12'
+    junitVintageVersion  = '4.12.1'
+    junitJupiterVersion  = '5.0.1'
 }
 
 repositories {
@@ -65,6 +70,11 @@ dependencies {
     // test
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test:4.2.1.RELEASE')
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    // for Junit4 Compatible
+    testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
+    testCompileOnly('org.apiguardian:apiguardian-api:1.0.0')
     testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.0")
     testCompile('org.assertj:assertj-core:3.6.2')
 }
@@ -72,6 +82,7 @@ dependencies {
 //bootRun {
 //    addResources = true
 //}
+
 
 flyway {
     url = 'jdbc:h2:file:./target/cafe'
