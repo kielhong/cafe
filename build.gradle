@@ -72,17 +72,24 @@ dependencies {
     testCompile('org.springframework.security:spring-security-test:4.2.1.RELEASE')
     testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testCompile('org.assertj:assertj-core:3.6.2')
+    testRuntime("org.junit.platform:junit-platform-launcher:1.0.1")
     // for Junit4 Compatible
     testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
-    testCompileOnly('org.apiguardian:apiguardian-api:1.0.0')
     testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.0")
-    testCompile('org.assertj:assertj-core:3.6.2')
+    // To avoid compiler warnings about @API annotations in JUnit code
+    compileOnly('org.apiguardian:apiguardian-api:1.0.0')
+    testCompileOnly('org.apiguardian:apiguardian-api:1.0.0')
 }
 
 //bootRun {
 //    addResources = true
 //}
 
+junitPlatform {
+    platformVersion '1.0.0'
+    logManager 'org.apache.logging.log4j.jul.LogManager'
+}
 
 flyway {
     url = 'jdbc:h2:file:./target/cafe'
