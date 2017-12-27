@@ -1,4 +1,4 @@
-# Small Naver Cafe
+# Simple Naver Cafe
 
 ## Dependencies
 - Java 8
