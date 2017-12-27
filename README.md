@@ -8,10 +8,12 @@
 - Spring Data MongoDB 2.0.0 M5
 - Spring Security 2.0.0 M5
 - Hibernate 5.1.1
-- JUnit 5.0.1
-- Mockito 2.10
+### View
 - Thymleaf 3.0.8
 - AngularJS 1.6.1
+### Test
+- JUnit 5.0.1
+- Mockito 2.10
 
 ## Features
 ### Cafe Main Section
