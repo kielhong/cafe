@@ -9,6 +9,8 @@
 - Spring Security 2.0.0 M5
 - Hibernate 5.1.1
 - JUnit 5.0.1
+- Mockito 2.10
+- Thymleaf 3.0.8
 - AngularJS 1.6.1
 
 ## Features
@@ -20,6 +22,8 @@
   - Boards List
 - Article List by Board
 - Article Read
+- Article Write
 - Comment List by Article
 - Comment Create
+- Cafe Join
 
