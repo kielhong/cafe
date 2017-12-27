@@ -1,4 +1,7 @@
 # Simple Naver Cafe
+- Naver Cafe의 핵심 기능 위주의 단순화 버전
+- Spring 5.0 기반 기술 적용
+- 동적 화면 변경은 AngularJS 이용
 
 ## Dependencies
 - Java 8
