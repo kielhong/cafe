@@ -6,9 +6,11 @@ import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
+
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * Created by kiel on 2017. 2. 12..
@@ -19,7 +21,7 @@ public class CommentTest {
     private Member member;
     private Article article;
 
-    @BeforeEach
+    @Before
     public void init() {
         cafe = new Cafe("testcafe", "testcafe");
         board = new Board(cafe, "testboard");

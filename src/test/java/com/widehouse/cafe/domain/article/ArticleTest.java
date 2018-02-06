@@ -6,11 +6,12 @@ import static org.assertj.core.api.BDDAssertions.then;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created by kiel on 2017. 2. 11..
@@ -22,7 +23,7 @@ public class ArticleTest {
     private Member member;
     private Article article;
 
-    @BeforeEach
+    @Before
     public void init () {
         cafe = new Cafe("testcafe", "testcafe");
         board = new Board(cafe, "testboard");

@@ -8,6 +8,12 @@ import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.config.MongoConfiguration;
 import com.widehouse.cafe.domain.member.Member;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -16,12 +22,11 @@ import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -29,17 +34,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by kiel on 2017. 2. 20..
  */
-@ExtendWith(SpringExtension.class)
+@RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {MongoConfiguration.class})
 @Slf4j
 public class CommentRepositoryTest {
@@ -57,7 +57,7 @@ public class CommentRepositoryTest {
     private static final String HOST = "localhost";
     private static final int PORT = 12345;
 
-    @BeforeAll
+    @BeforeClass
     public static void initAll() throws Exception {
         _mongodExe = starter.prepare(new MongodConfigBuilder()
                 .version(Version.Main.PRODUCTION)
@@ -67,21 +67,20 @@ public class CommentRepositoryTest {
         mongo = new MongoClient("localhost", 12345);
     }
 
-    @AfterAll
+    @AfterClass
     public static void tearDownAll() throws Exception {
         mongo.close();
         _mongod.stop();
         _mongodExe.stop();
     }
 
-    @BeforeEach
+    @Before
     public void init () throws Exception {
         template = new MongoTemplate(mongo, "test");
         template.dropCollection(Comment.class);
     }
 
     @Test
-    @DisplayName("Test Comment Creation")
     public void saveCommentTest() throws Exception {
         // given
         Comment comment = new Comment(1L, new Member(1L, "member"), "comment");
@@ -94,7 +93,6 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    @DisplayName("Test Reply Comment Save")
     public void saveReplyCommentsTest() throws Exception {
         // given
         Comment comment = new Comment(1L, new Member(1L, "member"), "comment");
@@ -112,7 +110,6 @@ public class CommentRepositoryTest {
 
 
     @Test
-    @DisplayName("Test findByArticle, Should list Comments of Article order by comment id with paging")
     public void findByArticle_Should_ListComments() {
         // given
         Cafe cafe = new Cafe("testcafe", "testcafe");

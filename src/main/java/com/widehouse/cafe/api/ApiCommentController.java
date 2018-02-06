@@ -8,6 +8,8 @@ import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
 import com.widehouse.cafe.service.CommentService;
 import com.widehouse.cafe.service.MemberDetailsService;
+
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +54,7 @@ public class ApiCommentController {
     }
 
     @PostMapping("/articles/{articleId}/comments")
+    @Ignore
     public Comment write(@PathVariable Long articleId,
                          @RequestBody CommentForm input) {
         Member member = memberDetailsService.getCurrentMember();
