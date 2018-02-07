@@ -65,6 +65,6 @@ public class Board {
     }
 
     public boolean isSpecialType() {
-        return (type == TAG || type == BEST || type == CALENDAR || type == BOOK);
+        return type.specialType;
     }
 }

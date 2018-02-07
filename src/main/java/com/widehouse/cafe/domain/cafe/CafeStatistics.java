@@ -11,10 +11,8 @@ import javax.persistence.Embeddable;
  * Created by kiel on 2017. 2. 10..
  */
 @Embeddable
-
 @Getter
 @Setter
-@ToString
 public class CafeStatistics {
     private Long cafeMemberCount;
     private Long cafeArticleCount;
@@ -34,7 +32,9 @@ public class CafeStatistics {
     }
 
     public void decreaseCafeMemberCount() {
-        cafeMemberCount--;
+        if (cafeMemberCount > 0) {
+            cafeMemberCount--;
+        }
     }
 
     public void increaseCommentCount() {
@@ -42,7 +42,9 @@ public class CafeStatistics {
     }
 
     public void decreaseCommentCount() {
-        cafeCommentCount--;
+        if (cafeCommentCount > 0) {
+            cafeCommentCount--;
+        }
     }
 
     public void increaseArticleCount() {

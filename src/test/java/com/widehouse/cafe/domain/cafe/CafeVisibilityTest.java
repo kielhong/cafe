@@ -9,10 +9,9 @@ import org.junit.Test;
  */
 public class CafeVisibilityTest {
     @Test
-    public void PUBLIC_Should_ValueOfPublic() {
-        // when
+    public void valueOf_withPUBLIC_thenPublic() {
         CafeVisibility visibility = CafeVisibility.valueOf("PUBLIC");
-        // then
+
         then(visibility)
                 .isEqualTo(CafeVisibility.PUBLIC);
     }

@@ -19,15 +19,12 @@ public class SimpleMember {
 
     private String username;
 
-    private String nickname;
-
-    public SimpleMember(Long id, String username, String nickname) {
+    public SimpleMember(Long id, String username) {
         this.id = id;
         this.username = username;
-        this.nickname = nickname;
     }
 
     public SimpleMember(Member member) {
-        this(member.getId(), member.getUsername(), member.getNickname());
+        this(member.getId(), member.getUsername());
     }
 }

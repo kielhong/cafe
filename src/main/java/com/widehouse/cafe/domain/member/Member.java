@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -29,13 +30,11 @@ public class Member implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Size(max = 30)
+    @Column(nullable = false, length = 30, unique = true)
     private String username;
 
     private String password;
-
-    @Size(max = 30)
-    private String nickname;
 
     @Email
     private String email;
@@ -43,13 +42,11 @@ public class Member implements UserDetails {
     public Member(Long id, String username) {
         this.id = id;
         this.username = username;
-        this.nickname = username;
         this.password = "";
     }
 
     public Member(String username) {
         this.username = username;
-        this.nickname = username;
         this.password = "";
     }
 

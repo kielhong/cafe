@@ -24,34 +24,38 @@ public class CafeValidationTest {
     }
 
     @Test
-    public void AlphanumericunderscoreCafeUrl_Should_Validate() {
+    public void cafeUrl_withAlphaNumericUnderscore_thenValidate() {
         Cafe cafe = new Cafe("a1234_test_url", "test name");
+
         Set<ConstraintViolation<Cafe>> violations = validator.validate(cafe);
-        then(violations.isEmpty())
-                .isTrue();
+
+        then(violations.isEmpty()).isTrue();
     }
 
     @Test
-    public void SpaceCafeUrl_Should_Violated() {
+    public void cafeUrl_withSpace_thenInvalid() {
         Cafe cafe = new Cafe("test url", "test name");
+
         Set<ConstraintViolation<Cafe>> violations = validator.validate(cafe);
-        then(violations.isEmpty())
-                .isFalse();
+
+        then(violations.isEmpty()).isFalse();
     }
 
     @Test
-    public void NumericCafeUrl_Should_Violated() {
+    public void cafeUrl_withAllNumeric_thenViolated() {
         Cafe cafe = new Cafe("123456", "test name");
+
         Set<ConstraintViolation<Cafe>> violations = validator.validate(cafe);
-        then(violations.isEmpty())
-                .isFalse();
+
+        then(violations.isEmpty()).isFalse();
     }
 
     @Test
-    public void BeginWithNumericCafeUrl_Should_Violated() {
+    public void cafeUrl_withNumericBeginingUrl_thenViolated() {
         Cafe cafe = new Cafe("1asdf", "test name");
+
         Set<ConstraintViolation<Cafe>> violations = validator.validate(cafe);
-        then(violations.isEmpty())
-                .isFalse();
+
+        then(violations.isEmpty()).isFalse();
     }
 }

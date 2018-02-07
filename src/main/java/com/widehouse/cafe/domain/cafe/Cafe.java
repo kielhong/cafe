@@ -1,10 +1,5 @@
 package com.widehouse.cafe.domain.cafe;
 
-import groovy.util.logging.Slf4j;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.ToString;
-
 import java.time.LocalDateTime;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -19,6 +14,10 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.ToString;
 
 
 /**
@@ -91,12 +90,12 @@ public class Cafe {
         this.visibility = visibility;
         this.category = category;
     }
-//
-//    public CafeMember getCafeManager() {
-//        // TODO : cafeManager는 필수이다. 없으면 안되도록 코드 수정
-//        return cafeMembers.stream()
-//                .filter(x -> x.getRole() == CafeMemberRole.MANAGER)
-//                .findFirst()
-//                .orElse(null);
-//    }
+    //
+    //    public CafeMember getCafeManager() {
+    //        // TODO : cafeManager는 필수이다. 없으면 안되도록 코드 수정
+    //        return cafeMembers.stream()
+    //                .filter(x -> x.getRole() == CafeMemberRole.MANAGER)
+    //                .findFirst()
+    //                .orElse(null);
+    //    }
 }

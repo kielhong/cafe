@@ -1,5 +1,6 @@
 package com.widehouse.cafe.domain.cafe;
 
+import static com.widehouse.cafe.domain.cafe.CafeVisibility.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -13,19 +14,18 @@ import org.junit.Test;
 @Slf4j
 public class CafeTest {
     private Cafe cafe;
+    private Category category;
 
     @Before
     public void setUp() {
+        category = new Category(1L, "category");
         cafe = new Cafe("testcafe", "testcafe");
     }
 
     @Test
     public void createCafe() {
-        // Given
-        Category category = new Category();
-        // When
         Cafe cafe = new Cafe("cafeurl", "cafename", "desc", CafeVisibility.PUBLIC, category);
-        // Then
+
         assertThat(cafe)
                 .hasFieldOrPropertyWithValue("url", "cafeurl")
                 .hasFieldOrPropertyWithValue("name", "cafename")
@@ -33,23 +33,17 @@ public class CafeTest {
                 .hasFieldOrPropertyWithValue("visibility", CafeVisibility.PUBLIC)
                 .hasFieldOrPropertyWithValue("category", category)
                 .hasFieldOrProperty("statistics");
-        System.out.println("cafe" + cafe);
     }
 
     @Test
-    public void updateCafeInfo_should_change_cafeName_description_visibility() {
-        // When
-        Category category = new Category("category");
+    public void updateCafeInfo_thenChangeCafeInfo() {
         cafe.updateInfo("new name", "new description", CafeVisibility.PRIVATE, category);
-        // Then
-        assertThat(cafe.getName())
-                .isEqualTo("new name");
-        assertThat(cafe.getDescription())
-                .isEqualTo("new description");
-        assertThat(cafe.getVisibility())
-                .isEqualTo(CafeVisibility.PRIVATE);
-        assertThat(cafe.getCategory())
-                .isEqualTo(category);
+
+        then(cafe)
+                .hasFieldOrPropertyWithValue("name", "new name")
+                .hasFieldOrPropertyWithValue("description", "new description")
+                .hasFieldOrPropertyWithValue("visibility", PRIVATE)
+                .hasFieldOrPropertyWithValue("category", category);
     }
 
 //    @Test

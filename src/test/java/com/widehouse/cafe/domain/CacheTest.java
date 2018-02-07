@@ -2,6 +2,8 @@ package com.widehouse.cafe.domain;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
+import java.util.Random;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Random;
 
 /**
  * Created by kiel on 2017. 2. 28..
@@ -30,15 +30,14 @@ public class CacheTest {
     }
 }
 
-interface TestService{
-    String cachedMethod(String param1,String param2);
+interface TestService {
+    String cachedMethod(String param1, String param2);
 }
 
 @Component
-class TestServiceImpl implements TestService{
-
-    @Cacheable(value="default", key="#p0.concat('-').concat(#p1)")
-    public String cachedMethod(String param1, String param2){
+class TestServiceImpl implements TestService {
+    @Cacheable(value = "default", key = "#p0.concat('-').concat(#p1)")
+    public String cachedMethod(String param1, String param2) {
         return "response " + new Random().nextInt();
     }
 }

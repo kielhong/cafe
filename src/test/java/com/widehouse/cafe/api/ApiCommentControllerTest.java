@@ -1,12 +1,13 @@
 package com.widehouse.cafe.api;
 
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
+import static java.time.LocalDateTime.now;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,6 +29,13 @@ import com.widehouse.cafe.domain.member.SimpleMember;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import com.widehouse.cafe.service.CommentService;
 import com.widehouse.cafe.service.MemberDetailsService;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Optional;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -38,12 +46,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 20..
@@ -77,7 +79,7 @@ public class ApiCommentControllerTest {
         cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category"));
         board = new Board(cafe, "board");
         member = new Member(1L, "member");
-        article = new Article(1L, board, member, "title", "content", new ArrayList<>(), 0, LocalDateTime.now(), LocalDateTime.now());
+        article = new Article(1L, board, member, "title", "content", new ArrayList<>(), 0, now(), now());
     }
 
     @Test
@@ -141,7 +143,7 @@ public class ApiCommentControllerTest {
     public void writeReplyComment_WhenSubComment_Shoud_Success() throws Exception {
         // given
         Comment comment = new Comment("1", article.getId(), new SimpleMember(member), "comment",
-                Collections.emptyList(), LocalDateTime.now(), LocalDateTime.now());
+                Collections.emptyList(), now(), now());
         String subCommentText = "sub comment";
         given(memberDetailsService.getCurrentMember())
                 .willReturn(member);

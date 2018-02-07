@@ -2,12 +2,11 @@ package com.widehouse.cafe.api;
 
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,6 +23,10 @@ import com.widehouse.cafe.exception.NoAuthorityException;
 import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
 import com.widehouse.cafe.service.MemberDetailsService;
+
+import java.util.Arrays;
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,22 +38,16 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 19..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = ApiArticleController.class)
+@WebMvcTest(ApiArticleController.class)
 @Import(WebSecurityConfig.class)
 @EnableSpringDataWebSupport
 public class ApiArticleControllerTest {
     @Autowired
-    private WebApplicationContext context;
     private MockMvc mvc;
 
     @MockBean
@@ -72,11 +69,6 @@ public class ApiArticleControllerTest {
 
     @Before
     public void setUp() {
-        mvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(springSecurity())
-                .build();
-
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
         writer = new Member("writer");
@@ -106,8 +98,7 @@ public class ApiArticleControllerTest {
                 .willReturn(Arrays.asList(
                         new Article(board, writer, "test article1", "test1"),
                         new Article(board, writer, "test article2", "test2"),
-                        new Article(board, writer, "test article3", "test3"))
-                );
+                        new Article(board, writer, "test article3", "test3")));
         // then
         mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/boards/" + board.getId() + "/articles?page=0&size=3"))
                 .andExpect(status().isOk())
@@ -129,7 +120,8 @@ public class ApiArticleControllerTest {
         given(memberDetailsService.getCurrentMember())
                 .willReturn(new Member("reader"));
         given(articleService.getArticle(anyLong(), any(Member.class)))
-                .willReturn(new Article(new Board(new Cafe("testurl", "testname"), "board"), new Member("writer"), "title", "content"));
+                .willReturn(new Article(new Board(new Cafe("testurl", "testname"), "board"), new Member("writer"),
+                        "title", "content"));
         // when
         mvc.perform(get("/api/cafes/testurl/articles/1"))
                 .andExpect(status().isOk())

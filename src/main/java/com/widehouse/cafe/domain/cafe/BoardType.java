@@ -1,17 +1,26 @@
 package com.widehouse.cafe.domain.cafe;
 
+import lombok.Getter;
+
 /**
  * Created by kiel on 2017. 3. 12..
  */
+@Getter
 public enum BoardType {
     // Normal Boards
-    LIST,
-    MEMO,
-    QNA,
-    SALES,
+    LIST(false),
+    MEMO(false),
+    QNA(false),
+    SALES(false),
     // Special Boards
-    TAG,
-    BEST,
-    CALENDAR,
-    BOOK
+    TAG(true),
+    BEST(true),
+    CALENDAR(true),
+    BOOK(true);
+
+    boolean specialType;
+
+    BoardType(boolean specialType) {
+        this.specialType = specialType;
+    }
 }

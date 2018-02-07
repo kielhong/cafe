@@ -22,58 +22,57 @@ public class BoardTest {
     }
 
     @Test
-    public void modifyBoard_should_change_board_info() {
-        // given
+    public void modifyBoard_thenChangeBoardInfo() {
         Board board = new Board(cafe, "test board", 1);
-        // when
+
         board.update("new board name", 2);
-        // then
+
         then(board)
                 .hasFieldOrPropertyWithValue("name", "new board name")
                 .hasFieldOrPropertyWithValue("listOrder", 2);
     }
 
     @Test
-    public void isSpecialType_WhenTAGorBOOKorCALENDARorBEST_Should_True() {
-        // given
+    public void isSpecialType_withTAG_thenTrue() {
         Board board = new Board(cafe, "test board", TAG, 1);
-        // when
+
         boolean isSpecialType = board.isSpecialType();
-        // then
-        then(isSpecialType)
-                .isTrue();
-        // given
-        board = new Board(cafe, "test board", BOOK, 1);
-        // when
-        isSpecialType = board.isSpecialType();
-        // then
-        then(isSpecialType)
-                .isTrue();
-        // given
-        board = new Board(cafe, "test board", CALENDAR, 1);
-        // when
-        isSpecialType = board.isSpecialType();
-        // then
-        then(isSpecialType)
-                .isTrue();
-        // given
-        board = new Board(cafe, "test board", BEST, 1);
-        // when
-        isSpecialType = board.isSpecialType();
-        // then
-        then(isSpecialType)
-                .isTrue();
+
+        then(isSpecialType).isTrue();
     }
 
     @Test
-    public void isSpecialType_WhenLIST_Should_False() {
-        // given
-        Board board = new Board(cafe, "test board", LIST, 1);
-        // when
+    public void isSpecialType_withBOOK_thenTrue() {
+        Board board = new Board(cafe, "test board", BOOK, 1);
+
         boolean isSpecialType = board.isSpecialType();
-        // then
-        then(isSpecialType)
-                .isFalse();
+
+        then(isSpecialType).isTrue();
+    }
+
+    @Test
+    public void isSpecialType_withBEST_thenTrue() {
+        Board board = new Board(cafe, "test board", BEST, 1);
+
+        boolean isSpecialType = board.isSpecialType();
+
+        then(isSpecialType).isTrue();
+    }
+
+    @Test
+    public void isSpecialType_withCALENDAR_thenTrue() {
+        Board board = new Board(cafe, "test board", CALENDAR, 1);
+
+        boolean isSpecialType = board.isSpecialType();
+
+        then(isSpecialType).isTrue();
+    }
+
+    @Test
+    public void isSpecialType_withLIST_thenFalse() {
+        Board board = new Board(cafe, "test board", LIST, 1);
+
+        then(board.getType().isSpecialType()).isFalse();
     }
 
 }

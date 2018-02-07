@@ -25,8 +25,7 @@ public class BoardRepositoryTest {
     private BoardRepository boardRepository;
 
     @Test
-    public void findAllByCafe_should_list_order_by_listOrder() {
-        // given
+    public void findAllByCafe_thenListBoardOrderByListOrder() {
         Cafe cafe = new Cafe("testurl", "testname");
         entityManager.persist(cafe);
         Board board1 = new Board(cafe, "board1", 4);
@@ -37,11 +36,10 @@ public class BoardRepositoryTest {
         entityManager.persist(board3);
         Board board4 = new Board(cafe, "board4", 1);
         entityManager.persist(board4);
-        // when
+
         List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder"));
-        // then
+
         then(boards)
-                .hasSize(4)
                 .containsExactly(board4, board3, board2, board1);
     }
 }

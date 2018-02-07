@@ -5,9 +5,9 @@ import static com.widehouse.cafe.domain.cafemember.CafeMemberRole.MEMBER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -26,6 +26,11 @@ import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.SimpleMember;
 import com.widehouse.cafe.exception.NoAuthorityException;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,10 +38,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 12..
@@ -138,16 +139,16 @@ public class CommentServiceTest {
         // when
         commentService.modifyComment(comment, commenter, "another comment");
         // then
-        verify(commentRepository).save(comment);
-        assertThat(comment)
+        then(cafe.getStatistics().getCafeCommentCount())
+                .isEqualTo(beforeCommentCount);
+        then(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
                 .hasFieldOrPropertyWithValue("member.id", commenter.getId())
                 .hasFieldOrPropertyWithValue("comment", "another comment");
-        assertThat(comment.getUpdateDateTime())
+        then(comment.getUpdateDateTime())
                 .isAfterOrEqualTo(comment.getCreateDateTime());
-        assertThat(cafe.getStatistics().getCafeCommentCount())
-                .isEqualTo(beforeCommentCount);
+        verify(commentRepository).save(comment);
     }
 
     @Test

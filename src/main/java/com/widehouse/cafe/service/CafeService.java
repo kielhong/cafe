@@ -48,7 +48,6 @@ public class CafeService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-//    @Cacheable(value = "cafes", key = "#url")
     @Transactional
     public Cafe createCafe(Member member, String url, String name, String description,
                            CafeVisibility visibility, Long categoryId) {
@@ -132,7 +131,6 @@ public class CafeService {
      * @param url cafe url
      * @return Cafe Info
      */
-//    @Cacheable(value = "cafes", key = "#url")
     @Transactional
     public Cafe getCafe(String url) {
         Cafe cafe = cafeRepository.findByUrl(url);

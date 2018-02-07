@@ -34,7 +34,6 @@ public class ArticleRepositoryTest {
 
     private Cafe cafe;
     private Board board1;
-    private Board board2;
     private Member writer;
 
     private Article article1;
@@ -47,7 +46,7 @@ public class ArticleRepositoryTest {
         entityManager.persist(cafe);
         board1 = new Board(cafe, "board1");
         entityManager.persist(board1);
-        board2 = new Board(cafe, "board2");
+        Board board2 = new Board(cafe, "board2");
         entityManager.persist(board2);
         writer = new Member("writer");
         entityManager.persist(writer);
@@ -62,9 +61,8 @@ public class ArticleRepositoryTest {
 
     @Test
     public void findByCafe_Should_Return_ListArticle() {
-        // when
         List<ArticleProjection> articles = articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 2, new Sort(DESC, "id")));
-        // then
+
         then(articles)
                 .hasSize(2)
                 .extracting("id")
@@ -73,26 +71,24 @@ public class ArticleRepositoryTest {
 
     @Test
     public void findByBoard_Should_Return_ListArticle() {
-        // when
         List<Article> articles = articleRepository.findByBoard(board1, PageRequest.of(0, 3, new Sort(DESC, "id")));
-        // then
+
         then(articles)
                 .containsExactly(article2, article1);
     }
 
     @Test
-    public void saveArticle_WhenAddTag_Should_SaveTag() {
-        // given
+    public void saveArticle_whenAddTag_thenSaveTag() {
         Article article = new Article(board1, writer, "test article1", "test1");
         entityManager.persist(article);
         Tag tag = new Tag("tag");
         tag = entityManager.persist(tag);
-        // when
+
         article.getTags().add(tag);
         articleRepository.save(article);
         tag.getArticles().add(article);
         entityManager.persist(tag);
-        // then
+
         Tag result = entityManager.find(Tag.class, tag.getId());
         then(result.getArticles())
                 .contains(article);

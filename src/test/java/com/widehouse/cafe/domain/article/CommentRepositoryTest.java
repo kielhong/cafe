@@ -1,5 +1,6 @@
 package com.widehouse.cafe.domain.article;
 
+import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
@@ -8,12 +9,6 @@ import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.config.MongoConfiguration;
 import com.widehouse.cafe.domain.member.Member;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -21,6 +16,12 @@ import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -68,14 +69,14 @@ public class CommentRepositoryTest {
     }
 
     @AfterClass
-    public static void tearDownAll() throws Exception {
+    public static void tearDownAll() {
         mongo.close();
         _mongod.stop();
         _mongodExe.stop();
     }
 
     @Before
-    public void init () throws Exception {
+    public void init() {
         template = new MongoTemplate(mongo, "test");
         template.dropCollection(Comment.class);
     }
@@ -116,7 +117,7 @@ public class CommentRepositoryTest {
         Board board = new Board(cafe, "board");
         Member writer = new Member(1L, "member");
         Member commenter = new Member(2L, "commenter");
-        Article article = new Article(1L, board, writer, "title", "content", Collections.emptyList(), 0, LocalDateTime.now(), LocalDateTime.now());
+        Article article = new Article(1L, board, writer, "title", "content", Collections.emptyList(), 0, now(), now());
 
         Comment comment1 = new Comment(article, commenter, "comment1");
         template.insert(comment1);
@@ -127,7 +128,8 @@ public class CommentRepositoryTest {
         Comment comment4 = new Comment(article, commenter, "comment4");
         template.insert(comment4);
         // when
-        List<Comment> comments = commentRepository.findByArticleId(article.getId(), PageRequest.of(0, 5, new Sort(ASC, "id")));
+        List<Comment> comments = commentRepository.findByArticleId(article.getId(),
+                PageRequest.of(0, 5, new Sort(ASC, "id")));
         // then
         then(comments)
                 .extracting("comment")
