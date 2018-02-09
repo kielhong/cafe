@@ -1,4 +1,4 @@
-package com.widehouse.cafe.domain.config;
+package com.widehouse.cafe.config;
 
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Bean;

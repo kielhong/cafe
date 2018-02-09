@@ -1,9 +1,9 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static java.time.LocalDateTime.now;
+import static java.util.Collections.emptyList;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -15,17 +15,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
-import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
-import com.widehouse.cafe.service.MemberDetailsService;
+import com.widehouse.cafe.service.CafeService;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -45,7 +40,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @RunWith(SpringRunner.class)
 @WebMvcTest(ApiArticleController.class)
 @Import(WebSecurityConfig.class)
-@EnableSpringDataWebSupport
 public class ApiArticleControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -53,81 +47,66 @@ public class ApiArticleControllerTest {
     @MockBean
     private ArticleService articleService;
     @MockBean
-    private CafeRepository cafeRepository;
-    @MockBean
-    private BoardRepository boardRepository;
-    @MockBean
-    private MemberDetailsService memberDetailsService;
+    private CafeService cafeService;
 
     private Cafe cafe;
     private Board board;
     private Member writer;
 
-    private Article article1;
-    private Article article2;
-    private Article article3;
-
-    private ArticleProjection articleProjection1;
-    private ArticleProjection articleProjection2;
-    private ArticleProjection articleProjection3;
-
     @Before
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
-        writer = new Member("writer");
+        writer = new Member(1L, "writer");
+
+        given(cafeService.getCafe("testurl"))
+                .willReturn(cafe);
+        given(cafeService.getBoard(1L))
+                .willReturn(board);
     }
 
     @Test
-    public void getArticlesByCafe_Should_ListArticles() throws Exception {
-        // given
-        given(cafeRepository.findByUrl(cafe.getUrl()))
-                .willReturn(cafe);
+    public void listArticlesByCafe_thenListArticles() throws Exception {
         given(articleService.getArticlesByCafe(cafe, 0, 3))
-                .willReturn(Arrays.asList(article3, article2, article1));
+                .willReturn(Arrays.asList(
+                        new Article(board, writer, "test article1", "test1"),
+                        new Article(board, writer, "test article2", "test2"),
+                        new Article(board, writer, "test article3", "test3")));
         // then
-        mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/articles?page=0&size=3"))
+        mvc.perform(get("/api/cafes/testurl/articles?page=0&size=3"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(3));
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$").isArray());
     }
 
     @Test
-    public void getArticlesByBoard_Should_ListArticles() throws Exception {
-        // given
-        given(cafeRepository.findByUrl(cafe.getUrl()))
-                .willReturn(cafe);
-        given(boardRepository.findById(board.getId()))
-                .willReturn(Optional.of(board));
+    public void listArticlesByBoard_thenListArticles() throws Exception {
         given(articleService.getArticlesByBoard(board, 0, 3))
                 .willReturn(Arrays.asList(
                         new Article(board, writer, "test article1", "test1"),
                         new Article(board, writer, "test article2", "test2"),
                         new Article(board, writer, "test article3", "test3")));
         // then
-        mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/boards/" + board.getId() + "/articles?page=0&size=3"))
+        mvc.perform(get("/api/cafes/testurl/boards/1/articles?page=0&size=3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(3))
-                .andExpect(jsonPath("$.[0].cafe.url").value(cafe.getUrl()))
-                .andExpect(jsonPath("$.[0].board.id").value(board.getId()))
+                .andExpect(jsonPath("$..cafe[?(@.url == 'testurl')]", hasSize(3)))
+                .andExpect(jsonPath("$..board[?(@.id == 1)]", hasSize(3)))
                 .andExpect(jsonPath("$.[0].title").value("test article1"))
-                .andExpect(jsonPath("$.[0].board.id").value(board.getId()))
                 .andExpect(jsonPath("$.[1].title").value("test article2"))
-                .andExpect(jsonPath("$.[0].board.id").value(board.getId()))
                 .andExpect(jsonPath("$.[2].title").value("test article3"))
                 .andExpect(jsonPath("$.[2].commentCount").value(0))
                 .andExpect(jsonPath("$.[2].writer").exists());
     }
 
     @Test
-    public void getArticle_Should_ReturnArticle() throws Exception {
-        // given
-        given(memberDetailsService.getCurrentMember())
-                .willReturn(new Member("reader"));
-        given(articleService.getArticle(anyLong(), any(Member.class)))
-                .willReturn(new Article(new Board(new Cafe("testurl", "testname"), "board"), new Member("writer"),
-                        "title", "content"));
+    public void getArticle_withAuh_thenReturnArticle() throws Exception {
+        Member reader = new Member("reader");
+        given(articleService.getArticle(1L, reader))
+                .willReturn(new Article(1L, board, writer, "title", "content", emptyList(), 0, now(), now()));
         // when
-        mvc.perform(get("/api/cafes/testurl/articles/1"))
+        mvc.perform(get("/api/cafes/testurl/articles/1")
+                    .with(user(reader)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("title"))
                 .andExpect(jsonPath("$.content").value("content"))
@@ -135,28 +114,30 @@ public class ApiArticleControllerTest {
     }
 
     @Test
-    public void getArticle_WithNoAuthorityMember_Should_Error_403Forbidden() throws Exception {
-        // given
-        given(articleService.getArticle(anyLong(), any()))
+    public void getArticle_withNoAuthorityMember_then403Forbidden() throws Exception {
+        Member reader = new Member("reader");
+        given(articleService.getArticle(1L, reader))
                 .willThrow(new NoAuthorityException());
-        // when
-        mvc.perform(get("/api/cafes/testurl/articles/1"))
+
+        mvc.perform(get("/api/cafes/testurl/articles/1")
+                    .with(user(reader)))
                 .andExpect(status().isForbidden());
     }
 
     @Test
-    public void writeArticle_WithCafeMember_Should_Success() throws Exception {
-        // given
-        given(articleService.writeArticle(any(Board.class), any(Member.class), anyString(), anyString()))
-                .willReturn(new Article(board, writer, "title", "content"));
-        given(boardRepository.findById(anyLong()))
-                .willReturn(Optional.of(board));
+    public void writeArticle_withCafeMember_thenSuccess() throws Exception {
+        given(articleService.writeArticle(board, writer, "test title", "test content"))
+                .willReturn(new Article(board, writer, "test title", "test content"));
         // then
-        mvc.perform(post("/api/cafes/" + cafe.getUrl() + "/articles/")
+        mvc.perform(post("/api/cafes/testurl/articles/")
                     .with(user(writer))
-                    .with(csrf().asHeader())
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\"title\":\"test title\", \"content\":\"test content\", \"board\": {\"id\" : 1} }"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("test title"))
+                .andExpect(jsonPath("$.content").value("test content"))
+                .andExpect(jsonPath("$.writer.id").value(writer.getId()))
+                .andExpect(jsonPath("$.board.id").value(board.getId()));
     }
 }

@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,11 +20,8 @@ import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.domain.member.MemberRepository;
 import com.widehouse.cafe.service.ArticleService;
 import com.widehouse.cafe.service.CafeService;
-import com.widehouse.cafe.service.MemberDetailsService;
-import com.widehouse.cafe.service.MemberService;
 import com.widehouse.cafe.service.TagService;
 
 import java.util.Arrays;
@@ -56,13 +53,7 @@ public class ApiTagControllerTest {
     @MockBean
     private TagService tagService;
     @MockBean
-    private MemberService memberService;
-    @MockBean
-    private MemberRepository memberRepository;
-    @MockBean
     private TagRepository tagRepository;
-    @MockBean
-    private MemberDetailsService memberDetailsService;
 
     private Cafe cafe;
     private Board board;
@@ -124,7 +115,6 @@ public class ApiTagControllerTest {
         // given
         Article article = new Article(board, writer, "article", "content");
         Tag tag1 = new Tag("testtag1");
-        Tag tag2 = new Tag("testtag2");
         Tag tag3 = new Tag("testtag3");
         Tag tag4 = new Tag("testtag4");
         article.getTags().addAll(Arrays.asList(tag1, tag3, tag4));

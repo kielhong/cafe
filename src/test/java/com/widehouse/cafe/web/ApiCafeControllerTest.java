@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
 import static org.mockito.BDDMockito.given;
@@ -11,6 +11,7 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.service.CafeService;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

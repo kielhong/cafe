@@ -1,12 +1,12 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
+import com.widehouse.cafe.annotation.CurrentMember;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.ArticleService;
+import com.widehouse.cafe.service.CafeService;
 import com.widehouse.cafe.service.MemberDetailsService;
 
 import java.util.List;
@@ -28,19 +28,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api")
 public class ApiArticleController {
     @Autowired
-    private CafeRepository cafeRepository;
-    @Autowired
-    private BoardRepository boardRepository;
-    @Autowired
     private ArticleService articleService;
     @Autowired
-    private MemberDetailsService memberDetailsService;
+    private CafeService cafeService;
 
     @GetMapping("/cafes/{cafeUrl}/articles")
     public List<Article> getArticlesByCafe(@PathVariable String cafeUrl,
                                            @RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "10") int size) {
-        Cafe cafe = cafeRepository.findByUrl(cafeUrl);
+        Cafe cafe = cafeService.getCafe(cafeUrl);
 
         return articleService.getArticlesByCafe(cafe, page, size);
     }
@@ -50,27 +46,23 @@ public class ApiArticleController {
                                            @PathVariable Long boardId,
                                            @RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "10") int size) {
-        // TODO : artcleService 가 boardId을 받도록 하는게 좋을지?
-        Board board = boardRepository.findById(boardId).get();
-        List<Article> articles = articleService.getArticlesByBoard(board, page, size);
+        Board board = cafeService.getBoard(boardId);
 
-        return articles;
+        return articleService.getArticlesByBoard(board, page, size);
     }
 
     @GetMapping("/cafes/{cafeUrl}/articles/{articleId}")
     public Article getArticle(@PathVariable String cafeUrl,
-                              @PathVariable Long articleId) {
-        Member reader = memberDetailsService.getCurrentMember();
-        Article article = articleService.getArticle(articleId, reader);
-
-        return article;
+                              @PathVariable Long articleId,
+                              @CurrentMember Member reader) {
+        return articleService.getArticle(articleId, reader);
     }
 
     @PostMapping(value = "/cafes/{cafeUrl}/articles")
     public Article writeArticle(@PathVariable String cafeUrl,
-                                @RequestBody ArticleForm articleForm) {
-        Member member = memberDetailsService.getCurrentMember();
-        Board board = boardRepository.findById(articleForm.getBoard().getId()).get();
+                                @RequestBody ArticleForm articleForm,
+                                @CurrentMember Member member) {
+        Board board = cafeService.getBoard(articleForm.getBoard().getId());
 
         return articleService.writeArticle(board, member, articleForm.getTitle(), articleForm.getContent());
     }

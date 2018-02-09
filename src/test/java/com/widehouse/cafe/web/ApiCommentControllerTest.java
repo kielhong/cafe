@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
 import static java.time.LocalDateTime.now;
@@ -24,6 +24,7 @@ import com.widehouse.cafe.domain.member.SimpleMember;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import com.widehouse.cafe.service.CommentService;
 import com.widehouse.cafe.service.MemberDetailsService;
+import com.widehouse.cafe.web.ApiCommentController;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.data.domain.Sort.Direction.ASC;
@@ -12,6 +12,8 @@ import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.projection.CafeProjection;
 import com.widehouse.cafe.service.CafeService;
+import com.widehouse.cafe.web.ApiCategoryController;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

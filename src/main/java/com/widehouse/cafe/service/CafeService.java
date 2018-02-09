@@ -20,6 +20,7 @@ import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.exception.BoardNotExistsException;
 import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.projection.CafeProjection;
 
@@ -150,4 +151,17 @@ public class CafeService {
 
         return cafe;
     }
+
+    @Transactional
+    public Board getBoard(Long boardId) {
+        Optional<Board> boardOptional = boardRepository.findById(boardId);
+
+        if (boardOptional.isPresent()) {
+            return boardOptional.get();
+        } else {
+            throw new BoardNotExistsException();
+        }
+
+    }
+
 }

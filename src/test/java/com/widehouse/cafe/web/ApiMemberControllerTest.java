@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -10,6 +10,8 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.MemberDetailsService;
 import com.widehouse.cafe.service.MemberService;
+import com.widehouse.cafe.web.ApiMemberController;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

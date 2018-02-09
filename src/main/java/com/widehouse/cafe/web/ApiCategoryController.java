@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import static org.springframework.data.domain.Sort.Direction.ASC;
 

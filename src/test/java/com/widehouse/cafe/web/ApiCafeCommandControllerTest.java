@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
 import static org.mockito.BDDMockito.given;
@@ -15,6 +15,8 @@ import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.CafeService;
 import com.widehouse.cafe.service.MemberDetailsService;
+import com.widehouse.cafe.web.ApiCafeCommandController;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

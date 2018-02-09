@@ -1,4 +1,4 @@
-package com.widehouse.cafe.domain;
+package com.widehouse.cafe.config;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CacheTest {
+public class CacheConfigTest {
     @Autowired
     private TestService testService;
 

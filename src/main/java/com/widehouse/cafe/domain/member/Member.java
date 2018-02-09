@@ -1,5 +1,7 @@
 package com.widehouse.cafe.domain.member;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Arrays;
 import java.util.Collection;
 import javax.persistence.Column;
@@ -25,6 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@JsonIgnoreProperties({"password", "enabled", "accountNonExpired", "accountNonLocked", "credentialsNonExpired"})
 public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import com.widehouse.cafe.annotation.CurrentMember;
 import com.widehouse.cafe.domain.article.Article;

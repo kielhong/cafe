@@ -7,7 +7,7 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
 import com.mongodb.MongoClient;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.config.MongoConfiguration;
+import com.widehouse.cafe.config.MongoConfiguration;
 import com.widehouse.cafe.domain.member.Member;
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
@@ -17,7 +17,6 @@ import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

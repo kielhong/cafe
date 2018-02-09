@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 import static org.mockito.BDDMockito.given;
@@ -10,6 +10,7 @@ import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.service.CafeService;
+import com.widehouse.cafe.web.ApiBoardController;
 
 import java.util.Arrays;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web.exception;
 
 import com.widehouse.cafe.exception.NoAuthorityException;
 import org.springframework.http.HttpStatus;

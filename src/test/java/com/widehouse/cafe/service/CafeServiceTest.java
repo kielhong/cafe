@@ -15,6 +15,7 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
+import com.widehouse.cafe.domain.cafe.BoardType;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.Category;
@@ -22,6 +23,7 @@ import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.exception.BoardNotExistsException;
 import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.projection.CafeProjection;
 
@@ -231,11 +233,32 @@ public class CafeServiceTest {
     }
 
     @Test
-    public void getCafe_WhenNotExistCafe_Should_ThrowCafeNotFoundException() {
+    public void getCafe_withNotExistCafe_Should_ThrowCafeNotFoundException() {
         given(cafeRepository.findByUrl("testurl"))
                 .willReturn(null);
 
         thenThrownBy(() -> cafeService.getCafe("testurl"))
                 .isInstanceOf(CafeNotFoundException.class);
+    }
+
+    @Test
+    public void getBoard_thenReturnBoard() {
+        Board board = new Board(1L, cafe, "board", LIST, 1);
+        given(boardRepository.findById(1L))
+                .willReturn(Optional.of(board));
+
+        Board result = cafeService.getBoard(1L);
+
+        then(result)
+                .isEqualTo(board);
+    }
+
+    @Test
+    public void getBoard_withNotExistBoard_thenRaiseBoardNotExistsExcetpion() {
+        given(boardRepository.findById(1L))
+                .willReturn(Optional.empty());
+
+        thenThrownBy(() -> cafeService.getBoard(1L))
+                .isInstanceOf(BoardNotExistsException.class);
     }
 }

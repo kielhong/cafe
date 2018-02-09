@@ -1,4 +1,4 @@
-package com.widehouse.cafe.api;
+package com.widehouse.cafe.web;
 
 import com.widehouse.cafe.annotation.CurrentMember;
 import com.widehouse.cafe.domain.article.Article;
@@ -8,7 +8,6 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.ArticleService;
 import com.widehouse.cafe.service.CafeService;
-import com.widehouse.cafe.service.MemberDetailsService;
 import com.widehouse.cafe.service.TagService;
 
 import java.util.ArrayList;
@@ -39,8 +38,6 @@ public class ApiTagController {
     private TagService tagService;
     @Autowired
     private ArticleService articleService;
-    @Autowired
-    private MemberDetailsService memberDetailsService;
 
     /**
      * GET /api/cafes/{cafeUrl}/tags.

@@ -38,10 +38,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //            .csrf().disable();
     }
 
-    @Bean
-    public MemberDetailsService memberDetailsService() {
-        return new MemberDetailsService();
-    }
+//    @Bean
+//    public MemberDetailsService memberDetailsService() {
+//        return new MemberDetailsService();
+//    }
 
     @Bean
     public PasswordEncoder encoder() {

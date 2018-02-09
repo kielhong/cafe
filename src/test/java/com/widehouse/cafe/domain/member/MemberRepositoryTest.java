@@ -21,7 +21,7 @@ public class MemberRepositoryTest {
     private MemberRepository memberRepository;
 
     @Test
-    public void findByUsername_Sould_Return_Member() {
+    public void findByUsername_thenMember() {
         // given
         entityManager.persist(new Member("testuser"));
         // when
@@ -29,6 +29,5 @@ public class MemberRepositoryTest {
         // then
         then(member)
                 .isNotNull();
-
     }
 }
