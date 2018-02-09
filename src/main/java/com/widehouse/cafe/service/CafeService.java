@@ -126,7 +126,7 @@ public class CafeService {
     }
 
     /**
-     * get {@link Cafe} by cafe id
+     * get {@link Cafe} by cafe id.
      *
      * @param cafeId cafe id
      * @return Cafe Info
@@ -136,7 +136,7 @@ public class CafeService {
     }
 
     /**
-     * get {@link Cafe} by cafe url
+     * get {@link Cafe} by cafe url.
      *
      * @param url cafe url
      * @return Cafe Info

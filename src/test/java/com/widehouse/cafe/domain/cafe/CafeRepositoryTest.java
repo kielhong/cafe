@@ -36,7 +36,7 @@ public class CafeRepositoryTest {
 
     @Before
     public void setUp() {
-        category1 = new Category("category1");
+        category1 = new Category("category1", 1);
         entityManager.persist(category1);
 
         cafe1 = new Cafe("test1", "test1", "", CafeVisibility.PUBLIC, category1);

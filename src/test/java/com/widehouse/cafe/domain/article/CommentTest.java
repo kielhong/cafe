@@ -20,43 +20,38 @@ public class CommentTest {
     private Board board;
     private Member member;
     private Article article;
+    private Comment comment;
 
     @Before
     public void init() {
+        member = new Member(1L, "member");
         cafe = new Cafe("testcafe", "testcafe");
         board = new Board(cafe, "testboard");
-        member = new Member();
         article = new Article(board, member, "test title", "test content");
+        comment = new Comment(article, member, "test comment");
     }
 
     @Test
-    public void createComment_should_create_comment_and_attachto_article() {
-        // Given
-        Member commenter = new Member("commenter");
-        // When
-        Comment comment = new Comment(article, commenter, "test comment");
+    public void createComment_thenCreateComment_AttachToArticle() {
+        Comment comment = new Comment(article, member, "test comment");
         // Then
         assertThat(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
-                .hasFieldOrPropertyWithValue("member.id", commenter.getId())
+                .hasFieldOrPropertyWithValue("member.id", member.getId())
                 .hasFieldOrPropertyWithValue("comment", "test comment");
         assertThat(comment.getCreateDateTime())
                 .isNotNull();
     }
 
     @Test
-    public void modifyComment_should_update_comment() {
-        // Given
-        Member commenter = new Member(1L, "commenter");
-        Comment comment = new Comment(article, commenter, "test comment");
-        // When
-        comment.modify(commenter, "another comment");
+    public void modifyComment_thenUpdateComment() {
+        comment.modify(member, "another comment");
         // Then
         assertThat(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
-                .hasFieldOrPropertyWithValue("member.id", commenter.getId())
+                .hasFieldOrPropertyWithValue("member.id", member.getId())
                 .hasFieldOrPropertyWithValue("comment", "another comment");
         assertThat(comment.getUpdateDateTime())
                 .isNotNull()
@@ -64,11 +59,9 @@ public class CommentTest {
     }
 
     @Test
-    public void modifyComment_not_commenter_throws_NoAuthroityException() {
+    public void modifyComment_withNotCommentOwner_thenRaiseNoAuthorityException() {
         // Given
-        Member commenter = new Member(1L, "commenter");
         Member anotherCommenter = new Member(2L, "another");
-        Comment comment = new Comment(article, commenter, "test comment");
         // Then
         Assertions.assertThatThrownBy(() -> comment.modify(anotherCommenter, "new comment"))
                 .isInstanceOf(NoAuthorityException.class);

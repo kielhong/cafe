@@ -68,7 +68,7 @@ public class ApiCommentControllerTest {
     public void setUp() {
         member = new Member(1L, "member");
 
-        Cafe cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category"));
+        Cafe cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category", 1));
         Board board = new Board(cafe, "board");
         article = new Article(1L, board, member, "title", "content", new ArrayList<>(), 0, now(), now());
 

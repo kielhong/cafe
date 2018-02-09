@@ -6,9 +6,11 @@ import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.projection.ArticleProjection;
 import com.widehouse.cafe.service.ArticleService;
 import com.widehouse.cafe.service.MemberDetailsService;
+
+import java.util.List;
+
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Created by kiel on 2017. 2. 19..
@@ -35,7 +35,6 @@ public class ApiArticleController {
     private ArticleService articleService;
     @Autowired
     private MemberDetailsService memberDetailsService;
-
 
     @GetMapping("/cafes/{cafeUrl}/articles")
     public List<Article> getArticlesByCafe(@PathVariable String cafeUrl,
