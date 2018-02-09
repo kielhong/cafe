@@ -63,6 +63,10 @@ public class ApiArticleControllerTest {
     private Board board;
     private Member writer;
 
+    private Article article1;
+    private Article article2;
+    private Article article3;
+
     private ArticleProjection articleProjection1;
     private ArticleProjection articleProjection2;
     private ArticleProjection articleProjection3;
@@ -80,7 +84,7 @@ public class ApiArticleControllerTest {
         given(cafeRepository.findByUrl(cafe.getUrl()))
                 .willReturn(cafe);
         given(articleService.getArticlesByCafe(cafe, 0, 3))
-                .willReturn(Arrays.asList(articleProjection3, articleProjection2, articleProjection1));
+                .willReturn(Arrays.asList(article3, article2, article1));
         // then
         mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/articles?page=0&size=3"))
                 .andExpect(status().isOk())

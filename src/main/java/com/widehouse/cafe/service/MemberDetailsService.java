@@ -23,7 +23,7 @@ public class MemberDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findByUsername(username);
         if (member == null) {
-            throw new UsernameNotFoundException("Member Not Exists");
+            throw new UsernameNotFoundException("Member : " + username + " Not Exists");
         }
 
         return member;

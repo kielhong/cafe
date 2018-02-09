@@ -37,11 +37,9 @@ public class ArticleService {
     private TagRepository tagRepository;
 
 
-    public List<ArticleProjection> getArticlesByCafe(Cafe cafe, int page, int size) {
-        List<ArticleProjection> articles = articleRepository.findByBoardCafe(cafe,
+    public List<Article> getArticlesByCafe(Cafe cafe, int page, int size) {
+        return articleRepository.findByBoardCafe(cafe,
                 PageRequest.of(page, size, new Sort(DESC, "id")));
-
-        return articles;
     }
 
     public List<Article> getArticlesByBoard(Board board, int page, int size) {
@@ -66,9 +64,10 @@ public class ArticleService {
             throw new NoAuthorityException();
         }
 
-        Article article =  articleRepository.save(new Article(board, writer, title, content));
+        Article article = articleRepository.save(new Article(board, writer, title, content));
 
-        Cafe cafe = article.getBoard().getCafe();
+        // TODO : move to async event
+        Cafe cafe = board.getCafe();
         cafe.getStatistics().increaseArticleCount();
         cafeRepository.save(cafe);
 

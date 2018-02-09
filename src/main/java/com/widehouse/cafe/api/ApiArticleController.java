@@ -38,13 +38,12 @@ public class ApiArticleController {
 
 
     @GetMapping("/cafes/{cafeUrl}/articles")
-    public List<ArticleProjection> getArticlesByCafe(@PathVariable String cafeUrl,
-                                                     @RequestParam(defaultValue = "0") int page,
-                                                     @RequestParam(defaultValue = "10") int size) {
+    public List<Article> getArticlesByCafe(@PathVariable String cafeUrl,
+                                           @RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "10") int size) {
         Cafe cafe = cafeRepository.findByUrl(cafeUrl);
-        List<ArticleProjection> articles = articleService.getArticlesByCafe(cafe, page, size);
 
-        return articles;
+        return articleService.getArticlesByCafe(cafe, page, size);
     }
 
     @GetMapping("/cafes/{cafeUrl}/boards/{boardId}/articles")

@@ -73,7 +73,6 @@ public class CafeServiceTest {
     private Category category;
     private Cafe cafe;
 
-
     @Before
     public void setUp() {
         member = new Member("user");

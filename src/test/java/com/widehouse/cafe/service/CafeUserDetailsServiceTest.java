@@ -11,28 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by kiel on 2017. 3. 3..
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@ContextConfiguration(classes = MemberDetailsService.class)
 public class CafeUserDetailsServiceTest {
-    @MockBean
-    private MemberRepository memberRepository;
     @Autowired
     private MemberDetailsService cafeUserDetailsService;
+    @MockBean
+    private MemberRepository memberRepository;
 
     @Test
-    public void loadUserByUsername_Should_Return_User() {
-        // given
+    public void loadUserByUsername_thenReturnUser() {
+        Member member = new Member("user");
         given(memberRepository.findByUsername("user"))
-                .willReturn(new Member("user"));
-        // when
-        UserDetails userDetails = cafeUserDetailsService.loadUserByUsername("user");
-        // then
-        then(userDetails)
-                .hasFieldOrPropertyWithValue("username", "user");
+                .willReturn(member);
+
+        UserDetails result = cafeUserDetailsService.loadUserByUsername("user");
+
+        then(result)
+                .isEqualTo(member)
+                .hasFieldOrPropertyWithValue("enabled", true);
     }
 }

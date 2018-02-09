@@ -61,7 +61,7 @@ public class ArticleRepositoryTest {
 
     @Test
     public void findByCafe_Should_Return_ListArticle() {
-        List<ArticleProjection> articles = articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 2, new Sort(DESC, "id")));
+        List<Article> articles = articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 2, new Sort(DESC, "id")));
 
         then(articles)
                 .hasSize(2)

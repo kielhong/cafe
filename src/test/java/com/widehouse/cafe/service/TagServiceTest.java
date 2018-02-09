@@ -11,21 +11,23 @@ import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by kiel on 2017. 3. 10..
  */
 @RunWith(SpringRunner.class)
-@Import(TagService.class)
+@ContextConfiguration(classes = TagService.class)
 public class TagServiceTest {
     @Autowired
     private TagService tagService;
@@ -34,101 +36,93 @@ public class TagServiceTest {
     @MockBean
     private ArticleRepository articleRepository;
 
+    private Member member;
+    private Cafe cafe;
+    private Board board;
+    private Article article;
+    private Tag tag;
+
+    @Before
+    public void setup() {
+        member = new Member("member");
+        cafe = new Cafe("testurl", "testname");
+        board = new Board(cafe, "board");
+        article = new Article(board, member, "test", "test");
+        tag = new Tag("tag");
+
+        given(tagRepository.findByName("tag"))
+                .willReturn(tag);
+    }
+
     @Test
-    public void getTagsByCafe_Should_ListTagsOfCafe() {
-        // Given
-        Cafe cafe = new Cafe("testurl", "testname");
+    public void getTagsByCafe_thenListTagsOfCafe() {
         Tag tag1 = new Tag("tag1");
         Tag tag2 = new Tag("tag2");
         given(tagRepository.findAllByCafe(cafe))
                 .willReturn(Arrays.asList(tag1, tag2));
-        // when
+
         List<Tag> tags = tagService.getTagsByCafe(cafe);
-        // then
+
         then(tags)
                 .contains(tag1, tag2);
     }
 
     @Test
-    public void getTagsByName_Should_ReturnTagHasName() {
-        String tagName = "tag1";
-        Tag tag = new Tag(tagName);
-        given(tagRepository.findByName(tagName))
-                .willReturn(tag);
-        // when
-        Tag result = tagService.getTagByName(tagName);
-        // then
+    public void getTagsByName_thenTagWithName() {
+        Tag result = tagService.getTagByName("tag");
+
         then(result)
-                .hasFieldOrPropertyWithValue("name", tagName);
+                .isEqualTo(tag);
     }
 
     @Test
-    public void getTagsByName_WhenSpaceIncluded_Should_ReturnTagWithTrimedName() {
-        String tagName = "tagname";
-        Tag tag = new Tag(tagName);
-        given(tagRepository.findByName(tagName))
-                .willReturn(tag);
-        // when
-        Tag result = tagService.getTagByName(" " + tagName + "  ");
-        // then
+    public void getTagsByName_whenTagNameHasSpace_thenReturnTagWithTrimmedName() {
+        Tag result = tagService.getTagByName(" tag  ");
+
         then(result)
-                .hasFieldOrPropertyWithValue("name", tagName);
+                .isEqualTo(tag);
     }
 
     @Test
-    public void getArticlesByTag_WhenCafeAndTag_Should_ReturnArticleHasTagInCafe() {
-        Cafe cafe = new Cafe("testurl", "testname");
-        Board board = new Board(cafe, "board");
-        Member member = new Member("member");
+    public void getArticlesByTag_whenCafeAndTag_thenReturnArticleHasTagInCafe() {
         Article article1 = new Article(board, member, "title1", "content1");
         Article article2 = new Article(board, member, "title2", "content2");
-        Tag tag = new Tag("tagname");
         given(tagRepository.findArticlesByCafeAndTag(cafe, tag))
                 .willReturn(Arrays.asList(article1, article2));
-        // when
+
         List<Article> articles = tagService.getArticlesByTag(cafe, tag);
-        // then
+
         then(articles)
                 .containsOnlyOnce(article1, article2);
     }
 
     @Test
-    public void updateTagsOfArticle_Should_UpdateTags() {
-        // given
-        Cafe cafe = new Cafe("testurl", "testname");
-        Board board = new Board(cafe, "board");
-        Member member = new Member("member");
-        Article article = new Article(board, member, "test", "test");
+    public void updateTagsOfArticle_thenUpdateTags() {
         Tag tag1 = new Tag("tag1");
         Tag tag2 = new Tag("tag2");
         article.getTags().addAll(Arrays.asList(tag1));
         given(tagRepository.findByName("tag2"))
             .willReturn(tag2);
-        // when
+
         tagService.updateTagsOfArticle(article, Arrays.asList(tag2));
-        // then
+
         then(article.getTags())
                 .contains(tag2);
         verify(articleRepository).save(article);
     }
 
     @Test
-    public void updateTagsOfArticle_WhenNotSavedTag_Should_SaveTagAndUpdateTags() {
-        // given
-        Cafe cafe = new Cafe("testurl", "testname");
-        Board board = new Board(cafe, "board");
-        Member member = new Member("member");
-        Article article = new Article(board, member, "test", "test");
+    public void updateTagsOfArticle_whenNotSavedTag_thenSaveTagAndUpdateTags() {
         Tag tag1 = new Tag("tag1");
         Tag tag2 = new Tag("tag2");
-        article.getTags().addAll(Arrays.asList(tag1, tag2));
+        article.getTags().addAll(Arrays.asList(tag1));
         given(tagRepository.findByName("tag2"))
                 .willReturn(null);
         given(tagRepository.save(tag2))
                 .willReturn(tag2);
-        // when
+
         tagService.updateTagsOfArticle(article, Arrays.asList(tag2));
-        // then
+
         then(article.getTags())
                 .contains(tag2);
         verify(tagRepository).save(tag2);

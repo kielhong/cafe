@@ -1,17 +1,18 @@
 package com.widehouse.cafe.api;
 
+import com.widehouse.cafe.annotation.CurrentMember;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.domain.member.MemberRepository;
 import com.widehouse.cafe.service.CommentService;
-import com.widehouse.cafe.service.MemberDetailsService;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import lombok.AllArgsConstructor;
+import java.util.List;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Created by kiel on 2017. 2. 20..
@@ -37,27 +36,21 @@ public class ApiCommentController {
     private CommentRepository commentRepository;
     @Autowired
     private ArticleRepository articleRepository;
-    @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private MemberDetailsService memberDetailsService;
 
     @GetMapping("/articles/{articleId}/comments")
     public List<Comment> getComments(@PathVariable Long articleId,
                                      @RequestParam(defaultValue = "0") Integer page,
-                                     @RequestParam(defaultValue = "10") Integer size) {
-        Member member = memberDetailsService.getCurrentMember();
-
+                                     @RequestParam(defaultValue = "10") Integer size,
+                                     @CurrentMember Member member) {
         List<Comment> comments = commentService.getComments(member, articleId, page, size);
 
         return comments;
     }
 
     @PostMapping("/articles/{articleId}/comments")
-    @Ignore
     public Comment write(@PathVariable Long articleId,
-                         @RequestBody CommentForm input) {
-        Member member = memberDetailsService.getCurrentMember();
+                         @RequestBody CommentForm input,
+                         @CurrentMember Member member) {
         Article article = articleRepository.findById(articleId).get();
 
         return commentService.writeComment(article, member, input.getComment());
@@ -65,15 +58,15 @@ public class ApiCommentController {
 
     @PostMapping("/comments/{commentId}/comments")
     public Comment writeReplyComment(@PathVariable String commentId,
-                                     @RequestBody CommentForm input) {
-        Member member = memberDetailsService.getCurrentMember();
+                                     @RequestBody CommentForm input,
+                                     @CurrentMember Member member) {
         Comment comment = commentRepository.findById(commentId).get();
-        Comment subComment = commentService.writeReplyComment(comment, member, input.getComment());
 
-        return subComment;
+        return commentService.writeReplyComment(comment, member, input.getComment());
     }
 
-    @AllArgsConstructor
+    @NoArgsConstructor
+    @Setter
     @Getter
     public static class CommentForm {
         private String comment;

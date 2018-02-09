@@ -1,12 +1,13 @@
 package com.widehouse.cafe.service;
 
+import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
 import static com.widehouse.cafe.domain.cafemember.CafeMemberRole.MANAGER;
 import static com.widehouse.cafe.domain.cafemember.CafeMemberRole.MEMBER;
+import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -18,17 +19,14 @@ import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
-import com.widehouse.cafe.domain.cafe.CafeVisibility;
 import com.widehouse.cafe.domain.cafe.Category;
-import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.SimpleMember;
 import com.widehouse.cafe.exception.NoAuthorityException;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -36,15 +34,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by kiel on 2017. 2. 12..
  */
 @RunWith(SpringRunner.class)
-@Import(CommentService.class)
+@ContextConfiguration(classes = CommentService.class)
 public class CommentServiceTest {
+    @Autowired
+    private CommentService commentService;
+
     @MockBean
     private CommentRepository commentRepository;
     @MockBean
@@ -54,71 +55,70 @@ public class CommentServiceTest {
     @MockBean
     private CafeMemberRepository cafeMemberRepository;
     @MockBean
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private CommentService commentService;
+    private CafeMemberService cafeMemberService;
 
-    private Cafe cafe;
-    private Board board;
-    private Article article;
     private Member manager;
     private Member commenter;
+    private Cafe cafe;
+    private Article article;
+    private Comment comment;
 
     @Before
     public void setUp() {
         manager = new Member("manager");
-        cafe = new Cafe("testurl", "testname", "", CafeVisibility.PUBLIC, new Category(1L, "test"));
-        board = new Board(cafe,"article");
-        Member writer = new Member("writer");
-        article = new Article(board, writer, "title", "content");
-
         commenter = new Member(1L, "commenter");
+
+        cafe = new Cafe("testurl", "testname", "", PUBLIC, new Category(1L, "test"));
+        Board board = new Board(cafe,"article");
+        article = new Article(1L, board, new Member("writer"), "title", "content",
+                new ArrayList<>(), 0, now(), now());
+        comment = new Comment("commentId", 1L, new SimpleMember(commenter), "comment",
+                new ArrayList<>(), now(), now());
+
+        given(articleRepository.findById(1L))
+                .willReturn(Optional.of(article));
+        given(commentRepository.findById("commentId"))
+                .willReturn(Optional.of(comment));
+        given(cafeMemberService.isCafeMember(cafe, commenter))
+                .willReturn(true);
     }
 
     @Test
-    public void writeComment_Should_CreateComment_IncreaseCafeCommentCount_IncreaseArticleCommentCount() {
-        // given
-        String commentText = "comment";
+    public void writeComment_thenCreateComment_IncreaseCafeCommentCount_IncreaseArticleCommentCount() {
         Long cafeCommentCount = cafe.getStatistics().getCafeCommentCount();
         int articleCommentCount = article.getCommentCount();
-        given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
-                .willReturn(true);
-        // when
-        Comment comment = commentService.writeComment(article, commenter, commentText);
-        // then
-        verify(commentRepository).save(comment);
-        verify(cafeRepository).save(cafe);
-        verify(articleRepository).save(article);
-        assertThat(comment)
+
+        Comment result = commentService.writeComment(article, commenter, "new comment");
+
+        then(result)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
                 .hasFieldOrPropertyWithValue("member.id", commenter.getId())
-                .hasFieldOrPropertyWithValue("comment", commentText);
-        assertThat(cafe.getStatistics().getCafeCommentCount())
+                .hasFieldOrPropertyWithValue("comment", "new comment");
+        then(cafe.getStatistics().getCafeCommentCount())
                 .isEqualTo(cafeCommentCount + 1);
-        assertThat(article.getCommentCount())
+        then(article.getCommentCount())
                 .isEqualTo(articleCommentCount + 1);
+        verify(commentRepository).save(any(Comment.class));
+        verify(cafeRepository).save(cafe);
+        verify(articleRepository).save(article);
     }
 
     @Test
-    public void writeComment_By_NotCafeMember_Thorws_NoAuthorityException() {
-        // Given
+    public void writeComment_withNotCafeMember_thenRaiseNoAuthorityException() {
         Member notCafeMember = new Member("commenter");
-        given(cafeMemberRepository.existsByCafeMember(cafe, notCafeMember))
+        given(cafeMemberService.isCafeMember(cafe, notCafeMember))
                 .willReturn(false);
-        // Then
-        assertThatThrownBy(() -> commentService.writeComment(article, notCafeMember, "comment"))
+
+        thenThrownBy(() -> commentService.writeComment(article, notCafeMember, "comment"))
                 .isInstanceOf(NoAuthorityException.class);
+        verify(commentRepository, never()).save(any(Comment.class));
     }
 
     @Test
-    public void writeReplyComment_Should_Success() {
-        // given
-        Comment comment = new Comment(1L, commenter, "comment");
+    public void writeReplyComment_thenSuccess() {
         Comment writeResult = new Comment(1L, commenter, "comment");
         writeResult.getComments().add(new Comment(1L, commenter, "reply comment"));
-        given(commentRepository.findById(anyString()))
-                .willReturn(Optional.of(comment));
         given(commentRepository.save(comment))
                 .willReturn(writeResult);
         // when
@@ -132,104 +132,94 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void modifyComment_Should_UpdateComment() {
+    public void writeReplyComment_withNotCafeMember_thenRaiseNoAuthorityException() {
+        Member another = new Member("another member");
+        given(cafeMemberService.isCafeMember(cafe, another))
+                .willReturn(false);
+        // when
+        thenThrownBy(() -> commentService.writeReplyComment(comment, another, "reply comment"))
+                .isInstanceOf(NoAuthorityException.class);
+        // then
+        then(comment.getComments())
+                .hasSize(0);
+        verify(commentRepository, never()).save(any(Comment.class));
+    }
+
+    @Test
+    public void modifyComment_withCommenter_thenUpdateComment() {
         // given
-        Comment comment = new Comment(article, commenter, "comment");
         Long beforeCommentCount = cafe.getStatistics().getCafeCommentCount();
         // when
-        commentService.modifyComment(comment, commenter, "another comment");
+        commentService.modifyComment(comment, commenter, "updated comment");
         // then
         then(cafe.getStatistics().getCafeCommentCount())
                 .isEqualTo(beforeCommentCount);
         then(comment)
-                .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
                 .hasFieldOrPropertyWithValue("member.id", commenter.getId())
-                .hasFieldOrPropertyWithValue("comment", "another comment");
+                .hasFieldOrPropertyWithValue("comment", "updated comment");
         then(comment.getUpdateDateTime())
                 .isAfterOrEqualTo(comment.getCreateDateTime());
         verify(commentRepository).save(comment);
     }
 
     @Test
-    public void modifyComment_ByNotCommenter_Throw_NoAuthorityException() {
-        // given
-        Comment comment = new Comment(article, commenter, "comment");
+    public void modifyComment_withNotCommenter_thenRaiseNoAuthorityException() {
         Member another = new Member("another member");
-        // then
-        assertThatThrownBy(() -> commentService.modifyComment(comment, another, "new comment"))
+
+        thenThrownBy(() -> commentService.modifyComment(comment, another, "new comment"))
                 .isInstanceOf(NoAuthorityException.class);
     }
 
     @Test
-    public void deleteComment_ByCommenter_Should_Success_DecreaseCafeCommentCount_DecreaseArticleCommentCount() {
+    public void deleteComment_ByCommenter_thenDeleteComment_DecreaseCounts() {
         // given
-        Comment comment = new Comment("testcomment", article.getId(), new SimpleMember(commenter), "comment",
-                Arrays.asList(), LocalDateTime.now(), LocalDateTime.now());
         Long cafeCommentCount = cafe.getStatistics().getCafeCommentCount();
         int articleCommentCount = article.getCommentCount();
-        given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
-                .willReturn(true);
-        given(articleRepository.findById(comment.getArticleId()))
-                .willReturn(Optional.of(article));
-        given(commentRepository.findById(comment.getId()))
-                .willReturn(Optional.of(comment));
         // when
         commentService.deleteComment(comment.getId(), commenter);
         // then
+        then(cafe.getStatistics().getCafeCommentCount())
+                .isEqualTo(cafeCommentCount - 1 < 0 ? 0 : cafeCommentCount - 1);
+        then(article.getCommentCount())
+                .isEqualTo(articleCommentCount - 1);
         verify(commentRepository).delete(comment);
         verify(cafeRepository).save(cafe);
         verify(articleRepository).save(article);
-        assertThat(cafe.getStatistics().getCafeCommentCount())
-                .isEqualTo(cafeCommentCount - 1);
-        assertThat(article.getCommentCount())
-                .isEqualTo(articleCommentCount - 1);
     }
 
     @Test
-    public void deleteComment_ByCafeManager_Should_Success_DecreaseCommentCount() {
+    public void deleteComment_withCafeManager_thenDeleteComment_DecreaseCounts() {
         // given
-        Comment comment = new Comment("testcomment", article.getId(), new SimpleMember(commenter), "comment",
-                Arrays.asList(), LocalDateTime.now(), LocalDateTime.now());
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
-        given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
-                .willReturn(true);
-        given(articleRepository.findById(comment.getArticleId()))
-                .willReturn(Optional.of(article));
-        given(commentRepository.findById(comment.getId()))
-                .willReturn(Optional.of(comment));
+        int articleCommentCount = article.getCommentCount();
         given(cafeMemberRepository.findByCafeAndMember(cafe, manager))
                 .willReturn(new CafeMember(cafe, manager, MANAGER));
         // when
         commentService.deleteComment(comment.getId(), manager);
         // then
+        assertThat(cafe.getStatistics().getCafeCommentCount())
+                .isEqualTo(beforeCafeStatisticsCommentCount - 1 < 0 ? 0 : beforeCafeStatisticsCommentCount - 1);
+        then(article.getCommentCount())
+                .isEqualTo(articleCommentCount - 1);
         verify(commentRepository).delete(comment);
         verify(cafeRepository).save(cafe);
         verify(articleRepository).save(article);
-        assertThat(cafe.getStatistics().getCafeCommentCount())
-                .isEqualTo(beforeCafeStatisticsCommentCount - 1);
     }
 
     @Test
-    public void deleteComment_ByNotCafeManagerNorNotCommenter_Throw_NoAuthorityException() {
+    public void deleteComment_withNotCommentNorNotCafeManager_thenRaiseNoAuthorityException() {
         // given
-        Comment comment = new Comment("testcomment", article.getId(), new SimpleMember(commenter), "comment",
-                Arrays.asList(), LocalDateTime.now(), LocalDateTime.now());
-        Member member1 = new Member(2L, "another writer");
+        Member anotherMember = new Member(2L, "another writer");
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
-        given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
-                .willReturn(true);
-        given(commentRepository.findById(comment.getId()))
-                .willReturn(Optional.of(comment));
-        given(articleRepository.findById(comment.getArticleId()))
-                .willReturn(Optional.of(article));
-        given(cafeMemberRepository.findByCafeAndMember(cafe, member1))
-                .willReturn(new CafeMember(cafe, member1, MEMBER));
+        given(cafeMemberRepository.findByCafeAndMember(cafe, anotherMember))
+                .willReturn(new CafeMember(cafe, anotherMember, MEMBER));
         // then
-        assertThatThrownBy(() -> commentService.deleteComment(comment.getId(), member1))
+        thenThrownBy(() -> commentService.deleteComment(comment.getId(), anotherMember))
                 .isInstanceOf(NoAuthorityException.class);
-        verify(commentRepository, never()).delete(comment);
-        assertThat(cafe.getStatistics().getCafeCommentCount())
+        then(cafe.getStatistics().getCafeCommentCount())
                 .isEqualTo(beforeCafeStatisticsCommentCount);
+        verify(commentRepository, never()).delete(comment);
+
     }
 }

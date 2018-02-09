@@ -43,7 +43,9 @@ repositories {
     maven { url "http://repo.spring.io/snapshot" }
     maven { url "http://repo.spring.io/milestone" }
 }
-
+// for thymeleaf 3
+project.ext["thymeleaf.version"] = "3.0.9.RELEASE"
+project.ext["thymeleaf-layout-dialect.version"] = "2.2.2"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

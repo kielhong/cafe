@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 
 /**
@@ -30,6 +31,8 @@ import javax.transaction.Transactional;
 @Service
 @Slf4j
 public class CommentService {
+    @Autowired
+    private CafeMemberService cafeMemberService;
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
@@ -42,7 +45,7 @@ public class CommentService {
     @Transactional
     public Comment writeComment(Article article, Member commenter, String commentContent) {
         Cafe cafe = article.getCafe();
-        if (cafeMemberRepository.existsByCafeMember(cafe, commenter)) {
+        if (cafeMemberService.isCafeMember(cafe, commenter)) {
             Comment comment = new Comment(article, commenter, commentContent);
             commentRepository.save(comment);
 
@@ -60,11 +63,16 @@ public class CommentService {
 
     @Transactional
     public Comment writeReplyComment(Comment comment, Member commenter, String commentText) {
-        comment.getComments().add(new Comment(comment.getArticleId(), commenter, commentText));
-        Comment writeResult = commentRepository.save(comment);
+        Optional<Article> article = articleRepository.findById(comment.getArticleId());
+        Cafe cafe = article.get().getCafe();
+        if (cafeMemberService.isCafeMember(cafe, commenter)) {
+            comment.getComments().add(new Comment(comment.getArticleId(), commenter, commentText));
+            Comment writeResult = commentRepository.save(comment);
 
-        log.debug("writeResult : {}", writeResult);
-        return writeResult.getComments().get(writeResult.getComments().size() - 1);
+            return writeResult.getComments().get(writeResult.getComments().size() - 1);
+        } else {
+            throw new NoAuthorityException();
+        }
     }
 
     @Transactional
@@ -95,10 +103,6 @@ public class CommentService {
         } else {
             throw new NoAuthorityException();
         }
-    }
-
-    public Comment getComment(String id) {
-        return null;
     }
 
     public List<Comment> getComments(Member member, Long articleId, int page, int size) {
