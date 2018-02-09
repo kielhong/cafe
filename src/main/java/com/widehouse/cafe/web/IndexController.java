@@ -4,13 +4,14 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 /**
  * Created by kiel on 2017. 2. 21..
@@ -20,6 +21,11 @@ public class IndexController {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    /**
+     * index home
+     * @param model {@link Model}
+     * @return
+     */
     @GetMapping("/")
     public String index(Model model) {
         List<Category> categories = categoryRepository.findAll(new Sort(ASC, "listOrder"));

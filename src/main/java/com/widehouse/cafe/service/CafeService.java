@@ -22,16 +22,17 @@ import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.projection.CafeProjection;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 11..
@@ -58,14 +59,8 @@ public class CafeService {
         cafe.getStatistics().increaseCafeMemberCount();
         cafeRepository.save(cafe);
 
-        addBoard(cafe, "카페태그보기", TAG, 1);
-        addBoard(cafe, "베스트게시물", BEST, 2);
-        addBoard(cafe, "카페 캘린더", CALENDAR, 3);
-        addBoard(cafe, "카페북 책꽂이", BOOK, 4);
-
-        for (int i = 4; i < 8; i++) {
-            addBoard(cafe, "일반 게시판" + i, (i + 1));
-        }
+        addSpecialBoard(cafe);
+        addNormalBoard(cafe, 4, 4);
 
         return cafe;
     }
@@ -91,6 +86,19 @@ public class CafeService {
                 .reduce((a, b) -> b)
                 .orElse(0);
         addBoard(cafe, boardName, lastOrder + 1);
+    }
+
+    private void addSpecialBoard(Cafe cafe) {
+        addBoard(cafe, "카페태그보기",TAG, 1);
+        addBoard(cafe, "베스트게시물",BEST, 2);
+        addBoard(cafe, "카페 캘린더",CALENDAR, 3);
+        addBoard(cafe, "카페북 책꽂이",BOOK, 4);
+    }
+
+    private void addNormalBoard(Cafe cafe, int startOrder, int length) {
+        for (int i = startOrder; i < startOrder + length; i++) {
+            addBoard(cafe, "일반 게시판" + i, (i + 1));
+        }
     }
 
     public void removeBoard(Cafe cafe, Board board) {
@@ -119,6 +127,7 @@ public class CafeService {
 
     /**
      * get {@link Cafe} by cafe id
+     *
      * @param cafeId cafe id
      * @return Cafe Info
      */
@@ -128,6 +137,7 @@ public class CafeService {
 
     /**
      * get {@link Cafe} by cafe url
+     *
      * @param url cafe url
      * @return Cafe Info
      */
@@ -140,5 +150,4 @@ public class CafeService {
 
         return cafe;
     }
-
 }

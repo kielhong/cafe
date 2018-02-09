@@ -1,8 +1,6 @@
 package com.widehouse.cafe.domain.article;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -15,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import lombok.Getter;
 
 /**
  * Created by kiel on 2017. 3. 9..

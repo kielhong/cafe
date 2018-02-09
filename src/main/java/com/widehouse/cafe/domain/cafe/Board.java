@@ -1,15 +1,8 @@
 package com.widehouse.cafe.domain.cafe;
 
-import static com.widehouse.cafe.domain.cafe.BoardType.BEST;
-import static com.widehouse.cafe.domain.cafe.BoardType.BOOK;
-import static com.widehouse.cafe.domain.cafe.BoardType.CALENDAR;
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
-import static com.widehouse.cafe.domain.cafe.BoardType.TAG;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,8 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by kiel on 2017. 2. 11..

@@ -1,5 +1,6 @@
 package com.widehouse.cafe.api;
 
+import com.widehouse.cafe.annotation.CurrentMember;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.article.TagRepository;
@@ -60,9 +61,8 @@ public class ApiTagController {
     }
 
     @GetMapping("/articles/{articleId}/tags")
-    public List<Tag> getTags(@PathVariable Long articleId) {
-        Member member = memberDetailsService.getCurrentMember();
-
+    public List<Tag> getTags(@PathVariable Long articleId,
+                             @CurrentMember Member member) {
         Article article = articleService.getArticle(articleId, member);
 
         return article.getTags();
@@ -70,9 +70,8 @@ public class ApiTagController {
 
     @PostMapping("/articles/{articleId}/tags")
     public List<Tag> postTags(@PathVariable Long articleId,
-                              @RequestBody List<TagForm> tagForms) {
-        Member member = memberDetailsService.getCurrentMember();
-
+                              @RequestBody List<TagForm> tagForms,
+                              @CurrentMember Member member) {
         Article article = articleService.getArticle(articleId, member);
         List<Tag> tags = new ArrayList<>();
         for (TagForm tagForm : tagForms) {

@@ -1,15 +1,13 @@
 package com.widehouse.cafe.api;
 
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
-
-import static org.mockito.BDDMockito.given;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -28,6 +26,9 @@ import com.widehouse.cafe.service.CafeService;
 import com.widehouse.cafe.service.MemberDetailsService;
 import com.widehouse.cafe.service.MemberService;
 import com.widehouse.cafe.service.TagService;
+
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,20 +39,15 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import java.util.Arrays;
 
 /**
  * Created by kiel on 2017. 3. 10..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = ApiTagController.class)
+@WebMvcTest(ApiTagController.class)
 @Import(WebSecurityConfig.class)
 public class ApiTagControllerTest {
     @Autowired
-    private WebApplicationContext context;
     private MockMvc mvc;
     @MockBean
     private CafeService cafeService;
@@ -65,6 +61,8 @@ public class ApiTagControllerTest {
     private MemberRepository memberRepository;
     @MockBean
     private TagRepository tagRepository;
+    @MockBean
+    private MemberDetailsService memberDetailsService;
 
     private Cafe cafe;
     private Board board;
@@ -72,36 +70,28 @@ public class ApiTagControllerTest {
 
     @Before
     public void setUp() {
-        mvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(springSecurity())
-                .build();
-
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
         writer = new Member("writer");
+
+        given(cafeService.getCafe("testurl"))
+                .willReturn(cafe);
     }
 
     @Test
-    public void getTagsByCafe_Should_Success() throws Exception {
-        // given
-        Cafe cafe = new Cafe("testurl", "testcafe");
-        given(cafeService.getCafe("testurl"))
-                .willReturn(cafe);
+    public void getTagsByCafe_thenListTags() throws Exception {
         given(tagService.getTagsByCafe(cafe))
                 .willReturn(Arrays.asList(new Tag("tag1"), new Tag("tag2")));
-        // then
+
         mvc.perform(get("/api/cafes/testurl/tags"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
     }
 
     @Test
-    public void getArticlesByCafe_Should_Success() throws Exception {
+    public void getArticlesByCafe_thenListArticles() throws Exception {
         // given
         Tag tag = new Tag("testtag");
-        given(cafeService.getCafe("testurl"))
-                .willReturn(cafe);
         given(tagService.getTagByName("testtag"))
                 .willReturn(tag);
         given(tagService.getArticlesByTag(cafe, tag))
@@ -115,11 +105,7 @@ public class ApiTagControllerTest {
     }
 
     @Test
-    public void getTags_Should_ListTags() throws Exception {
-        // given
-        Cafe cafe = new Cafe("testurl", "testcafe");
-        Board board = new Board(1L, cafe, "board", LIST, 1);
-        Member writer = new Member("writer");
+    public void getTags_thenListTags() throws Exception {
         Article article = new Article(board, writer, "title", "content");
         article.getTags().add(new Tag("tag1"));
         article.getTags().add(new Tag("tag2"));
@@ -134,7 +120,7 @@ public class ApiTagControllerTest {
     }
 
     @Test
-    public void postTags_WhenArticleWriter_Should_Success() throws Exception {
+    public void postTags_withArticleWriter_thenAddTags() throws Exception {
         // given
         Article article = new Article(board, writer, "article", "content");
         Tag tag1 = new Tag("testtag1");
@@ -156,7 +142,7 @@ public class ApiTagControllerTest {
         // then
         mvc.perform(post("/api/articles/1/tags")
                     .with(user(writer))
-                    .with(csrf().asHeader())
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("[{\"name\":\"testtag1\"},{\"name\":\"testtag3\"},{\"name\":\"testtag4\"}]"))
                 .andExpect(status().isOk())
