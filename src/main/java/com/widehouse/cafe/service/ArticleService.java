@@ -12,15 +12,17 @@ import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.event.ArticleCreateEvent;
 import com.widehouse.cafe.exception.NoAuthorityException;
-import com.widehouse.cafe.projection.ArticleProjection;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * Created by kiel on 2017. 2. 19..
@@ -35,6 +37,8 @@ public class ArticleService {
     private CafeRepository cafeRepository;
     @Autowired
     private TagRepository tagRepository;
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
 
     public List<Article> getArticlesByCafe(Cafe cafe, int page, int size) {
@@ -66,10 +70,7 @@ public class ArticleService {
 
         Article article = articleRepository.save(new Article(board, writer, title, content));
 
-        // TODO : move to async event
-        Cafe cafe = board.getCafe();
-        cafe.getStatistics().increaseArticleCount();
-        cafeRepository.save(cafe);
+        eventPublisher.publishEvent(new ArticleCreateEvent(board.getCafe()));
 
         return article;
     }

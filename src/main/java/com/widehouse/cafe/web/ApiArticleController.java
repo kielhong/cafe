@@ -58,6 +58,14 @@ public class ApiArticleController {
         return articleService.getArticle(articleId, reader);
     }
 
+    /**
+     * POST /api/cafes/{careUrl}/articles.
+     * Create article
+     * @param cafeUrl url of cafe
+     * @param articleForm request article form
+     * @param member current member
+     * @return created {@link Article}
+     */
     @PostMapping(value = "/cafes/{cafeUrl}/articles")
     public Article writeArticle(@PathVariable String cafeUrl,
                                 @RequestBody ArticleForm articleForm,

@@ -142,7 +142,6 @@ public class ArticleServiceTest {
                 .hasFieldOrPropertyWithValue("title", "title")
                 .hasFieldOrPropertyWithValue("content", "content");
         verify(articleRepository).save(any(Article.class));
-        verify(cafeRepository).save(any(Cafe.class));
     }
 
     @Test
@@ -155,7 +154,6 @@ public class ArticleServiceTest {
         thenThrownBy(() -> articleService.writeArticle(board1, writer, "title", "content"))
                 .isInstanceOf(NoAuthorityException.class);
         verify(articleRepository, never()).save(any(Article.class));
-        verify(cafeRepository, never()).save(any(Cafe.class));
     }
 
     @Test
