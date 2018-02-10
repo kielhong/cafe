@@ -3,14 +3,15 @@ package com.widehouse.cafe.web;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.widehouse.cafe.domain.cafe.Category;
+
+import java.time.LocalDateTime;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.time.LocalDateTime;
 
 /**
  * Created by kiel on 2017. 2. 20..

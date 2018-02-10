@@ -5,9 +5,9 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.mongodb.MongoClient;
+import com.widehouse.cafe.config.MongoConfiguration;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.config.MongoConfiguration;
 import com.widehouse.cafe.domain.member.Member;
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
@@ -81,7 +81,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    public void saveCommentTest() throws Exception {
+    public void saveCommentTest() {
         // given
         Comment comment = new Comment(1L, new Member(1L, "member"), "comment");
         // when
@@ -93,7 +93,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    public void saveReplyCommentsTest() throws Exception {
+    public void saveReplyCommentsTest() {
         // given
         Comment comment = new Comment(1L, new Member(1L, "member"), "comment");
         comment.getComments().addAll(

@@ -9,7 +9,7 @@ import org.junit.Test;
  */
 public class CafeVisibilityTest {
     @Test
-    public void valueOf_withPUBLIC_thenPublic() {
+    public void valueOf_withPublic_thenPublic() {
         CafeVisibility visibility = CafeVisibility.valueOf("PUBLIC");
 
         then(visibility)

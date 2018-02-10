@@ -108,6 +108,6 @@ public class IndexControllerTest {
     public void createCafeForm_withNonLogin_thenRedirectLoginForm() throws Exception {
         mvc.perform(get("/createCafe"))
                 .andExpect(status().is3xxRedirection());
-                //.andExpect(redirectedUrl("/login"));
+        //.andExpect(redirectedUrl("/login"));
     }
 }

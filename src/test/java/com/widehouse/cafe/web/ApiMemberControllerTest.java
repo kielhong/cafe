@@ -1,6 +1,7 @@
 package com.widehouse.cafe.web;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -10,9 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.service.MemberDetailsService;
 import com.widehouse.cafe.service.MemberService;
-import com.widehouse.cafe.web.ApiMemberController;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,8 +27,6 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.Arrays;
 
 /**
  * Created by kiel on 2017. 2. 15..
@@ -46,7 +45,7 @@ public class ApiMemberControllerTest {
     @Test
     public void getCafesByMember() throws Exception {
         Member member = new Member(1L, "tester");
-        given(this.memberService.getCafesByMember(member, PageRequest.of(0, 10, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
+        given(memberService.getCafesByMember(member, PageRequest.of(0, 10, new Sort(DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),
                         new Cafe("url3", "name3"), new Cafe("url4", "name4")));
         // then

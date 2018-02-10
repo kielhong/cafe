@@ -8,14 +8,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
-import com.widehouse.cafe.domain.cafe.BoardType;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.Category;
@@ -25,7 +23,6 @@ import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.BoardNotExistsException;
 import com.widehouse.cafe.exception.CafeNotFoundException;
-import com.widehouse.cafe.projection.CafeProjection;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
@@ -104,7 +100,8 @@ public class CafeServiceTest {
                 PageRequest.of(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock4, cafeMock3, cafeMock2, cafeMock1));
 
-        List<Cafe> cafes = cafeService.getCafeByCategory(category.getId(), PageRequest.of(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
+        List<Cafe> cafes = cafeService.getCafeByCategory(category.getId(),
+                PageRequest.of(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
 
         then(cafes)
                 .contains(cafeMock4, cafeMock3, cafeMock2, cafeMock1);
@@ -132,7 +129,8 @@ public class CafeServiceTest {
     @Test
     public void removeBoard_should_remove_board() {
         // given
-        List<Board> boards = Arrays.asList(new Board(cafe, "board1", 1), new Board(cafe, "board3", 3), new Board(cafe, "board3", 4), new Board(cafe, "board4", 2));
+        List<Board> boards = Arrays.asList(new Board(cafe, "board1", 1), new Board(cafe, "board3", 3),
+                new Board(cafe, "board3", 4), new Board(cafe, "board4", 2));
         given(boardRepository.findAllByCafe(eq(cafe), any(Sort.class)))
                 .willReturn(boards);
         Board board = boards.get(1);

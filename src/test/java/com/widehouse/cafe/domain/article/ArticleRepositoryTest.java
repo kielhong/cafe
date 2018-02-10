@@ -6,7 +6,6 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.projection.ArticleProjection;
 
 import java.util.List;
 

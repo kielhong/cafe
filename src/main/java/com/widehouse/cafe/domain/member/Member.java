@@ -43,6 +43,11 @@ public class Member implements UserDetails {
     @Email
     private String email;
 
+    /**
+     * constructor Member.
+     * @param id id of member
+     * @param username username of member
+     */
     public Member(Long id, String username) {
         this.id = id;
         this.username = username;

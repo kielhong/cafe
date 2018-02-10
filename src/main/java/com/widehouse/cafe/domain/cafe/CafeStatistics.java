@@ -1,11 +1,9 @@
 package com.widehouse.cafe.domain.cafe;
 
+import javax.persistence.Embeddable;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
-
-import javax.persistence.Embeddable;
 
 /**
  * Created by kiel on 2017. 2. 10..
@@ -19,12 +17,14 @@ public class CafeStatistics {
     private Long cafeCommentCount;
     private Long cafeVisitCount;
 
-
+    /**
+     * Constructor.
+     */
     public CafeStatistics() {
-        cafeMemberCount = 0L;
-        cafeArticleCount = 0L;
-        cafeCommentCount = 0L;
-        cafeVisitCount = 0L;
+        this.cafeMemberCount = 0L;
+        this.cafeArticleCount = 0L;
+        this.cafeCommentCount = 0L;
+        this.cafeVisitCount = 0L;
     }
 
     public void increaseCafeMemberCount() {
@@ -51,4 +51,3 @@ public class CafeStatistics {
         cafeArticleCount++;
     }
 }
-

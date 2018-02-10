@@ -215,7 +215,7 @@
             <property name="allowMissingThrowsTags" value="true"/>
             <property name="allowMissingReturnTag" value="true"/>
             <property name="minLineCount" value="2"/>
-            <property name="allowedAnnotations" value="Override, Test, Before, GetMapping"/>
+            <property name="allowedAnnotations" value="Override, Test, Before, BeforeClass, AfterClass, GetMapping"/>
             <property name="allowThrowsTagsForSubclasses" value="true"/>
         </module>
         <module name="MethodName">

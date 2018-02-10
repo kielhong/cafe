@@ -33,7 +33,7 @@ public class BoardTest {
     }
 
     @Test
-    public void isSpecialType_withTAG_thenTrue() {
+    public void isSpecialType_withTagType_thenTrue() {
         Board board = new Board(cafe, "test board", TAG, 1);
 
         boolean isSpecialType = board.isSpecialType();
@@ -42,7 +42,7 @@ public class BoardTest {
     }
 
     @Test
-    public void isSpecialType_withBOOK_thenTrue() {
+    public void isSpecialType_withBookType_thenTrue() {
         Board board = new Board(cafe, "test board", BOOK, 1);
 
         boolean isSpecialType = board.isSpecialType();
@@ -51,7 +51,7 @@ public class BoardTest {
     }
 
     @Test
-    public void isSpecialType_withBEST_thenTrue() {
+    public void isSpecialType_withBestType_thenTrue() {
         Board board = new Board(cafe, "test board", BEST, 1);
 
         boolean isSpecialType = board.isSpecialType();
@@ -60,7 +60,7 @@ public class BoardTest {
     }
 
     @Test
-    public void isSpecialType_withCALENDAR_thenTrue() {
+    public void isSpecialType_withCalendarType_thenTrue() {
         Board board = new Board(cafe, "test board", CALENDAR, 1);
 
         boolean isSpecialType = board.isSpecialType();
@@ -69,7 +69,7 @@ public class BoardTest {
     }
 
     @Test
-    public void isSpecialType_withLIST_thenFalse() {
+    public void isSpecialType_withListType_thenFalse() {
         Board board = new Board(cafe, "test board", LIST, 1);
 
         then(board.getType().isSpecialType()).isFalse();

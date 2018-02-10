@@ -25,7 +25,6 @@ import lombok.ToString;
  */
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "url")})
-
 @Getter
 @ToString
 public class Cafe {

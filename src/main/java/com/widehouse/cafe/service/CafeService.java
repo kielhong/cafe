@@ -22,7 +22,6 @@ import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.BoardNotExistsException;
 import com.widehouse.cafe.exception.CafeNotFoundException;
-import com.widehouse.cafe.projection.CafeProjection;
 
 import java.util.Comparator;
 import java.util.List;
@@ -50,6 +49,16 @@ public class CafeService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    /**
+     * Create a Cafe.
+     * @param member member who creates cafe. He/She will be cafe manager
+     * @param url url of cafe
+     * @param name name of cafe
+     * @param description description about cafe
+     * @param visibility PUBLIC or PRIVATE
+     * @param categoryId category of cafe
+     * @return create {@link Cafe}
+     */
     @Transactional
     public Cafe createCafe(Member member, String url, String name, String description,
                            CafeVisibility visibility, Long categoryId) {

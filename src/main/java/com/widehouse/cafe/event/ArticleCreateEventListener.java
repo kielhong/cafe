@@ -16,6 +16,10 @@ public class ArticleCreateEventListener {
     @Autowired
     private CafeRepository cafeRepository;
 
+    /**
+     * listener for article create event.
+     * @param event {@link ArticleCreateEvent}
+     */
     @EventListener
     @Async
     @Transactional

@@ -22,12 +22,12 @@ public class MemberRepositoryTest {
 
     @Test
     public void findByUsername_thenMember() {
-        // given
-        entityManager.persist(new Member("testuser"));
-        // when
-        Member member = memberRepository.findByUsername("testuser");
-        // then
-        then(member)
-                .isNotNull();
+        Member member = new Member("foo");
+        entityManager.persist(member);
+
+        Member result = memberRepository.findByUsername("foo");
+
+        then(result)
+                .isEqualTo(member);
     }
 }

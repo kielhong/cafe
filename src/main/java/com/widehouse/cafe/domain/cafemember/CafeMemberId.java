@@ -1,11 +1,11 @@
 package com.widehouse.cafe.domain.cafemember;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 /**
  * Created by kiel on 2017. 2. 15..

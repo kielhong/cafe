@@ -21,7 +21,7 @@ public class ArticleTest {
     private Article article;
 
     @Before
-    public void init () {
+    public void init() {
         cafe = new Cafe("testcafe", "testcafe");
         board = new Board(cafe, "testboard");
         member = new Member();

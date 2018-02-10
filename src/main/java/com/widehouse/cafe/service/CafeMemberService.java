@@ -21,6 +21,12 @@ public class CafeMemberService {
     @Autowired
     private CafeRepository cafeRepository;
 
+    /**
+     * join member to cafe.
+     * @param cafe cafe to join
+     * @param member member who join
+     * @return joined {@link CafeMember}
+     */
     public CafeMember joinMember(Cafe cafe, Member member) {
         if (!cafeMemberRepository.existsByCafeMember(cafe, member)) {
             CafeMember cafeMember = new CafeMember(cafe, member, MEMBER);
