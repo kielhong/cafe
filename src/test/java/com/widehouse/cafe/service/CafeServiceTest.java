@@ -62,14 +62,10 @@ public class CafeServiceTest {
     @MockBean
     private CategoryRepository categoryRepository;
 
-    @Mock
-    private CafeProjection cafeMock1;
-    @Mock
-    private CafeProjection cafeMock2;
-    @Mock
-    private CafeProjection cafeMock3;
-    @Mock
-    private CafeProjection cafeMock4;
+    private Cafe cafeMock1;
+    private Cafe cafeMock2;
+    private Cafe cafeMock3;
+    private Cafe cafeMock4;
 
     private Member member;
     private Category category;
@@ -108,7 +104,7 @@ public class CafeServiceTest {
                 PageRequest.of(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafeMock4, cafeMock3, cafeMock2, cafeMock1));
 
-        List<CafeProjection> cafes = cafeService.getCafeByCategory(category.getId(), PageRequest.of(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
+        List<Cafe> cafes = cafeService.getCafeByCategory(category.getId(), PageRequest.of(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
 
         then(cafes)
                 .contains(cafeMock4, cafeMock3, cafeMock2, cafeMock1);

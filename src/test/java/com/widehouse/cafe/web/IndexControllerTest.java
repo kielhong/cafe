@@ -30,6 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 /**
  * Created by kiel on 2017. 2. 23..
@@ -86,7 +87,7 @@ public class IndexControllerTest {
         mvc.perform(formLogin()
                     .user("user").password("password"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
+                .andExpect(redirectedUrl("/")).andDo(MockMvcResultHandlers.print());
     }
 
     @Test

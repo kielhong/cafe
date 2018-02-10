@@ -22,7 +22,7 @@ public class IndexController {
     private CategoryRepository categoryRepository;
 
     /**
-     * index home
+     * index home.
      * @param model {@link Model}
      * @return
      */

@@ -8,32 +8,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.widehouse.cafe.config.WebSecurityConfig;
+import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
-import com.widehouse.cafe.projection.CafeProjection;
 import com.widehouse.cafe.service.CafeService;
-import com.widehouse.cafe.web.ApiCategoryController;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.Arrays;
 
 /**
  * Created by kiel on 2017. 2. 15..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = ApiCategoryController.class, secure = false)
-@EnableSpringDataWebSupport
+@WebMvcTest(ApiCategoryController.class)
+@Import(WebSecurityConfig.class)
+@EnableSpringDataWebSupport                 // for Pageable resolve
+@TestPropertySource(properties = {"default.age = 11"})
 public class ApiCategoryControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -41,11 +45,6 @@ public class ApiCategoryControllerTest {
     private CategoryRepository categoryRepository;
     @MockBean
     private CafeService cafeService;
-
-    private CafeProjection cafeMock1;
-    private CafeProjection cafeMock2;
-    private CafeProjection cafeMock3;
-    private CafeProjection cafeMock4;
 
     @Test
     public void getCategories() throws Exception {
@@ -69,7 +68,7 @@ public class ApiCategoryControllerTest {
         // given
         given(this.cafeService.getCafeByCategory(1L,
                 PageRequest.of(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
-                .willReturn(Arrays.asList(cafeMock1, cafeMock2));
+                .willReturn(Arrays.asList(new Cafe("cafe1", "cafe1"), new Cafe("cafe2", "cafe2")));
         // then
         this.mvc.perform(get("/api/categories/1/cafes"))
                 .andExpect(status().isOk())
@@ -82,7 +81,8 @@ public class ApiCategoryControllerTest {
         // given
         given(this.cafeService.getCafeByCategory(1L,
                 PageRequest.of(0, 4, new Sort(DESC, "statistics.cafeMemberCount"))))
-                .willReturn(Arrays.asList(cafeMock1, cafeMock2, cafeMock3, cafeMock4));
+                .willReturn(Arrays.asList(new Cafe("cafe1", "cafe1"), new Cafe("cafe2", "cafe2"),
+                        new Cafe("cafe3", "cafe3"), new Cafe("cafe4", "cafe4")));
         // then
         this.mvc.perform(get("/api/categories/1/cafes?page=0&size=4"))
                 .andExpect(status().isOk())

@@ -37,6 +37,14 @@ public class ApiCommentController {
     @Autowired
     private ArticleRepository articleRepository;
 
+    /**
+     * GET /api/articles/{articleId}/comments.
+     * @param articleId id of Article
+     * @param page page
+     * @param size size
+     * @param member current member
+     * @return list of {@link Comment}
+     */
     @GetMapping("/articles/{articleId}/comments")
     public List<Comment> getComments(@PathVariable Long articleId,
                                      @RequestParam(defaultValue = "0") Integer page,
@@ -47,6 +55,14 @@ public class ApiCommentController {
         return comments;
     }
 
+    /**
+     * POST /api/articles/{articleId}/comments.
+     * Create comment on article
+     * @param articleId id of article
+     * @param input comment request form
+     * @param member current member
+     * @return created {@link Comment}
+     */
     @PostMapping("/articles/{articleId}/comments")
     public Comment write(@PathVariable Long articleId,
                          @RequestBody CommentForm input,
@@ -56,6 +72,14 @@ public class ApiCommentController {
         return commentService.writeComment(article, member, input.getComment());
     }
 
+    /**
+     * POST /api/comments/{commentId}/comments.
+     * Create reply comment on comment
+     * @param commentId id of comment
+     * @param input request comment form
+     * @param member current member
+     * @return created reply {@link Comment}
+     */
     @PostMapping("/comments/{commentId}/comments")
     public Comment writeReplyComment(@PathVariable String commentId,
                                      @RequestBody CommentForm input,

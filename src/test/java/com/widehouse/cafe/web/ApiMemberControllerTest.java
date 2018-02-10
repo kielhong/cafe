@@ -1,11 +1,13 @@
 package com.widehouse.cafe.web;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.MemberDetailsService;
@@ -17,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
@@ -30,27 +33,25 @@ import java.util.Arrays;
  * Created by kiel on 2017. 2. 15..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = ApiMemberController.class, secure = false)
+@WebMvcTest(ApiMemberController.class)
+@Import(WebSecurityConfig.class)
 @EnableSpringDataWebSupport
 public class ApiMemberControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private MemberDetailsService memberDetailsService;
-    @MockBean
     private MemberService memberService;
 
     @Test
     public void getCafesByMember() throws Exception {
-        Member member = new Member("tester");
-        given(this.memberDetailsService.getCurrentMember())
-                .willReturn(member);
+        Member member = new Member(1L, "tester");
         given(this.memberService.getCafesByMember(member, PageRequest.of(0, 10, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),
                         new Cafe("url3", "name3"), new Cafe("url4", "name4")));
         // then
-        this.mockMvc.perform(get("/api/members/my/cafes"))
+        this.mockMvc.perform(get("/api/members/my/cafes")
+                            .with(user(member)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.length()").value(4))
@@ -63,14 +64,13 @@ public class ApiMemberControllerTest {
     @Test
     public void getCafesByMemberWithPaging() throws Exception {
         Member member = new Member("tester");
-        given(this.memberDetailsService.getCurrentMember())
-                .willReturn(member);
         given(this.memberService.getCafesByMember(member,
                 PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),
                         new Cafe("url3", "name3")));
         // then
-        this.mockMvc.perform(get("/api/members/my/cafes?page=0&size=3&sort=cafe.createDateTime,desc"))
+        this.mockMvc.perform(get("/api/members/my/cafes?page=0&size=3&sort=cafe.createDateTime,desc")
+                            .with(user(member)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.length()").value(3))

@@ -1,5 +1,7 @@
 package com.widehouse.cafe.web.exception;
 
+import com.widehouse.cafe.exception.BoardNotExistsException;
+import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,5 +16,10 @@ public class GlobalControllerExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(NoAuthorityException.class)
     public void handleNoAuthority() {
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler({CafeNotFoundException.class, BoardNotExistsException.class})
+    public void handleResourceNotExistsException() {
     }
 }

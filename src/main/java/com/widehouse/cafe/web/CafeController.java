@@ -23,7 +23,7 @@ public class CafeController {
     private CafeService cafeService;
 
     /**
-     * cafe home
+     * cafe home.
      * @param url cafe url
      * @param model {@link Model}
      * @return cafe view

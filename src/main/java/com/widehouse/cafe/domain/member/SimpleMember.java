@@ -4,9 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Size;
-
 /**
  * Created by kiel on 2017. 3. 15..
  */

@@ -69,10 +69,10 @@ public class CafeRepositoryTest {
         cafe2.getStatistics().setCafeMemberCount(5L);
         cafe3.getStatistics().setCafeMemberCount(2L);
 
-        List<CafeProjection> cafes = cafeRepository.findByCategory(category1,
+        List<Cafe> result = cafeRepository.findByCategory(category1,
                 PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
 
-        assertThat(cafes)
+        assertThat(result)
                 .extracting("cafeMemberCount")
                 .containsExactly(10L, 5L, 2L);
     }
@@ -83,7 +83,7 @@ public class CafeRepositoryTest {
         cafe2.getStatistics().setCafeMemberCount(5L);
         cafe3.getStatistics().setCafeMemberCount(2L);
 
-        List<CafeProjection> cafes = cafeRepository.findByCategoryId(category1.getId(),
+        List<Cafe> cafes = cafeRepository.findByCategoryId(category1.getId(),
                 PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
 
         assertThat(cafes)

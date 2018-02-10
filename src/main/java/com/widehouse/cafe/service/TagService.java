@@ -5,13 +5,14 @@ import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by kiel on 2017. 3. 10..
@@ -25,9 +26,7 @@ public class TagService {
     private ArticleRepository articleRepository;
 
     public Tag getTagByName(String tagName) {
-        Tag tag = tagRepository.findByName(tagName.trim());
-
-        return tag;
+        return tagRepository.findByName(tagName.trim());
     }
 
     public List<Tag> getTagsByCafe(Cafe cafe) {
@@ -38,6 +37,11 @@ public class TagService {
         return tagRepository.findArticlesByCafeAndTag(cafe, tag);
     }
 
+    /**
+     * update tags.
+     * @param article Article
+     * @param tagForms request form of tag
+     */
     @Transactional
     public void updateTagsOfArticle(Article article, List<Tag> tagForms) {
         List<Tag> tags = new ArrayList<>();

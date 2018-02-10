@@ -52,6 +52,5 @@ public class CafeControllerTest {
                 .andExpect(view().name("cafe"))
                 .andExpect(model().attribute("cafe", cafe))
                 .andExpect(model().attribute("boards", boards));
-
     }
 }

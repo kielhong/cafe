@@ -66,7 +66,7 @@ public class CafeService {
         return cafe;
     }
 
-    public List<CafeProjection> getCafeByCategory(Long categoryId, Pageable pageable) {
+    public List<Cafe> getCafeByCategory(Long categoryId, Pageable pageable) {
         return cafeRepository.findByCategoryId(categoryId, pageable);
     }
 

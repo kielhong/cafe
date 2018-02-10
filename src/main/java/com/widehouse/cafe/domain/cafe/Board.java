@@ -21,12 +21,12 @@ import lombok.NoArgsConstructor;
  * Created by kiel on 2017. 2. 11..
  */
 @Entity
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class Board {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -41,12 +41,13 @@ public class Board {
 
     private int listOrder;
 
-    public Board(Cafe cafe ,String name, BoardType type, int listOrder) {
+    public Board(Cafe cafe, String name, BoardType type, int listOrder) {
         this.cafe = cafe;
         this.name = name;
         this.type = type;
         this.listOrder = listOrder;
     }
+
     public Board(Cafe cafe, String name, int listOrder) {
         this(cafe, name, LIST, listOrder);
     }

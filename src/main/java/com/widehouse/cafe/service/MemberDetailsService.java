@@ -2,14 +2,12 @@ package com.widehouse.cafe.service;
 
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.MemberRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 /**
  * Created by kiel on 2017. 3. 3..
@@ -27,16 +25,5 @@ public class MemberDetailsService implements UserDetailsService {
         }
 
         return member;
-    }
-
-    @Transactional
-    public Member getCurrentMember() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof Member) {
-            return (Member)principal;
-        } else {
-            return null;
-        }
     }
 }

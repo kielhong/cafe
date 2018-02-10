@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.BoardRepository;
 import com.widehouse.cafe.domain.cafe.Cafe;
@@ -15,11 +16,13 @@ import com.widehouse.cafe.web.ApiBoardController;
 import java.util.Arrays;
 import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,38 +30,55 @@ import org.springframework.test.web.servlet.MockMvc;
  * Created by kiel on 2017. 2. 25..
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = ApiBoardController.class, secure = false)
+@WebMvcTest(ApiBoardController.class)
+@Import(WebSecurityConfig.class)
 public class ApiBoardControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
-    private BoardRepository boardRepository;
-    @MockBean
     private CafeService cafeService;
 
+    private Cafe cafe;
+
+    @Before
+    public void setup() {
+        cafe = new Cafe(1L, "testurl", "testcafe");
+
+        given(cafeService.getCafe("testurl"))
+                .willReturn(cafe);
+    }
+
     @Test
-    public void getBoard_Should_ReturnBoard() throws Exception {
-        Cafe cafe = new Cafe("testurl", "testcafe");
+    public void getBoard_thenReturnBoard() throws Exception {
         Board board = new Board(1L, cafe, "board", LIST, 1);
-        given(boardRepository.findById(1L))
-                .willReturn(Optional.of(board));
-        // then
-        mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/boards/" + board.getId()))
+        given(cafeService.getBoard(1L))
+                .willReturn(board);
+
+        mvc.perform(get("/api/cafes/testurl/boards/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("board"));
     }
 
     @Test
-    public void getBoardsByCafe_Should_ReturnBoardListOfCafe() throws Exception {
-        // given
-        Cafe cafe = new Cafe("testurl", "testcafe");
-        given(cafeService.getCafe("testurl"))
-                .willReturn(cafe);
+    public void getBoard_withOtherCafe_then404NotFound() throws Exception {
+        Cafe otherCafe = new Cafe(2L, "otherturl", "othercafe");
+        Board board = new Board(1L, cafe, "board", LIST, 1);
+        given(cafeService.getCafe("otherurl"))
+                .willReturn(otherCafe);
+        given(cafeService.getBoard(1L))
+                .willReturn(board);
+
+        mvc.perform(get("/api/cafes/otherurl/boards/1"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void getBoardsByCafe_thenListBoardsInCafe() throws Exception {
         given(cafeService.listBoard(cafe))
                 .willReturn(Arrays.asList(new Board(cafe, "board1", 1), new Board(cafe, "board2", 2)));
-        // then
-        mvc.perform(get("/api/cafes/" + cafe.getUrl() + "/boards"))
+
+        mvc.perform(get("/api/cafes/testurl/boards"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
     }

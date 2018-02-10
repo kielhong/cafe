@@ -10,9 +10,15 @@ import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
+import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafe.CafeVisibility;
+import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,27 +27,28 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by kiel on 2017. 2. 20..
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@ContextConfiguration(classes = CommentService.class)
 public class CommentListServiceTest {
+    @Autowired
+    private CommentService commentService;
+
+    @MockBean
+    private CafeMemberService cafeMemberService;
     @MockBean
     private CommentRepository commentRepository;
+    @MockBean
+    private CafeRepository cafeRepository;
     @MockBean
     private ArticleRepository articleRepository;
     @MockBean
     private CafeMemberRepository cafeMemberRepository;
-
-    @Autowired
-    private CommentService commentService;
 
     private Cafe cafe;
     private Board board;
@@ -73,7 +80,7 @@ public class CommentListServiceTest {
     @Test
     public void getComments_Should_ListComments() {
         // given
-        given(cafeMemberRepository.existsByCafeMember(cafe, commenter))
+        given(cafeMemberService.isCafeMember(cafe, commenter))
                 .willReturn(true);
         given(articleRepository.findById(article.getId()))
                 .willReturn(Optional.of(article));
@@ -91,7 +98,7 @@ public class CommentListServiceTest {
         // given
         Member nonCafeMember = new Member("noncafemember");
         cafe.updateInfo(cafe.getName(), "", CafeVisibility.PRIVATE, cafe.getCategory());
-        given(cafeMemberRepository.existsByCafeMember(cafe, nonCafeMember))
+        given(cafeMemberService.isCafeMember(cafe, nonCafeMember))
                 .willReturn(false);
         given(articleRepository.findById(article.getId()))
                 .willReturn(Optional.of(article));

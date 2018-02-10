@@ -98,4 +98,8 @@ public class Cafe {
     //                .findFirst()
     //                .orElse(null);
     //    }
+
+    public Long getCafeMemberCount() {
+        return this.getStatistics().getCafeMemberCount();
+    }
 }
