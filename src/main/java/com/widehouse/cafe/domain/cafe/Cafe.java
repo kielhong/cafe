@@ -1,8 +1,10 @@
 package com.widehouse.cafe.domain.cafe;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,8 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 /**
@@ -25,8 +29,8 @@ import lombok.ToString;
  */
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "url")})
+@EntityListeners(AuditingEntityListener.class)
 @Getter
-@ToString
 public class Cafe {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,14 +54,14 @@ public class Cafe {
     @Size(max = 1000)
     private String description;
 
-    private LocalDateTime createDateTime;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @Embedded
     private CafeStatistics statistics;
 
     public Cafe() {
         this.statistics = new CafeStatistics();
-        this.createDateTime = LocalDateTime.now();
     }
 
     public Cafe(Long id, String url, String name) {
@@ -75,7 +79,6 @@ public class Cafe {
 
     public Cafe(String url, String name, String description, CafeVisibility visibility, Category category) {
         this();
-        System.out.println("Cafe()");
         this.url = url;
         this.name = name;
         this.description = description;

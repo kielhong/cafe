@@ -2,7 +2,7 @@ create table article (
     id bigint not null auto_increment,
     comment_count integer not null,
     content longtext,
-    create_date_time datetime,
+    created_at datetime,
     title varchar(1000),
     update_date_time datetime,
     board_id bigint,
