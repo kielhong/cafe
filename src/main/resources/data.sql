@@ -18,8 +18,8 @@ INSERT INTO cafe(category_id, url, name, description, visibility, cafe_article_c
 INSERT INTO cafe(category_id, url, name, description, visibility, cafe_article_count, cafe_comment_count, cafe_member_count, cafe_visit_count, create_date_time) values (1,'gamecafe13','샌드박스 팬 카페','샌드박스 팬 카페입니다','PUBLIC', 898790, 1231312, 58582, 123123, '2014-03-21 01:02:03');
 
 /** Member **/
-INSERT INTO member(id, username, nickname, password) VALUES (1, 'kiel', '키엘', '1234');
-INSERT INTO member(id, username, nickname, password) VALUES (2, 'user', '테스트유저', 'password');
+INSERT INTO member(id, username, password) VALUES (1, 'kiel', '1234');
+INSERT INTO member(id, username, password) VALUES (2, 'user', 'password');
 
 /** CafeMember **/
 INSERT INTO cafe_member(cafe_id, member_id, role, join_date) VALUES (1, 1, 'MANAGER', now());
@@ -64,16 +64,16 @@ INSERT INTO article(board_id, writer_id, title, content, comment_count, create_d
 VALUES (2, 1, '테스트 1010번째 보드 2글', '테스트 글 내용 10', 0, now(), now());
 
 /** Comment **/
-INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다1', now(), now());
-INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다2', now(), now());
-INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다3', now(), now());
-INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다4', now(), now());
-INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다5', now(), now());
-INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다6', now(), now());
-INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다7', now(), now());
-INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다8', now(), now());
-INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다9', now(), now());
-INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다10', now(), now());
+--INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다1', now(), now());
+--INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다2', now(), now());
+--INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다3', now(), now());
+--INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다4', now(), now());
+--INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다5', now(), now());
+--INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다6', now(), now());
+--INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다7', now(), now());
+--INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다8', now(), now());
+--INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다9', now(), now());
+--INSERT INTO comment(article_id, commenter_id, comment, create_date_time, update_date_time) VALUES (1, 1, '덧글입니다10', now(), now());
 
 /** Tag **/
 INSERT INTO tag(id, name, create_date_time) VALUES (1, '태그', now());

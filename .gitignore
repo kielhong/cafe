@@ -5,6 +5,7 @@
 
 ### IntelliJ IDEA ###
 .idea
+*.iml
 
 ### Mac Files ###
 .DS_Store

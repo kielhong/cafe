@@ -1,17 +1,17 @@
 spring:
-  jackson:
-    serialization.write-dates-as-timestamps: false
+#  jackson:
+#    serialization.write-dates-as-timestamps: false
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:cafe;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:cafe;MODE=MYSQL
   jpa:
+    generate-ddl: true
+    hibernate.ddl-auto: create-drop
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        dialect: org.hibernate.dialect.MySQL5Dialect
         format_sql: true
     show-sql: true
-    hibernate.ddl-auto: none
-    generate-ddl: true
   h2:
     console:
       enabled: true
@@ -19,7 +19,3 @@ spring:
   resources.chain.cache : false
   thymeleaf:
     cache: false
-logging:
-  level:
-    com.widehouse: DEBUG
-    org.springframework: ERROR

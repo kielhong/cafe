@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
  * Created by kiel on 2017. 2. 11..
  */
 @Entity
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
