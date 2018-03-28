@@ -1,11 +1,9 @@
 package com.widehouse.cafe.web;
 
-import static org.springframework.data.domain.Sort.Direction.ASC;
-
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
-import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.service.CafeService;
+import com.widehouse.cafe.service.CategoryService;
 
 import java.util.List;
 
@@ -16,7 +14,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,21 +25,17 @@ public class ApiCategoryController {
     @Autowired
     private CafeService cafeService;
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @GetMapping("categories")
     public List<Category> getCategories() {
-        List<Category> categories = categoryRepository.findAll(new Sort(ASC, "listOrder"));
-
-        return categories;
+        return categoryService.findAll("listOrder");
     }
 
     @GetMapping("categories/{categoryId}/cafes")
     public List<Cafe> getCafesByCategory(@PathVariable Long categoryId,
                                          @PageableDefault(direction = Sort.Direction.DESC,
-                                                 sort = "statistics.cafeMemberCount") Pageable pageable,
-                                         @RequestParam(defaultValue = "${default.age}") Integer age) {
-        System.out.println("age = " + age);
+                                                 sort = "statistics.cafeMemberCount") Pageable pageable) {
         List<Cafe> cafes = cafeService.getCafeByCategory(categoryId, pageable);
 
         return cafes;

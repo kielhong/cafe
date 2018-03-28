@@ -1,7 +1,6 @@
 package com.widehouse.cafe.web;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -11,8 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.cafe.Category;
-import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.service.CafeService;
+import com.widehouse.cafe.service.CategoryService;
 
 import java.util.Arrays;
 
@@ -26,7 +25,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,19 +35,18 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(ApiCategoryController.class)
 @Import(WebSecurityConfig.class)
 @EnableSpringDataWebSupport                 // for Pageable resolve
-@TestPropertySource(properties = {"default.age = 11"})
 public class ApiCategoryControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
     @MockBean
     private CafeService cafeService;
 
     @Test
     public void getCategories() throws Exception {
         // given
-        given(categoryRepository.findAll(new Sort(ASC, "listOrder")))
+        given(categoryService.findAll("listOrder"))
                 .willReturn(Arrays.asList(
                         new Category("Games", 1),
                         new Category("Comics", 2),

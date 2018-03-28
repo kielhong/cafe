@@ -38,7 +38,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 @RunWith(SpringRunner.class)
 @WebMvcTest(IndexController.class)
 @Import(WebSecurityConfig.class)
-// https://github.com/spring-projects/spring-boot/issues/6514
 public class IndexControllerTest {
     @Autowired
     private MockMvc mvc;

@@ -59,9 +59,9 @@ dependencies {
     testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo:${flapdoodleVersion}")
 }
 
-//bootRun {
-//    addResources = true
-//}
+bootRun {
+    sourceResources sourceSets.main
+}
 
 flyway {
     url = 'jdbc:h2:file:./target/cafe'
