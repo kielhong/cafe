@@ -69,7 +69,7 @@ public class CafeServiceTest {
 
     @Before
     public void setUp() {
-        member = new Member("user");
+        member = new Member(1L, "user", "password", "foo@bar.com");
         category = new Category(1L, "category");
         cafe = new Cafe("testurl", "testname", "desc", PUBLIC, category);
 

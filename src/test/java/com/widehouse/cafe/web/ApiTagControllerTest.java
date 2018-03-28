@@ -63,7 +63,7 @@ public class ApiTagControllerTest {
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
-        writer = new Member("writer");
+        writer = new Member(1L, "writer", "password", "writer@bar.com");
 
         given(cafeService.getCafe("testurl"))
                 .willReturn(cafe);

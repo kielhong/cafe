@@ -9,22 +9,14 @@ import org.junit.Test;
  */
 public class MemberTest {
     @Test
-    public void constructor_withIdAndUsername() {
-        Member result = new Member(1L, "foo");
+    public void constructorTest() {
+        Member result = new Member(1L, "foo", "password", "foo@bar.com");
 
         then(result)
                 .hasFieldOrPropertyWithValue("id", 1L)
                 .hasFieldOrPropertyWithValue("username", "foo")
-                .hasFieldOrPropertyWithValue("password", "");
+                .hasFieldOrPropertyWithValue("password", "password")
+                .hasFieldOrPropertyWithValue("email", "foo@bar.com");
     }
 
-    @Test
-    public void constructor_withUsername() {
-        Member result = new Member("foo");
-
-        then(result)
-                .hasFieldOrPropertyWithValue("id", null)
-                .hasFieldOrPropertyWithValue("username", "foo")
-                .hasFieldOrPropertyWithValue("password", "");
-    }
 }

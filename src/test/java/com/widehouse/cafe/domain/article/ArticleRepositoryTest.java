@@ -47,7 +47,7 @@ public class ArticleRepositoryTest {
         entityManager.persist(board1);
         Board board2 = new Board(cafe, "board2");
         entityManager.persist(board2);
-        writer = new Member("writer");
+        writer = new Member("writer", "password", "writer@bar.com");
         entityManager.persist(writer);
 
         article1 = new Article(board1, writer, "test article1", "test1");
@@ -63,9 +63,7 @@ public class ArticleRepositoryTest {
         List<Article> articles = articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 2, new Sort(DESC, "id")));
 
         then(articles)
-                .hasSize(2)
-                .extracting("id")
-                .containsExactly(article3.getId(), article2.getId());
+                .containsExactly(article3, article2);
     }
 
     @Test

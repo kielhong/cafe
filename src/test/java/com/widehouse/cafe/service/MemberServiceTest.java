@@ -32,7 +32,7 @@ public class MemberServiceTest {
 
     @Test
     public void getCafesByMember_thenListCafes() {
-        Member member = new Member("member");
+        Member member = new Member(1L, "member", "password", "foo@bar.com");
         Cafe cafe1 = new Cafe("url1", "name1");
         Cafe cafe2 = new Cafe("url2", "name2");
         Cafe cafe3 = new Cafe("url3", "name3");

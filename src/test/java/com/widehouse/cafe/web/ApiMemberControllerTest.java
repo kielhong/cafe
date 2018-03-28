@@ -44,7 +44,7 @@ public class ApiMemberControllerTest {
 
     @Test
     public void getCafesByMember() throws Exception {
-        Member member = new Member(1L, "tester");
+        Member member = new Member(1L, "tester", "password", "foo@bar.com");
         given(memberService.getCafesByMember(member, PageRequest.of(0, 10, new Sort(DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),
                         new Cafe("url3", "name3"), new Cafe("url4", "name4")));
@@ -62,7 +62,7 @@ public class ApiMemberControllerTest {
 
     @Test
     public void getCafesByMemberWithPaging() throws Exception {
-        Member member = new Member("tester");
+        Member member = new Member(1L, "tester", "password", "foo@bar.com");
         given(this.memberService.getCafesByMember(member,
                 PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),

@@ -45,7 +45,7 @@ public class ApiArticleControllerIntTest {
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
-        writer = new Member(1L, "writer");
+        writer = new Member(1L, "writer", "password", "foo@bar.com");
     }
 
     @Test

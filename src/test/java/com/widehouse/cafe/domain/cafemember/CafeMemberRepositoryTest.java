@@ -35,7 +35,7 @@ public class CafeMemberRepositoryTest {
 
     @Before
     public void setUp() {
-        member = new Member("member");
+        member = new Member("member", "password", "foo@bar.com");
         entityManager.persist(member);
 
         cafe = new Cafe("testurl", "testcafe");

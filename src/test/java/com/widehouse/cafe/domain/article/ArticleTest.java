@@ -40,7 +40,8 @@ public class ArticleTest {
                 .hasFieldOrPropertyWithValue("title", "test title")
                 .hasFieldOrPropertyWithValue("content", "test content")
                 .hasFieldOrPropertyWithValue("commentCount", 0)
-                .hasFieldOrProperty("createDateTime");
+                .hasFieldOrProperty("createdAt")
+                .hasFieldOrProperty("updatedAt");
     }
 
     @Test
@@ -56,8 +57,8 @@ public class ArticleTest {
                 .hasFieldOrPropertyWithValue("title", "modify title")
                 .hasFieldOrPropertyWithValue("content", "modify content")
                 .hasFieldOrPropertyWithValue("commentCount", commentCount);
-        then(article.getUpdateDateTime())
-                .isAfterOrEqualTo(article.getCreateDateTime());
+        then(article.getUpdatedAt())
+                .isAfterOrEqualTo(article.getCreatedAt());
     }
 
     @Test

@@ -43,20 +43,10 @@ public class Member implements UserDetails {
     @Email
     private String email;
 
-    /**
-     * constructor Member.
-     * @param id id of member
-     * @param username username of member
-     */
-    public Member(Long id, String username) {
-        this.id = id;
+    public Member(@Size(max = 30) String username, String password, @Email String email) {
         this.username = username;
-        this.password = "";
-    }
-
-    public Member(String username) {
-        this.username = username;
-        this.password = "";
+        this.password = password;
+        this.email = email;
     }
 
     @Override

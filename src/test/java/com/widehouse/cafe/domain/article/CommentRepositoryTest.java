@@ -57,6 +57,8 @@ public class CommentRepositoryTest {
     private static final String HOST = "localhost";
     private static final int PORT = 12345;
 
+    private Member member;
+
     @BeforeClass
     public static void initAll() throws Exception {
         _mongodExe = starter.prepare(new MongodConfigBuilder()
@@ -78,12 +80,14 @@ public class CommentRepositoryTest {
     public void init() {
         template = new MongoTemplate(mongo, "test");
         template.dropCollection(Comment.class);
+
+        member = new Member(1L, "member", "password", "foo@bar.com");
     }
 
     @Test
     public void saveCommentTest() {
         // given
-        Comment comment = new Comment(1L, new Member(1L, "member"), "comment");
+        Comment comment = new Comment(1L, member, "comment");
         // when
         commentRepository.save(comment);
         // then
@@ -95,11 +99,11 @@ public class CommentRepositoryTest {
     @Test
     public void saveReplyCommentsTest() {
         // given
-        Comment comment = new Comment(1L, new Member(1L, "member"), "comment");
+        Comment comment = new Comment(1L, member, "comment");
         comment.getComments().addAll(
                 Arrays.asList(
-                    new Comment(1L, new Member(1L, "member"), "subcomment1"),
-                    new Comment(1L, new Member(1L, "member"), "subcomment2")));
+                    new Comment(1L, member, "subcomment1"),
+                    new Comment(1L, member, "subcomment2")));
         // when
         template.save(comment);
         // then
@@ -114,9 +118,8 @@ public class CommentRepositoryTest {
         // given
         Cafe cafe = new Cafe("testcafe", "testcafe");
         Board board = new Board(cafe, "board");
-        Member writer = new Member(1L, "member");
-        Member commenter = new Member(2L, "commenter");
-        Article article = new Article(1L, board, writer, "title", "content", Collections.emptyList(), 0, now(), now());
+        Member commenter = new Member(2L, "commenter", "password", "comment@bar.com");
+        Article article = new Article(1L, board, member, "title", "content", Collections.emptyList(), 0, now(), now());
 
         Comment comment1 = new Comment(article, commenter, "comment1");
         template.insert(comment1);

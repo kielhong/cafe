@@ -67,7 +67,7 @@ public class ApiCommentControllerTest {
 
     @Before
     public void setUp() {
-        member = new Member(1L, "member");
+        member = new Member(1L, "member", "password", "foo@bar.com");
 
         Cafe cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category", 1));
         Board board = new Board(cafe, "board");

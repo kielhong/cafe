@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,12 +23,15 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * Created by kiel on 2017. 2. 10..
  */
 @Entity
-
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -56,9 +60,11 @@ public class Article {
 
     private int commentCount;
 
-    private LocalDateTime createDateTime;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updateDateTime;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     public Article(Board board, Member writer, String title, String content) {
         this.board = board;
@@ -67,13 +73,13 @@ public class Article {
         this.content = content;
         this.commentCount = 0;
         this.tags = new ArrayList<>();
-        this.createDateTime = this.updateDateTime = LocalDateTime.now();
+        this.createdAt = this.updatedAt = LocalDateTime.now();
     }
 
     public void modify(String title, String content) {
         this.title = title;
         this.content = content;
-        this.updateDateTime = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     public void moveBoard(Board board) {

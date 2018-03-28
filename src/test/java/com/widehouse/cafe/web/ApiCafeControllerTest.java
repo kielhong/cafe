@@ -72,7 +72,7 @@ public class ApiCafeControllerTest {
     @Test
     public void createCafe_WithLoginMember_Should_CreateCafe() throws Exception {
         // given
-        Member member = new Member("member");
+        Member member = new Member(1L, "member", "password", "foo@bar.com");
         given(cafeService.createCafe(member, "testurl", "testcafe", "desc", PUBLIC, 1L))
                 .willReturn(new Cafe("testurl", "testcafe", "desc", PUBLIC, new Category(1L, "testcategory")));
         String requestContent = "{\"name\": \"testcafe\", \"url\": \"testurl\", \"description\": \"desc\", "

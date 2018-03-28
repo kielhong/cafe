@@ -65,12 +65,13 @@ public class CommentServiceTest {
 
     @Before
     public void setUp() {
-        manager = new Member("manager");
-        commenter = new Member(1L, "commenter");
+        manager = new Member(1L, "manager", "password", "manager@bar.com");
+        commenter = new Member(2L, "commenter", "password", "commeter@bar.com");
+        Member writer = new Member(3L, "writer", "password", "writer@bar.com");
 
         cafe = new Cafe("testurl", "testname", "", PUBLIC, new Category(1L, "test"));
         Board board = new Board(cafe,"article");
-        article = new Article(1L, board, new Member("writer"), "title", "content",
+        article = new Article(1L, board, writer, "title", "content",
                 new ArrayList<>(), 0, now(), now());
         comment = new Comment("commentId", 1L, new SimpleMember(commenter), "comment",
                 new ArrayList<>(), now(), now());
@@ -106,7 +107,7 @@ public class CommentServiceTest {
 
     @Test
     public void writeComment_withNotCafeMember_thenRaiseNoAuthorityException() {
-        Member notCafeMember = new Member("commenter");
+        Member notCafeMember = new Member(4L, "commenter", "password", "commeter@bar.com");
         given(cafeMemberService.isCafeMember(cafe, notCafeMember))
                 .willReturn(false);
 
@@ -133,7 +134,7 @@ public class CommentServiceTest {
 
     @Test
     public void writeReplyComment_withNotCafeMember_thenRaiseNoAuthorityException() {
-        Member another = new Member("another member");
+        Member another = new Member(4L, "another_member", "password", "amember@bar.com");
         given(cafeMemberService.isCafeMember(cafe, another))
                 .willReturn(false);
         // when
@@ -165,7 +166,7 @@ public class CommentServiceTest {
 
     @Test
     public void modifyComment_withNotCommenter_thenRaiseNoAuthorityException() {
-        Member another = new Member("another member");
+        Member another = new Member(4L, "another_member", "password", "foo@bar.com");
 
         thenThrownBy(() -> commentService.modifyComment(comment, another, "new comment"))
                 .isInstanceOf(NoAuthorityException.class);
@@ -210,7 +211,7 @@ public class CommentServiceTest {
     @Test
     public void deleteComment_withNotCommentNorNotCafeManager_thenRaiseNoAuthorityException() {
         // given
-        Member anotherMember = new Member(2L, "another writer");
+        Member anotherMember = new Member(4L, "another writer", "password", "awriter@bar.com");
         Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
         given(cafeMemberRepository.findByCafeAndMember(cafe, anotherMember))
                 .willReturn(new CafeMember(cafe, anotherMember, MEMBER));

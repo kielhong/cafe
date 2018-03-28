@@ -24,7 +24,7 @@ public class CommentTest {
 
     @Before
     public void init() {
-        member = new Member(1L, "member");
+        member = new Member(1L, "member", "password", "foo@bar.com");
         cafe = new Cafe("testcafe", "testcafe");
         board = new Board(cafe, "testboard");
         article = new Article(board, member, "test title", "test content");
@@ -61,7 +61,7 @@ public class CommentTest {
     @Test
     public void modifyComment_withNotCommentOwner_thenRaiseNoAuthorityException() {
         // Given
-        Member anotherCommenter = new Member(2L, "another");
+        Member anotherCommenter = new Member(2L, "another", "password", "another@bar.com");
         // Then
         Assertions.assertThatThrownBy(() -> comment.modify(anotherCommenter, "new comment"))
                 .isInstanceOf(NoAuthorityException.class);
