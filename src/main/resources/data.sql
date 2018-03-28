@@ -1,5 +1,7 @@
 /** Cafe Category **/
-INSERT INTO category (name, create_date_time, list_order) VALUES ('게임',now(),1),('만화/애니메이션',now(),2),('방송/연예',now(),3),('문화/예술',now(),4),('영화',now(),5),('음악',now(),6),('팬카페',now(),7),('여행',now(),8),('스포츠/레저',now(),9),('애완동물',now(),10),('취미',now(),11),('생활',now(),12);
+INSERT INTO category (name, list_order, created_at) VALUES
+('게임',1,now()),('만화/애니메이션',2,now()),('방송/연예',3,now()),('문화/예술',4,now()),('영화',5,now()),('음악',6,now()),
+('팬카페',7,now()),('여행',8,now()),('스포츠/레저',9,now()),('애완동물',10,now()),('취미',11,now()),('생활',12,now());
 
 /** Cafe **/
 INSERT INTO cafe(id, category_id, url, name, description, visibility, cafe_article_count, cafe_comment_count, cafe_member_count, cafe_visit_count, created_at) values (1, 1,'cafetest','테스트 카페','테스트용 카페입니다','PUBLIC', 12345, 1234566, 160540, 1233, '2003-12-21 01:02:03');

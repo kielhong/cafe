@@ -10,7 +10,6 @@ import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.service.implement.CategoryServiceImpl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +39,7 @@ public class CategoryServiceImplTest {
     public void init() {
         categories = new ArrayList<>();
         LongStream.range(1, 11)
-                .forEach(i -> categories.add(new Category(i, "category" + i, now(), Long.valueOf(i).intValue())));
+                .forEach(i -> categories.add(new Category(i, "category" + i, Long.valueOf(i).intValue(), now())));
         given(categoryRepository.findAll(Sort.by(ASC, "listOrder")))
                 .willReturn(categories.stream()
                         .sorted(Comparator.comparing(Category::getListOrder)).collect(Collectors.toList()));

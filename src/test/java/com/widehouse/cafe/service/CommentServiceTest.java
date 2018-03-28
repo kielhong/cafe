@@ -69,7 +69,7 @@ public class CommentServiceTest {
         commenter = new Member(2L, "commenter", "password", "commeter@bar.com");
         Member writer = new Member(3L, "writer", "password", "writer@bar.com");
 
-        cafe = new Cafe("testurl", "testname", "", PUBLIC, new Category(1L, "test"));
+        cafe = new Cafe("testurl", "testname", "", PUBLIC, new Category(1L, "test", 1, now()));
         Board board = new Board(cafe,"article");
         article = new Article(1L, board, writer, "title", "content",
                 new ArrayList<>(), 0, now(), now());

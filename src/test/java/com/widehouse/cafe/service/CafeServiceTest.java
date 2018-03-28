@@ -2,6 +2,7 @@ package com.widehouse.cafe.service;
 
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
+import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -70,7 +71,7 @@ public class CafeServiceTest {
     @Before
     public void setUp() {
         member = new Member(1L, "user", "password", "foo@bar.com");
-        category = new Category(1L, "category");
+        category = new Category(1L, "category", 1, now());
         cafe = new Cafe("testurl", "testname", "desc", PUBLIC, category);
 
         given(categoryRepository.findById(category.getId()))

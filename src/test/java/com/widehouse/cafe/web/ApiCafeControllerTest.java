@@ -1,6 +1,7 @@
 package com.widehouse.cafe.web;
 
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
+import static java.time.LocalDateTime.now;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -17,6 +18,7 @@ import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.service.CafeService;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +42,15 @@ public class ApiCafeControllerTest {
     @MockBean
     private CafeService cafeService;
 
+    private Category category;
+
+    @Before
+    public void setup() {
+        category = new Category(1L, "category", 1, now());
+    }
+
     @Test
     public void getCafeByUrl_thenReturnCafeInfo() throws Exception {
-        Category category = new Category(1L, "category");
         Cafe cafe = new Cafe("cafeurl", "cafename", "", PUBLIC, category);
         given(cafeService.getCafe("cafeurl"))
                 .willReturn(cafe);
@@ -74,7 +82,7 @@ public class ApiCafeControllerTest {
         // given
         Member member = new Member(1L, "member", "password", "foo@bar.com");
         given(cafeService.createCafe(member, "testurl", "testcafe", "desc", PUBLIC, 1L))
-                .willReturn(new Cafe("testurl", "testcafe", "desc", PUBLIC, new Category(1L, "testcategory")));
+                .willReturn(new Cafe("testurl", "testcafe", "desc", PUBLIC, category));
         String requestContent = "{\"name\": \"testcafe\", \"url\": \"testurl\", \"description\": \"desc\", "
                 + "\"visibility\": \"PUBLIC\", \"category\": {\"id\":\"1\"}}";
 

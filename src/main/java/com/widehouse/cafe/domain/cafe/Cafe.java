@@ -69,6 +69,11 @@ public class Cafe {
         this.id = id;
     }
 
+    /**
+     * constructor.
+     * @param url url of cafe
+     * @param name name of cafe
+     */
     public Cafe(String url, String name) {
         this();
         this.url = url;
@@ -77,6 +82,14 @@ public class Cafe {
         this.visibility = CafeVisibility.PUBLIC;
     }
 
+    /**
+     * constructor.
+     * @param url url of cafe
+     * @param name name of cafe
+     * @param description description
+     * @param visibility {@link CafeVisibility}
+     * @param category {@link Category}
+     */
     public Cafe(String url, String name, String description, CafeVisibility visibility, Category category) {
         this();
         this.url = url;
@@ -86,6 +99,13 @@ public class Cafe {
         this.category = category;
     }
 
+    /**
+     * update cafe info
+     * @param name name of cafe
+     * @param description description
+     * @param visibility {@link CafeVisibility}
+     * @param category {@link Category}
+     */
     public void updateInfo(String name, String description, CafeVisibility visibility, Category category) {
         this.name = name;
         this.description = description;

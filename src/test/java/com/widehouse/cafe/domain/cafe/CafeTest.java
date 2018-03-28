@@ -1,6 +1,7 @@
 package com.widehouse.cafe.domain.cafe;
 
 import static com.widehouse.cafe.domain.cafe.CafeVisibility.PRIVATE;
+import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -18,7 +19,7 @@ public class CafeTest {
 
     @Before
     public void setUp() {
-        category = new Category(1L, "category");
+        category = new Category(1L, "category", 1, now());
         cafe = new Cafe("testcafe", "testcafe");
     }
 
