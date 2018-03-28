@@ -29,11 +29,11 @@ public class ApiCategoryController {
 
     @GetMapping("categories")
     public List<Category> getCategories() {
-        return categoryService.findAll("listOrder");
+        return categoryService.findAll(CategoryService.ORDER);
     }
 
     @GetMapping("categories/{categoryId}/cafes")
-    public List<Cafe> getCafesByCategory(@PathVariable Long categoryId,
+    public List<Cafe> getCafesByCategory(@PathVariable Integer categoryId,
                                          @PageableDefault(direction = Sort.Direction.DESC,
                                                  sort = "statistics.cafeMemberCount") Pageable pageable) {
         List<Cafe> cafes = cafeService.getCafeByCategory(categoryId, pageable);

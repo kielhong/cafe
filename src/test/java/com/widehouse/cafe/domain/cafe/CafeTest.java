@@ -19,7 +19,7 @@ public class CafeTest {
 
     @Before
     public void setUp() {
-        category = new Category(1L, "category", 1, now());
+        category = new Category(1, "category", 1, now());
         cafe = new Cafe("testcafe", "testcafe");
     }
 

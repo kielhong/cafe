@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 import org.junit.Before;
@@ -38,8 +39,8 @@ public class CategoryServiceImplTest {
     @Before
     public void init() {
         categories = new ArrayList<>();
-        LongStream.range(1, 11)
-                .forEach(i -> categories.add(new Category(i, "category" + i, Long.valueOf(i).intValue(), now())));
+        IntStream.range(1, 11)
+                .forEach(i -> categories.add(new Category(i, "category" + i, i, now())));
         given(categoryRepository.findAll(Sort.by(ASC, "listOrder")))
                 .willReturn(categories.stream()
                         .sorted(Comparator.comparing(Category::getListOrder)).collect(Collectors.toList()));

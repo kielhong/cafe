@@ -46,7 +46,7 @@ public class ApiCafeControllerTest {
 
     @Before
     public void setup() {
-        category = new Category(1L, "category", 1, now());
+        category = new Category(1, "category", 1, now());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ApiCafeControllerTest {
     public void createCafe_WithLoginMember_Should_CreateCafe() throws Exception {
         // given
         Member member = new Member(1L, "member", "password", "foo@bar.com");
-        given(cafeService.createCafe(member, "testurl", "testcafe", "desc", PUBLIC, 1L))
+        given(cafeService.createCafe(member, "testurl", "testcafe", "desc", PUBLIC, 1))
                 .willReturn(new Cafe("testurl", "testcafe", "desc", PUBLIC, category));
         String requestContent = "{\"name\": \"testcafe\", \"url\": \"testurl\", \"description\": \"desc\", "
                 + "\"visibility\": \"PUBLIC\", \"category\": {\"id\":\"1\"}}";

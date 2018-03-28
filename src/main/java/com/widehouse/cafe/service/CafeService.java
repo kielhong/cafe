@@ -61,7 +61,7 @@ public class CafeService {
      */
     @Transactional
     public Cafe createCafe(Member member, String url, String name, String description,
-                           CafeVisibility visibility, Long categoryId) {
+                           CafeVisibility visibility, Integer categoryId) {
         Category category = categoryRepository.findById(categoryId).get();
         Cafe cafe = cafeRepository.save(new Cafe(url, name, description, visibility, category));
         CafeMember cafeMember = new CafeMember(cafe, member, CafeMemberRole.MANAGER);
@@ -75,7 +75,7 @@ public class CafeService {
         return cafe;
     }
 
-    public List<Cafe> getCafeByCategory(Long categoryId, Pageable pageable) {
+    public List<Cafe> getCafeByCategory(Integer categoryId, Pageable pageable) {
         return cafeRepository.findByCategoryId(categoryId, pageable);
     }
 

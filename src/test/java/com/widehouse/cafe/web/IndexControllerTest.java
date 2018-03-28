@@ -1,5 +1,6 @@
 package com.widehouse.cafe.web;
 
+import static java.time.LocalDateTime.now;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
@@ -14,8 +15,13 @@ import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.cafe.Category;
 import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.service.CafeService;
+import com.widehouse.cafe.service.CategoryService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,9 +51,9 @@ public class IndexControllerTest {
     @MockBean
     private UserDetailsService memberDetailsService;
     @MockBean
-    private PasswordEncoder encoder;
+    private CategoryService categoryService;
     @MockBean
-    private CategoryRepository categoryRepository;
+    private PasswordEncoder encoder;
 
     private Member member;
 
@@ -62,16 +68,16 @@ public class IndexControllerTest {
 
     @Test
     public void index_thenIndexPage() throws Exception {
-        // given
-        Category category1 = new Category("test1", 1);
-        Category category2 = new Category("test2", 2);
-        given(categoryRepository.findAll(any(Sort.class)))
-                .willReturn(Arrays.asList(category1, category2));
+        List<Category> categories = new ArrayList<>();
+        IntStream.range(1, 11)
+                .forEach(i -> categories.add(new Category(i, "test" + i, i, now())));
+        given(categoryService.findAll(CategoryService.ORDER))
+                .willReturn(categories);
         // then
         mvc.perform(get("/"))
             .andExpect(status().isOk())
             .andExpect(view().name("index"))
-            .andExpect(model().attribute("categories", Arrays.asList(category1, category2)));
+            .andExpect(model().attribute("categories", categories));
     }
 
     @Test
@@ -86,13 +92,14 @@ public class IndexControllerTest {
         mvc.perform(formLogin()
                     .user("user").password("password"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/")).andDo(MockMvcResultHandlers.print());
+                .andExpect(redirectedUrl("/"));
     }
 
     @Test
     public void logout_thenRedirectToIndex() throws Exception {
         mvc.perform(logout())
-            .andExpect(status().is3xxRedirection());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
     }
 
     @Test
@@ -104,9 +111,10 @@ public class IndexControllerTest {
     }
 
     @Test
-    public void createCafeForm_withNonLogin_thenRedirectLoginForm() throws Exception {
+    public void createCafeForm_withAnonymouseUser_thenRedirectLoginForm() throws Exception {
         mvc.perform(get("/createCafe"))
-                .andExpect(status().is3xxRedirection());
-        //.andExpect(redirectedUrl("/login"));
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
     }
 }

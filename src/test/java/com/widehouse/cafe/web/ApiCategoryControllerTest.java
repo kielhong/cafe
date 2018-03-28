@@ -1,5 +1,6 @@
 package com.widehouse.cafe.web;
 
+import static com.widehouse.cafe.service.CategoryService.ORDER;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,7 +47,7 @@ public class ApiCategoryControllerTest {
     @Test
     public void getCategories() throws Exception {
         // given
-        given(categoryService.findAll("listOrder"))
+        given(categoryService.findAll(ORDER))
                 .willReturn(Arrays.asList(
                         new Category("Games", 1),
                         new Category("Comics", 2),
@@ -63,7 +64,7 @@ public class ApiCategoryControllerTest {
     @Test
     public void getCafesByCategory() throws Exception {
         // given
-        given(this.cafeService.getCafeByCategory(1L,
+        given(this.cafeService.getCafeByCategory(1,
                 PageRequest.of(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(new Cafe("cafe1", "cafe1"), new Cafe("cafe2", "cafe2")));
         // then
@@ -76,7 +77,7 @@ public class ApiCategoryControllerTest {
     @Test
     public void getCafesByCategoryWithPaging() throws Exception {
         // given
-        given(this.cafeService.getCafeByCategory(1L,
+        given(this.cafeService.getCafeByCategory(1,
                 PageRequest.of(0, 4, new Sort(DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(new Cafe("cafe1", "cafe1"), new Cafe("cafe2", "cafe2"),
                         new Cafe("cafe3", "cafe3"), new Cafe("cafe4", "cafe4")));

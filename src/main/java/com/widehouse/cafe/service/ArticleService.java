@@ -9,7 +9,6 @@ import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.event.ArticleCreateEvent;
@@ -33,8 +32,6 @@ public class ArticleService {
     private ArticleRepository articleRepository;
     @Autowired
     private CafeMemberRepository cafeMemberRepository;
-    @Autowired
-    private CafeRepository cafeRepository;
     @Autowired
     private TagRepository tagRepository;
     @Autowired
