@@ -22,7 +22,7 @@ public class MemberRepositoryTest {
 
     @Test
     public void findByUsername_thenMember() {
-        Member member = new Member("foo", "passowrd", "foo@bar.com");
+        Member member = new Member("foo", "passowrd", "nickname", "foo@bar.com");
         entityManager.persist(member);
 
         Member result = memberRepository.findByUsername("foo");

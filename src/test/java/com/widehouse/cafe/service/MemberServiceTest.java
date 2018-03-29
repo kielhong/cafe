@@ -32,13 +32,10 @@ public class MemberServiceTest {
 
     @Test
     public void getCafesByMember_thenListCafes() {
-        Member member = new Member(1L, "member", "password", "foo@bar.com");
+        Member member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
         Cafe cafe1 = new Cafe("url1", "name1");
         Cafe cafe2 = new Cafe("url2", "name2");
         Cafe cafe3 = new Cafe("url3", "name3");
-        //        CafeMember cafeMember1 = new CafeMember(cafe1, member);
-        //        CafeMember cafeMember2 = new CafeMember(cafe2, member);
-        //        CafeMember cafeMember3 = new CafeMember(cafe3, member);
         given(cafeMemberRepository.findCafeByMember(member, PageRequest.of(0, 3)))
                 .willReturn(Arrays.asList(cafe1, cafe2, cafe3));
 

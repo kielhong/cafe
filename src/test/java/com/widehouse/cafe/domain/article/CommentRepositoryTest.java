@@ -81,7 +81,7 @@ public class CommentRepositoryTest {
         template = new MongoTemplate(mongo, "test");
         template.dropCollection(Comment.class);
 
-        member = new Member(1L, "member", "password", "foo@bar.com");
+        member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
     }
 
     @Test
@@ -118,7 +118,7 @@ public class CommentRepositoryTest {
         // given
         Cafe cafe = new Cafe("testcafe", "testcafe");
         Board board = new Board(cafe, "board");
-        Member commenter = new Member(2L, "commenter", "password", "comment@bar.com");
+        Member commenter = new Member(2L, "commenter", "password", "nickname", "comment@bar.com");
         Article article = new Article(1L, board, member, "title", "content", Collections.emptyList(), 0, now(), now());
 
         Comment comment1 = new Comment(article, commenter, "comment1");

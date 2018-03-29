@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -28,24 +29,29 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @Getter
 @JsonIgnoreProperties({"password", "enabled", "accountNonExpired", "accountNonLocked", "credentialsNonExpired"})
-@ToString
 public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Size(max = 30)
     @Column(nullable = false, length = 30, unique = true)
     private String username;
 
+    @NotNull
+    @Column(nullable = false, length = 80)
     private String password;
+
+    private String nickname;
 
     @Email
     private String email;
 
-    public Member(@Size(max = 30) String username, String password, @Email String email) {
+    public Member(@Size(max = 30) String username, String password, String nickname, @Email String email) {
         this.username = username;
         this.password = password;
+        this.nickname = nickname;
         this.email = email;
     }
 

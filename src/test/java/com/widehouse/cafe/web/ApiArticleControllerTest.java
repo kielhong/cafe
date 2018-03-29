@@ -57,7 +57,7 @@ public class ApiArticleControllerTest {
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
-        writer = new Member(1L, "writer", "password", "foo@bar.com");
+        writer = new Member(1L, "writer", "password", "nickname", "foo@bar.com");
 
         given(cafeService.getCafe("testurl"))
                 .willReturn(cafe);
@@ -101,7 +101,7 @@ public class ApiArticleControllerTest {
 
     @Test
     public void getArticle_withAuh_thenReturnArticle() throws Exception {
-        Member reader = new Member(1L, "reader", "password", "foo@bar.com");
+        Member reader = new Member(1L, "reader", "password", "nickname", "foo@bar.com");
         given(articleService.getArticle(1L, reader))
                 .willReturn(new Article(1L, board, writer, "title", "content", emptyList(), 0, now(), now()));
         // when
@@ -115,7 +115,7 @@ public class ApiArticleControllerTest {
 
     @Test
     public void getArticle_withNoAuthorityMember_then403Forbidden() throws Exception {
-        Member reader = new Member(1L, "reader", "password", "foo@bar.com");
+        Member reader = new Member(1L, "reader", "password", "nickname", "foo@bar.com");
         given(articleService.getArticle(1L, reader))
                 .willThrow(new NoAuthorityException());
 

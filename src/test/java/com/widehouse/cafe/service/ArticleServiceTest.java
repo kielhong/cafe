@@ -70,8 +70,8 @@ public class ArticleServiceTest {
         board1 = new Board(cafe, "board1");
         board2 = new Board(cafe, "board2");
 
-        writer = new Member(1L, "writer", "password", "writer@bar.com");
-        reader = new Member(2L, "reader", "password", "reader@bar.com");
+        writer = new Member(1L, "writer", "password", "nickname", "writer@bar.com");
+        reader = new Member(2L, "reader", "password","nickname",  "reader@bar.com");
 
         article1 = new Article(board1, writer, "test article1", "test1");
         article2 = new Article(board1, writer, "test article2", "test2");

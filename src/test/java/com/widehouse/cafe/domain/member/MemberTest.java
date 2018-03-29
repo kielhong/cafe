@@ -10,7 +10,7 @@ import org.junit.Test;
 public class MemberTest {
     @Test
     public void constructorTest() {
-        Member result = new Member(1L, "foo", "password", "foo@bar.com");
+        Member result = new Member(1L, "foo", "password", "nickname", "foo@bar.com");
 
         then(result)
                 .hasFieldOrPropertyWithValue("id", 1L)

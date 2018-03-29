@@ -101,7 +101,7 @@ cafeApp.controller('articleViewCtrl', function($scope, $http, $routeParams) {
         return false;
     };
     $scope.postTags = function() {
-        var url = "http://localhost:8080/api/articles/" + $scope.article.id + "/tags";
+        var url = "/api/articles/" + $scope.article.id + "/tags";
         var data = [];
         angular.forEach($scope.tags, function(tag) {
             data.push({name : tag.name});
@@ -122,12 +122,12 @@ cafeApp.controller('articleViewCtrl', function($scope, $http, $routeParams) {
                 });
     };
 
-    $http.get("http://localhost:8080/api/cafes/" + $scope.$parent.cafeUrl + "/articles/" + $routeParams.articleId)
+    $http.get("/api/articles/" + $routeParams.articleId + "/comments?page=0&size=20")
         .then(function(response) {
-            $scope.article = response.data;
+            $scope.comments = response.data;
         });
 
-    $http.get("http://localhost:8080/api/articles/" + $routeParams.articleId + "/comments?page=0&size=20")
+    $http.get("/api/articles/" + $routeParams.articleId + "/stream/comments")
         .then(function(response) {
             $scope.comments = response.data;
         });

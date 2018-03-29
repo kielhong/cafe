@@ -39,7 +39,7 @@ public class CafeMemberServiceTest {
     @Before
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
-        member = new Member(1L, "member", "password", "foo@bar.com");
+        member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
     }
 
     @Test

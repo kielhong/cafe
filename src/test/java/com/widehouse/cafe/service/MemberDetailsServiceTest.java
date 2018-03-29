@@ -30,7 +30,7 @@ public class MemberDetailsServiceTest {
 
     @Test
     public void loadUserByUsername_thenReturnUser() {
-        Member member = new Member("user", "password", "foo@bar.com");
+        Member member = new Member("user", "password", "nickname", "foo@bar.com");
         given(memberRepository.findByUsername("user"))
                 .willReturn(member);
 

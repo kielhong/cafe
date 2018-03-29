@@ -24,7 +24,6 @@ import com.widehouse.cafe.domain.member.SimpleMember;
 import com.widehouse.cafe.exception.NoAuthorityException;
 import com.widehouse.cafe.service.CommentService;
 import com.widehouse.cafe.service.MemberDetailsService;
-import com.widehouse.cafe.web.ApiCommentController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,7 +66,7 @@ public class ApiCommentControllerTest {
 
     @Before
     public void setUp() {
-        member = new Member(1L, "member", "password", "foo@bar.com");
+        member = new Member(1L, "member", "password", "nickanme", "foo@bar.com");
 
         Cafe cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category", 1));
         Board board = new Board(cafe, "board");

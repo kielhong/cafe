@@ -59,7 +59,7 @@ public class IndexControllerTest {
 
     @Before
     public void setup() {
-        member = new Member(1L, "user", "encodedPass", "foo@bar.com");
+        member = new Member(1L, "user", "encodedPass", "nickname", "foo@bar.com");
         given(memberDetailsService.loadUserByUsername("user"))
                 .willReturn(member);
         given(encoder.matches("password", "encodedPass"))

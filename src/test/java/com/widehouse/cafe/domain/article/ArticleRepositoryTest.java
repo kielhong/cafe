@@ -47,7 +47,7 @@ public class ArticleRepositoryTest {
         entityManager.persist(board1);
         Board board2 = new Board(cafe, "board2");
         entityManager.persist(board2);
-        writer = new Member("writer", "password", "writer@bar.com");
+        writer = new Member("writer", "password", "nickname", "writer@bar.com");
         entityManager.persist(writer);
 
         article1 = new Article(board1, writer, "test article1", "test1");

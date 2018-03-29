@@ -64,10 +64,10 @@ public class CommentListServiceTest {
     public void setUp() {
         cafe = new Cafe("testurl", "testname");
         board = new Board(cafe,"article");
-        Member writer = new Member(1L, "writer", "password", "foo@bar.com");
+        Member writer = new Member(1L, "writer", "password", "nickname", "foo@bar.com");
         article = new Article(board, writer, "title", "content");
 
-        commenter = new Member(2L, "commenter", "password", "commeter@bar.com");
+        commenter = new Member(2L, "commenter", "password", "nickname", "commeter@bar.com");
 
         comment1 = new Comment(article, commenter, "comment1");
         comment2 = new Comment(article, commenter, "comment2");
@@ -96,7 +96,7 @@ public class CommentListServiceTest {
     @Test
     public void getComments_PrivateCafe_NotMember_Should_EmptyList() {
         // given
-        Member nonCafeMember = new Member(3L, "noncafemember", "password", "nonmember@bar.com");
+        Member nonCafeMember = new Member(3L, "noncafemember", "password", "nickname", "nonmember@bar.com");
         cafe.updateInfo(cafe.getName(), "", CafeVisibility.PRIVATE, cafe.getCategory());
         given(cafeMemberService.isCafeMember(cafe, nonCafeMember))
                 .willReturn(false);

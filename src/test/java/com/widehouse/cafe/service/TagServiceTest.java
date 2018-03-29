@@ -44,7 +44,7 @@ public class TagServiceTest {
 
     @Before
     public void setup() {
-        member = new Member(1L, "member", "password", "foo@bar.com");
+        member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
         cafe = new Cafe("testurl", "testname");
         board = new Board(cafe, "board");
         article = new Article(board, member, "test", "test");
