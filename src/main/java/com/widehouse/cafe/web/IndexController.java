@@ -32,7 +32,7 @@ public class IndexController {
         List<Category> categories = categoryService.findAll(CategoryService.ORDER);
         model.addAttribute("categories", categories);
 
-        return "index";
+        return "index.vue";
     }
 
     @GetMapping("/login")
