@@ -76,7 +76,7 @@ public class IndexControllerTest {
         // then
         mvc.perform(get("/"))
             .andExpect(status().isOk())
-            .andExpect(view().name("index"))
+            .andExpect(view().name("index.vue"))
             .andExpect(model().attribute("categories", categories));
     }
 
