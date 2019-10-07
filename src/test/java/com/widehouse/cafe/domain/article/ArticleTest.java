@@ -8,20 +8,20 @@ import com.widehouse.cafe.domain.member.Member;
 
 import java.util.Arrays;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by kiel on 2017. 2. 11..
  */
-public class ArticleTest {
+class ArticleTest {
     private Cafe cafe;
     private Board board;
     private Member member;
     private Article article;
 
-    @Before
-    public void init() {
+    @BeforeEach
+    void init() {
         cafe = new Cafe("testcafe", "testcafe");
         board = new Board(cafe, "testboard");
         member = new Member();
@@ -29,7 +29,7 @@ public class ArticleTest {
     }
 
     @Test
-    public void writeArticle_should_create_article() {
+    void writeArticle_should_create_article() {
         Article newArticle = new Article(board, member, "test title", "test content");
 
         then(newArticle)
@@ -38,14 +38,13 @@ public class ArticleTest {
                 .hasFieldOrPropertyWithValue("board", board)
                 .hasFieldOrPropertyWithValue("writer", member)
                 .hasFieldOrPropertyWithValue("title", "test title")
-                .hasFieldOrPropertyWithValue("content", "test content")
                 .hasFieldOrPropertyWithValue("commentCount", 0)
                 .hasFieldOrProperty("createdAt")
                 .hasFieldOrProperty("updatedAt");
     }
 
     @Test
-    public void modifyArticle_should_update_article() {
+    void modifyArticle_should_update_article() {
         int commentCount = article.getCommentCount();
 
         article.modify("modify title", "modify content");
@@ -55,14 +54,13 @@ public class ArticleTest {
                 .hasFieldOrPropertyWithValue("board", board)
                 .hasFieldOrPropertyWithValue("writer", member)
                 .hasFieldOrPropertyWithValue("title", "modify title")
-                .hasFieldOrPropertyWithValue("content", "modify content")
                 .hasFieldOrPropertyWithValue("commentCount", commentCount);
         then(article.getUpdatedAt())
                 .isAfterOrEqualTo(article.getCreatedAt());
     }
 
     @Test
-    public void moveBoard_should_update_board() {
+    void moveBoard_should_update_board() {
         Board board2 = new Board(cafe, "another article");
 
         article.moveBoard(board2);
@@ -75,7 +73,7 @@ public class ArticleTest {
     // TODO : cafe 가 다른 board로 이동할 경우 오류 처리
 
     @Test
-    public void increaseCommentCount_thenCommentCountIncreasedBy1() {
+    void increaseCommentCount_thenCommentCountIncreasedBy1() {
         int commentCount = article.getCommentCount();
 
         article.increaseCommentCount();
@@ -85,7 +83,7 @@ public class ArticleTest {
     }
 
     @Test
-    public void decreaseCommentCount_thenCommentCountDescreasedBy1() {
+    void decreaseCommentCount_thenCommentCountDescreasedBy1() {
         int commentCount = article.getCommentCount();
 
         article.decreaseCommentCount();
@@ -95,7 +93,7 @@ public class ArticleTest {
     }
 
     @Test
-    public void getTags_Should_ListTags() {
+    void getTags_Should_ListTags() {
         Tag tag1 = new Tag("tag1");
         Tag tag2 = new Tag("tag2");
 

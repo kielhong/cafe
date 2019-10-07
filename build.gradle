@@ -46,8 +46,12 @@ dependencies {
     runtime("org.webjars:bootstrap:3.3.7")
 
     // test
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile("org.springframework.security:spring-security-test")
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+//        exclude group: 'junit', module: 'junit'
+    }
+    testImplementation('org.springframework.security:spring-security-test')
+    testImplementation('org.junit.jupiter:junit-jupiter-api')
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo:${flapdoodleVersion}")
 }
 
@@ -57,4 +61,8 @@ bootRun {
 
 flyway {
     url = 'jdbc:h2:file:./target/cafe'
+}
+
+test {
+    useJUnitPlatform()
 }

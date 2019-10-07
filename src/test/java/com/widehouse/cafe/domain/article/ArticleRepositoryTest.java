@@ -9,22 +9,19 @@ import com.widehouse.cafe.domain.member.Member;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by kiel on 2017. 2. 19..
  */
-@RunWith(SpringRunner.class)
 @DataJpaTest
-public class ArticleRepositoryTest {
+class ArticleRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
@@ -39,8 +36,8 @@ public class ArticleRepositoryTest {
     private Article article2;
     private Article article3;
 
-    @Before
-    public void init() {
+    @BeforeEach
+    void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         entityManager.persist(cafe);
         board1 = new Board(cafe, "board1");
@@ -59,7 +56,7 @@ public class ArticleRepositoryTest {
     }
 
     @Test
-    public void findByCafe_Should_Return_ListArticle() {
+    void findByCafe_Should_Return_ListArticle() {
         List<Article> articles = articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 2, new Sort(DESC, "id")));
 
         then(articles)
@@ -67,7 +64,7 @@ public class ArticleRepositoryTest {
     }
 
     @Test
-    public void findByBoard_Should_Return_ListArticle() {
+    void findByBoard_Should_Return_ListArticle() {
         List<Article> articles = articleRepository.findByBoard(board1, PageRequest.of(0, 3, new Sort(DESC, "id")));
 
         then(articles)
@@ -75,7 +72,7 @@ public class ArticleRepositoryTest {
     }
 
     @Test
-    public void saveArticle_whenAddTag_thenSaveTag() {
+    void saveArticle_whenAddTag_thenSaveTag() {
         Article article = new Article(board1, writer, "test article1", "test1");
         entityManager.persist(article);
         Tag tag = new Tag("tag");
