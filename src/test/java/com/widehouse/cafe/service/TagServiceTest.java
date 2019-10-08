@@ -15,18 +15,18 @@ import com.widehouse.cafe.domain.member.Member;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Created by kiel on 2017. 3. 10..
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TagService.class)
 public class TagServiceTest {
     @Autowired
@@ -42,7 +42,7 @@ public class TagServiceTest {
     private Article article;
     private Tag tag;
 
-    @Before
+    @BeforeEach
     public void setup() {
         member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
         cafe = new Cafe("testurl", "testname");

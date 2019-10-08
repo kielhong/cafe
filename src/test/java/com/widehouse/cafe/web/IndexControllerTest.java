@@ -1,7 +1,6 @@
 package com.widehouse.cafe.web;
 
 import static java.time.LocalDateTime.now;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.logout;
@@ -13,35 +12,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.cafe.Category;
-import com.widehouse.cafe.domain.cafe.CategoryRepository;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.service.CafeService;
 import com.widehouse.cafe.service.CategoryService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 /**
  * Created by kiel on 2017. 2. 23..
  */
-@RunWith(SpringRunner.class)
 @WebMvcTest(IndexController.class)
 @Import(WebSecurityConfig.class)
 public class IndexControllerTest {
@@ -57,7 +49,7 @@ public class IndexControllerTest {
 
     private Member member;
 
-    @Before
+    @BeforeEach
     public void setup() {
         member = new Member(1L, "user", "encodedPass", "nickname", "foo@bar.com");
         given(memberDetailsService.loadUserByUsername("user"))

@@ -8,31 +8,29 @@ import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.NoAuthorityException;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 
 /**
  * Created by kiel on 2017. 2. 12..
  */
-public class CommentTest {
-    private Cafe cafe;
-    private Board board;
+class CommentTest {
     private Member member;
     private Article article;
     private Comment comment;
 
-    @Before
-    public void init() {
+    @BeforeEach
+    void setUp() {
+        Cafe cafe = new Cafe("testcafe", "testcafe");
+        Board board = new Board(cafe, "testboard");
         member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
-        cafe = new Cafe("testcafe", "testcafe");
-        board = new Board(cafe, "testboard");
         article = new Article(board, member, "test title", "test content");
         comment = new Comment(article, member, "test comment");
     }
 
     @Test
-    public void createComment_thenCreateComment_AttachToArticle() {
+    void createComment_thenCreateComment_AttachToArticle() {
         Comment comment = new Comment(article, member, "test comment");
         // Then
         assertThat(comment)
@@ -45,7 +43,7 @@ public class CommentTest {
     }
 
     @Test
-    public void modifyComment_thenUpdateComment() {
+    void modifyComment_thenUpdateComment() {
         comment.modify(member, "another comment");
         // Then
         assertThat(comment)
@@ -59,7 +57,7 @@ public class CommentTest {
     }
 
     @Test
-    public void modifyComment_withNotCommentOwner_thenRaiseNoAuthorityException() {
+    void modifyComment_withNotCommentOwner_thenRaiseNoAuthorityException() {
         // Given
         Member anotherCommenter = new Member(2L, "another", "password", "nickname", "another@bar.com");
         // Then

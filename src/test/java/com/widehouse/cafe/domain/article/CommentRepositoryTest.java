@@ -9,6 +9,11 @@ import com.widehouse.cafe.config.MongoConfiguration;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -16,17 +21,12 @@ import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -34,12 +34,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Created by kiel on 2017. 2. 20..
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {MongoConfiguration.class})
 @Slf4j
 public class CommentRepositoryTest {
@@ -59,7 +59,7 @@ public class CommentRepositoryTest {
 
     private Member member;
 
-    @BeforeClass
+    @BeforeAll
     public static void initAll() throws Exception {
         _mongodExe = starter.prepare(new MongodConfigBuilder()
                 .version(Version.Main.PRODUCTION)
@@ -69,14 +69,14 @@ public class CommentRepositoryTest {
         mongo = new MongoClient("localhost", 12345);
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownAll() {
         mongo.close();
         _mongod.stop();
         _mongodExe.stop();
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         template = new MongoTemplate(mongo, "test");
         template.dropCollection(Comment.class);

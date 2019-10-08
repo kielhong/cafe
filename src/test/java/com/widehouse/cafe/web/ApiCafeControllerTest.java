@@ -18,21 +18,18 @@ import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.exception.CafeNotFoundException;
 import com.widehouse.cafe.service.CafeService;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Created by kiel on 2017. 2. 18..
  */
-@RunWith(SpringRunner.class)
 @WebMvcTest(ApiCafeController.class)
 @Import(WebSecurityConfig.class)
 public class ApiCafeControllerTest {
@@ -44,7 +41,7 @@ public class ApiCafeControllerTest {
 
     private Category category;
 
-    @Before
+    @BeforeEach
     public void setup() {
         category = new Category(1, "category", 1, now());
     }

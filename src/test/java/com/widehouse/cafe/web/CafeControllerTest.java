@@ -16,19 +16,16 @@ import com.widehouse.cafe.service.CafeService;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Created by kiel on 2017. 2. 24..
  */
-@RunWith(SpringRunner.class)
 @WebMvcTest(CafeController.class)
 @Import(WebSecurityConfig.class)
 public class CafeControllerTest {

@@ -4,18 +4,15 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by kiel on 2017. 2. 16..
  */
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class BoardRepositoryTest {
     @Autowired

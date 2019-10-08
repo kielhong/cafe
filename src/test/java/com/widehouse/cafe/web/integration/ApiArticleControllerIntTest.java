@@ -1,31 +1,26 @@
 package com.widehouse.cafe.web.integration;
 
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.domain.cafe.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.ArticleService;
 import com.widehouse.cafe.service.CafeService;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ApiArticleControllerIntTest {
@@ -41,7 +36,7 @@ public class ApiArticleControllerIntTest {
     private Board board;
     private Member writer;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);

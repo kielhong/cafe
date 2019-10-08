@@ -7,17 +7,17 @@ import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 import static com.widehouse.cafe.domain.cafe.BoardType.TAG;
 import static org.assertj.core.api.BDDAssertions.then;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by kiel on 2017. 2. 17..
  */
-public class BoardTest {
+class BoardTest {
     private Cafe cafe;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
         cafe = new Cafe("testurl", "testcafe");
     }
 

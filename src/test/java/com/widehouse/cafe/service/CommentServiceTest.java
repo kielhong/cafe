@@ -29,18 +29,18 @@ import com.widehouse.cafe.exception.NoAuthorityException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Created by kiel on 2017. 2. 12..
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = CommentService.class)
 public class CommentServiceTest {
     @Autowired
@@ -63,7 +63,7 @@ public class CommentServiceTest {
     private Article article;
     private Comment comment;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         manager = new Member(1L, "manager", "password", "nickname", "manager@bar.com");
         commenter = new Member(2L, "commenter", "password", "nickname", "commeter@bar.com");

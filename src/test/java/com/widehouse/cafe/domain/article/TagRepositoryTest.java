@@ -9,18 +9,15 @@ import com.widehouse.cafe.domain.member.Member;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by kiel on 2017. 3. 10..
  */
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class TagRepositoryTest {
     @Autowired
@@ -32,7 +29,7 @@ public class TagRepositoryTest {
     private Board board;
     private Member member;
 
-    @Before
+    @BeforeEach
     public void init() {
         cafe = new Cafe("testurl", "testname");
         entityManager.persist(cafe);

@@ -23,21 +23,18 @@ import com.widehouse.cafe.service.CafeService;
 
 import java.util.Arrays;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Created by kiel on 2017. 2. 19..
  */
-@RunWith(SpringRunner.class)
 @WebMvcTest(ApiArticleController.class)
 @Import(WebSecurityConfig.class)
 public class ApiArticleControllerTest {
@@ -53,7 +50,7 @@ public class ApiArticleControllerTest {
     private Board board;
     private Member writer;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);

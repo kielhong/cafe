@@ -14,18 +14,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = CategoryServiceImpl.class)
 public class CategoryServiceImplTest {
     @Autowired
@@ -36,8 +35,8 @@ public class CategoryServiceImplTest {
 
     private List<Category> categories;
 
-    @Before
-    public void init() {
+    @BeforeEach
+    public void setUp() {
         categories = new ArrayList<>();
         IntStream.range(1, 11)
                 .forEach(i -> categories.add(new Category(i, "category" + i, i, now())));

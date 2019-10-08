@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import groovy.util.logging.Slf4j;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by kiel on 2017. 2. 10..
@@ -17,7 +17,7 @@ public class CafeTest {
     private Cafe cafe;
     private Category category;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         category = new Category(1, "category", 1, now());
         cafe = new Cafe("testcafe", "testcafe");

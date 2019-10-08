@@ -16,8 +16,7 @@ import com.widehouse.cafe.service.CategoryService;
 
 import java.util.Arrays;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,13 +25,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Created by kiel on 2017. 2. 15..
  */
-@RunWith(SpringRunner.class)
 @WebMvcTest(ApiCategoryController.class)
 @Import(WebSecurityConfig.class)
 @EnableSpringDataWebSupport                 // for Pageable resolve

@@ -31,20 +31,17 @@ import java.util.Collections;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Created by kiel on 2017. 2. 20..
  */
-@RunWith(SpringRunner.class)
 @WebMvcTest(ApiCommentController.class)
 @Import(WebSecurityConfig.class)
 @Slf4j
@@ -64,7 +61,7 @@ public class ApiCommentControllerTest {
     private Article article;
     private Member member;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         member = new Member(1L, "member", "password", "nickanme", "foo@bar.com");
 

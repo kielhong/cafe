@@ -2,8 +2,8 @@ package com.widehouse.cafe.domain.cafe;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by kiel on 2017. 2. 15..
@@ -11,8 +11,8 @@ import org.junit.Test;
 public class CafeStatisticsTest {
     private CafeStatistics statistics;
 
-    @Before
-    public void init() {
+    @BeforeEach
+    public void setUp() {
         statistics = new CafeStatistics();
     }
 

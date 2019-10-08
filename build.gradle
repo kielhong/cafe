@@ -47,12 +47,12 @@ dependencies {
 
     // test
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
-//        exclude group: 'junit', module: 'junit'
+        exclude group: 'junit', module: 'junit'
     }
     testImplementation('org.springframework.security:spring-security-test')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo:${flapdoodleVersion}")
+    testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:${flapdoodleVersion}")
 }
 
 bootRun {
@@ -65,4 +65,14 @@ flyway {
 
 test {
     useJUnitPlatform()
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: '**/**Application.class')
+        })
+    }
+
+    dependsOn test
 }
