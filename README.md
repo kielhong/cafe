@@ -1,22 +1,22 @@
 # Simple Naver Cafe
 - Naver Cafe의 핵심 기능 위주의 단순화 버전
-- Spring 5.0 기반 기술 적용
+- Spring 5.x 기반 기술 적용
 - 동적 화면 변경은 AngularJS 이용
 
 ## Dependencies
 - Java 8
-- Spring 5.0.0
-- Spring Boot 2.0.0 M5
-- Spring Data JPA 2.0.0
-- Spring Data MongoDB 2.0.0 M5
-- Spring Security 2.0.0 M5
-- Hibernate 5.1.1
+- Spring 5.1.10
+- Spring Boot 2.1.9
+- Spring Security 5.1.16
+- Spring Data JPA 2.1.11
+- Spring Data MongoDB 2.1.11
+- Hibernate 5.3.12
 ### View
 - Thymleaf 3.0.8
 - AngularJS 1.6.1
 ### Test
-- JUnit 5.0.1
-- Mockito 2.10
+- JUnit 5.3.x
+- Mockito 2.23.x
 
 ## Features
 ### Cafe Section
