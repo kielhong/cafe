@@ -1,9 +1,9 @@
 package com.widehouse.cafe.web;
 
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.exception.BoardNotExistsException;
-import com.widehouse.cafe.service.CafeService;
+import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.common.exception.BoardNotExistsException;
+import com.widehouse.cafe.cafe.service.CafeService;
 
 import java.util.List;
 

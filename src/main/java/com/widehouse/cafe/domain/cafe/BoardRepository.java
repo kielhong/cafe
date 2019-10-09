@@ -1,5 +1,7 @@
 package com.widehouse.cafe.domain.cafe;
 
+import com.widehouse.cafe.cafe.entity.Cafe;
+
 import java.util.List;
 
 import org.springframework.data.domain.Sort;

@@ -9,9 +9,9 @@ import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeRepository;
-import com.widehouse.cafe.domain.cafe.CafeVisibility;
+import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.entity.CafeRepository;
+import com.widehouse.cafe.cafe.entity.CafeVisibility;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 

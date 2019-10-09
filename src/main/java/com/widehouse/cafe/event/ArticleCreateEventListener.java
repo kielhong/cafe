@@ -1,7 +1,7 @@
 package com.widehouse.cafe.event;
 
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeRepository;
+import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.entity.CafeRepository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

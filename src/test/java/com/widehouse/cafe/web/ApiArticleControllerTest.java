@@ -15,11 +15,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.exception.NoAuthorityException;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.service.ArticleService;
-import com.widehouse.cafe.service.CafeService;
+import com.widehouse.cafe.cafe.service.CafeService;
 
 import java.util.Arrays;
 

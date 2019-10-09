@@ -1,13 +1,12 @@
 package com.widehouse.cafe.web;
 
-import com.widehouse.cafe.annotation.CurrentMember;
-import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.common.annotation.CurrentMember;
+import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.MemberService;
 
 import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

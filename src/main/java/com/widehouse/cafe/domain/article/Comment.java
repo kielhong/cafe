@@ -2,7 +2,7 @@ package com.widehouse.cafe.domain.article;
 
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.SimpleMember;
-import com.widehouse.cafe.exception.NoAuthorityException;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**

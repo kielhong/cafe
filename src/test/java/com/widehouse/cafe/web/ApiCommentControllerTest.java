@@ -1,6 +1,6 @@
 package com.widehouse.cafe.web;
 
-import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
+import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
 import static java.time.LocalDateTime.now;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -17,11 +17,11 @@ import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.Category;
+import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.SimpleMember;
-import com.widehouse.cafe.exception.NoAuthorityException;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.service.CommentService;
 import com.widehouse.cafe.service.MemberDetailsService;
 

@@ -1,6 +1,6 @@
 package com.widehouse.cafe.service;
 
-import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
+import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
 import static com.widehouse.cafe.domain.cafemember.CafeMemberRole.MANAGER;
 import static com.widehouse.cafe.domain.cafemember.CafeMemberRole.MEMBER;
 import static java.time.LocalDateTime.now;
@@ -17,14 +17,14 @@ import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeRepository;
-import com.widehouse.cafe.domain.cafe.Category;
+import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.entity.CafeRepository;
+import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.SimpleMember;
-import com.widehouse.cafe.exception.NoAuthorityException;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
 
 import java.util.ArrayList;
 import java.util.Optional;

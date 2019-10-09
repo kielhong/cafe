@@ -3,9 +3,9 @@ package com.widehouse.cafe.domain.article;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.exception.NoAuthorityException;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

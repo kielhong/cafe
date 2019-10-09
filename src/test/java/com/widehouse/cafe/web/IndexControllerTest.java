@@ -11,9 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import com.widehouse.cafe.config.WebSecurityConfig;
-import com.widehouse.cafe.domain.cafe.Category;
+import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.service.CategoryService;
+import com.widehouse.cafe.cafe.service.CategoryService;
 
 import java.util.ArrayList;
 import java.util.List;

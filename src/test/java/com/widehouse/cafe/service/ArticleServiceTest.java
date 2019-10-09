@@ -1,6 +1,6 @@
 package com.widehouse.cafe.service;
 
-import static com.widehouse.cafe.domain.cafe.CafeVisibility.PRIVATE;
+import static com.widehouse.cafe.cafe.entity.CafeVisibility.PRIVATE;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -14,12 +14,12 @@ import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeRepository;
-import com.widehouse.cafe.domain.cafe.Category;
+import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.entity.CafeRepository;
+import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.exception.NoAuthorityException;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
 
 import java.util.Arrays;
 import java.util.List;

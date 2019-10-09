@@ -1,8 +1,8 @@
 package com.widehouse.cafe.service.implement;
 
-import com.widehouse.cafe.domain.cafe.Category;
-import com.widehouse.cafe.domain.cafe.CategoryRepository;
-import com.widehouse.cafe.service.CategoryService;
+import com.widehouse.cafe.cafe.entity.Category;
+import com.widehouse.cafe.cafe.entity.CategoryRepository;
+import com.widehouse.cafe.cafe.service.CategoryService;
 
 import java.util.List;
 

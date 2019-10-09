@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.widehouse.cafe.config.WebSecurityConfig;
-import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.service.MemberService;
 

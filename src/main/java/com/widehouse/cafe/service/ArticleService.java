@@ -1,6 +1,6 @@
 package com.widehouse.cafe.service;
 
-import static com.widehouse.cafe.domain.cafe.CafeVisibility.PUBLIC;
+import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.domain.article.Article;
@@ -8,11 +8,11 @@ import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.article.TagRepository;
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.event.ArticleCreateEvent;
-import com.widehouse.cafe.exception.NoAuthorityException;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
 
 import java.util.List;
 

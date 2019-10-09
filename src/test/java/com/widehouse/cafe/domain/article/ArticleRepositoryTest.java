@@ -4,7 +4,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 
 import java.util.List;
