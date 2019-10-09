@@ -1,4 +1,4 @@
-package com.widehouse.cafe.service.implement;
+package com.widehouse.cafe.cafe.service;
 
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.entity.CategoryRepository;

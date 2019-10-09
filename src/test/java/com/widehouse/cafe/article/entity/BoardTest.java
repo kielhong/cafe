@@ -1,10 +1,10 @@
-package com.widehouse.cafe.domain.cafe;
+package com.widehouse.cafe.article.entity;
 
-import static com.widehouse.cafe.domain.cafe.BoardType.BEST;
-import static com.widehouse.cafe.domain.cafe.BoardType.BOOK;
-import static com.widehouse.cafe.domain.cafe.BoardType.CALENDAR;
-import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
-import static com.widehouse.cafe.domain.cafe.BoardType.TAG;
+import static com.widehouse.cafe.article.entity.BoardType.BEST;
+import static com.widehouse.cafe.article.entity.BoardType.BOOK;
+import static com.widehouse.cafe.article.entity.BoardType.CALENDAR;
+import static com.widehouse.cafe.article.entity.BoardType.LIST;
+import static com.widehouse.cafe.article.entity.BoardType.TAG;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import com.widehouse.cafe.cafe.entity.Cafe;
@@ -24,7 +24,7 @@ class BoardTest {
     }
 
     @Test
-    public void modifyBoard_thenChangeBoardInfo() {
+    void modifyBoard_thenChangeBoardInfo() {
         Board board = new Board(cafe, "test board", 1);
 
         board.update("new board name", 2);
@@ -35,7 +35,7 @@ class BoardTest {
     }
 
     @Test
-    public void isSpecialType_withTagType_thenTrue() {
+    void isSpecialType_withTagType_thenTrue() {
         Board board = new Board(cafe, "test board", TAG, 1);
 
         boolean isSpecialType = board.isSpecialType();
@@ -44,7 +44,7 @@ class BoardTest {
     }
 
     @Test
-    public void isSpecialType_withBookType_thenTrue() {
+    void isSpecialType_withBookType_thenTrue() {
         Board board = new Board(cafe, "test board", BOOK, 1);
 
         boolean isSpecialType = board.isSpecialType();
@@ -53,7 +53,7 @@ class BoardTest {
     }
 
     @Test
-    public void isSpecialType_withBestType_thenTrue() {
+    void isSpecialType_withBestType_thenTrue() {
         Board board = new Board(cafe, "test board", BEST, 1);
 
         boolean isSpecialType = board.isSpecialType();
@@ -62,7 +62,7 @@ class BoardTest {
     }
 
     @Test
-    public void isSpecialType_withCalendarType_thenTrue() {
+    void isSpecialType_withCalendarType_thenTrue() {
         Board board = new Board(cafe, "test board", CALENDAR, 1);
 
         boolean isSpecialType = board.isSpecialType();
@@ -71,7 +71,7 @@ class BoardTest {
     }
 
     @Test
-    public void isSpecialType_withListType_thenFalse() {
+    void isSpecialType_withListType_thenFalse() {
         Board board = new Board(cafe, "test board", LIST, 1);
 
         then(board.getType().isSpecialType()).isFalse();

@@ -1,11 +1,11 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.article.controller;
 
 import com.widehouse.cafe.common.annotation.CurrentMember;
-import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.service.ArticleService;
+import com.widehouse.cafe.article.service.ArticleService;
 import com.widehouse.cafe.cafe.service.CafeService;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.widehouse.cafe.cafe.service;
 
 import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
-import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
+import static com.widehouse.cafe.article.entity.BoardType.LIST;
 import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
@@ -19,8 +19,8 @@ import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.entity.CategoryRepository;
 import com.widehouse.cafe.common.exception.BoardNotExistsException;
 import com.widehouse.cafe.common.exception.CafeNotFoundException;
-import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.BoardRepository;
+import com.widehouse.cafe.article.entity.Board;
+import com.widehouse.cafe.article.entity.BoardRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;

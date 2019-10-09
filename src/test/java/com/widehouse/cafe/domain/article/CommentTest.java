@@ -2,7 +2,8 @@ package com.widehouse.cafe.domain.article;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.common.exception.NoAuthorityException;

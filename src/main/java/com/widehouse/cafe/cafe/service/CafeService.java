@@ -1,16 +1,16 @@
 package com.widehouse.cafe.cafe.service;
 
-import static com.widehouse.cafe.domain.cafe.BoardType.BEST;
-import static com.widehouse.cafe.domain.cafe.BoardType.BOOK;
-import static com.widehouse.cafe.domain.cafe.BoardType.CALENDAR;
-import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
-import static com.widehouse.cafe.domain.cafe.BoardType.TAG;
+import static com.widehouse.cafe.article.entity.BoardType.BEST;
+import static com.widehouse.cafe.article.entity.BoardType.BOOK;
+import static com.widehouse.cafe.article.entity.BoardType.CALENDAR;
+import static com.widehouse.cafe.article.entity.BoardType.LIST;
+import static com.widehouse.cafe.article.entity.BoardType.TAG;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
-import com.widehouse.cafe.domain.cafe.Board;
-import com.widehouse.cafe.domain.cafe.BoardRepository;
-import com.widehouse.cafe.domain.cafe.BoardType;
+import com.widehouse.cafe.article.entity.Board;
+import com.widehouse.cafe.article.entity.BoardRepository;
+import com.widehouse.cafe.article.entity.BoardType;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.cafe.entity.CafeVisibility;

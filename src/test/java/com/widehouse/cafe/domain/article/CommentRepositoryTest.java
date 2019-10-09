@@ -5,8 +5,9 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.mongodb.MongoClient;
+import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.config.MongoConfiguration;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 

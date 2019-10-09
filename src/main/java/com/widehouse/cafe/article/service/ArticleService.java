@@ -1,13 +1,13 @@
-package com.widehouse.cafe.service;
+package com.widehouse.cafe.article.service;
 
 import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
-import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.article.ArticleRepository;
-import com.widehouse.cafe.domain.article.Tag;
-import com.widehouse.cafe.domain.article.TagRepository;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.article.entity.ArticleRepository;
+import com.widehouse.cafe.article.entity.Tag;
+import com.widehouse.cafe.article.entity.TagRepository;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;

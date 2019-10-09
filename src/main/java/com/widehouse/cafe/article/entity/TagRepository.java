@@ -1,4 +1,4 @@
-package com.widehouse.cafe.domain.article;
+package com.widehouse.cafe.article.entity;
 
 import com.widehouse.cafe.cafe.entity.Cafe;
 

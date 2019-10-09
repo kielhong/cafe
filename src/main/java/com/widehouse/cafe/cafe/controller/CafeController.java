@@ -1,6 +1,6 @@
 package com.widehouse.cafe.cafe.controller;
 
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
 

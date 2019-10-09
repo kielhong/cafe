@@ -1,6 +1,7 @@
-package com.widehouse.cafe.domain.article;
+package com.widehouse.cafe.article.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.widehouse.cafe.article.entity.Article;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;

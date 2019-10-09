@@ -1,6 +1,6 @@
-package com.widehouse.cafe.domain.cafe;
+package com.widehouse.cafe.article.entity;
 
-import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
+import static com.widehouse.cafe.article.entity.BoardType.LIST;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.widehouse.cafe.cafe.entity.Cafe;

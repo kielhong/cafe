@@ -1,12 +1,12 @@
-package com.widehouse.cafe.domain.article;
+package com.widehouse.cafe.article.entity;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
-import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
  * Created by kiel on 2017. 3. 10..
  */
 @DataJpaTest
-public class TagRepositoryTest {
+class TagRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
     @Autowired
@@ -30,7 +30,7 @@ public class TagRepositoryTest {
     private Member member;
 
     @BeforeEach
-    public void init() {
+    void init() {
         cafe = new Cafe("testurl", "testname");
         entityManager.persist(cafe);
         board = new Board(cafe, "board");
@@ -40,7 +40,7 @@ public class TagRepositoryTest {
     }
 
     @Test
-    public void findTagByNameTest() {
+    void findTagByNameTest() {
         // given
         entityManager.persist(new Tag("tagname"));
         // when
@@ -51,7 +51,7 @@ public class TagRepositoryTest {
     }
 
     @Test
-    public void findAllByCafe_Should_ListDistinctTagsByCafe() {
+    void findAllByCafe_Should_ListDistinctTagsByCafe() {
         Tag tag1 = new Tag("tag1");
         entityManager.persist(tag1);
         Tag tag2 = new Tag("tag2");
@@ -73,15 +73,15 @@ public class TagRepositoryTest {
     }
 
     @Test
-    public void findArticlesByCafeAndTag_Should_ListArticlesByCafeAndTag() {
+    void findArticlesByCafeAndTag_Should_ListArticlesByCafeAndTag() {
         Tag tag1 = new Tag("tag1");
         entityManager.persist(tag1);
 
         Article article1 = new Article(board, member, "title1", "content1");
-        article1.getTags().addAll(Arrays.asList(tag1));
+        article1.getTags().addAll(Collections.singletonList(tag1));
         entityManager.persist(article1);
         Article article2 = new Article(board, member, "title2", "content2");
-        article2.getTags().addAll(Arrays.asList(tag1));
+        article2.getTags().addAll(Collections.singletonList(tag1));
         entityManager.persist(article2);
         // when
         List<Article> articles = tagRepository.findArticlesByCafeAndTag(cafe, tag1);

@@ -1,7 +1,6 @@
-package com.widehouse.cafe.domain.article;
+package com.widehouse.cafe.article.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.widehouse.cafe.domain.cafe.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 

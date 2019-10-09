@@ -12,11 +12,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.widehouse.cafe.config.WebSecurityConfig;
-import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.article.ArticleRepository;
+import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.article.entity.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.article.CommentRepository;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.domain.member.Member;

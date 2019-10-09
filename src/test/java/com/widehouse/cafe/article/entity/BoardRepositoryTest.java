@@ -1,4 +1,4 @@
-package com.widehouse.cafe.domain.cafe;
+package com.widehouse.cafe.article.entity;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -16,7 +16,7 @@ import org.springframework.data.domain.Sort;
  * Created by kiel on 2017. 2. 16..
  */
 @DataJpaTest
-public class BoardRepositoryTest {
+class BoardRepositoryTest {
     @Autowired
     TestEntityManager entityManager;
 
@@ -24,7 +24,7 @@ public class BoardRepositoryTest {
     private BoardRepository boardRepository;
 
     @Test
-    public void findAllByCafe_thenListBoardOrderByListOrder() {
+    void findAllByCafe_thenListBoardOrderByListOrder() {
         Cafe cafe = new Cafe("testurl", "testname");
         entityManager.persist(cafe);
         Board board1 = new Board(cafe, "board1", 4);

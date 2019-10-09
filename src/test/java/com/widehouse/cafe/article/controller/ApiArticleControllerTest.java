@@ -1,6 +1,6 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.article.controller;
 
-import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
+import static com.widehouse.cafe.article.entity.BoardType.LIST;
 import static java.time.LocalDateTime.now;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -12,13 +12,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.widehouse.cafe.article.controller.ApiArticleController;
 import com.widehouse.cafe.config.WebSecurityConfig;
-import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.service.ArticleService;
+import com.widehouse.cafe.article.service.ArticleService;
 import com.widehouse.cafe.cafe.service.CafeService;
 
 import java.util.Arrays;

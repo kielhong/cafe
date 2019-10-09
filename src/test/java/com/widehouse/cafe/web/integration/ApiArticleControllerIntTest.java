@@ -1,16 +1,16 @@
 package com.widehouse.cafe.web.integration;
 
-import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
+import static com.widehouse.cafe.article.entity.BoardType.LIST;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.service.ArticleService;
+import com.widehouse.cafe.article.service.ArticleService;
 import com.widehouse.cafe.cafe.service.CafeService;
 
 import org.junit.jupiter.api.BeforeEach;

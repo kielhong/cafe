@@ -1,5 +1,6 @@
 package com.widehouse.cafe.domain.article;
 
+import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.SimpleMember;
 import com.widehouse.cafe.common.exception.NoAuthorityException;

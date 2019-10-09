@@ -4,11 +4,11 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
-import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.article.ArticleRepository;
+import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.article.entity.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.article.CommentRepository;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.cafe.entity.CafeVisibility;

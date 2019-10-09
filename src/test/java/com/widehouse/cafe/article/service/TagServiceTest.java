@@ -1,14 +1,14 @@
-package com.widehouse.cafe.service;
+package com.widehouse.cafe.article.service;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.article.ArticleRepository;
-import com.widehouse.cafe.domain.article.Tag;
-import com.widehouse.cafe.domain.article.TagRepository;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.article.entity.ArticleRepository;
+import com.widehouse.cafe.article.entity.Board;
+import com.widehouse.cafe.article.entity.Tag;
+import com.widehouse.cafe.article.entity.TagRepository;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.domain.member.Member;
 
@@ -28,7 +28,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TagService.class)
-public class TagServiceTest {
+class TagServiceTest {
     @Autowired
     private TagService tagService;
     @MockBean
@@ -43,7 +43,7 @@ public class TagServiceTest {
     private Tag tag;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
         cafe = new Cafe("testurl", "testname");
         board = new Board(cafe, "board");
@@ -55,7 +55,7 @@ public class TagServiceTest {
     }
 
     @Test
-    public void getTagsByCafe_thenListTagsOfCafe() {
+    void getTagsByCafe_thenListTagsOfCafe() {
         Tag tag1 = new Tag("tag1");
         Tag tag2 = new Tag("tag2");
         given(tagRepository.findAllByCafe(cafe))
@@ -68,7 +68,7 @@ public class TagServiceTest {
     }
 
     @Test
-    public void getTagsByName_thenTagWithName() {
+    void getTagsByName_thenTagWithName() {
         Tag result = tagService.getTagByName("tag");
 
         then(result)
@@ -76,7 +76,7 @@ public class TagServiceTest {
     }
 
     @Test
-    public void getTagsByName_whenTagNameHasSpace_thenReturnTagWithTrimmedName() {
+    void getTagsByName_whenTagNameHasSpace_thenReturnTagWithTrimmedName() {
         Tag result = tagService.getTagByName(" tag  ");
 
         then(result)
@@ -84,7 +84,7 @@ public class TagServiceTest {
     }
 
     @Test
-    public void getArticlesByTag_whenCafeAndTag_thenReturnArticleHasTagInCafe() {
+    void getArticlesByTag_whenCafeAndTag_thenReturnArticleHasTagInCafe() {
         Article article1 = new Article(board, member, "title1", "content1");
         Article article2 = new Article(board, member, "title2", "content2");
         given(tagRepository.findArticlesByCafeAndTag(cafe, tag))
@@ -97,7 +97,7 @@ public class TagServiceTest {
     }
 
     @Test
-    public void updateTagsOfArticle_thenUpdateTags() {
+    void updateTagsOfArticle_thenUpdateTags() {
         Tag tag1 = new Tag("tag1");
         Tag tag2 = new Tag("tag2");
         article.getTags().addAll(Arrays.asList(tag1));
@@ -112,7 +112,7 @@ public class TagServiceTest {
     }
 
     @Test
-    public void updateTagsOfArticle_whenNotSavedTag_thenSaveTagAndUpdateTags() {
+    void updateTagsOfArticle_whenNotSavedTag_thenSaveTagAndUpdateTags() {
         Tag tag1 = new Tag("tag1");
         Tag tag2 = new Tag("tag2");
         article.getTags().addAll(Arrays.asList(tag1));

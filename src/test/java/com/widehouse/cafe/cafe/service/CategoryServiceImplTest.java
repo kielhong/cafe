@@ -5,10 +5,8 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
-import com.widehouse.cafe.cafe.service.CategoryService;
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.entity.CategoryRepository;
-import com.widehouse.cafe.service.implement.CategoryServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Comparator;

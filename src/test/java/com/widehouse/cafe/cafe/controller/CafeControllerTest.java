@@ -1,16 +1,15 @@
 package com.widehouse.cafe.cafe.controller;
 
-import static com.widehouse.cafe.domain.cafe.BoardType.CALENDAR;
-import static com.widehouse.cafe.domain.cafe.BoardType.TAG;
+import static com.widehouse.cafe.article.entity.BoardType.CALENDAR;
+import static com.widehouse.cafe.article.entity.BoardType.TAG;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import com.widehouse.cafe.cafe.controller.CafeController;
 import com.widehouse.cafe.config.WebSecurityConfig;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
 

@@ -1,13 +1,14 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.article.controller;
 
-import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
+import static com.widehouse.cafe.article.entity.BoardType.LIST;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.widehouse.cafe.article.controller.ApiBoardController;
 import com.widehouse.cafe.config.WebSecurityConfig;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
 

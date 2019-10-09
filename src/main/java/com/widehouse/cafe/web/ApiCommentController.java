@@ -1,8 +1,8 @@
 package com.widehouse.cafe.web;
 
 import com.widehouse.cafe.common.annotation.CurrentMember;
-import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.article.ArticleRepository;
+import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.article.entity.ArticleRepository;
 import com.widehouse.cafe.domain.article.Comment;
 import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.domain.member.Member;

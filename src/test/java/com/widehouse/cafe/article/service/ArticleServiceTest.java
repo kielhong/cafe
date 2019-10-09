@@ -1,4 +1,4 @@
-package com.widehouse.cafe.service;
+package com.widehouse.cafe.article.service;
 
 import static com.widehouse.cafe.cafe.entity.CafeVisibility.PRIVATE;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -9,17 +9,16 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
-import com.widehouse.cafe.domain.article.Article;
-import com.widehouse.cafe.domain.article.ArticleRepository;
-import com.widehouse.cafe.domain.article.Tag;
-import com.widehouse.cafe.domain.article.TagRepository;
-import com.widehouse.cafe.domain.cafe.Board;
+import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.article.entity.ArticleRepository;
+import com.widehouse.cafe.article.entity.Board;
+import com.widehouse.cafe.article.entity.Tag;
+import com.widehouse.cafe.article.entity.TagRepository;
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.cafe.entity.Category;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.common.exception.NoAuthorityException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,15 +39,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ArticleService.class)
-public class ArticleServiceTest {
+class ArticleServiceTest {
     @Autowired
     private ArticleService articleService;
     @MockBean
     private ArticleRepository articleRepository;
     @MockBean
     private CafeMemberRepository cafeMemberRepository;
-    @MockBean
-    private CafeRepository cafeRepository;
     @MockBean
     private TagRepository tagRepository;
 
@@ -63,7 +60,7 @@ public class ArticleServiceTest {
     private Article article3;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board1 = new Board(cafe, "board1");
         board2 = new Board(cafe, "board2");
@@ -77,7 +74,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void getArticlesByCafe_thenListArticleInCafeWithIdOrderDesc() {
+    void getArticlesByCafe_thenListArticleInCafeWithIdOrderDesc() {
         given(articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 3, new Sort(DESC, "id"))))
                 .willReturn(Arrays.asList(article3, article2, article1));
 
@@ -88,7 +85,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void getArticlesByBoard_thenListArticleInBoardWithIdOrderDesc() {
+    void getArticlesByBoard_thenListArticleInBoardWithIdOrderDesc() {
         given(articleRepository.findByBoard(board1, PageRequest.of(0, 3, new Sort(DESC, "id"))))
                 .willReturn(Arrays.asList(article2, article1));
 
@@ -99,7 +96,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void getArticle_withArticleId_thenReturnArticle() {
+    void getArticle_withArticleId_thenReturnArticle() {
         given(articleRepository.findById(1L))
                 .willReturn(Optional.of(article1));
 
@@ -111,7 +108,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void getArticle_withPrivateCafeAndNonCafeMember_thenRaiseNoAuthorityException() {
+    void getArticle_withPrivateCafeAndNonCafeMember_thenRaiseNoAuthorityException() {
         Cafe privateCafe = new Cafe("private", "private cafe", "", PRIVATE, new Category());
         Board board = new Board(privateCafe, "board");
         Article article = new Article(board, writer, "private article", "content");
@@ -125,7 +122,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void writeArticle_withCafeMember_thenCreateArticle() {
+    void writeArticle_withCafeMember_thenCreateArticle() {
         given(cafeMemberRepository.existsByCafeMember(board1.getCafe(), writer))
                 .willReturn(true);
         given(articleRepository.save(any(Article.class)))
@@ -143,7 +140,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void writeArticle_withNotCafeMember_thenRaiseNoAuthorityException() {
+    void writeArticle_withNotCafeMember_thenRaiseNoAuthorityException() {
         given(cafeMemberRepository.existsByCafeMember(board1.getCafe(), writer))
                 .willReturn(false);
         given(articleRepository.save(any(Article.class)))
@@ -155,7 +152,7 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void addTag_withTag_thenArticleAddRelationToTag() {
+    void addTag_withTag_thenArticleAddRelationToTag() {
         Tag tag = new Tag("tag");
 
         articleService.addTag(article1, tag);
