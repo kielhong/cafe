@@ -3,6 +3,7 @@ package com.widehouse.cafe.domain.cafe;
 import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.widehouse.cafe.cafe.entity.Cafe;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

@@ -2,12 +2,12 @@ package com.widehouse.cafe.service;
 
 import static com.widehouse.cafe.domain.cafemember.CafeMemberRole.MEMBER;
 
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeRepository;
+import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.exception.CafeMemberExistsException;
+import com.widehouse.cafe.common.exception.CafeMemberExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class CafeMemberService {
     public CafeMember joinMember(Cafe cafe, Member member) {
         if (!cafeMemberRepository.existsByCafeMember(cafe, member)) {
             CafeMember cafeMember = new CafeMember(cafe, member, MEMBER);
-            cafe.getStatistics().increaseCafeMemberCount();
+            cafe.getData().increaseCafeMemberCount();
 
             cafeMemberRepository.save(cafeMember);
             cafeRepository.save(cafe);

@@ -1,6 +1,6 @@
 package com.widehouse.cafe.event;
 
-import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.cafe.entity.Cafe;
 
 import org.springframework.context.ApplicationEvent;
 

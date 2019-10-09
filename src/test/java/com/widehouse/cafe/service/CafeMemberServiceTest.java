@@ -5,12 +5,12 @@ import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeRepository;
+import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.exception.CafeMemberExistsException;
+import com.widehouse.cafe.common.exception.CafeMemberExistsException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,11 +54,11 @@ public class CafeMemberServiceTest {
 
     @Test
     public void joinMember_thenIncreaseCafeStatisticsCafeMemberCountBy1() {
-        Long beforeCount = cafe.getStatistics().getCafeMemberCount();
+        Long beforeCount = cafe.getData().getCafeMemberCount();
 
         cafeMemberService.joinMember(cafe, member);
 
-        then(cafe.getStatistics().getCafeMemberCount())
+        then(cafe.getData().getCafeMemberCount())
                 .isEqualTo(beforeCount + 1);
         verify(cafeRepository).save(cafe);
     }
@@ -67,11 +67,11 @@ public class CafeMemberServiceTest {
     public void joinMember_withExistsCafeMember_thenRaiseCafeMemberExistsException() {
         given(cafeMemberRepository.existsByCafeMember(cafe, member))
                 .willReturn(true);
-        Long beforeSize = cafe.getStatistics().getCafeMemberCount();
+        Long beforeSize = cafe.getData().getCafeMemberCount();
 
         thenThrownBy(() -> cafeMemberService.joinMember(cafe, member))
                 .isInstanceOf(CafeMemberExistsException.class);
-        then(cafe.getStatistics().getCafeMemberCount())
+        then(cafe.getData().getCafeMemberCount())
                 .isEqualTo(beforeSize);
     }
 }

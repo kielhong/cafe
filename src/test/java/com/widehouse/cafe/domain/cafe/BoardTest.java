@@ -7,6 +7,8 @@ import static com.widehouse.cafe.domain.cafe.BoardType.LIST;
 import static com.widehouse.cafe.domain.cafe.BoardType.TAG;
 import static org.assertj.core.api.BDDAssertions.then;
 
+import com.widehouse.cafe.cafe.entity.Cafe;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

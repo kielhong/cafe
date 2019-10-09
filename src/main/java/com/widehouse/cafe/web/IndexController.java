@@ -1,15 +1,11 @@
 package com.widehouse.cafe.web;
 
-import static org.springframework.data.domain.Sort.Direction.ASC;
-
-import com.widehouse.cafe.domain.cafe.Category;
-import com.widehouse.cafe.domain.cafe.CategoryRepository;
-import com.widehouse.cafe.service.CategoryService;
+import com.widehouse.cafe.cafe.entity.Category;
+import com.widehouse.cafe.cafe.service.CategoryService;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -2,6 +2,8 @@ package com.widehouse.cafe.domain.cafe;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
+import com.widehouse.cafe.cafe.entity.Cafe;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Test;

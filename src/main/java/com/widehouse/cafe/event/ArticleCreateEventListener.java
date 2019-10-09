@@ -1,7 +1,7 @@
 package com.widehouse.cafe.event;
 
-import com.widehouse.cafe.domain.cafe.Cafe;
-import com.widehouse.cafe.domain.cafe.CafeRepository;
+import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.entity.CafeRepository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class ArticleCreateEventListener {
     @Transactional
     public void handleArticleCreatedEvent(ArticleCreateEvent event) {
         Cafe cafe = event.getCafe();
-        cafe.getStatistics().increaseArticleCount();
+        cafe.getData().increaseArticleCount();
         cafeRepository.save(cafe);
 
         log.info("ASYNC EVENT : increase cafe article count ");

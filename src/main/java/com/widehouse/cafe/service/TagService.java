@@ -4,7 +4,7 @@ import com.widehouse.cafe.domain.article.Article;
 import com.widehouse.cafe.domain.article.ArticleRepository;
 import com.widehouse.cafe.domain.article.Tag;
 import com.widehouse.cafe.domain.article.TagRepository;
-import com.widehouse.cafe.domain.cafe.Cafe;
+import com.widehouse.cafe.cafe.entity.Cafe;
 
 import java.util.ArrayList;
 import java.util.List;
