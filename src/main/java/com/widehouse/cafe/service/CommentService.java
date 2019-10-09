@@ -50,7 +50,7 @@ public class CommentService {
             Comment comment = new Comment(article, commenter, commentContent);
             commentRepository.save(comment);
 
-            cafe.getStatistics().increaseCommentCount();
+            cafe.getData().increaseCommentCount();
             cafeRepository.save(cafe);
 
             article.increaseCommentCount();
@@ -96,7 +96,7 @@ public class CommentService {
                 || cafeMember.getRole() == CafeMemberRole.MANAGER) {
             commentRepository.delete(comment);
 
-            cafe.getStatistics().decreaseCommentCount();
+            cafe.getData().decreaseCommentCount();
             cafeRepository.save(cafe);
 
             article.decreaseCommentCount();

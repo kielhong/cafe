@@ -86,7 +86,7 @@ public class CommentServiceTest {
 
     @Test
     public void writeComment_thenCreateComment_IncreaseCafeCommentCount_IncreaseArticleCommentCount() {
-        Long cafeCommentCount = cafe.getStatistics().getCafeCommentCount();
+        Long cafeCommentCount = cafe.getData().getCafeCommentCount();
         int articleCommentCount = article.getCommentCount();
 
         Comment result = commentService.writeComment(article, commenter, "new comment");
@@ -96,7 +96,7 @@ public class CommentServiceTest {
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
                 .hasFieldOrPropertyWithValue("member.id", commenter.getId())
                 .hasFieldOrPropertyWithValue("comment", "new comment");
-        then(cafe.getStatistics().getCafeCommentCount())
+        then(cafe.getData().getCafeCommentCount())
                 .isEqualTo(cafeCommentCount + 1);
         then(article.getCommentCount())
                 .isEqualTo(articleCommentCount + 1);
@@ -149,11 +149,11 @@ public class CommentServiceTest {
     @Test
     public void modifyComment_withCommenter_thenUpdateComment() {
         // given
-        Long beforeCommentCount = cafe.getStatistics().getCafeCommentCount();
+        Long beforeCommentCount = cafe.getData().getCafeCommentCount();
         // when
         commentService.modifyComment(comment, commenter, "updated comment");
         // then
-        then(cafe.getStatistics().getCafeCommentCount())
+        then(cafe.getData().getCafeCommentCount())
                 .isEqualTo(beforeCommentCount);
         then(comment)
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
@@ -175,12 +175,12 @@ public class CommentServiceTest {
     @Test
     public void deleteComment_ByCommenter_thenDeleteComment_DecreaseCounts() {
         // given
-        Long cafeCommentCount = cafe.getStatistics().getCafeCommentCount();
+        Long cafeCommentCount = cafe.getData().getCafeCommentCount();
         int articleCommentCount = article.getCommentCount();
         // when
         commentService.deleteComment(comment.getId(), commenter);
         // then
-        then(cafe.getStatistics().getCafeCommentCount())
+        then(cafe.getData().getCafeCommentCount())
                 .isEqualTo(cafeCommentCount - 1 < 0 ? 0 : cafeCommentCount - 1);
         then(article.getCommentCount())
                 .isEqualTo(articleCommentCount - 1);
@@ -192,14 +192,14 @@ public class CommentServiceTest {
     @Test
     public void deleteComment_withCafeManager_thenDeleteComment_DecreaseCounts() {
         // given
-        Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
+        Long beforeCafeStatisticsCommentCount = cafe.getData().getCafeCommentCount();
         int articleCommentCount = article.getCommentCount();
         given(cafeMemberRepository.findByCafeAndMember(cafe, manager))
                 .willReturn(new CafeMember(cafe, manager, MANAGER));
         // when
         commentService.deleteComment(comment.getId(), manager);
         // then
-        assertThat(cafe.getStatistics().getCafeCommentCount())
+        assertThat(cafe.getData().getCafeCommentCount())
                 .isEqualTo(beforeCafeStatisticsCommentCount - 1 < 0 ? 0 : beforeCafeStatisticsCommentCount - 1);
         then(article.getCommentCount())
                 .isEqualTo(articleCommentCount - 1);
@@ -212,13 +212,13 @@ public class CommentServiceTest {
     public void deleteComment_withNotCommentNorNotCafeManager_thenRaiseNoAuthorityException() {
         // given
         Member anotherMember = new Member(4L, "another writer", "password", "nickname", "awriter@bar.com");
-        Long beforeCafeStatisticsCommentCount = cafe.getStatistics().getCafeCommentCount();
+        Long beforeCafeStatisticsCommentCount = cafe.getData().getCafeCommentCount();
         given(cafeMemberRepository.findByCafeAndMember(cafe, anotherMember))
                 .willReturn(new CafeMember(cafe, anotherMember, MEMBER));
         // then
         thenThrownBy(() -> commentService.deleteComment(comment.getId(), anotherMember))
                 .isInstanceOf(NoAuthorityException.class);
-        then(cafe.getStatistics().getCafeCommentCount())
+        then(cafe.getData().getCafeCommentCount())
                 .isEqualTo(beforeCafeStatisticsCommentCount);
         verify(commentRepository, never()).delete(comment);
 

@@ -66,7 +66,7 @@ public class CafeService {
         Cafe cafe = cafeRepository.save(new Cafe(url, name, description, visibility, category));
         CafeMember cafeMember = new CafeMember(cafe, member, CafeMemberRole.MANAGER);
         cafeMemberRepository.save(cafeMember);
-        cafe.getStatistics().increaseCafeMemberCount();
+        cafe.getData().increaseCafeMemberCount();
         cafeRepository.save(cafe);
 
         addSpecialBoard(cafe);

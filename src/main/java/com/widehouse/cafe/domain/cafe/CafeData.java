@@ -11,7 +11,7 @@ import lombok.Setter;
 @Embeddable
 @Getter
 @Setter
-public class CafeStatistics {
+public class CafeData {
     private Long cafeMemberCount;
     private Long cafeArticleCount;
     private Long cafeCommentCount;
@@ -20,7 +20,7 @@ public class CafeStatistics {
     /**
      * Constructor.
      */
-    public CafeStatistics() {
+    public CafeData() {
         this.cafeMemberCount = 0L;
         this.cafeArticleCount = 0L;
         this.cafeCommentCount = 0L;

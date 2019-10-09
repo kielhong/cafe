@@ -1,7 +1,6 @@
 package com.widehouse.cafe.domain.cafe;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -19,7 +18,6 @@ import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -58,10 +56,10 @@ public class Cafe {
     private LocalDateTime createdAt;
 
     @Embedded
-    private CafeStatistics statistics;
+    private CafeData data;
 
     public Cafe() {
-        this.statistics = new CafeStatistics();
+        this.data = new CafeData();
     }
 
     public Cafe(Long id, String url, String name) {
@@ -122,6 +120,6 @@ public class Cafe {
     //    }
 
     public Long getCafeMemberCount() {
-        return this.getStatistics().getCafeMemberCount();
+        return this.getData().getCafeMemberCount();
     }
 }

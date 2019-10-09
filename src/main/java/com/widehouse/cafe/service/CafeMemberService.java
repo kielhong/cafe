@@ -30,7 +30,7 @@ public class CafeMemberService {
     public CafeMember joinMember(Cafe cafe, Member member) {
         if (!cafeMemberRepository.existsByCafeMember(cafe, member)) {
             CafeMember cafeMember = new CafeMember(cafe, member, MEMBER);
-            cafe.getStatistics().increaseCafeMemberCount();
+            cafe.getData().increaseCafeMemberCount();
 
             cafeMemberRepository.save(cafeMember);
             cafeRepository.save(cafe);

@@ -54,11 +54,11 @@ public class CafeMemberServiceTest {
 
     @Test
     public void joinMember_thenIncreaseCafeStatisticsCafeMemberCountBy1() {
-        Long beforeCount = cafe.getStatistics().getCafeMemberCount();
+        Long beforeCount = cafe.getData().getCafeMemberCount();
 
         cafeMemberService.joinMember(cafe, member);
 
-        then(cafe.getStatistics().getCafeMemberCount())
+        then(cafe.getData().getCafeMemberCount())
                 .isEqualTo(beforeCount + 1);
         verify(cafeRepository).save(cafe);
     }
@@ -67,11 +67,11 @@ public class CafeMemberServiceTest {
     public void joinMember_withExistsCafeMember_thenRaiseCafeMemberExistsException() {
         given(cafeMemberRepository.existsByCafeMember(cafe, member))
                 .willReturn(true);
-        Long beforeSize = cafe.getStatistics().getCafeMemberCount();
+        Long beforeSize = cafe.getData().getCafeMemberCount();
 
         thenThrownBy(() -> cafeMemberService.joinMember(cafe, member))
                 .isInstanceOf(CafeMemberExistsException.class);
-        then(cafe.getStatistics().getCafeMemberCount())
+        then(cafe.getData().getCafeMemberCount())
                 .isEqualTo(beforeSize);
     }
 }

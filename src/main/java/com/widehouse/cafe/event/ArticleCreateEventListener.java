@@ -25,7 +25,7 @@ public class ArticleCreateEventListener {
     @Transactional
     public void handleArticleCreatedEvent(ArticleCreateEvent event) {
         Cafe cafe = event.getCafe();
-        cafe.getStatistics().increaseArticleCount();
+        cafe.getData().increaseArticleCount();
         cafeRepository.save(cafe);
 
         log.info("ASYNC EVENT : increase cafe article count ");
