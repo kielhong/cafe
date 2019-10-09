@@ -1,4 +1,4 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.comment.controller;
 
 import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
 import static java.time.LocalDateTime.now;
@@ -11,18 +11,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.ArticleRepository;
-import com.widehouse.cafe.domain.article.Comment;
-import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.Category;
+import com.widehouse.cafe.comment.entity.Comment;
+import com.widehouse.cafe.comment.entity.CommentRepository;
+import com.widehouse.cafe.comment.service.CommentService;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
+import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.SimpleMember;
-import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.service.CommentService;
 import com.widehouse.cafe.service.MemberDetailsService;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(ApiCommentController.class)
 @Import(WebSecurityConfig.class)
 @Slf4j
-public class ApiCommentControllerTest {
+class ApiCommentControllerTest {
     @Autowired
     private MockMvc mvc;
 
@@ -62,7 +62,7 @@ public class ApiCommentControllerTest {
     private Member member;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         member = new Member(1L, "member", "password", "nickanme", "foo@bar.com");
 
         Cafe cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category", 1));
@@ -74,7 +74,7 @@ public class ApiCommentControllerTest {
     }
 
     @Test
-    public void getComments_thenListComments() throws Exception {
+    void getComments_thenListComments() throws Exception {
         // given
         Comment comment1 = new Comment(article, member, "comment1");
         Comment comment2 = new Comment(article, member, "comment2");
@@ -91,7 +91,7 @@ public class ApiCommentControllerTest {
     }
 
     @Test
-    public void write_withCafeMember_thenCreateComment() throws Exception {
+    void write_withCafeMember_thenCreateComment() throws Exception {
         given(commentService.writeComment(article, member, "new comment"))
                 .willReturn(new Comment(article, member, "new comment"));
 
@@ -106,7 +106,7 @@ public class ApiCommentControllerTest {
     }
 
     @Test
-    public void write_withNonCafeMember_then403Forbidden() throws Exception {
+    void write_withNonCafeMember_then403Forbidden() throws Exception {
         // given
         Comment comment = new Comment(article, member, "new comment");
         given(commentService.writeComment(article, member, comment.getComment()))
@@ -119,7 +119,7 @@ public class ApiCommentControllerTest {
     }
 
     @Test
-    public void writeReplyComment_whenSubComment_thenSuccess() throws Exception {
+    void writeReplyComment_whenSubComment_thenSuccess() throws Exception {
         // given
         Comment comment = new Comment("1", article.getId(), new SimpleMember(member), "comment",
                 Collections.emptyList(), now(), now());

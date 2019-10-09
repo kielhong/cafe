@@ -1,8 +1,8 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.comment.controller;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-import com.widehouse.cafe.domain.article.CommentReactiveRepository;
+import com.widehouse.cafe.comment.entity.CommentReactiveRepository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class ApiCommentStreamControllerTest {
+class ApiCommentStreamControllerTest {
     @Autowired
     private WebTestClient webTestClient;
 
@@ -19,7 +19,7 @@ public class ApiCommentStreamControllerTest {
     private CommentReactiveRepository commentRepository;
 
     @Test
-    public void getAllCommentsTest() {
+    void getAllCommentsTest() {
         webTestClient.get().uri("/api/articles/1/stream/comments")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange()

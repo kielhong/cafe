@@ -1,4 +1,4 @@
-package com.widehouse.cafe.domain.article;
+package com.widehouse.cafe.comment.entity;
 
 import java.util.List;
 

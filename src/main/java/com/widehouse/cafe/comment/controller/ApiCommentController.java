@@ -1,12 +1,12 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.comment.controller;
 
 import com.widehouse.cafe.common.annotation.CurrentMember;
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.ArticleRepository;
-import com.widehouse.cafe.domain.article.Comment;
-import com.widehouse.cafe.domain.article.CommentRepository;
+import com.widehouse.cafe.comment.entity.Comment;
+import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.service.CommentService;
+import com.widehouse.cafe.comment.service.CommentService;
 
 import java.util.List;
 

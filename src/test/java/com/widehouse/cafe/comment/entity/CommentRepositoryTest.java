@@ -1,4 +1,4 @@
-package com.widehouse.cafe.domain.article;
+package com.widehouse.cafe.comment.entity;
 
 import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -6,9 +6,9 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.mongodb.MongoClient;
 import com.widehouse.cafe.article.entity.Article;
-import com.widehouse.cafe.config.MongoConfiguration;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.config.MongoConfiguration;
 import com.widehouse.cafe.domain.member.Member;
 
 import java.util.Arrays;
@@ -43,7 +43,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {MongoConfiguration.class})
 @Slf4j
-public class CommentRepositoryTest {
+class CommentRepositoryTest {
     @Autowired
     private CommentRepository commentRepository;
 
@@ -61,7 +61,7 @@ public class CommentRepositoryTest {
     private Member member;
 
     @BeforeAll
-    public static void initAll() throws Exception {
+    static void initAll() throws Exception {
         _mongodExe = starter.prepare(new MongodConfigBuilder()
                 .version(Version.Main.PRODUCTION)
                 .net(new Net(HOST, PORT, Network.localhostIsIPv6()))
@@ -71,14 +71,14 @@ public class CommentRepositoryTest {
     }
 
     @AfterAll
-    public static void tearDownAll() {
+    static void tearDownAll() {
         mongo.close();
         _mongod.stop();
         _mongodExe.stop();
     }
 
     @BeforeEach
-    public void init() {
+     void init() {
         template = new MongoTemplate(mongo, "test");
         template.dropCollection(Comment.class);
 
@@ -86,7 +86,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    public void saveCommentTest() {
+     void saveCommentTest() {
         // given
         Comment comment = new Comment(1L, member, "comment");
         // when
@@ -98,7 +98,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    public void saveReplyCommentsTest() {
+     void saveReplyCommentsTest() {
         // given
         Comment comment = new Comment(1L, member, "comment");
         comment.getComments().addAll(
@@ -115,7 +115,7 @@ public class CommentRepositoryTest {
 
 
     @Test
-    public void findByArticle_Should_ListComments() {
+     void findByArticle_Should_ListComments() {
         // given
         Cafe cafe = new Cafe("testcafe", "testcafe");
         Board board = new Board(cafe, "board");

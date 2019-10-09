@@ -1,4 +1,4 @@
-package com.widehouse.cafe.service;
+package com.widehouse.cafe.comment.service;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
@@ -6,14 +6,15 @@ import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.ArticleRepository;
-import com.widehouse.cafe.domain.article.Comment;
-import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.cafe.entity.CafeVisibility;
+import com.widehouse.cafe.comment.entity.Comment;
+import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.service.CafeMemberService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +35,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = CommentService.class)
-public class CommentListServiceTest {
+class CommentListServiceTest {
     @Autowired
     private CommentService commentService;
 
@@ -60,7 +61,7 @@ public class CommentListServiceTest {
     private Comment comment5;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         cafe = new Cafe("testurl", "testname");
         board = new Board(cafe,"article");
         Member writer = new Member(1L, "writer", "password", "nickname", "foo@bar.com");
@@ -77,7 +78,7 @@ public class CommentListServiceTest {
 
 
     @Test
-    public void getComments_Should_ListComments() {
+    void getComments_Should_ListComments() {
         // given
         given(cafeMemberService.isCafeMember(cafe, commenter))
                 .willReturn(true);
@@ -93,7 +94,7 @@ public class CommentListServiceTest {
     }
 
     @Test
-    public void getComments_PrivateCafe_NotMember_Should_EmptyList() {
+    void getComments_PrivateCafe_NotMember_Should_EmptyList() {
         // given
         Member nonCafeMember = new Member(3L, "noncafemember", "password", "nickname", "nonmember@bar.com");
         cafe.updateInfo(cafe.getName(), "", CafeVisibility.PRIVATE, cafe.getCategory());

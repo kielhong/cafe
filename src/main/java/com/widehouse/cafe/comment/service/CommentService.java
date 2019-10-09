@@ -1,12 +1,12 @@
-package com.widehouse.cafe.service;
+package com.widehouse.cafe.comment.service;
 
 import static com.widehouse.cafe.cafe.entity.CafeVisibility.PRIVATE;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.ArticleRepository;
-import com.widehouse.cafe.domain.article.Comment;
-import com.widehouse.cafe.domain.article.CommentRepository;
+import com.widehouse.cafe.comment.entity.Comment;
+import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
@@ -14,6 +14,7 @@ import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
+import com.widehouse.cafe.service.CafeMemberService;
 
 import java.util.Collections;
 import java.util.List;

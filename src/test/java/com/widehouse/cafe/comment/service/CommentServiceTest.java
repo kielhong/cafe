@@ -1,4 +1,4 @@
-package com.widehouse.cafe.service;
+package com.widehouse.cafe.comment.service;
 
 import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
 import static com.widehouse.cafe.domain.cafemember.CafeMemberRole.MANAGER;
@@ -14,17 +14,18 @@ import static org.mockito.Mockito.verify;
 
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.ArticleRepository;
-import com.widehouse.cafe.domain.article.Comment;
-import com.widehouse.cafe.domain.article.CommentRepository;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.cafe.entity.Category;
+import com.widehouse.cafe.comment.entity.Comment;
+import com.widehouse.cafe.comment.entity.CommentRepository;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.domain.cafemember.CafeMember;
 import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
 import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.domain.member.SimpleMember;
-import com.widehouse.cafe.common.exception.NoAuthorityException;
+import com.widehouse.cafe.service.CafeMemberService;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -42,7 +43,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = CommentService.class)
-public class CommentServiceTest {
+class CommentServiceTest {
     @Autowired
     private CommentService commentService;
 
@@ -64,7 +65,7 @@ public class CommentServiceTest {
     private Comment comment;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         manager = new Member(1L, "manager", "password", "nickname", "manager@bar.com");
         commenter = new Member(2L, "commenter", "password", "nickname", "commeter@bar.com");
         Member writer = new Member(3L, "writer", "password", "nickname", "writer@bar.com");
@@ -85,7 +86,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void writeComment_thenCreateComment_IncreaseCafeCommentCount_IncreaseArticleCommentCount() {
+    void writeComment_thenCreateComment_IncreaseCafeCommentCount_IncreaseArticleCommentCount() {
         Long cafeCommentCount = cafe.getData().getCafeCommentCount();
         int articleCommentCount = article.getCommentCount();
 
@@ -106,7 +107,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void writeComment_withNotCafeMember_thenRaiseNoAuthorityException() {
+    void writeComment_withNotCafeMember_thenRaiseNoAuthorityException() {
         Member notCafeMember = new Member(4L, "commenter", "password", "nickname", "commeter@bar.com");
         given(cafeMemberService.isCafeMember(cafe, notCafeMember))
                 .willReturn(false);
@@ -117,7 +118,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void writeReplyComment_thenSuccess() {
+    void writeReplyComment_thenSuccess() {
         Comment writeResult = new Comment(1L, commenter, "comment");
         writeResult.getComments().add(new Comment(1L, commenter, "reply comment"));
         given(commentRepository.save(comment))
@@ -133,7 +134,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void writeReplyComment_withNotCafeMember_thenRaiseNoAuthorityException() {
+    void writeReplyComment_withNotCafeMember_thenRaiseNoAuthorityException() {
         Member another = new Member(4L, "another_member", "password", "nickname", "amember@bar.com");
         given(cafeMemberService.isCafeMember(cafe, another))
                 .willReturn(false);
@@ -147,7 +148,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void modifyComment_withCommenter_thenUpdateComment() {
+    void modifyComment_withCommenter_thenUpdateComment() {
         // given
         Long beforeCommentCount = cafe.getData().getCafeCommentCount();
         // when
@@ -165,7 +166,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void modifyComment_withNotCommenter_thenRaiseNoAuthorityException() {
+    void modifyComment_withNotCommenter_thenRaiseNoAuthorityException() {
         Member another = new Member(4L, "another_member", "password", "nickname", "foo@bar.com");
 
         thenThrownBy(() -> commentService.modifyComment(comment, another, "new comment"))
@@ -173,7 +174,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void deleteComment_ByCommenter_thenDeleteComment_DecreaseCounts() {
+    void deleteComment_ByCommenter_thenDeleteComment_DecreaseCounts() {
         // given
         Long cafeCommentCount = cafe.getData().getCafeCommentCount();
         int articleCommentCount = article.getCommentCount();
@@ -190,7 +191,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void deleteComment_withCafeManager_thenDeleteComment_DecreaseCounts() {
+    void deleteComment_withCafeManager_thenDeleteComment_DecreaseCounts() {
         // given
         Long beforeCafeStatisticsCommentCount = cafe.getData().getCafeCommentCount();
         int articleCommentCount = article.getCommentCount();
@@ -209,7 +210,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void deleteComment_withNotCommentNorNotCafeManager_thenRaiseNoAuthorityException() {
+    void deleteComment_withNotCommentNorNotCafeManager_thenRaiseNoAuthorityException() {
         // given
         Member anotherMember = new Member(4L, "another writer", "password", "nickname", "awriter@bar.com");
         Long beforeCafeStatisticsCommentCount = cafe.getData().getCafeCommentCount();

@@ -1,7 +1,7 @@
-package com.widehouse.cafe.web;
+package com.widehouse.cafe.comment.controller;
 
-import com.widehouse.cafe.domain.article.Comment;
-import com.widehouse.cafe.domain.article.CommentReactiveRepository;
+import com.widehouse.cafe.comment.entity.Comment;
+import com.widehouse.cafe.comment.entity.CommentReactiveRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

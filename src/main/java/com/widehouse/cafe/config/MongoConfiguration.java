@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 /**
  * Created by kiel on 2017. 3. 14..
  */
-@EnableMongoRepositories(basePackages = {"com.widehouse.cafe.domain"})
+@EnableMongoRepositories(basePackages = {"com.widehouse.cafe.comment.entity"})
 public class MongoConfiguration {
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {

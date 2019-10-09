@@ -1,4 +1,4 @@
-package com.widehouse.cafe.domain.article;
+package com.widehouse.cafe.comment.entity;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;
