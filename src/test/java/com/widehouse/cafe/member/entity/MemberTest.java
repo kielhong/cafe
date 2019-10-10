@@ -1,0 +1,24 @@
+package com.widehouse.cafe.member.entity;
+
+import static org.assertj.core.api.BDDAssertions.then;
+
+import com.widehouse.cafe.member.entity.Member;
+
+import org.junit.jupiter.api.Test;
+
+/**
+ * Created by kiel on 2017. 2. 10..
+ */
+public class MemberTest {
+    @Test
+    public void constructorTest() {
+        Member result = new Member(1L, "foo", "password", "nickname", "foo@bar.com");
+
+        then(result)
+                .hasFieldOrPropertyWithValue("id", 1L)
+                .hasFieldOrPropertyWithValue("username", "foo")
+                .hasFieldOrPropertyWithValue("password", "password")
+                .hasFieldOrPropertyWithValue("email", "foo@bar.com");
+    }
+
+}

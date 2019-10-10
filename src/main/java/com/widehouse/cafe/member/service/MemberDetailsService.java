@@ -1,0 +1,29 @@
+package com.widehouse.cafe.member.service;
+
+import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.member.entity.MemberRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+/**
+ * Created by kiel on 2017. 3. 3..
+ */
+@Service
+public class MemberDetailsService implements UserDetailsService {
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Member member = memberRepository.findByUsername(username);
+        if (member == null) {
+            throw new UsernameNotFoundException("Member : " + username + " Not Exists");
+        }
+
+        return member;
+    }
+}

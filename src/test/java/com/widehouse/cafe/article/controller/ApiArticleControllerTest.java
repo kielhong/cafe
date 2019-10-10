@@ -12,15 +12,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.article.controller.ApiArticleController;
-import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.Board;
-import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.article.service.ArticleService;
+import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
+import com.widehouse.cafe.member.entity.Member;
 
 import java.util.Arrays;
 
@@ -29,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,8 +34,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * Created by kiel on 2017. 2. 19..
  */
 @WebMvcTest(ApiArticleController.class)
-@Import(WebSecurityConfig.class)
-public class ApiArticleControllerTest {
+class ApiArticleControllerTest {
     @Autowired
     private MockMvc mvc;
 
@@ -52,7 +48,7 @@ public class ApiArticleControllerTest {
     private Member writer;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
         writer = new Member(1L, "writer", "password", "nickname", "foo@bar.com");
@@ -64,7 +60,7 @@ public class ApiArticleControllerTest {
     }
 
     @Test
-    public void listArticlesByCafe_thenListArticles() throws Exception {
+    void listArticlesByCafe_thenListArticles() throws Exception {
         given(articleService.getArticlesByCafe(cafe, 0, 3))
                 .willReturn(Arrays.asList(
                         new Article(board, writer, "test article1", "test1"),
@@ -78,7 +74,7 @@ public class ApiArticleControllerTest {
     }
 
     @Test
-    public void listArticlesByBoard_thenListArticles() throws Exception {
+    void listArticlesByBoard_thenListArticles() throws Exception {
         given(articleService.getArticlesByBoard(board, 0, 3))
                 .willReturn(Arrays.asList(
                         new Article(board, writer, "test article1", "test1"),
@@ -98,7 +94,7 @@ public class ApiArticleControllerTest {
     }
 
     @Test
-    public void getArticle_withAuh_thenReturnArticle() throws Exception {
+    void getArticle_withAuh_thenReturnArticle() throws Exception {
         Member reader = new Member(1L, "reader", "password", "nickname", "foo@bar.com");
         given(articleService.getArticle(1L, reader))
                 .willReturn(new Article(1L, board, writer, "title", "content", emptyList(), 0, now(), now()));
@@ -112,7 +108,7 @@ public class ApiArticleControllerTest {
     }
 
     @Test
-    public void getArticle_withNoAuthorityMember_then403Forbidden() throws Exception {
+    void getArticle_withNoAuthorityMember_then403Forbidden() throws Exception {
         Member reader = new Member(1L, "reader", "password", "nickname", "foo@bar.com");
         given(articleService.getArticle(1L, reader))
                 .willThrow(new NoAuthorityException());
@@ -123,7 +119,7 @@ public class ApiArticleControllerTest {
     }
 
     @Test
-    public void writeArticle_withCafeMember_thenSuccess() throws Exception {
+    void writeArticle_withCafeMember_thenSuccess() throws Exception {
         given(articleService.writeArticle(board, writer, "test title", "test content"))
                 .willReturn(new Article(board, writer, "test title", "test content"));
         // then

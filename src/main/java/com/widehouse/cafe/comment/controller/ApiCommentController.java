@@ -5,7 +5,7 @@ import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.ArticleRepository;
 import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
-import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.member.entity.Member;
 import com.widehouse.cafe.comment.service.CommentService;
 
 import java.util.List;

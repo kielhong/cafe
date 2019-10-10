@@ -20,31 +20,26 @@ import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.comment.service.CommentService;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.config.WebSecurityConfig;
-import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.domain.member.SimpleMember;
-import com.widehouse.cafe.service.MemberDetailsService;
+import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.member.entity.SimpleMember;
+import com.widehouse.cafe.member.service.MemberDetailsService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Created by kiel on 2017. 2. 20..
  */
 @WebMvcTest(ApiCommentController.class)
-@Import(WebSecurityConfig.class)
-@Slf4j
 class ApiCommentControllerTest {
     @Autowired
     private MockMvc mvc;

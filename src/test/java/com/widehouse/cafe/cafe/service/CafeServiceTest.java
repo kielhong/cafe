@@ -21,9 +21,9 @@ import com.widehouse.cafe.common.exception.BoardNotExistsException;
 import com.widehouse.cafe.common.exception.CafeNotFoundException;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.article.entity.BoardRepository;
-import com.widehouse.cafe.domain.cafemember.CafeMember;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
-import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.cafe.entity.CafeMember;
+import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
+import com.widehouse.cafe.member.entity.Member;
 
 import java.util.Arrays;
 import java.util.List;

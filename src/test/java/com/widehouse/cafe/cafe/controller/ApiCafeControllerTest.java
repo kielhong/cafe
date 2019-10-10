@@ -16,7 +16,7 @@ import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.common.exception.CafeNotFoundException;
 import com.widehouse.cafe.config.WebSecurityConfig;
-import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.member.entity.Member;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,6 @@ import org.springframework.test.web.servlet.MockMvc;
  * Created by kiel on 2017. 2. 18..
  */
 @WebMvcTest(ApiCafeController.class)
-@Import(WebSecurityConfig.class)
 class ApiCafeControllerTest {
     @Autowired
     private MockMvc mvc;

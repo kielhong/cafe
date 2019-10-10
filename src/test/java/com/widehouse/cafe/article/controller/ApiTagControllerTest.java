@@ -13,17 +13,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.article.controller.ApiTagController;
-import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.article.entity.Tag;
 import com.widehouse.cafe.article.entity.TagRepository;
-import com.widehouse.cafe.article.entity.Board;
-import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.domain.member.Member;
 import com.widehouse.cafe.article.service.ArticleService;
-import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.article.service.TagService;
+import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.service.CafeService;
+import com.widehouse.cafe.member.entity.Member;
 
 import java.util.Arrays;
 
@@ -32,7 +30,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -40,8 +37,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * Created by kiel on 2017. 3. 10..
  */
 @WebMvcTest(ApiTagController.class)
-@Import(WebSecurityConfig.class)
-public class ApiTagControllerTest {
+class ApiTagControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
@@ -58,7 +54,7 @@ public class ApiTagControllerTest {
     private Member writer;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
         writer = new Member(1L, "writer", "password", "nickname", "writer@bar.com");
@@ -68,7 +64,7 @@ public class ApiTagControllerTest {
     }
 
     @Test
-    public void getTagsByCafe_thenListTags() throws Exception {
+    void getTagsByCafe_thenListTags() throws Exception {
         given(tagService.getTagsByCafe(cafe))
                 .willReturn(Arrays.asList(new Tag("tag1"), new Tag("tag2")));
 
@@ -78,7 +74,7 @@ public class ApiTagControllerTest {
     }
 
     @Test
-    public void getArticlesByCafe_thenListArticles() throws Exception {
+    void getArticlesByCafe_thenListArticles() throws Exception {
         // given
         Tag tag = new Tag("testtag");
         given(tagService.getTagByName("testtag"))
@@ -94,7 +90,7 @@ public class ApiTagControllerTest {
     }
 
     @Test
-    public void getTags_thenListTags() throws Exception {
+    void getTags_thenListTags() throws Exception {
         Article article = new Article(board, writer, "title", "content");
         article.getTags().add(new Tag("tag1"));
         article.getTags().add(new Tag("tag2"));
@@ -109,7 +105,7 @@ public class ApiTagControllerTest {
     }
 
     @Test
-    public void postTags_withArticleWriter_thenAddTags() throws Exception {
+    void postTags_withArticleWriter_thenAddTags() throws Exception {
         // given
         Article article = new Article(board, writer, "article", "content");
         Tag tag1 = new Tag("testtag1");

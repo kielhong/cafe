@@ -2,7 +2,7 @@ package com.widehouse.cafe.article.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.member.entity.Member;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

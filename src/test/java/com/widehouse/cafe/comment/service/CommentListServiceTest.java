@@ -12,9 +12,9 @@ import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.cafe.entity.CafeVisibility;
 import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
-import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.service.CafeMemberService;
+import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
+import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.cafe.service.CafeMemberService;
 
 import java.util.Arrays;
 import java.util.List;

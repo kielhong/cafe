@@ -1,8 +1,8 @@
 package com.widehouse.cafe.comment.service;
 
 import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
-import static com.widehouse.cafe.domain.cafemember.CafeMemberRole.MANAGER;
-import static com.widehouse.cafe.domain.cafemember.CafeMemberRole.MEMBER;
+import static com.widehouse.cafe.cafe.entity.CafeMemberRole.MANAGER;
+import static com.widehouse.cafe.cafe.entity.CafeMemberRole.MEMBER;
 import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -21,11 +21,11 @@ import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.domain.cafemember.CafeMember;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
-import com.widehouse.cafe.domain.member.Member;
-import com.widehouse.cafe.domain.member.SimpleMember;
-import com.widehouse.cafe.service.CafeMemberService;
+import com.widehouse.cafe.cafe.entity.CafeMember;
+import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
+import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.member.entity.SimpleMember;
+import com.widehouse.cafe.cafe.service.CafeMemberService;
 
 import java.util.ArrayList;
 import java.util.Optional;

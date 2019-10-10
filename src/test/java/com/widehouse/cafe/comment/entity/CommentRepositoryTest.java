@@ -9,7 +9,7 @@ import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.config.MongoConfiguration;
-import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.member.entity.Member;
 
 import java.util.Arrays;
 import java.util.Collections;

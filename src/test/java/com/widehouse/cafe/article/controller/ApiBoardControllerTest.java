@@ -6,8 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.article.controller.ApiBoardController;
-import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
@@ -19,15 +17,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Created by kiel on 2017. 2. 25..
  */
 @WebMvcTest(ApiBoardController.class)
-@Import(WebSecurityConfig.class)
-public class ApiBoardControllerTest {
+class ApiBoardControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
@@ -36,7 +32,7 @@ public class ApiBoardControllerTest {
     private Cafe cafe;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         cafe = new Cafe(1L, "testurl", "testcafe");
 
         given(cafeService.getCafe("testurl"))
@@ -44,7 +40,7 @@ public class ApiBoardControllerTest {
     }
 
     @Test
-    public void getBoard_thenReturnBoard() throws Exception {
+    void getBoard_thenReturnBoard() throws Exception {
         Board board = new Board(1L, cafe, "board", LIST, 1);
         given(cafeService.getBoard(1L))
                 .willReturn(board);
@@ -56,7 +52,7 @@ public class ApiBoardControllerTest {
     }
 
     @Test
-    public void getBoard_withOtherCafe_then404NotFound() throws Exception {
+    void getBoard_withOtherCafe_then404NotFound() throws Exception {
         Cafe otherCafe = new Cafe(2L, "otherturl", "othercafe");
         Board board = new Board(1L, cafe, "board", LIST, 1);
         given(cafeService.getCafe("otherurl"))
@@ -69,7 +65,7 @@ public class ApiBoardControllerTest {
     }
 
     @Test
-    public void getBoardsByCafe_thenListBoardsInCafe() throws Exception {
+    void getBoardsByCafe_thenListBoardsInCafe() throws Exception {
         given(cafeService.listBoard(cafe))
                 .willReturn(Arrays.asList(new Board(cafe, "board1", 1), new Board(cafe, "board2", 2)));
 

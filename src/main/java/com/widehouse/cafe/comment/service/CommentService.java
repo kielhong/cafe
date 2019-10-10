@@ -9,12 +9,12 @@ import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeRepository;
-import com.widehouse.cafe.domain.cafemember.CafeMember;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
-import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.cafe.entity.CafeMember;
+import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
+import com.widehouse.cafe.cafe.entity.CafeMemberRole;
+import com.widehouse.cafe.member.entity.Member;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.service.CafeMemberService;
+import com.widehouse.cafe.cafe.service.CafeMemberService;
 
 import java.util.Collections;
 import java.util.List;

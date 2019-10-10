@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
@@ -20,22 +19,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Created by kiel on 2017. 2. 24..
  */
 @WebMvcTest(CafeController.class)
-@Import(WebSecurityConfig.class)
-public class CafeControllerTest {
+class CafeControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
     private CafeService cafeService;
 
     @Test
-    public void getCafe_thenCafeInfo() throws Exception {
+    void getCafe_thenCafeInfo() throws Exception {
         // given
         Cafe cafe = new Cafe("cafetest", "cafename");
         Board board1 = new Board(cafe, "board1", 1);

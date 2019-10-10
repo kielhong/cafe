@@ -8,8 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.widehouse.cafe.cafe.controller.ApiCategoryController;
-import com.widehouse.cafe.config.WebSecurityConfig;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.service.CafeService;
@@ -21,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
@@ -32,9 +29,8 @@ import org.springframework.test.web.servlet.MockMvc;
  * Created by kiel on 2017. 2. 15..
  */
 @WebMvcTest(ApiCategoryController.class)
-@Import(WebSecurityConfig.class)
 @EnableSpringDataWebSupport                 // for Pageable resolve
-public class ApiCategoryControllerTest {
+class ApiCategoryControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
@@ -43,7 +39,7 @@ public class ApiCategoryControllerTest {
     private CafeService cafeService;
 
     @Test
-    public void getCategories() throws Exception {
+    void getCategories() throws Exception {
         // given
         given(categoryService.findAll(ORDER))
                 .willReturn(Arrays.asList(
@@ -60,7 +56,7 @@ public class ApiCategoryControllerTest {
     }
 
     @Test
-    public void getCafesByCategory() throws Exception {
+    void getCafesByCategory() throws Exception {
         // given
         given(this.cafeService.getCafeByCategory(1,
                 PageRequest.of(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
@@ -73,7 +69,7 @@ public class ApiCategoryControllerTest {
     }
 
     @Test
-    public void getCafesByCategoryWithPaging() throws Exception {
+    void getCafesByCategoryWithPaging() throws Exception {
         // given
         given(this.cafeService.getCafeByCategory(1,
                 PageRequest.of(0, 4, new Sort(DESC, "statistics.cafeMemberCount"))))

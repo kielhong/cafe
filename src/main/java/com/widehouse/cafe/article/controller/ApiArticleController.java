@@ -4,7 +4,7 @@ import com.widehouse.cafe.common.annotation.CurrentMember;
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.member.entity.Member;
 import com.widehouse.cafe.article.service.ArticleService;
 import com.widehouse.cafe.cafe.service.CafeService;
 

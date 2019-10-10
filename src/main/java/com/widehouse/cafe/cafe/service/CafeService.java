@@ -16,10 +16,10 @@ import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.cafe.entity.CafeVisibility;
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.entity.CategoryRepository;
-import com.widehouse.cafe.domain.cafemember.CafeMember;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRole;
-import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.cafe.entity.CafeMember;
+import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
+import com.widehouse.cafe.cafe.entity.CafeMemberRole;
+import com.widehouse.cafe.member.entity.Member;
 import com.widehouse.cafe.common.exception.BoardNotExistsException;
 import com.widehouse.cafe.common.exception.CafeNotFoundException;
 

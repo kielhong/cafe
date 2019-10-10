@@ -17,8 +17,8 @@ import com.widehouse.cafe.article.entity.TagRepository;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.domain.cafemember.CafeMemberRepository;
-import com.widehouse.cafe.domain.member.Member;
+import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
+import com.widehouse.cafe.member.entity.Member;
 
 import java.util.Arrays;
 import java.util.List;
