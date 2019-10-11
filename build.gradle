@@ -10,14 +10,16 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'jacoco'
 apply plugin: 'checkstyle'
 
-ext {
-    flapdoodleVersion = "2.0.1"
-}
-
 repositories {
     jcenter()
     mavenCentral()
 }
+
+ext {
+    mockitoVersion = "3.1.0"
+    flapdoodleVersion = "2.0.1"
+}
+ext['mockito.version'] = '2.24.0'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -52,6 +54,7 @@ dependencies {
     testImplementation('org.springframework.security:spring-security-test')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
     testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:${flapdoodleVersion}")
 }
 

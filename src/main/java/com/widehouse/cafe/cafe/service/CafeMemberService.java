@@ -3,23 +3,23 @@ package com.widehouse.cafe.cafe.service;
 import static com.widehouse.cafe.cafe.entity.CafeMemberRole.MEMBER;
 
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.cafe.entity.CafeMember;
 import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.common.exception.CafeMemberExistsException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.widehouse.cafe.member.entity.Member;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by kiel on 2017. 2. 24..
  */
+@RequiredArgsConstructor
 @Service
 public class CafeMemberService {
-    @Autowired
-    private CafeMemberRepository cafeMemberRepository;
-    @Autowired
-    private CafeRepository cafeRepository;
+    private final CafeRepository cafeRepository;
+    private final CafeMemberRepository cafeMemberRepository;
 
     /**
      * join member to cafe.
@@ -28,17 +28,17 @@ public class CafeMemberService {
      * @return joined {@link CafeMember}
      */
     public CafeMember joinMember(Cafe cafe, Member member) {
-        if (!cafeMemberRepository.existsByCafeMember(cafe, member)) {
-            CafeMember cafeMember = new CafeMember(cafe, member, MEMBER);
-            cafe.getData().increaseCafeMemberCount();
-
-            cafeMemberRepository.save(cafeMember);
-            cafeRepository.save(cafe);
-
-            return cafeMember;
-        } else {
+        if (isCafeMember(cafe, member)) {
             throw new CafeMemberExistsException();
         }
+
+        CafeMember cafeMember = new CafeMember(cafe, member, MEMBER);
+        cafe.getData().increaseCafeMemberCount();
+
+        cafeMemberRepository.save(cafeMember);
+        cafeRepository.save(cafe);
+
+        return cafeMember;
     }
 
     public boolean isCafeMember(Cafe cafe, Member member) {

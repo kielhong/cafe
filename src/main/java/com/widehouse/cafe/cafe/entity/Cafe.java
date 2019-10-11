@@ -98,7 +98,7 @@ public class Cafe {
     }
 
     /**
-     * update cafe info
+     * update cafe info.
      * @param name name of cafe
      * @param description description
      * @param visibility {@link CafeVisibility}
@@ -120,6 +120,6 @@ public class Cafe {
     //    }
 
     public Long getCafeMemberCount() {
-        return this.getData().getCafeMemberCount();
+        return this.getData().getMemberCount();
     }
 }

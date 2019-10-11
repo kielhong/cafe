@@ -5,14 +5,14 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.ArticleRepository;
+import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.article.entity.Tag;
 import com.widehouse.cafe.article.entity.TagRepository;
-import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
-import com.widehouse.cafe.member.entity.Member;
 import com.widehouse.cafe.common.event.ArticleCreateEvent;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
+import com.widehouse.cafe.member.entity.Member;
 
 import java.util.List;
 

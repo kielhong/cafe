@@ -2,7 +2,6 @@ package com.widehouse.cafe.cafe.controller;
 
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.Category;
-import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.cafe.service.CategoryService;
 
 import java.util.List;
@@ -23,8 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api")
 public class ApiCategoryController {
     @Autowired
-    private CafeService cafeService;
-    @Autowired
     private CategoryService categoryService;
 
     @GetMapping("categories")
@@ -36,7 +33,7 @@ public class ApiCategoryController {
     public List<Cafe> getCafesByCategory(@PathVariable Integer categoryId,
                                          @PageableDefault(direction = Sort.Direction.DESC,
                                                  sort = "statistics.cafeMemberCount") Pageable pageable) {
-        List<Cafe> cafes = cafeService.getCafeByCategory(categoryId, pageable);
+        List<Cafe> cafes = categoryService.getCafeByCategory(categoryId, pageable);
 
         return cafes;
     }

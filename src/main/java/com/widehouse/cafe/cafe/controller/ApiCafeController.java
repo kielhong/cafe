@@ -1,9 +1,10 @@
 package com.widehouse.cafe.cafe.controller;
 
-import com.widehouse.cafe.common.annotation.CurrentMember;
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.member.entity.Member;
 import com.widehouse.cafe.cafe.service.CafeService;
+import com.widehouse.cafe.common.annotation.CurrentMember;
+import com.widehouse.cafe.member.entity.Member;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -12,24 +12,23 @@ import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.article.entity.BoardRepository;
 import com.widehouse.cafe.article.entity.BoardType;
 import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.entity.CafeMember;
+import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
+import com.widehouse.cafe.cafe.entity.CafeMemberRole;
 import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.cafe.entity.CafeVisibility;
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.entity.CategoryRepository;
-import com.widehouse.cafe.cafe.entity.CafeMember;
-import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
-import com.widehouse.cafe.cafe.entity.CafeMemberRole;
-import com.widehouse.cafe.member.entity.Member;
 import com.widehouse.cafe.common.exception.BoardNotExistsException;
 import com.widehouse.cafe.common.exception.CafeNotFoundException;
+import com.widehouse.cafe.member.entity.Member;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,17 +36,16 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by kiel on 2017. 2. 11..
  */
+@RequiredArgsConstructor
 @Service
 @Slf4j
 public class CafeService {
-    @Autowired
-    private CafeRepository cafeRepository;
-    @Autowired
-    private CafeMemberRepository cafeMemberRepository;
-    @Autowired
-    private BoardRepository boardRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CafeRepository cafeRepository;
+    private final CafeMemberRepository cafeMemberRepository;
+    private final BoardRepository boardRepository;
+    private final CategoryRepository categoryRepository;
+
+    private final static String BOARD_LIST_ORDER = "listOrder";
 
     /**
      * Create a Cafe.
@@ -75,10 +73,6 @@ public class CafeService {
         return cafe;
     }
 
-    public List<Cafe> getCafeByCategory(Integer categoryId, Pageable pageable) {
-        return cafeRepository.findByCategoryId(categoryId, pageable);
-    }
-
     public void addBoard(Cafe cafe, String boardName, BoardType type, int listOrder) {
         Board board = new Board(cafe, boardName, type, listOrder);
         boardRepository.save(board);
@@ -88,8 +82,13 @@ public class CafeService {
         addBoard(cafe, boardName, LIST, listOrder);
     }
 
+    /**
+     * add Board.
+     * @param cafe cafe which add board
+     * @param boardName added board name
+     */
     public void addBoard(Cafe cafe, String boardName) {
-        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(DESC, "listOrder"));
+        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(DESC, BOARD_LIST_ORDER));
         int lastOrder = boards.stream()
                 .sorted(Comparator.comparing(Board::getListOrder))
                 .mapToInt(Board::getListOrder)
@@ -116,7 +115,7 @@ public class CafeService {
     }
 
     public void updateBoard(Cafe cafe, Board board) {
-        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(ASC, "listOrder"));
+        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(ASC, BOARD_LIST_ORDER));
         Optional<Board> boardOptional = boards.stream()
                 .filter(o -> o.getId() == board.getId())
                 .findFirst();
@@ -130,9 +129,7 @@ public class CafeService {
     }
 
     public List<Board> listBoard(Cafe cafe) {
-        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(ASC, "listOrder"));
-
-        return boards;
+        return boardRepository.findAllByCafe(cafe, new Sort(ASC, BOARD_LIST_ORDER));
     }
 
     /**

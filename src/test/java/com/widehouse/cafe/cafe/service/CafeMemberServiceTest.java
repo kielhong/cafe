@@ -15,37 +15,40 @@ import com.widehouse.cafe.member.entity.Member;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Created by kiel on 2017. 2. 24..
  */
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = CafeMemberService.class)
+@ExtendWith(MockitoExtension.class)
 class CafeMemberServiceTest {
-    @Autowired
-    private CafeMemberService cafeMemberService;
-    @MockBean
-    private CafeMemberRepository cafeMemberRepository;
-    @MockBean
+    private CafeMemberService service;
+
+    @Mock
     private CafeRepository cafeRepository;
+    @Mock
+    private CafeMemberRepository cafeMemberRepository;
 
     private Cafe cafe;
     private Member member;
 
     @BeforeEach
     void setUp() {
+        service = new CafeMemberService(cafeRepository, cafeMemberRepository);
+
         cafe = new Cafe("testurl", "testcafe");
         member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
     }
 
     @Test
     void joinMember_thenCreateCafeMember() {
-        CafeMember cafeMember = cafeMemberService.joinMember(cafe, member);
-
+        // given
+        given(cafeMemberRepository.existsByCafeMember(cafe, member))
+                .willReturn(false);
+        // when
+        CafeMember cafeMember = service.joinMember(cafe, member);
+        // then
         then(cafeMember)
                 .hasFieldOrPropertyWithValue("cafe", cafe)
                 .hasFieldOrPropertyWithValue("member", member);
@@ -54,11 +57,11 @@ class CafeMemberServiceTest {
 
     @Test
     void joinMember_thenIncreaseCafeStatisticsCafeMemberCountBy1() {
-        Long beforeCount = cafe.getData().getCafeMemberCount();
+        Long beforeCount = cafe.getData().getMemberCount();
 
-        cafeMemberService.joinMember(cafe, member);
+        service.joinMember(cafe, member);
 
-        then(cafe.getData().getCafeMemberCount())
+        then(cafe.getData().getMemberCount())
                 .isEqualTo(beforeCount + 1);
         verify(cafeRepository).save(cafe);
     }
@@ -67,11 +70,11 @@ class CafeMemberServiceTest {
     void joinMember_withExistsCafeMember_thenRaiseCafeMemberExistsException() {
         given(cafeMemberRepository.existsByCafeMember(cafe, member))
                 .willReturn(true);
-        Long beforeSize = cafe.getData().getCafeMemberCount();
+        Long beforeSize = cafe.getData().getMemberCount();
 
-        thenThrownBy(() -> cafeMemberService.joinMember(cafe, member))
+        thenThrownBy(() -> service.joinMember(cafe, member))
                 .isInstanceOf(CafeMemberExistsException.class);
-        then(cafe.getData().getCafeMemberCount())
+        then(cafe.getData().getMemberCount())
                 .isEqualTo(beforeSize);
     }
 }

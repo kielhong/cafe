@@ -1,9 +1,9 @@
 package com.widehouse.cafe.comment.entity;
 
 import com.widehouse.cafe.article.entity.Article;
+import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.member.entity.Member;
 import com.widehouse.cafe.member.entity.SimpleMember;
-import com.widehouse.cafe.common.exception.NoAuthorityException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

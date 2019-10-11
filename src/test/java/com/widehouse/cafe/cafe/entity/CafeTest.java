@@ -31,6 +31,11 @@ class CafeTest {
                 .hasFieldOrPropertyWithValue("visibility", CafeVisibility.PUBLIC)
                 .hasFieldOrPropertyWithValue("category", category)
                 .hasFieldOrProperty("data");
+        then(cafe.getData())
+                .hasFieldOrPropertyWithValue("memberCount", 0L)
+                .hasFieldOrPropertyWithValue("articleCount", 0L)
+                .hasFieldOrPropertyWithValue("commentCount", 0L)
+                .hasFieldOrPropertyWithValue("visitCount", 0L);
     }
 
     @Test

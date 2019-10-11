@@ -2,8 +2,8 @@ package com.widehouse.cafe.article.controller;
 
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.common.exception.BoardNotExistsException;
 import com.widehouse.cafe.cafe.service.CafeService;
+import com.widehouse.cafe.common.exception.BoardNotExistsException;
 
 import java.util.List;
 

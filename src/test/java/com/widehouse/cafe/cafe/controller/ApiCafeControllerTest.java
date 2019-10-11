@@ -59,8 +59,8 @@ class ApiCafeControllerTest {
                 .andExpect(jsonPath("$.visibility").value(PUBLIC.toString()))
                 .andExpect(jsonPath("$.category.id").value(category.getId()))
                 .andExpect(jsonPath("$.category.name").value(category.getName()))
-                .andExpect(jsonPath("$.data.cafeMemberCount").value(0))
-                .andExpect(jsonPath("$.data.cafeArticleCount").value(0));
+                .andExpect(jsonPath("$.data.memberCount").value(0))
+                .andExpect(jsonPath("$.data.articleCount").value(0));
     }
 
     @Test

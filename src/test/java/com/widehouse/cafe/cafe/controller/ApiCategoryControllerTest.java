@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.Category;
-import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.cafe.service.CategoryService;
 
 import java.util.Arrays;
@@ -21,7 +20,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -29,14 +27,11 @@ import org.springframework.test.web.servlet.MockMvc;
  * Created by kiel on 2017. 2. 15..
  */
 @WebMvcTest(ApiCategoryController.class)
-@EnableSpringDataWebSupport                 // for Pageable resolve
 class ApiCategoryControllerTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
     private CategoryService categoryService;
-    @MockBean
-    private CafeService cafeService;
 
     @Test
     void getCategories() throws Exception {
@@ -58,7 +53,7 @@ class ApiCategoryControllerTest {
     @Test
     void getCafesByCategory() throws Exception {
         // given
-        given(this.cafeService.getCafeByCategory(1,
+        given(this.categoryService.getCafeByCategory(1,
                 PageRequest.of(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(new Cafe("cafe1", "cafe1"), new Cafe("cafe2", "cafe2")));
         // then
@@ -71,7 +66,7 @@ class ApiCategoryControllerTest {
     @Test
     void getCafesByCategoryWithPaging() throws Exception {
         // given
-        given(this.cafeService.getCafeByCategory(1,
+        given(this.categoryService.getCafeByCategory(1,
                 PageRequest.of(0, 4, new Sort(DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(new Cafe("cafe1", "cafe1"), new Cafe("cafe2", "cafe2"),
                         new Cafe("cafe3", "cafe3"), new Cafe("cafe4", "cafe4")));

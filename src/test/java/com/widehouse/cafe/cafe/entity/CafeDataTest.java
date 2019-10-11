@@ -18,39 +18,39 @@ class CafeDataTest {
 
     @Test
     void decreaseCommentCount_thenDecreaseCommentCountBy1() {
-        cafeData.setCafeCommentCount(10L);
-        Long count = cafeData.getCafeCommentCount();
+        cafeData.setCommentCount(10L);
+        Long count = cafeData.getCommentCount();
 
         cafeData.decreaseCommentCount();
 
-        then(cafeData.getCafeCommentCount()).isEqualTo(count - 1);
+        then(cafeData.getCommentCount()).isEqualTo(count - 1);
     }
 
     @Test
     void decreaseCommentCount_withZero_thenCommentCountZero() {
-        cafeData.setCafeCommentCount(0L);
+        cafeData.setCommentCount(0L);
 
         cafeData.decreaseCommentCount();
 
-        then(cafeData.getCafeCommentCount()).isEqualTo(0);
+        then(cafeData.getCommentCount()).isEqualTo(0);
     }
 
     @Test
     void decreaseCafeMemberCount_thenDecreaseCafeMemberCountBy1() {
-        cafeData.setCafeMemberCount(10L);
-        Long count = cafeData.getCafeMemberCount();
+        cafeData.setMemberCount(10L);
+        Long count = cafeData.getMemberCount();
 
         cafeData.decreaseCafeMemberCount();
 
-        then(cafeData.getCafeMemberCount()).isEqualTo(count - 1);
+        then(cafeData.getMemberCount()).isEqualTo(count - 1);
     }
 
     @Test
     void decreaseCafeMemberCount_withZero_thenCafeMemberCountZero() {
-        cafeData.setCafeMemberCount(0L);
+        cafeData.setMemberCount(0L);
 
         cafeData.decreaseCafeMemberCount();
 
-        then(cafeData.getCafeMemberCount()).isEqualTo(0);
+        then(cafeData.getMemberCount()).isEqualTo(0);
     }
 }

@@ -1,7 +1,7 @@
 package com.widehouse.cafe.member.controller;
 
-import com.widehouse.cafe.common.annotation.CurrentMember;
 import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.common.annotation.CurrentMember;
 import com.widehouse.cafe.member.entity.Member;
 import com.widehouse.cafe.member.service.MemberService;
 

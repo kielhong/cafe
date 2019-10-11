@@ -60,12 +60,12 @@ class CafeRepositoryTest {
 
     @Test
     void findByCategory_withPaging_thenCafeListByCategoryPagingAndSorted() {
-        cafe1.getData().setCafeMemberCount(10L);
-        cafe2.getData().setCafeMemberCount(5L);
-        cafe3.getData().setCafeMemberCount(2L);
+        cafe1.getData().setMemberCount(10L);
+        cafe2.getData().setMemberCount(5L);
+        cafe3.getData().setMemberCount(2L);
 
         List<Cafe> result = cafeRepository.findByCategory(category1,
-                PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "data.cafeMemberCount")));
+                PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "data.memberCount")));
 
         assertThat(result)
                 .extracting("cafeMemberCount")
@@ -74,12 +74,12 @@ class CafeRepositoryTest {
 
     @Test
     void findByCategoryId_withPaging_thenCafeListByCategoryPagingAndSorted() {
-        cafe1.getData().setCafeMemberCount(10L);
-        cafe2.getData().setCafeMemberCount(5L);
-        cafe3.getData().setCafeMemberCount(2L);
+        cafe1.getData().setMemberCount(10L);
+        cafe2.getData().setMemberCount(5L);
+        cafe3.getData().setMemberCount(2L);
 
         List<Cafe> cafes = cafeRepository.findByCategoryId(category1.getId(),
-                PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "data.cafeMemberCount")));
+                PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "data.memberCount")));
 
         assertThat(cafes)
                 .extracting("cafeMemberCount")

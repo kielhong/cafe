@@ -12,42 +12,42 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CafeData {
-    private Long cafeMemberCount;
-    private Long cafeArticleCount;
-    private Long cafeCommentCount;
-    private Long cafeVisitCount;
+    private Long memberCount;
+    private Long articleCount;
+    private Long commentCount;
+    private Long visitCount;
 
     /**
      * Constructor.
      */
     public CafeData() {
-        this.cafeMemberCount = 0L;
-        this.cafeArticleCount = 0L;
-        this.cafeCommentCount = 0L;
-        this.cafeVisitCount = 0L;
+        this.memberCount = 0L;
+        this.articleCount = 0L;
+        this.commentCount = 0L;
+        this.visitCount = 0L;
     }
 
     public void increaseCafeMemberCount() {
-        cafeMemberCount++;
+        memberCount++;
     }
 
     public void decreaseCafeMemberCount() {
-        if (cafeMemberCount > 0) {
-            cafeMemberCount--;
+        if (memberCount > 0) {
+            memberCount--;
         }
     }
 
     public void increaseCommentCount() {
-        cafeCommentCount++;
+        commentCount++;
     }
 
     public void decreaseCommentCount() {
-        if (cafeCommentCount > 0) {
-            cafeCommentCount--;
+        if (commentCount > 0) {
+            commentCount--;
         }
     }
 
     public void increaseArticleCount() {
-        cafeArticleCount++;
+        articleCount++;
     }
 }
