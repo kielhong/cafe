@@ -37,7 +37,7 @@ public class ApiArticleController {
                                            @RequestParam(defaultValue = "10") int size) {
         Cafe cafe = cafeService.getCafe(cafeUrl);
 
-        return articleService.getArticlesByCafe(cafe, page, size);
+        return articleService.getArticles(cafe, page, size);
     }
 
     @GetMapping("/cafes/{cafeUrl}/boards/{boardId}/articles")
@@ -47,7 +47,7 @@ public class ApiArticleController {
                                            @RequestParam(defaultValue = "10") int size) {
         Board board = cafeService.getBoard(boardId);
 
-        return articleService.getArticlesByBoard(board, page, size);
+        return articleService.getArticles(board, page, size);
     }
 
     @GetMapping("/cafes/{cafeUrl}/articles/{articleId}")

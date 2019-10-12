@@ -10,8 +10,8 @@ import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.common.annotation.CurrentMember;
 import com.widehouse.cafe.member.entity.Member;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,8 @@ public class ApiTagController {
     public List<Article> getArticlesByTag(@PathVariable String cafeUrl,
                                           @PathVariable String tagName) {
         Cafe cafe = cafeService.getCafe(cafeUrl);
-        Tag tag = tagService.getTagByName(tagName);
+        Tag tag = tagService.getTagByName(tagName)
+                .orElse(new Tag());
 
         return tagService.getArticlesByTag(cafe, tag);
     }
@@ -96,14 +97,10 @@ public class ApiTagController {
                               @RequestBody List<TagForm> tagForms,
                               @CurrentMember Member member) {
         Article article = articleService.getArticle(articleId, member);
-        List<Tag> tags = new ArrayList<>();
-        for (TagForm tagForm : tagForms) {
-            Tag tag = tagService.getTagByName(tagForm.getName());
-            if (tag == null) {
-                tag = tagRepository.save(new Tag(tagForm.getName()));
-            }
-            tags.add(tag);
-        }
+
+        List<Tag> tags = tagForms.stream()
+                .map(t -> tagService.getTagByName(t.getName()).orElse(tagRepository.save(new Tag(t.getName()))))
+                .collect(Collectors.toList());
 
         tagService.updateTagsOfArticle(article, tags);
 

@@ -24,6 +24,7 @@ import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.member.entity.Member;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -78,7 +79,7 @@ class ApiTagControllerTest {
         // given
         Tag tag = new Tag("testtag");
         given(tagService.getTagByName("testtag"))
-                .willReturn(tag);
+                .willReturn(Optional.of(tag));
         given(tagService.getArticlesByTag(cafe, tag))
                 .willReturn(Arrays.asList(
                         new Article(board, writer, "title1", "content1"),
@@ -118,11 +119,11 @@ class ApiTagControllerTest {
         given(articleService.getArticle(1L, writer))
                 .willReturn(article);
         given(tagRepository.findByName("testtag1"))
-                .willReturn(tag1);
+                .willReturn(Optional.of(tag1));
         given(tagRepository.findByName("testtag3"))
-                .willReturn(tag3);
+                .willReturn(Optional.of(tag3));
         given(tagRepository.findByName("testtag4"))
-                .willReturn(tag4);
+                .willReturn(Optional.of(tag4));
         // then
         mvc.perform(post("/api/articles/1/tags")
                     .with(user(writer))

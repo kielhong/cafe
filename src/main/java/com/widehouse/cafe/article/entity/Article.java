@@ -66,6 +66,9 @@ public class Article {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    /**
+     * constructor.
+     */
     public Article(Board board, Member writer, String title, String content) {
         this.board = board;
         this.writer = writer;
@@ -76,6 +79,9 @@ public class Article {
         this.createdAt = this.updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * update cafe title and content.
+     */
     public void modify(String title, String content) {
         this.title = title;
         this.content = content;

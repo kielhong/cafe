@@ -8,6 +8,7 @@ import com.widehouse.cafe.member.entity.Member;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,12 +43,13 @@ class TagRepositoryTest {
     @Test
     void findTagByNameTest() {
         // given
-        entityManager.persist(new Tag("tagname"));
+        Tag tag = entityManager.persist(new Tag("tagname"));
         // when
-        Tag result = tagRepository.findByName("tagname");
+        Optional<Tag> result = tagRepository.findByName("tagname");
         // then
         then(result)
-                .hasFieldOrPropertyWithValue("name", "tagname");
+                .isPresent()
+                .hasValue(tag);
     }
 
     @Test

@@ -8,7 +8,10 @@ import com.widehouse.cafe.cafe.entity.Cafe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,16 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by kiel on 2017. 3. 10..
  */
+@RequiredArgsConstructor
 @Service
-@Slf4j
 public class TagService {
-    @Autowired
-    private TagRepository tagRepository;
-    @Autowired
-    private ArticleRepository articleRepository;
+    private final TagRepository tagRepository;
+    private final ArticleRepository articleRepository;
 
-    public Tag getTagByName(String tagName) {
-        return tagRepository.findByName(tagName.trim());
+    public Optional<Tag> getTagByName(String tagName) {
+        return tagRepository.findByName(tagName);
     }
 
     public List<Tag> getTagsByCafe(Cafe cafe) {
@@ -44,17 +45,12 @@ public class TagService {
      */
     @Transactional
     public void updateTagsOfArticle(Article article, List<Tag> tagForms) {
-        List<Tag> tags = new ArrayList<>();
-        for (Tag tagForm : tagForms) {
-            Tag tag = tagRepository.findByName(tagForm.getName());
-            if (tag == null) {
-                tag = tagRepository.save(tagForm);
-            }
-
-            tags.add(tag);
-        }
+        List<Tag> tags = tagForms.stream()
+                .map(t -> tagRepository.findByName(t.getName()).orElse(tagRepository.save(t)))
+                .collect(Collectors.toList());
         article.getTags().clear();
         article.getTags().addAll(tags);
+
         articleRepository.save(article);
     }
 }

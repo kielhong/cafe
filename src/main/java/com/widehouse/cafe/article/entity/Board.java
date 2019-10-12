@@ -42,6 +42,9 @@ public class Board {
 
     private int listOrder;
 
+    /**
+     * constructor.
+     */
     public Board(Cafe cafe, String name, BoardType type, int listOrder) {
         this.cafe = cafe;
         this.name = name;

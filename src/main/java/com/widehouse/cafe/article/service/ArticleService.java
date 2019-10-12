@@ -16,6 +16,7 @@ import com.widehouse.cafe.member.entity.Member;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
@@ -26,30 +27,31 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by kiel on 2017. 2. 19..
  */
+@RequiredArgsConstructor
 @Service
 public class ArticleService {
-    @Autowired
-    private ArticleRepository articleRepository;
-    @Autowired
-    private CafeMemberRepository cafeMemberRepository;
-    @Autowired
-    private TagRepository tagRepository;
-    @Autowired
-    private ApplicationEventPublisher eventPublisher;
+    private final ArticleRepository articleRepository;
+    private final CafeMemberRepository cafeMemberRepository;
+    private final TagRepository tagRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
 
-    public List<Article> getArticlesByCafe(Cafe cafe, int page, int size) {
+    public List<Article> getArticles(Cafe cafe, int page, int size) {
         return articleRepository.findByBoardCafe(cafe,
                 PageRequest.of(page, size, new Sort(DESC, "id")));
     }
 
-    public List<Article> getArticlesByBoard(Board board, int page, int size) {
-        List<Article> articles = articleRepository.findByBoard(board,
+    public List<Article> getArticles(Board board, int page, int size) {
+        return articleRepository.findByBoard(board,
                 PageRequest.of(page, size, new Sort(DESC, "id")));
-
-        return articles;
     }
 
+    /**
+     * get a article with reader.
+     * if reader has no read auth then throw NoAuthorityException
+     * @param id id of article
+     * @param reader reader {@link Member}
+     */
     public Article getArticle(Long id, Member reader) {
         Article article = articleRepository.findById(id).get();
 
@@ -60,6 +62,10 @@ public class ArticleService {
         }
     }
 
+    /**
+     * write a article.
+     * @return created Article
+     */
     public Article writeArticle(Board board, Member writer, String title, String content) {
         if (!cafeMemberRepository.existsByCafeMember(board.getCafe(), writer)) {
             throw new NoAuthorityException();
@@ -72,6 +78,9 @@ public class ArticleService {
         return article;
     }
 
+    /**
+     * add tag to article.
+     */
     @Transactional
     public void addTag(Article article, Tag tag) {
         article.getTags().add(tag);

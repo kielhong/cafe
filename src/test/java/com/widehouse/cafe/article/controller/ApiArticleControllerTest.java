@@ -61,7 +61,7 @@ class ApiArticleControllerTest {
 
     @Test
     void listArticlesByCafe_thenListArticles() throws Exception {
-        given(articleService.getArticlesByCafe(cafe, 0, 3))
+        given(articleService.getArticles(cafe, 0, 3))
                 .willReturn(Arrays.asList(
                         new Article(board, writer, "test article1", "test1"),
                         new Article(board, writer, "test article2", "test2"),
@@ -75,7 +75,7 @@ class ApiArticleControllerTest {
 
     @Test
     void listArticlesByBoard_thenListArticles() throws Exception {
-        given(articleService.getArticlesByBoard(board, 0, 3))
+        given(articleService.getArticles(board, 0, 3))
                 .willReturn(Arrays.asList(
                         new Article(board, writer, "test article1", "test1"),
                         new Article(board, writer, "test article2", "test2"),

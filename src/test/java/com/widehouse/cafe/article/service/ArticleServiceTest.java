@@ -4,10 +4,10 @@ import static com.widehouse.cafe.cafe.entity.CafeVisibility.PRIVATE;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.ArticleRepository;
@@ -15,9 +15,9 @@ import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.article.entity.Tag;
 import com.widehouse.cafe.article.entity.TagRepository;
 import com.widehouse.cafe.cafe.entity.Cafe;
+import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
 import com.widehouse.cafe.member.entity.Member;
 
 import java.util.Arrays;
@@ -27,27 +27,25 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Created by kiel on 2017. 2. 19..
  */
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = ArticleService.class)
+@ExtendWith(MockitoExtension.class)
 class ArticleServiceTest {
-    @Autowired
-    private ArticleService articleService;
-    @MockBean
+    private ArticleService service;
+    @Mock
     private ArticleRepository articleRepository;
-    @MockBean
+    @Mock
     private CafeMemberRepository cafeMemberRepository;
-    @MockBean
+    @Mock
     private TagRepository tagRepository;
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     private Cafe cafe;
     private Board board1;
@@ -61,6 +59,8 @@ class ArticleServiceTest {
 
     @BeforeEach
     void setUp() {
+        service = new ArticleService(articleRepository, cafeMemberRepository, tagRepository, eventPublisher);
+
         cafe = new Cafe("testurl", "testcafe");
         board1 = new Board(cafe, "board1");
         board2 = new Board(cafe, "board2");
@@ -74,33 +74,33 @@ class ArticleServiceTest {
     }
 
     @Test
-    void getArticlesByCafe_thenListArticleInCafeWithIdOrderDesc() {
-        given(articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 3, new Sort(DESC, "id"))))
+    void getArticlesByCafe_thenListArticleInCafe() {
+        given(articleRepository.findByBoardCafe(any(Cafe.class), any(PageRequest.class)))
                 .willReturn(Arrays.asList(article3, article2, article1));
-
-        List<Article> articles = articleService.getArticlesByCafe(cafe, 0, 3);
-
+        // when
+        List<Article> articles = service.getArticles(cafe, 0, 3);
+        // then
         then(articles)
                 .containsExactly(article3, article2, article1);
     }
 
     @Test
-    void getArticlesByBoard_thenListArticleInBoardWithIdOrderDesc() {
-        given(articleRepository.findByBoard(board1, PageRequest.of(0, 3, new Sort(DESC, "id"))))
+    void getArticlesByBoard_thenListArticleInBoard() {
+        given(articleRepository.findByBoard(any(Board.class), any(PageRequest.class)))
                 .willReturn(Arrays.asList(article2, article1));
-
-        List<Article> articles = articleService.getArticlesByBoard(board1, 0, 3);
-
+        // when
+        List<Article> articles = service.getArticles(board1, 0, 3);
+        // then
         then(articles)
                 .containsExactly(article2, article1);
     }
 
     @Test
     void getArticle_withArticleId_thenReturnArticle() {
-        given(articleRepository.findById(1L))
+        given(articleRepository.findById(anyLong()))
                 .willReturn(Optional.of(article1));
 
-        Article article = articleService.getArticle(1L, reader);
+        Article article = service.getArticle(1L, reader);
 
         then(article)
                 .isNotNull()
@@ -109,27 +109,28 @@ class ArticleServiceTest {
 
     @Test
     void getArticle_withPrivateCafeAndNonCafeMember_thenRaiseNoAuthorityException() {
+        // given
         Cafe privateCafe = new Cafe("private", "private cafe", "", PRIVATE, new Category());
         Board board = new Board(privateCafe, "board");
         Article article = new Article(board, writer, "private article", "content");
         given(articleRepository.findById(1L))
                 .willReturn(Optional.of(article));
-        given(cafeMemberRepository.existsByCafeMember(privateCafe, reader))
+        given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(Member.class)))
                 .willReturn(false);
-
-        thenThrownBy(() -> articleService.getArticle(1L, reader))
+        // then
+        thenThrownBy(() -> service.getArticle(1L, reader))
                 .isInstanceOf(NoAuthorityException.class);
     }
 
     @Test
     void writeArticle_withCafeMember_thenCreateArticle() {
-        given(cafeMemberRepository.existsByCafeMember(board1.getCafe(), writer))
+        given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(Member.class)))
                 .willReturn(true);
         given(articleRepository.save(any(Article.class)))
                 .willReturn(new Article(board1, writer, "title", "content"));
-
-        Article article = articleService.writeArticle(board1, writer, "title", "content");
-
+        // when
+        Article article = service.writeArticle(board1, writer, "title", "content");
+        // then
         then(article)
                 .hasFieldOrPropertyWithValue("board", board1)
                 .hasFieldOrPropertyWithValue("board.cafe", board1.getCafe())
@@ -141,12 +142,10 @@ class ArticleServiceTest {
 
     @Test
     void writeArticle_withNotCafeMember_thenRaiseNoAuthorityException() {
-        given(cafeMemberRepository.existsByCafeMember(board1.getCafe(), writer))
+        given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(Member.class)))
                 .willReturn(false);
-        given(articleRepository.save(any(Article.class)))
-                .willReturn(new Article(board1, writer, "title", "content"));
 
-        thenThrownBy(() -> articleService.writeArticle(board1, writer, "title", "content"))
+        thenThrownBy(() -> service.writeArticle(board1, writer, "title", "content"))
                 .isInstanceOf(NoAuthorityException.class);
         verify(articleRepository, never()).save(any(Article.class));
     }
@@ -154,9 +153,9 @@ class ArticleServiceTest {
     @Test
     void addTag_withTag_thenArticleAddRelationToTag() {
         Tag tag = new Tag("tag");
-
-        articleService.addTag(article1, tag);
-
+        // when
+        service.addTag(article1, tag);
+        // then
         then(article1.getTags())
                 .contains(tag);
         verify(articleRepository).save(article1);

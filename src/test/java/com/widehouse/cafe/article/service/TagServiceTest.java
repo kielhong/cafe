@@ -1,6 +1,9 @@
 package com.widehouse.cafe.article.service;
 
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -14,26 +17,23 @@ import com.widehouse.cafe.member.entity.Member;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Created by kiel on 2017. 3. 10..
  */
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TagService.class)
+@ExtendWith(MockitoExtension.class)
 class TagServiceTest {
-    @Autowired
-    private TagService tagService;
-    @MockBean
+    private TagService service;
+    @Mock
     private TagRepository tagRepository;
-    @MockBean
+    @Mock
     private ArticleRepository articleRepository;
 
     private Member member;
@@ -44,14 +44,13 @@ class TagServiceTest {
 
     @BeforeEach
     void setup() {
+        service = new TagService(tagRepository, articleRepository);
+
         member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
         cafe = new Cafe("testurl", "testname");
         board = new Board(cafe, "board");
         article = new Article(board, member, "test", "test");
         tag = new Tag("tag");
-
-        given(tagRepository.findByName("tag"))
-                .willReturn(tag);
     }
 
     @Test
@@ -61,7 +60,7 @@ class TagServiceTest {
         given(tagRepository.findAllByCafe(cafe))
                 .willReturn(Arrays.asList(tag1, tag2));
 
-        List<Tag> tags = tagService.getTagsByCafe(cafe);
+        List<Tag> tags = service.getTagsByCafe(cafe);
 
         then(tags)
                 .contains(tag1, tag2);
@@ -69,18 +68,26 @@ class TagServiceTest {
 
     @Test
     void getTagsByName_thenTagWithName() {
-        Tag result = tagService.getTagByName("tag");
-
+        // given
+        given(tagRepository.findByName(anyString()))
+                .willReturn(Optional.of(tag));
+        // when
+        Optional<Tag> result = service.getTagByName("tag");
+        // then
         then(result)
-                .isEqualTo(tag);
+                .isPresent()
+                .hasValue(tag);
     }
 
     @Test
-    void getTagsByName_whenTagNameHasSpace_thenReturnTagWithTrimmedName() {
-        Tag result = tagService.getTagByName(" tag  ");
-
-        then(result)
-                .isEqualTo(tag);
+    void getTagsByName_whenUnmatchedTagName_thenReturnNull() {
+        // given
+        given(tagRepository.findByName(anyString()))
+                .willReturn(Optional.empty());
+        // when
+        Optional<Tag> result = service.getTagByName(" tag  ");
+        // then
+        then(result).isNotPresent();
     }
 
     @Test
@@ -90,7 +97,7 @@ class TagServiceTest {
         given(tagRepository.findArticlesByCafeAndTag(cafe, tag))
                 .willReturn(Arrays.asList(article1, article2));
 
-        List<Article> articles = tagService.getArticlesByTag(cafe, tag);
+        List<Article> articles = service.getArticlesByTag(cafe, tag);
 
         then(articles)
                 .containsOnlyOnce(article1, article2);
@@ -100,11 +107,11 @@ class TagServiceTest {
     void updateTagsOfArticle_thenUpdateTags() {
         Tag tag1 = new Tag("tag1");
         Tag tag2 = new Tag("tag2");
-        article.getTags().addAll(Arrays.asList(tag1));
+        article.getTags().addAll(singletonList(tag1));
         given(tagRepository.findByName("tag2"))
-            .willReturn(tag2);
+            .willReturn(Optional.of(tag2));
 
-        tagService.updateTagsOfArticle(article, Arrays.asList(tag2));
+        service.updateTagsOfArticle(article, singletonList(tag2));
 
         then(article.getTags())
                 .contains(tag2);
@@ -115,14 +122,14 @@ class TagServiceTest {
     void updateTagsOfArticle_whenNotSavedTag_thenSaveTagAndUpdateTags() {
         Tag tag1 = new Tag("tag1");
         Tag tag2 = new Tag("tag2");
-        article.getTags().addAll(Arrays.asList(tag1));
+        article.getTags().addAll(singletonList(tag1));
         given(tagRepository.findByName("tag2"))
-                .willReturn(null);
+                .willReturn(Optional.empty());
         given(tagRepository.save(tag2))
                 .willReturn(tag2);
-
-        tagService.updateTagsOfArticle(article, Arrays.asList(tag2));
-
+        // when
+        service.updateTagsOfArticle(article, singletonList(tag2));
+        // then
         then(article.getTags())
                 .contains(tag2);
         verify(tagRepository).save(tag2);
