@@ -61,7 +61,7 @@ class ApiCommentControllerTest {
         member = new Member(1L, "member", "password", "nickanme", "foo@bar.com");
 
         Cafe cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category", 1));
-        Board board = new Board(cafe, "board");
+        Board board = Board.builder().cafe(cafe).name("board").build();
         article = new Article(1L, board, member, "title", "content", new ArrayList<>(), 0, now(), now());
 
         given(articleRepository.findById(1L))

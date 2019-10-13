@@ -66,8 +66,10 @@ class ApiBoardControllerTest {
 
     @Test
     void getBoardsByCafe_thenListBoardsInCafe() throws Exception {
+        Board board1 = Board.builder().cafe(cafe).name("board1").listOrder(1).build();
+        Board board2 = Board.builder().cafe(cafe).name("board2").listOrder(2).build();
         given(cafeService.listBoard(cafe))
-                .willReturn(Arrays.asList(new Board(cafe, "board1", 1), new Board(cafe, "board2", 2)));
+                .willReturn(Arrays.asList(board1, board2));
 
         mvc.perform(get("/api/cafes/testurl/boards"))
                 .andExpect(status().isOk())

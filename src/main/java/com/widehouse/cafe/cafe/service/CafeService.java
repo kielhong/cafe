@@ -45,7 +45,7 @@ public class CafeService {
     private final BoardRepository boardRepository;
     private final CategoryRepository categoryRepository;
 
-    private final static String BOARD_LIST_ORDER = "listOrder";
+    private static final String BOARD_LIST_ORDER = "listOrder";
 
     /**
      * Create a Cafe.
@@ -74,7 +74,7 @@ public class CafeService {
     }
 
     public void addBoard(Cafe cafe, String boardName, BoardType type, int listOrder) {
-        Board board = new Board(cafe, boardName, type, listOrder);
+        Board board = Board.builder().cafe(cafe).name(boardName).type(type).listOrder(listOrder).build();
         boardRepository.save(board);
     }
 

@@ -62,8 +62,8 @@ class ArticleServiceTest {
         service = new ArticleService(articleRepository, cafeMemberRepository, tagRepository, eventPublisher);
 
         cafe = new Cafe("testurl", "testcafe");
-        board1 = new Board(cafe, "board1");
-        board2 = new Board(cafe, "board2");
+        board1 = Board.builder().cafe(cafe).name("board1").build();
+        board2 = Board.builder().cafe(cafe).name("board2").build();
 
         writer = new Member(1L, "writer", "password", "nickname", "writer@bar.com");
         reader = new Member(2L, "reader", "password","nickname",  "reader@bar.com");
@@ -111,7 +111,7 @@ class ArticleServiceTest {
     void getArticle_withPrivateCafeAndNonCafeMember_thenRaiseNoAuthorityException() {
         // given
         Cafe privateCafe = new Cafe("private", "private cafe", "", PRIVATE, new Category());
-        Board board = new Board(privateCafe, "board");
+        Board board = Board.builder().cafe(privateCafe).name("board").build();
         Article article = new Article(board, writer, "private article", "content");
         given(articleRepository.findById(1L))
                 .willReturn(Optional.of(article));

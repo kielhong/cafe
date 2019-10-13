@@ -39,9 +39,9 @@ class ArticleRepositoryTest {
     void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         entityManager.persist(cafe);
-        board1 = new Board(cafe, "board1");
+        board1 = Board.builder().cafe(cafe).name("board1").build();
         entityManager.persist(board1);
-        Board board2 = new Board(cafe, "board2");
+        Board board2 = Board.builder().cafe(cafe).name("board2").build();
         entityManager.persist(board2);
         writer = new Member("writer", "password", "nickname", "writer@bar.com");
         entityManager.persist(writer);

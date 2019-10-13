@@ -4,6 +4,8 @@ import static com.widehouse.cafe.article.entity.BoardType.LIST;
 import static java.time.LocalDateTime.now;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -75,7 +77,7 @@ class ApiArticleControllerTest {
 
     @Test
     void listArticlesByBoard_thenListArticles() throws Exception {
-        given(articleService.getArticles(board, 0, 3))
+        given(articleService.getArticles(any(Board.class), anyInt(), anyInt()))
                 .willReturn(Arrays.asList(
                         new Article(board, writer, "test article1", "test1"),
                         new Article(board, writer, "test article2", "test2"),
@@ -84,7 +86,6 @@ class ApiArticleControllerTest {
         mvc.perform(get("/api/cafes/testurl/boards/1/articles?page=0&size=3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(3))
-                .andExpect(jsonPath("$..cafe[?(@.url == 'testurl')]", hasSize(3)))
                 .andExpect(jsonPath("$..board[?(@.id == 1)]", hasSize(3)))
                 .andExpect(jsonPath("$.[0].title").value("test article1"))
                 .andExpect(jsonPath("$.[1].title").value("test article2"))

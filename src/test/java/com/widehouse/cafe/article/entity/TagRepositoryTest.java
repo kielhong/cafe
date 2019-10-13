@@ -34,7 +34,7 @@ class TagRepositoryTest {
     void init() {
         cafe = new Cafe("testurl", "testname");
         entityManager.persist(cafe);
-        board = new Board(cafe, "board");
+        board = Board.builder().cafe(cafe).name("board").build();
         entityManager.persist(board);
         member = new Member("member", "password", "nickname", "foo@bar.com");
         entityManager.persist(member);

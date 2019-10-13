@@ -31,6 +31,10 @@ public class CafeData {
         memberCount++;
     }
 
+    /**
+     * decrease cafe member count in cafe.
+     * at least 0
+     */
     public void decreaseCafeMemberCount() {
         if (memberCount > 0) {
             memberCount--;
@@ -41,6 +45,10 @@ public class CafeData {
         commentCount++;
     }
 
+    /**
+     * decrease comment count in cafe.
+     * at least 0
+     */
     public void decreaseCommentCount() {
         if (commentCount > 0) {
             commentCount--;

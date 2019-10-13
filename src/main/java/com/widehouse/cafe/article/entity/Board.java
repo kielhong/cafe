@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,43 +23,28 @@ import lombok.NoArgsConstructor;
  * Created by kiel on 2017. 2. 11..
  */
 @Entity
+@Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JsonBackReference
     private Cafe cafe;
 
     @Size(min = 1, max = 50)
     private String name;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
-    private BoardType type;
+    private BoardType type = LIST;
 
-    private int listOrder;
-
-    /**
-     * constructor.
-     */
-    public Board(Cafe cafe, String name, BoardType type, int listOrder) {
-        this.cafe = cafe;
-        this.name = name;
-        this.type = type;
-        this.listOrder = listOrder;
-    }
-
-    public Board(Cafe cafe, String name, int listOrder) {
-        this(cafe, name, LIST, listOrder);
-    }
-
-    public Board(Cafe cafe, String name) {
-        this(cafe, name, 1);
-    }
+    // list order in cafe
+    @Builder.Default
+    private int listOrder = 1;
 
     public void update(String name, int listOrder) {
         this.name = name;

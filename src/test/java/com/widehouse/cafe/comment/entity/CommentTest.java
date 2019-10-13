@@ -24,7 +24,7 @@ class CommentTest {
     @BeforeEach
     void setUp() {
         Cafe cafe = new Cafe("testcafe", "testcafe");
-        Board board = new Board(cafe, "testboard");
+        Board board = Board.builder().cafe(cafe).name("testboard").build();
         member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
         article = new Article(board, member, "test title", "test content");
         comment = new Comment(article, member, "test comment");

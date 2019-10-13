@@ -48,7 +48,7 @@ class TagServiceTest {
 
         member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
         cafe = new Cafe("testurl", "testname");
-        board = new Board(cafe, "board");
+        board = Board.builder().cafe(cafe).name("board").build();
         article = new Article(board, member, "test", "test");
         tag = new Tag("tag");
     }

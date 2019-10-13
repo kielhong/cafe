@@ -71,7 +71,7 @@ class CommentServiceTest {
         Member writer = new Member(3L, "writer", "password", "nickname", "writer@bar.com");
 
         cafe = new Cafe("testurl", "testname", "", PUBLIC, new Category(1, "test", 1, now()));
-        Board board = new Board(cafe,"article");
+        Board board = Board.builder().cafe(cafe).name("article").build();
         article = new Article(1L, board, writer, "title", "content",
                 new ArrayList<>(), 0, now(), now());
         comment = new Comment("commentId", 1L, new SimpleMember(commenter), "comment",

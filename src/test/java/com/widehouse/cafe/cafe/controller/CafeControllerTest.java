@@ -35,10 +35,10 @@ class CafeControllerTest {
     void getCafe_thenCafeInfo() throws Exception {
         // given
         Cafe cafe = new Cafe("cafetest", "cafename");
-        Board board1 = new Board(cafe, "board1", 1);
-        Board board2 = new Board(cafe, "board2", 2);
-        Board board3 = new Board(cafe, "board3", TAG, 3);
-        Board board4 = new Board(cafe, "board4", CALENDAR, 4);
+        Board board1 = Board.builder().cafe(cafe).name("board1").listOrder(1).build();
+        Board board2 = Board.builder().cafe(cafe).name("board2").listOrder(2).build();
+        Board board3 = Board.builder().cafe(cafe).name("board3").type(TAG).listOrder(3).build();
+        Board board4 = Board.builder().cafe(cafe).name("board4").type(CALENDAR).listOrder(4).build();
 
         List<Board> boards = Arrays.asList(board1, board2, board3, board4);
         given(cafeService.getCafe("cafetest"))

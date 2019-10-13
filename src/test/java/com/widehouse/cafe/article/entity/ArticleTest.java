@@ -22,7 +22,7 @@ class ArticleTest {
     @BeforeEach
     void init() {
         cafe = new Cafe("testcafe", "testcafe");
-        board = new Board(cafe, "testboard");
+        board = board = Board.builder().cafe(cafe).name("testboard").build();
         member = new Member();
         article = new Article(board, member, "test title", "test content");
     }
@@ -60,7 +60,7 @@ class ArticleTest {
 
     @Test
     void moveBoard_should_update_board() {
-        Board board2 = new Board(cafe, "another article");
+        Board board2 = board = Board.builder().cafe(cafe).name("another artilce").build();
 
         article.moveBoard(board2);
 

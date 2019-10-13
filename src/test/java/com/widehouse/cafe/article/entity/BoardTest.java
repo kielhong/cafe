@@ -9,6 +9,8 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import com.widehouse.cafe.cafe.entity.Cafe;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,11 +26,32 @@ class BoardTest {
     }
 
     @Test
-    void modifyBoard_thenChangeBoardInfo() {
-        Board board = new Board(cafe, "test board", 1);
+    void builder() {
+        Board board = Board.builder().cafe(cafe).name("board").type(LIST).listOrder(1).build();
+        // then
+        then(board)
+                .hasFieldOrPropertyWithValue("cafe", cafe)
+                .hasFieldOrPropertyWithValue("name", "board")
+                .hasFieldOrPropertyWithValue("type", LIST)
+                .hasFieldOrPropertyWithValue("listOrder", 1);
+    }
 
+    @Test
+    void builder_defaultValue() {
+        Board board = Board.builder().cafe(cafe).name("board").build();
+        // then
+        then(board)
+                .hasFieldOrPropertyWithValue("type", LIST)
+                .hasFieldOrPropertyWithValue("listOrder", 1);
+    }
+
+    @Test
+    void updateBoardInfo_ThenChangeBoardInfo() {
+        // given
+        Board board = Board.builder().cafe(cafe).name("test board").listOrder(1).build();
+        // when
         board.update("new board name", 2);
-
+        // then
         then(board)
                 .hasFieldOrPropertyWithValue("name", "new board name")
                 .hasFieldOrPropertyWithValue("listOrder", 2);
@@ -36,25 +59,27 @@ class BoardTest {
 
     @Test
     void isSpecialType_withTagType_thenTrue() {
-        Board board = new Board(cafe, "test board", TAG, 1);
-
-        boolean isSpecialType = board.isSpecialType();
-
-        then(isSpecialType).isTrue();
+        Stream.of(TAG, BOOK, BEST)
+                .forEach(boardType -> {
+                    Board board = Board.builder().cafe(cafe).name("test board").type(boardType).listOrder(1).build();
+                    boolean isSpecialType = board.isSpecialType();
+                    then(isSpecialType).isTrue();
+                });
     }
 
     @Test
     void isSpecialType_withBookType_thenTrue() {
-        Board board = new Board(cafe, "test board", BOOK, 1);
-
+        // given
+        Board board = Board.builder().cafe(cafe).name("test board").type(BOOK).listOrder(1).build();
+        // when
         boolean isSpecialType = board.isSpecialType();
-
+        // then
         then(isSpecialType).isTrue();
     }
 
     @Test
     void isSpecialType_withBestType_thenTrue() {
-        Board board = new Board(cafe, "test board", BEST, 1);
+        Board board = Board.builder().cafe(cafe).name("test board").type(BEST).listOrder(1).build();
 
         boolean isSpecialType = board.isSpecialType();
 
@@ -63,7 +88,7 @@ class BoardTest {
 
     @Test
     void isSpecialType_withCalendarType_thenTrue() {
-        Board board = new Board(cafe, "test board", CALENDAR, 1);
+        Board board = Board.builder().cafe(cafe).name("test board").type(CALENDAR).listOrder(1).build();
 
         boolean isSpecialType = board.isSpecialType();
 
@@ -72,7 +97,7 @@ class BoardTest {
 
     @Test
     void isSpecialType_withListType_thenFalse() {
-        Board board = new Board(cafe, "test board", LIST, 1);
+        Board board = Board.builder().cafe(cafe).name("test board").type(LIST).listOrder(1).build();
 
         then(board.getType().isSpecialType()).isFalse();
     }

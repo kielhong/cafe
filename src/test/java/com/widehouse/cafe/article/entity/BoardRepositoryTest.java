@@ -27,13 +27,13 @@ class BoardRepositoryTest {
     void findAllByCafe_thenListBoardOrderByListOrder() {
         Cafe cafe = new Cafe("testurl", "testname");
         entityManager.persist(cafe);
-        Board board1 = new Board(cafe, "board1", 4);
+        Board board1 = Board.builder().cafe(cafe).name("board1").listOrder(4).build();
         entityManager.persist(board1);
-        Board board2 = new Board(cafe, "board2", 3);
+        Board board2 = Board.builder().cafe(cafe).name("board2").listOrder(3).build();
         entityManager.persist(board2);
-        Board board3 = new Board(cafe, "board3", 2);
+        Board board3 = Board.builder().cafe(cafe).name("board3").listOrder(2).build();
         entityManager.persist(board3);
-        Board board4 = new Board(cafe, "board4", 1);
+        Board board4 = Board.builder().cafe(cafe).name("board4").listOrder(1).build();
         entityManager.persist(board4);
 
         List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder"));

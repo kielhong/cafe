@@ -118,7 +118,7 @@ class CommentRepositoryTest {
      void findByArticle_Should_ListComments() {
         // given
         Cafe cafe = new Cafe("testcafe", "testcafe");
-        Board board = new Board(cafe, "board");
+        Board board = Board.builder().cafe(cafe).name("board").build();
         Member commenter = new Member(2L, "commenter", "password", "nickname", "comment@bar.com");
         Article article = new Article(1L, board, member, "title", "content", Collections.emptyList(), 0, now(), now());
 

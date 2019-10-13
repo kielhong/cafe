@@ -63,7 +63,7 @@ class CommentListServiceTest {
     @BeforeEach
     void setUp() {
         cafe = new Cafe("testurl", "testname");
-        board = new Board(cafe,"article");
+        Board board = Board.builder().cafe(cafe).name("article").build();
         Member writer = new Member(1L, "writer", "password", "nickname", "foo@bar.com");
         article = new Article(board, writer, "title", "content");
 

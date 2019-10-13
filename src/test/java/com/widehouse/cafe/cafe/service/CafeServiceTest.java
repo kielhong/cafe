@@ -98,7 +98,9 @@ class CafeServiceTest {
     @Test
     void addBoard_without_listOrder_should_append_board_with_last_order() {
         // given
-        List<Board> boards = Arrays.asList(new Board(cafe, "board1", 1), new Board(cafe, "board3", 3));
+        Board board1 = Board.builder().cafe(cafe).name("board1").listOrder(1).build();
+        Board board2 = Board.builder().cafe(cafe).name("board2").listOrder(3).build();
+        List<Board> boards = Arrays.asList(board1, board2);
         given(boardRepository.findAllByCafe(eq(cafe), any(Sort.class)))
                 .willReturn(boards);
         // when
@@ -110,7 +112,7 @@ class CafeServiceTest {
     @Test
     void removeBoard_should_remove_board() {
         // given
-        Board board = new Board(cafe, "board1", 1);
+        Board board = board = Board.builder().cafe(cafe).name("board1").build();
         // when
         service.removeBoard(cafe, board);
         // then
