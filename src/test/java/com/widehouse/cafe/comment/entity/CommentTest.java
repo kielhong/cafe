@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
 
 import org.assertj.core.api.Assertions;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * Created by kiel on 2017. 2. 12..
  */
 class CommentTest {
-    private Member member;
+    private User user;
     private Article article;
     private Comment comment;
 
@@ -25,19 +25,19 @@ class CommentTest {
     void setUp() {
         Cafe cafe = new Cafe("testcafe", "testcafe");
         Board board = Board.builder().cafe(cafe).name("testboard").build();
-        member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
-        article = new Article(board, member, "test title", "test content");
-        comment = new Comment(article, member, "test comment");
+        user = new User(1L, "user", "password");
+        article = new Article(board, user, "test title", "test content");
+        comment = new Comment(article, user, "test comment");
     }
 
     @Test
     void createComment_thenCreateComment_AttachToArticle() {
-        Comment comment = new Comment(article, member, "test comment");
+        Comment comment = new Comment(article, user, "test comment");
         // Then
         assertThat(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
-                .hasFieldOrPropertyWithValue("member.id", member.getId())
+                .hasFieldOrPropertyWithValue("member.id", user.getId())
                 .hasFieldOrPropertyWithValue("comment", "test comment");
         assertThat(comment.getCreateDateTime())
                 .isNotNull();
@@ -45,12 +45,12 @@ class CommentTest {
 
     @Test
     void modifyComment_thenUpdateComment() {
-        comment.modify(member, "another comment");
+        comment.modify(user, "another comment");
         // Then
         assertThat(comment)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
-                .hasFieldOrPropertyWithValue("member.id", member.getId())
+                .hasFieldOrPropertyWithValue("member.id", user.getId())
                 .hasFieldOrPropertyWithValue("comment", "another comment");
         assertThat(comment.getUpdateDateTime())
                 .isNotNull()
@@ -60,7 +60,7 @@ class CommentTest {
     @Test
     void modifyComment_withNotCommentOwner_thenRaiseNoAuthorityException() {
         // Given
-        Member anotherCommenter = new Member(2L, "another", "password", "nickname", "another@bar.com");
+        User anotherCommenter = new User(2L, "another", "password");
         // Then
         Assertions.assertThatThrownBy(() -> comment.modify(anotherCommenter, "new comment"))
                 .isInstanceOf(NoAuthorityException.class);

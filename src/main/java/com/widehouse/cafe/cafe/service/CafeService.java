@@ -21,7 +21,7 @@ import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.entity.CategoryRepository;
 import com.widehouse.cafe.common.exception.BoardNotExistsException;
 import com.widehouse.cafe.common.exception.CafeNotFoundException;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.Comparator;
 import java.util.List;
@@ -58,7 +58,7 @@ public class CafeService {
      * @return create {@link Cafe}
      */
     @Transactional
-    public Cafe createCafe(Member member, String url, String name, String description,
+    public Cafe createCafe(User member, String url, String name, String description,
                            CafeVisibility visibility, Integer categoryId) {
         Category category = categoryRepository.findById(categoryId).get();
         Cafe cafe = cafeRepository.save(new Cafe(url, name, description, visibility, category));

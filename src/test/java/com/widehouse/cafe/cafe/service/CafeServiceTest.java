@@ -24,7 +24,7 @@ import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.entity.CategoryRepository;
 import com.widehouse.cafe.common.exception.BoardNotExistsException;
 import com.widehouse.cafe.common.exception.CafeNotFoundException;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,13 +67,13 @@ class CafeServiceTest {
     @Test
     void createCafe_Should_CreateCafe_and_AssignCafeManager() {
         // given
-        Member member = new Member(1L, "user", "password", "nickname", "foo@bar.com");
+        User user = new User(1L, "user", "password");
         given(categoryRepository.findById(anyInt()))
                 .willReturn(Optional.of(category));
         given(cafeRepository.save(any(Cafe.class)))
                 .willReturn(new Cafe("testurl", "testname", "desc", PUBLIC, category));
         // when
-        Cafe cafe = service.createCafe(member, "testurl", "testname", "desc", PUBLIC, category.getId());
+        Cafe cafe = service.createCafe(user, "testurl", "testname", "desc", PUBLIC, category.getId());
         // then
         then(cafe)
                 .hasFieldOrPropertyWithValue("url", "testurl")
@@ -112,7 +112,7 @@ class CafeServiceTest {
     @Test
     void removeBoard_should_remove_board() {
         // given
-        Board board = board = Board.builder().cafe(cafe).name("board1").build();
+        Board board = Board.builder().cafe(cafe).name("board1").build();
         // when
         service.removeBoard(cafe, board);
         // then

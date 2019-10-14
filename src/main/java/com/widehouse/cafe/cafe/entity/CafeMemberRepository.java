@@ -1,6 +1,6 @@
 package com.widehouse.cafe.cafe.entity;
 
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.List;
 
@@ -14,11 +14,11 @@ import org.springframework.data.repository.query.Param;
  */
 public interface CafeMemberRepository extends JpaRepository<CafeMember, CafeMemberId> {
     @Query("SELECT cm.cafe FROM CafeMember cm WHERE cm.member = ?1")
-    List<Cafe> findCafeByMember(Member member, Pageable pageable);
+    List<Cafe> findCafeByMember(User member, Pageable pageable);
 
     @Query("SELECT CASE WHEN count(cm) > 0 THEN true ELSE false END "
             + " FROM CafeMember cm WHERE cm.cafe = :cafe AND cm.member = :member")
-    boolean existsByCafeMember(@Param("cafe") Cafe cafe, @Param("member") Member member);
+    boolean existsByCafeMember(@Param("cafe") Cafe cafe, @Param("member") User member);
 
-    CafeMember findByCafeAndMember(Cafe cafe, Member member);
+    CafeMember findByCafeAndMember(Cafe cafe, User member);
 }

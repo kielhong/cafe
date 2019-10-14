@@ -13,7 +13,7 @@ import com.widehouse.cafe.cafe.entity.CafeVisibility;
 import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 import com.widehouse.cafe.cafe.service.CafeMemberService;
 
 import java.util.Arrays;
@@ -53,7 +53,7 @@ class CommentListServiceTest {
     private Cafe cafe;
     private Board board;
     private Article article;
-    private Member commenter;
+    private User commenter;
     private Comment comment1;
     private Comment comment2;
     private Comment comment3;
@@ -64,10 +64,10 @@ class CommentListServiceTest {
     void setUp() {
         cafe = new Cafe("testurl", "testname");
         Board board = Board.builder().cafe(cafe).name("article").build();
-        Member writer = new Member(1L, "writer", "password", "nickname", "foo@bar.com");
+        User writer = new User(1L, "writer", "password");
         article = new Article(board, writer, "title", "content");
 
-        commenter = new Member(2L, "commenter", "password", "nickname", "commeter@bar.com");
+        commenter = new User(2L, "commenter", "password");
 
         comment1 = new Comment(article, commenter, "comment1");
         comment2 = new Comment(article, commenter, "comment2");
@@ -96,7 +96,7 @@ class CommentListServiceTest {
     @Test
     void getComments_PrivateCafe_NotMember_Should_EmptyList() {
         // given
-        Member nonCafeMember = new Member(3L, "noncafemember", "password", "nickname", "nonmember@bar.com");
+        User nonCafeMember = new User(3L, "noncafemember", "password");
         cafe.updateInfo(cafe.getName(), "", CafeVisibility.PRIVATE, cafe.getCategory());
         given(cafeMemberService.isCafeMember(cafe, nonCafeMember))
                 .willReturn(false);

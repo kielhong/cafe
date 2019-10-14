@@ -2,7 +2,6 @@ package com.widehouse.cafe.article.service;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.BDDAssertions.then;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -13,7 +12,7 @@ import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.article.entity.Tag;
 import com.widehouse.cafe.article.entity.TagRepository;
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +35,7 @@ class TagServiceTest {
     @Mock
     private ArticleRepository articleRepository;
 
-    private Member member;
+    private User user;
     private Cafe cafe;
     private Board board;
     private Article article;
@@ -46,10 +45,10 @@ class TagServiceTest {
     void setup() {
         service = new TagService(tagRepository, articleRepository);
 
-        member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
+        user = new User(1L, "user", "password");
         cafe = new Cafe("testurl", "testname");
         board = Board.builder().cafe(cafe).name("board").build();
-        article = new Article(board, member, "test", "test");
+        article = new Article(board, user, "test", "test");
         tag = new Tag("tag");
     }
 
@@ -92,8 +91,8 @@ class TagServiceTest {
 
     @Test
     void getArticlesByTag_whenCafeAndTag_thenReturnArticleHasTagInCafe() {
-        Article article1 = new Article(board, member, "title1", "content1");
-        Article article2 = new Article(board, member, "title2", "content2");
+        Article article1 = new Article(board, user, "title1", "content1");
+        Article article2 = new Article(board, user, "title2", "content2");
         given(tagRepository.findArticlesByCafeAndTag(cafe, tag))
                 .willReturn(Arrays.asList(article1, article2));
 

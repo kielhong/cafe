@@ -2,7 +2,7 @@ package com.widehouse.cafe.article.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class Article {
     private Board board;
 
     @ManyToOne
-    private Member writer;
+    private User writer;
 
     @Size(max = 500)
     private String title;
@@ -69,7 +69,7 @@ public class Article {
     /**
      * constructor.
      */
-    public Article(Board board, Member writer, String title, String content) {
+    public Article(Board board, User writer, String title, String content) {
         this.board = board;
         this.writer = writer;
         this.title = title;

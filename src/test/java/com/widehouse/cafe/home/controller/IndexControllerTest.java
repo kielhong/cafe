@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.service.CategoryService;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,19 +38,18 @@ class IndexControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private UserDetailsService memberDetailsService;
+    private UserDetailsService userDetailsService;
     @MockBean
     private CategoryService categoryService;
     @MockBean
     private PasswordEncoder encoder;
 
-    private Member member;
-
     @BeforeEach
     void setup() {
-        member = new Member(1L, "user", "encodedPass", "nickname", "foo@bar.com");
-        given(memberDetailsService.loadUserByUsername("user"))
-                .willReturn(member);
+        User user = new User(1L, "user", "encodedPass");
+
+        given(userDetailsService.loadUserByUsername("user"))
+                .willReturn(user);
         given(encoder.matches("password", "encodedPass"))
                 .willReturn(true);
     }

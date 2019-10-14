@@ -3,7 +3,7 @@ package com.widehouse.cafe.article.entity;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,7 +28,7 @@ class TagRepositoryTest {
 
     private Cafe cafe;
     private Board board;
-    private Member member;
+    private User member;
 
     @BeforeEach
     void init() {
@@ -36,7 +36,7 @@ class TagRepositoryTest {
         entityManager.persist(cafe);
         board = Board.builder().cafe(cafe).name("board").build();
         entityManager.persist(board);
-        member = new Member("member", "password", "nickname", "foo@bar.com");
+        member = new User("user", "password");
         entityManager.persist(member);
     }
 

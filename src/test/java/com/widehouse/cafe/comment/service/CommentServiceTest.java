@@ -23,8 +23,8 @@ import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.cafe.entity.CafeMember;
 import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
-import com.widehouse.cafe.member.entity.Member;
-import com.widehouse.cafe.member.entity.SimpleMember;
+import com.widehouse.cafe.user.entity.User;
+import com.widehouse.cafe.user.entity.SimpleUser;
 import com.widehouse.cafe.cafe.service.CafeMemberService;
 
 import java.util.ArrayList;
@@ -58,23 +58,23 @@ class CommentServiceTest {
     @MockBean
     private CafeMemberService cafeMemberService;
 
-    private Member manager;
-    private Member commenter;
+    private User manager;
+    private User commenter;
     private Cafe cafe;
     private Article article;
     private Comment comment;
 
     @BeforeEach
     void setUp() {
-        manager = new Member(1L, "manager", "password", "nickname", "manager@bar.com");
-        commenter = new Member(2L, "commenter", "password", "nickname", "commeter@bar.com");
-        Member writer = new Member(3L, "writer", "password", "nickname", "writer@bar.com");
+        manager = new User(1L, "manager", "password");
+        commenter = new User(2L, "commenter", "password");
+        User writer = new User(3L, "writer", "password");
 
         cafe = new Cafe("testurl", "testname", "", PUBLIC, new Category(1, "test", 1, now()));
         Board board = Board.builder().cafe(cafe).name("article").build();
         article = new Article(1L, board, writer, "title", "content",
                 new ArrayList<>(), 0, now(), now());
-        comment = new Comment("commentId", 1L, new SimpleMember(commenter), "comment",
+        comment = new Comment("commentId", 1L, new SimpleUser(commenter), "comment",
                 new ArrayList<>(), now(), now());
 
         given(articleRepository.findById(1L))
@@ -108,7 +108,7 @@ class CommentServiceTest {
 
     @Test
     void writeComment_withNotCafeMember_thenRaiseNoAuthorityException() {
-        Member notCafeMember = new Member(4L, "commenter", "password", "nickname", "commeter@bar.com");
+        User notCafeMember = new User(4L, "commenter", "password");
         given(cafeMemberService.isCafeMember(cafe, notCafeMember))
                 .willReturn(false);
 
@@ -135,7 +135,7 @@ class CommentServiceTest {
 
     @Test
     void writeReplyComment_withNotCafeMember_thenRaiseNoAuthorityException() {
-        Member another = new Member(4L, "another_member", "password", "nickname", "amember@bar.com");
+        User another = new User(4L, "another_user", "password");
         given(cafeMemberService.isCafeMember(cafe, another))
                 .willReturn(false);
         // when
@@ -167,7 +167,7 @@ class CommentServiceTest {
 
     @Test
     void modifyComment_withNotCommenter_thenRaiseNoAuthorityException() {
-        Member another = new Member(4L, "another_member", "password", "nickname", "foo@bar.com");
+        User another = new User(4L, "another_member", "password");
 
         thenThrownBy(() -> commentService.modifyComment(comment, another, "new comment"))
                 .isInstanceOf(NoAuthorityException.class);
@@ -212,7 +212,7 @@ class CommentServiceTest {
     @Test
     void deleteComment_withNotCommentNorNotCafeManager_thenRaiseNoAuthorityException() {
         // given
-        Member anotherMember = new Member(4L, "another writer", "password", "nickname", "awriter@bar.com");
+        User anotherMember = new User(4L, "another writer", "password");
         Long beforeCafeStatisticsCommentCount = cafe.getData().getCommentCount();
         given(cafeMemberRepository.findByCafeAndMember(cafe, anotherMember))
                 .willReturn(new CafeMember(cafe, anotherMember, MEMBER));

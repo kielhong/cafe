@@ -11,7 +11,7 @@ import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.article.service.ArticleService;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -34,15 +35,16 @@ class ApiArticleControllerIntTest {
 
     private Cafe cafe;
     private Board board;
-    private Member writer;
+    private User writer;
 
     @BeforeEach
     void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
-        writer = new Member(1L, "writer", "password", "nickname", "foo@bar.com");
+        writer = new User(1L, "writer", "password");
     }
 
+    @Sql("classpath:data.sql")
     @Test
     void writeArticle_withCafeMember_thenSuccess() throws Exception {
         mvc.perform(post("/api/cafes/testurl/articles/")

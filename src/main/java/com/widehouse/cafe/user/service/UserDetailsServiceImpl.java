@@ -1,8 +1,9 @@
-package com.widehouse.cafe.member.service;
+package com.widehouse.cafe.user.service;
 
-import com.widehouse.cafe.member.entity.Member;
-import com.widehouse.cafe.member.entity.MemberRepository;
+import com.widehouse.cafe.user.entity.User;
+import com.widehouse.cafe.user.entity.UserRepository;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,18 +13,14 @@ import org.springframework.stereotype.Service;
 /**
  * Created by kiel on 2017. 3. 3..
  */
+@RequiredArgsConstructor
 @Service
-public class MemberDetailsService implements UserDetailsService {
-    @Autowired
-    private MemberRepository memberRepository;
+public class UserDetailsServiceImpl implements UserDetailsService {
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByUsername(username);
-        if (member == null) {
-            throw new UsernameNotFoundException("Member : " + username + " Not Exists");
-        }
-
-        return member;
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User : " + username + " Not Exists"));
     }
 }

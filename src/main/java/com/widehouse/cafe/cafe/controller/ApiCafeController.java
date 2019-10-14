@@ -3,7 +3,7 @@ package com.widehouse.cafe.cafe.controller;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.common.annotation.CurrentMember;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +35,7 @@ public class ApiCafeController {
      */
     @PostMapping(value = "cafes")
     public Cafe createCafe(@RequestBody Cafe cafeForm,
-                           @CurrentMember Member member) {
+                           @CurrentMember User member) {
         Cafe cafe = cafeService.createCafe(member, cafeForm.getUrl(), cafeForm.getName(),
                 cafeForm.getDescription(), cafeForm.getVisibility(), cafeForm.getCategory().getId());
 

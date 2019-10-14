@@ -1,6 +1,4 @@
-package com.widehouse.cafe.member.entity;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+package com.widehouse.cafe.user.entity;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,7 +14,6 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,12 +21,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 /**
  * Created by kiel on 2017. 2. 10..
  */
-@Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@JsonIgnoreProperties({"password", "enabled", "accountNonExpired", "accountNonLocked", "credentialsNonExpired"})
-public class Member implements UserDetails {
+@Entity
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,16 +39,12 @@ public class Member implements UserDetails {
     @Column(nullable = false, length = 80)
     private String password;
 
-    private String nickname;
-
-    @Email
-    private String email;
-
-    public Member(@Size(max = 30) String username, String password, String nickname, @Email String email) {
+    /**
+     * Constructor.
+     */
+    public User(@Size(max = 30) String username, String password) {
         this.username = username;
         this.password = password;
-        this.nickname = nickname;
-        this.email = email;
     }
 
     @Override

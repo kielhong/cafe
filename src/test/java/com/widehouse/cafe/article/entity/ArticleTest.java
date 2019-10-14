@@ -3,7 +3,7 @@ package com.widehouse.cafe.article.entity;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.Arrays;
 
@@ -16,14 +16,14 @@ import org.junit.jupiter.api.Test;
 class ArticleTest {
     private Cafe cafe;
     private Board board;
-    private Member member;
+    private User member;
     private Article article;
 
     @BeforeEach
     void init() {
         cafe = new Cafe("testcafe", "testcafe");
         board = board = Board.builder().cafe(cafe).name("testboard").build();
-        member = new Member();
+        member = new User();
         article = new Article(board, member, "test title", "test content");
     }
 

@@ -21,7 +21,7 @@ import com.widehouse.cafe.article.service.ArticleService;
 import com.widehouse.cafe.article.service.TagService;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -52,13 +52,13 @@ class ApiTagControllerTest {
 
     private Cafe cafe;
     private Board board;
-    private Member writer;
+    private User writer;
 
     @BeforeEach
     void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
-        writer = new Member(1L, "writer", "password", "nickname", "writer@bar.com");
+        writer = new User(1L, "writer", "password");
 
         given(cafeService.getCafe("testurl"))
                 .willReturn(cafe);

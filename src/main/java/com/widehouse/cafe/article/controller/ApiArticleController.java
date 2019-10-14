@@ -6,7 +6,7 @@ import com.widehouse.cafe.article.service.ArticleService;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.common.annotation.CurrentMember;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class ApiArticleController {
     @GetMapping("/cafes/{cafeUrl}/articles/{articleId}")
     public Article getArticle(@PathVariable String cafeUrl,
                               @PathVariable Long articleId,
-                              @CurrentMember Member reader) {
+                              @CurrentMember User reader) {
         return articleService.getArticle(articleId, reader);
     }
 
@@ -68,7 +68,7 @@ public class ApiArticleController {
     @PostMapping(value = "/cafes/{cafeUrl}/articles")
     public Article writeArticle(@PathVariable String cafeUrl,
                                 @RequestBody ArticleForm articleForm,
-                                @CurrentMember Member member) {
+                                @CurrentMember User member) {
         Board board = cafeService.getBoard(articleForm.getBoard().getId());
 
         return articleService.writeArticle(board, member, articleForm.getTitle(), articleForm.getContent());

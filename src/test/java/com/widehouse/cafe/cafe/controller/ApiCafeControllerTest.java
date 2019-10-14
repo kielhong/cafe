@@ -15,15 +15,13 @@ import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.common.exception.CafeNotFoundException;
-import com.widehouse.cafe.config.WebSecurityConfig;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -76,7 +74,7 @@ class ApiCafeControllerTest {
     @Test
     void createCafe_WithLoginMember_Should_CreateCafe() throws Exception {
         // given
-        Member member = new Member(1L, "member", "password", "nickname", "foo@bar.com");
+        User member = new User(1L, "member", "password");
         given(cafeService.createCafe(member, "testurl", "testcafe", "desc", PUBLIC, 1))
                 .willReturn(new Cafe("testurl", "testcafe", "desc", PUBLIC, category));
         String requestContent = "{\"name\": \"testcafe\", \"url\": \"testurl\", \"description\": \"desc\", "

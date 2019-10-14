@@ -22,9 +22,9 @@ INSERT INTO cafe(category_id, url, name, description, visibility, article_count,
     (1,'gamecafe13','샌드박스 팬 카페','샌드박스 팬 카페입니다','PUBLIC', 898790, 1231312, 58582, 123123, '2014-03-21 01:02:03');
 
 /** Member **/
-INSERT INTO member(id, username, password, nickname) VALUES
-(1, 'kiel', '$2a$10$KwimrCmfFII4tsOh1R5WSet.OY2SmDdueOMiUjCS5z4xSpwHPfEZi', '키엘'), -- 1234
-(2, 'user', '$2a$10$8nPB6Czz76wxVBuBAvoRveNW5eUIl5Y9doMh8rDeI7y4Wy5SdGBLi', '유저'); -- password
+INSERT INTO user(id, username, password) VALUES
+(1, 'kiel', '$2a$10$KwimrCmfFII4tsOh1R5WSet.OY2SmDdueOMiUjCS5z4xSpwHPfEZi'), -- 1234
+(2, 'user', '$2a$10$8nPB6Czz76wxVBuBAvoRveNW5eUIl5Y9doMh8rDeI7y4Wy5SdGBLi'); -- password
 
 
 /** CafeMember **/

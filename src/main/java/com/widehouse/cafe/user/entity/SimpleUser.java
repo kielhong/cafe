@@ -1,6 +1,4 @@
-package com.widehouse.cafe.member.entity;
-
-import com.widehouse.cafe.member.entity.Member;
+package com.widehouse.cafe.user.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,20 +8,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * Created by kiel on 2017. 3. 15..
  */
 @Document
-
 @NoArgsConstructor
 @Getter
-public class SimpleMember {
+public class SimpleUser {
     private Long id;
 
     private String username;
 
-    public SimpleMember(Long id, String username) {
+    public SimpleUser(Long id, String username) {
         this.id = id;
         this.username = username;
     }
 
-    public SimpleMember(Member member) {
-        this(member.getId(), member.getUsername());
+    public SimpleUser(User user) {
+        this(user.getId(), user.getUsername());
     }
 }

@@ -12,12 +12,11 @@ import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
 import com.widehouse.cafe.common.event.ArticleCreateEvent;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -50,9 +49,9 @@ public class ArticleService {
      * get a article with reader.
      * if reader has no read auth then throw NoAuthorityException
      * @param id id of article
-     * @param reader reader {@link Member}
+     * @param reader reader {@link User}
      */
-    public Article getArticle(Long id, Member reader) {
+    public Article getArticle(Long id, User reader) {
         Article article = articleRepository.findById(id).get();
 
         if (isArticleReadable(article.getCafe(), reader)) {
@@ -66,7 +65,7 @@ public class ArticleService {
      * write a article.
      * @return created Article
      */
-    public Article writeArticle(Board board, Member writer, String title, String content) {
+    public Article writeArticle(Board board, User writer, String title, String content) {
         if (!cafeMemberRepository.existsByCafeMember(board.getCafe(), writer)) {
             throw new NoAuthorityException();
         }
@@ -89,7 +88,7 @@ public class ArticleService {
         tagRepository.save(tag);
     }
 
-    private boolean isArticleReadable(Cafe cafe, Member reader) {
+    private boolean isArticleReadable(Cafe cafe, User reader) {
         if (cafe.getVisibility() == PUBLIC) {
             return true;
         } else {

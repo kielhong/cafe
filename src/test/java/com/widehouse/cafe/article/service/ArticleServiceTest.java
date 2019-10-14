@@ -18,7 +18,7 @@ import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,8 +50,8 @@ class ArticleServiceTest {
     private Cafe cafe;
     private Board board1;
     private Board board2;
-    private Member writer;
-    private Member reader;
+    private User writer;
+    private User reader;
 
     private Article article1;
     private Article article2;
@@ -65,8 +65,8 @@ class ArticleServiceTest {
         board1 = Board.builder().cafe(cafe).name("board1").build();
         board2 = Board.builder().cafe(cafe).name("board2").build();
 
-        writer = new Member(1L, "writer", "password", "nickname", "writer@bar.com");
-        reader = new Member(2L, "reader", "password","nickname",  "reader@bar.com");
+        writer = new User(1L, "writer", "password");
+        reader = new User(2L, "reader", "password");
 
         article1 = new Article(board1, writer, "test article1", "test1");
         article2 = new Article(board1, writer, "test article2", "test2");
@@ -115,7 +115,7 @@ class ArticleServiceTest {
         Article article = new Article(board, writer, "private article", "content");
         given(articleRepository.findById(1L))
                 .willReturn(Optional.of(article));
-        given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(Member.class)))
+        given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(User.class)))
                 .willReturn(false);
         // then
         thenThrownBy(() -> service.getArticle(1L, reader))
@@ -124,7 +124,7 @@ class ArticleServiceTest {
 
     @Test
     void writeArticle_withCafeMember_thenCreateArticle() {
-        given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(Member.class)))
+        given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(User.class)))
                 .willReturn(true);
         given(articleRepository.save(any(Article.class)))
                 .willReturn(new Article(board1, writer, "title", "content"));
@@ -142,7 +142,7 @@ class ArticleServiceTest {
 
     @Test
     void writeArticle_withNotCafeMember_thenRaiseNoAuthorityException() {
-        given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(Member.class)))
+        given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(User.class)))
                 .willReturn(false);
 
         thenThrownBy(() -> service.writeArticle(board1, writer, "title", "content"))

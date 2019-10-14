@@ -1,9 +1,9 @@
-package com.widehouse.cafe.member.controller;
+package com.widehouse.cafe.user.controller;
 
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.common.annotation.CurrentMember;
-import com.widehouse.cafe.member.entity.Member;
-import com.widehouse.cafe.member.service.MemberService;
+import com.widehouse.cafe.user.entity.User;
+import com.widehouse.cafe.user.service.UserService;
 
 import java.util.List;
 
@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("api")
-public class ApiMemberController {
+public class ApiUserController {
     @Autowired
-    private MemberService memberService;
+    private UserService userService;
 
     @GetMapping("/members/my/cafes")
-    public List<Cafe> getCafesByMember(@PageableDefault(sort = "cafe.createDateTime", direction = Sort.Direction.DESC)
+    public List<Cafe> getCafesByUser(@PageableDefault(sort = "cafe.createDateTime", direction = Sort.Direction.DESC)
                                                    Pageable pageable,
-                                       @CurrentMember Member member) {
-        return  memberService.getCafesByMember(member, pageable);
+                                       @CurrentMember User member) {
+        return userService.getCafesByUser(member, pageable);
     }
 }

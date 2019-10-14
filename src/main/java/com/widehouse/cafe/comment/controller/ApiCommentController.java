@@ -6,7 +6,7 @@ import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.comment.service.CommentService;
 import com.widehouse.cafe.common.annotation.CurrentMember;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class ApiCommentController {
     public List<Comment> getComments(@PathVariable Long articleId,
                                      @RequestParam(defaultValue = "0") Integer page,
                                      @RequestParam(defaultValue = "10") Integer size,
-                                     @CurrentMember Member member) {
+                                     @CurrentMember User member) {
         List<Comment> comments = commentService.getComments(member, articleId, page, size);
 
         return comments;
@@ -66,7 +66,7 @@ public class ApiCommentController {
     @PostMapping("/articles/{articleId}/comments")
     public Comment write(@PathVariable Long articleId,
                          @RequestBody CommentForm input,
-                         @CurrentMember Member member) {
+                         @CurrentMember User member) {
         Article article = articleRepository.findById(articleId).get();
 
         return commentService.writeComment(article, member, input.getComment());
@@ -83,7 +83,7 @@ public class ApiCommentController {
     @PostMapping("/comments/{commentId}/comments")
     public Comment writeReplyComment(@PathVariable String commentId,
                                      @RequestBody CommentForm input,
-                                     @CurrentMember Member member) {
+                                     @CurrentMember User member) {
         Comment comment = commentRepository.findById(commentId).get();
 
         return commentService.writeReplyComment(comment, member, input.getComment());

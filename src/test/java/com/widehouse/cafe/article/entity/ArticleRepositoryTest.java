@@ -4,7 +4,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ class ArticleRepositoryTest {
 
     private Cafe cafe;
     private Board board1;
-    private Member writer;
+    private User writer;
 
     private Article article1;
     private Article article2;
@@ -43,7 +43,7 @@ class ArticleRepositoryTest {
         entityManager.persist(board1);
         Board board2 = Board.builder().cafe(cafe).name("board2").build();
         entityManager.persist(board2);
-        writer = new Member("writer", "password", "nickname", "writer@bar.com");
+        writer = new User("writer", "password");
         entityManager.persist(writer);
 
         article1 = new Article(board1, writer, "test article1", "test1");

@@ -20,9 +20,9 @@ import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.comment.service.CommentService;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.member.entity.Member;
-import com.widehouse.cafe.member.entity.SimpleMember;
-import com.widehouse.cafe.member.service.MemberDetailsService;
+import com.widehouse.cafe.user.entity.User;
+import com.widehouse.cafe.user.entity.SimpleUser;
+import com.widehouse.cafe.user.service.UserDetailsServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,18 +51,18 @@ class ApiCommentControllerTest {
     @MockBean
     private ArticleRepository articleRepository;
     @MockBean
-    private MemberDetailsService memberDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     private Article article;
-    private Member member;
+    private User user;
 
     @BeforeEach
     void setUp() {
-        member = new Member(1L, "member", "password", "nickanme", "foo@bar.com");
+        user = new User(1L, "member", "password");
 
         Cafe cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category", 1));
         Board board = Board.builder().cafe(cafe).name("board").build();
-        article = new Article(1L, board, member, "title", "content", new ArrayList<>(), 0, now(), now());
+        article = new Article(1L, board, user, "title", "content", new ArrayList<>(), 0, now(), now());
 
         given(articleRepository.findById(1L))
                 .willReturn(Optional.of(article));
@@ -71,40 +71,40 @@ class ApiCommentControllerTest {
     @Test
     void getComments_thenListComments() throws Exception {
         // given
-        Comment comment1 = new Comment(article, member, "comment1");
-        Comment comment2 = new Comment(article, member, "comment2");
-        Comment comment3 = new Comment(article, member, "comment3");
-        Comment comment4 = new Comment(article, member, "comment4");
-        Comment comment5 = new Comment(article, member, "comment5");
-        given(commentService.getComments(member, 1L, 0, 5))
+        Comment comment1 = new Comment(article, user, "comment1");
+        Comment comment2 = new Comment(article, user, "comment2");
+        Comment comment3 = new Comment(article, user, "comment3");
+        Comment comment4 = new Comment(article, user, "comment4");
+        Comment comment5 = new Comment(article, user, "comment5");
+        given(commentService.getComments(user, 1L, 0, 5))
                 .willReturn(Arrays.asList(comment1, comment2, comment3, comment4, comment5));
         // then
         mvc.perform(get("/api/articles/1/comments?page=0&size=5")
-                    .with(user(member)))
+                    .with(user(user)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5));
     }
 
     @Test
     void write_withCafeMember_thenCreateComment() throws Exception {
-        given(commentService.writeComment(article, member, "new comment"))
-                .willReturn(new Comment(article, member, "new comment"));
+        given(commentService.writeComment(article, user, "new comment"))
+                .willReturn(new Comment(article, user, "new comment"));
 
         mvc.perform(post("/api/articles/1/comments")
-                    .with(user(member))
+                    .with(user(user))
                     .with(csrf())
                     .contentType(APPLICATION_JSON)
                     .content("{\"comment\":\"new comment\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.comment").value("new comment"))
-                .andExpect(jsonPath("$.member.id").value(member.getId()));
+                .andExpect(jsonPath("$.member.id").value(user.getId()));
     }
 
     @Test
     void write_withNonCafeMember_then403Forbidden() throws Exception {
         // given
-        Comment comment = new Comment(article, member, "new comment");
-        given(commentService.writeComment(article, member, comment.getComment()))
+        Comment comment = new Comment(article, user, "new comment");
+        given(commentService.writeComment(article, user, comment.getComment()))
                 .willThrow(new NoAuthorityException());
         // then
         mvc.perform(post("/api/articles/1/comments")
@@ -116,22 +116,22 @@ class ApiCommentControllerTest {
     @Test
     void writeReplyComment_whenSubComment_thenSuccess() throws Exception {
         // given
-        Comment comment = new Comment("1", article.getId(), new SimpleMember(member), "comment",
+        Comment comment = new Comment("1", article.getId(), new SimpleUser(user), "comment",
                 Collections.emptyList(), now(), now());
         String subCommentText = "sub comment";
         given(commentRepository.findById("1"))
                 .willReturn(Optional.of(comment));
-        given(commentService.writeReplyComment(comment, member, subCommentText))
-                .willReturn(new Comment(article.getId(), member, subCommentText));
+        given(commentService.writeReplyComment(comment, user, subCommentText))
+                .willReturn(new Comment(article.getId(), user, subCommentText));
         // then
         mvc.perform(post("/api/comments/1/comments")
-                    .with(user(member))
+                    .with(user(user))
                     .with(csrf())
                     .contentType(APPLICATION_JSON)
                     .content("{\"comment\":\"" + subCommentText + "\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.comment").value(subCommentText))
                 .andExpect(jsonPath("$.articleId").value(article.getId()))
-                .andExpect(jsonPath("$.member.id").value(member.getId()));
+                .andExpect(jsonPath("$.member.id").value(user.getId()));
     }
 }

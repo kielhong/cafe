@@ -14,7 +14,7 @@ import com.widehouse.cafe.cafe.service.CafeMemberService;
 import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +45,7 @@ public class CommentService {
     private CafeMemberRepository cafeMemberRepository;
 
     @Transactional
-    public Comment writeComment(Article article, Member commenter, String commentContent) {
+    public Comment writeComment(Article article, User commenter, String commentContent) {
         Cafe cafe = article.getCafe();
         if (cafeMemberService.isCafeMember(cafe, commenter)) {
             Comment comment = new Comment(article, commenter, commentContent);
@@ -64,7 +64,7 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment writeReplyComment(Comment comment, Member commenter, String commentText) {
+    public Comment writeReplyComment(Comment comment, User commenter, String commentText) {
         Optional<Article> article = articleRepository.findById(comment.getArticleId());
         Cafe cafe = article.get().getCafe();
         if (cafeMemberService.isCafeMember(cafe, commenter)) {
@@ -78,7 +78,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void modifyComment(Comment comment, Member member, String newComment) {
+    public void modifyComment(Comment comment, User member, String newComment) {
         if (comment.getMember().getId().equals(member.getId())) {
             comment.modify(member, newComment);
             commentRepository.save(comment);
@@ -88,7 +88,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void deleteComment(String commentId, Member deleter) {
+    public void deleteComment(String commentId, User deleter) {
         Comment comment = commentRepository.findById(commentId).get();
         Article article = articleRepository.findById(comment.getArticleId()).get();
         Cafe cafe = article.getCafe();
@@ -107,7 +107,7 @@ public class CommentService {
         }
     }
 
-    public List<Comment> getComments(Member member, Long articleId, int page, int size) {
+    public List<Comment> getComments(User member, Long articleId, int page, int size) {
         Article article = articleRepository.findById(articleId).get();
         Cafe cafe = article.getCafe();
         List<Comment> comments;
@@ -120,7 +120,7 @@ public class CommentService {
         return comments;
     }
 
-    private boolean isCommentReadable(Cafe cafe, Member member) {
+    private boolean isCommentReadable(Cafe cafe, User member) {
         if (cafe.getVisibility() == PRIVATE) {
             return cafeMemberService.isCafeMember(cafe, member);
         } else {

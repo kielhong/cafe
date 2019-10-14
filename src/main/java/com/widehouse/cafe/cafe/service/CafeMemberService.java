@@ -7,7 +7,7 @@ import com.widehouse.cafe.cafe.entity.CafeMember;
 import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
 import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.common.exception.CafeMemberExistsException;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class CafeMemberService {
      * @param member member who join
      * @return joined {@link CafeMember}
      */
-    public CafeMember joinMember(Cafe cafe, Member member) {
+    public CafeMember joinMember(Cafe cafe, User member) {
         if (isCafeMember(cafe, member)) {
             throw new CafeMemberExistsException();
         }
@@ -41,7 +41,7 @@ public class CafeMemberService {
         return cafeMember;
     }
 
-    public boolean isCafeMember(Cafe cafe, Member member) {
+    public boolean isCafeMember(Cafe cafe, User member) {
         return cafeMemberRepository.existsByCafeMember(cafe, member);
     }
 }

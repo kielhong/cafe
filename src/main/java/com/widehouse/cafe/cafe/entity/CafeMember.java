@@ -1,6 +1,6 @@
 package com.widehouse.cafe.cafe.entity;
 
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -30,21 +30,21 @@ public class CafeMember {
     private Cafe cafe;
 
     @ManyToOne
-    private Member member;
+    private User member;
 
     @Enumerated(EnumType.STRING)
     private CafeMemberRole role;
 
     private LocalDateTime joinDate;
 
-    public CafeMember(Cafe cafe, Member member, CafeMemberRole role) {
+    public CafeMember(Cafe cafe, User member, CafeMemberRole role) {
         this.cafe = cafe;
         this.member = member;
         this.role = role;
         this.joinDate = LocalDateTime.now();
     }
 
-    public CafeMember(Cafe cafe, Member member) {
+    public CafeMember(Cafe cafe, User member) {
         this(cafe, member, CafeMemberRole.MEMBER);
     }
 }

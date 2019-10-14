@@ -4,7 +4,7 @@ import static com.widehouse.cafe.cafe.entity.CafeMemberRole.MANAGER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.List;
 
@@ -26,13 +26,13 @@ class CafeMemberRepositoryTest {
     @Autowired
     private CafeMemberRepository cafeMemberRepository;
 
-    private Member member;
+    private User user;
     private Cafe cafe;
 
     @BeforeEach
     void setUp() {
-        member = new Member("member", "password", "nickname", "foo@bar.com");
-        entityManager.persist(member);
+        user = new User("user", "password");
+        entityManager.persist(user);
 
         cafe = new Cafe("testurl", "testcafe");
         entityManager.persist(cafe);
@@ -50,13 +50,13 @@ class CafeMemberRepositoryTest {
         entityManager.persist(cafe4);
         Cafe cafe5 = new Cafe("url5", "name5");
         entityManager.persist(cafe5);
-        entityManager.persist(new CafeMember(cafe1, member));
-        entityManager.persist(new CafeMember(cafe2, member));
-        entityManager.persist(new CafeMember(cafe3, member));
-        entityManager.persist(new CafeMember(cafe4, member));
-        entityManager.persist(new CafeMember(cafe5, member));
+        entityManager.persist(new CafeMember(cafe1, user));
+        entityManager.persist(new CafeMember(cafe2, user));
+        entityManager.persist(new CafeMember(cafe3, user));
+        entityManager.persist(new CafeMember(cafe4, user));
+        entityManager.persist(new CafeMember(cafe5, user));
         // when
-        List<Cafe> cafes = cafeMemberRepository.findCafeByMember(member, PageRequest.of(0, 5));
+        List<Cafe> cafes = cafeMemberRepository.findCafeByMember(user, PageRequest.of(0, 5));
         // then
         assertThat(cafes)
                 .contains(cafe1, cafe2, cafe3, cafe4, cafe5);
@@ -65,9 +65,9 @@ class CafeMemberRepositoryTest {
     @Test
     void existsCafeAndMember_WithCafeMember_Should_True() {
         // given
-        entityManager.persist(new CafeMember(cafe, member));
+        entityManager.persist(new CafeMember(cafe, user));
         // when
-        boolean exist = cafeMemberRepository.existsByCafeMember(cafe, member);
+        boolean exist = cafeMemberRepository.existsByCafeMember(cafe, user);
         // then
         then(exist)
                 .isTrue();
@@ -76,7 +76,7 @@ class CafeMemberRepositoryTest {
     @Test
     void existsCafeAndMember_WithNotCafeMember_Should_False() {
         // when
-        boolean exist = cafeMemberRepository.existsByCafeMember(cafe, member);
+        boolean exist = cafeMemberRepository.existsByCafeMember(cafe, user);
         // then
         then(exist)
                 .isFalse();
@@ -85,10 +85,10 @@ class CafeMemberRepositoryTest {
     @Test
     void findByCafeAndMember_Should_Return_CafeMember() {
         // given
-        CafeMember cafeMember = new CafeMember(cafe, member, MANAGER);
+        CafeMember cafeMember = new CafeMember(cafe, user, MANAGER);
         entityManager.persist(cafeMember);
         // when
-        CafeMember result = cafeMemberRepository.findByCafeAndMember(cafe, member);
+        CafeMember result = cafeMemberRepository.findByCafeAndMember(cafe, user);
         // then
         then(result)
                 .isEqualTo(cafeMember);

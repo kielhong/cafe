@@ -20,7 +20,7 @@ import com.widehouse.cafe.article.service.ArticleService;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.Arrays;
 
@@ -47,13 +47,13 @@ class ApiArticleControllerTest {
 
     private Cafe cafe;
     private Board board;
-    private Member writer;
+    private User writer;
 
     @BeforeEach
     void setUp() {
         cafe = new Cafe("testurl", "testcafe");
         board = new Board(1L, cafe, "board", LIST, 1);
-        writer = new Member(1L, "writer", "password", "nickname", "foo@bar.com");
+        writer = new User(1L, "writer", "password");
 
         given(cafeService.getCafe("testurl"))
                 .willReturn(cafe);
@@ -96,7 +96,7 @@ class ApiArticleControllerTest {
 
     @Test
     void getArticle_withAuh_thenReturnArticle() throws Exception {
-        Member reader = new Member(1L, "reader", "password", "nickname", "foo@bar.com");
+        User reader = new User(1L, "reader", "password");
         given(articleService.getArticle(1L, reader))
                 .willReturn(new Article(1L, board, writer, "title", "content", emptyList(), 0, now(), now()));
         // when
@@ -110,7 +110,7 @@ class ApiArticleControllerTest {
 
     @Test
     void getArticle_withNoAuthorityMember_then403Forbidden() throws Exception {
-        Member reader = new Member(1L, "reader", "password", "nickname", "foo@bar.com");
+        User reader = new User(1L, "reader", "password");
         given(articleService.getArticle(1L, reader))
                 .willThrow(new NoAuthorityException());
 

@@ -8,7 +8,7 @@ import com.widehouse.cafe.article.service.TagService;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.common.annotation.CurrentMember;
-import com.widehouse.cafe.member.entity.Member;
+import com.widehouse.cafe.user.entity.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,7 +78,7 @@ public class ApiTagController {
      */
     @GetMapping("articles/{articleId}/tags")
     public List<Tag> getTags(@PathVariable Long articleId,
-                             @CurrentMember Member member) {
+                             @CurrentMember User member) {
         Article article = articleService.getArticle(articleId, member);
 
         return article.getTags();
@@ -95,7 +95,7 @@ public class ApiTagController {
     @PostMapping("/articles/{articleId}/tags")
     public List<Tag> postTags(@PathVariable Long articleId,
                               @RequestBody List<TagForm> tagForms,
-                              @CurrentMember Member member) {
+                              @CurrentMember User member) {
         Article article = articleService.getArticle(articleId, member);
 
         List<Tag> tags = tagForms.stream()
