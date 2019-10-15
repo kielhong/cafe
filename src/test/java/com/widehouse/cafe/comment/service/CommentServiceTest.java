@@ -196,7 +196,7 @@ class CommentServiceTest {
         Long beforeCafeStatisticsCommentCount = cafe.getData().getCommentCount();
         int articleCommentCount = article.getCommentCount();
         given(cafeMemberRepository.findByCafeAndMember(cafe, manager))
-                .willReturn(new CafeMember(cafe, manager, MANAGER));
+                .willReturn(CafeMember.builder().cafe(cafe).member(manager).role(MANAGER).build());
         // when
         commentService.deleteComment(comment.getId(), manager);
         // then
@@ -215,7 +215,7 @@ class CommentServiceTest {
         User anotherMember = new User(4L, "another writer", "password");
         Long beforeCafeStatisticsCommentCount = cafe.getData().getCommentCount();
         given(cafeMemberRepository.findByCafeAndMember(cafe, anotherMember))
-                .willReturn(new CafeMember(cafe, anotherMember, MEMBER));
+                .willReturn(CafeMember.builder().cafe(cafe).member(anotherMember).build());
         // then
         thenThrownBy(() -> commentService.deleteComment(comment.getId(), anotherMember))
                 .isInstanceOf(NoAuthorityException.class);

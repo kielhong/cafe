@@ -5,6 +5,7 @@ import static com.widehouse.cafe.article.entity.BoardType.BOOK;
 import static com.widehouse.cafe.article.entity.BoardType.CALENDAR;
 import static com.widehouse.cafe.article.entity.BoardType.LIST;
 import static com.widehouse.cafe.article.entity.BoardType.TAG;
+import static com.widehouse.cafe.cafe.entity.CafeMemberRole.MANAGER;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
@@ -14,7 +15,6 @@ import com.widehouse.cafe.article.entity.BoardType;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeMember;
 import com.widehouse.cafe.cafe.entity.CafeMemberRepository;
-import com.widehouse.cafe.cafe.entity.CafeMemberRole;
 import com.widehouse.cafe.cafe.entity.CafeRepository;
 import com.widehouse.cafe.cafe.entity.CafeVisibility;
 import com.widehouse.cafe.cafe.entity.Category;
@@ -49,7 +49,7 @@ public class CafeService {
 
     /**
      * Create a Cafe.
-     * @param member member who creates cafe. He/She will be cafe manager
+     * @param user user who creates cafe. He/She will be cafe manager
      * @param url url of cafe
      * @param name name of cafe
      * @param description description about cafe
@@ -58,11 +58,11 @@ public class CafeService {
      * @return create {@link Cafe}
      */
     @Transactional
-    public Cafe createCafe(User member, String url, String name, String description,
+    public Cafe createCafe(User user, String url, String name, String description,
                            CafeVisibility visibility, Integer categoryId) {
         Category category = categoryRepository.findById(categoryId).get();
         Cafe cafe = cafeRepository.save(new Cafe(url, name, description, visibility, category));
-        CafeMember cafeMember = new CafeMember(cafe, member, CafeMemberRole.MANAGER);
+        CafeMember cafeMember = CafeMember.builder().cafe(cafe).member(user).role(MANAGER).build();
         cafeMemberRepository.save(cafeMember);
         cafe.getData().increaseCafeMemberCount();
         cafeRepository.save(cafe);

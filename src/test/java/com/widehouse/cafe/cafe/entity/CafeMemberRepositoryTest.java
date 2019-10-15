@@ -50,11 +50,11 @@ class CafeMemberRepositoryTest {
         entityManager.persist(cafe4);
         Cafe cafe5 = new Cafe("url5", "name5");
         entityManager.persist(cafe5);
-        entityManager.persist(new CafeMember(cafe1, user));
-        entityManager.persist(new CafeMember(cafe2, user));
-        entityManager.persist(new CafeMember(cafe3, user));
-        entityManager.persist(new CafeMember(cafe4, user));
-        entityManager.persist(new CafeMember(cafe5, user));
+        entityManager.persist(CafeMember.builder().cafe(cafe1).member(user).build());
+        entityManager.persist(CafeMember.builder().cafe(cafe2).member(user).build());
+        entityManager.persist(CafeMember.builder().cafe(cafe3).member(user).build());
+        entityManager.persist(CafeMember.builder().cafe(cafe4).member(user).build());
+        entityManager.persist(CafeMember.builder().cafe(cafe5).member(user).build());
         // when
         List<Cafe> cafes = cafeMemberRepository.findCafeByMember(user, PageRequest.of(0, 5));
         // then
@@ -65,7 +65,7 @@ class CafeMemberRepositoryTest {
     @Test
     void existsCafeAndMember_WithCafeMember_Should_True() {
         // given
-        entityManager.persist(new CafeMember(cafe, user));
+        entityManager.persist(CafeMember.builder().cafe(cafe).member(user).build());
         // when
         boolean exist = cafeMemberRepository.existsByCafeMember(cafe, user);
         // then
@@ -85,7 +85,7 @@ class CafeMemberRepositoryTest {
     @Test
     void findByCafeAndMember_Should_Return_CafeMember() {
         // given
-        CafeMember cafeMember = new CafeMember(cafe, user, MANAGER);
+        CafeMember cafeMember = CafeMember.builder().cafe(cafe).member(user).role(MANAGER).build();
         entityManager.persist(cafeMember);
         // when
         CafeMember result = cafeMemberRepository.findByCafeAndMember(cafe, user);
