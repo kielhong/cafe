@@ -26,6 +26,8 @@ public class Comment {
     @Id
     private String id;
 
+    private Long cafeId;
+
     private Long articleId;
 
     private SimpleUser member;
@@ -38,23 +40,20 @@ public class Comment {
 
     private LocalDateTime updateDateTime;
 
-    public Comment(Long articleId, User member, String comment) {
+    public Comment(Long cafeId, Long articleId, User member, String comment) {
+        this.cafeId = cafeId;
         this.articleId = articleId;
         this.member = new SimpleUser(member);
         this.comment = comment;
         this.createDateTime = this.updateDateTime = LocalDateTime.now();
     }
 
-    public Comment(Article article, User member, String comment) {
-        this(article.getId(), member, comment);
+    public Comment(Article article, User user, String comment) {
+        this(article.getCafe().getId(), article.getId(), user, comment);
     }
 
-    public void modify(User member, String comment) {
-        if (this.member.getId().equals(member.getId())) {
-            this.comment = comment;
-            this.updateDateTime = LocalDateTime.now();
-        } else {
-            throw new NoAuthorityException();
-        }
+    public void modify(String comment) {
+        this.comment = comment;
+        this.updateDateTime = LocalDateTime.now();
     }
 }

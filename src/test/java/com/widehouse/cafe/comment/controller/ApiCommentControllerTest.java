@@ -116,13 +116,13 @@ class ApiCommentControllerTest {
     @Test
     void writeReplyComment_whenSubComment_thenSuccess() throws Exception {
         // given
-        Comment comment = new Comment("1", article.getId(), new SimpleUser(user), "comment",
+        Comment comment = new Comment("1", 1L, article.getId(), new SimpleUser(user), "comment",
                 Collections.emptyList(), now(), now());
         String subCommentText = "sub comment";
         given(commentRepository.findById("1"))
                 .willReturn(Optional.of(comment));
         given(commentService.writeReplyComment(comment, user, subCommentText))
-                .willReturn(new Comment(article.getId(), user, subCommentText));
+                .willReturn(new Comment(1L, article.getId(), user, subCommentText));
         // then
         mvc.perform(post("/api/comments/1/comments")
                     .with(user(user))

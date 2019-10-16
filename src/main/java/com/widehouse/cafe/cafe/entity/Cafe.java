@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,10 +26,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 /**
  * Created by kiel on 2017. 2. 10..
  */
+@Getter
+@AllArgsConstructor
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "url")})
 @EntityListeners(AuditingEntityListener.class)
-@Getter
 public class Cafe {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

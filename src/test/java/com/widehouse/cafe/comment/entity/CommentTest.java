@@ -45,24 +45,16 @@ class CommentTest {
 
     @Test
     void modifyComment_thenUpdateComment() {
-        comment.modify(user, "another comment");
+        comment.modify("another comment");
         // Then
         assertThat(comment)
                 .isNotNull()
+                .hasFieldOrPropertyWithValue("cafeId", article.getCafe().getId())
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
                 .hasFieldOrPropertyWithValue("member.id", user.getId())
                 .hasFieldOrPropertyWithValue("comment", "another comment");
         assertThat(comment.getUpdateDateTime())
                 .isNotNull()
                 .isAfterOrEqualTo(comment.getCreateDateTime());
-    }
-
-    @Test
-    void modifyComment_withNotCommentOwner_thenRaiseNoAuthorityException() {
-        // Given
-        User anotherCommenter = new User(2L, "another", "password");
-        // Then
-        Assertions.assertThatThrownBy(() -> comment.modify(anotherCommenter, "new comment"))
-                .isInstanceOf(NoAuthorityException.class);
     }
 }

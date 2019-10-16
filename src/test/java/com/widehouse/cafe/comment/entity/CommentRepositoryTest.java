@@ -88,7 +88,7 @@ class CommentRepositoryTest {
     @Test
      void saveCommentTest() {
         // given
-        Comment comment = new Comment(1L, user, "comment");
+        Comment comment = new Comment(1L, 1L, user, "comment");
         // when
         commentRepository.save(comment);
         // then
@@ -100,11 +100,11 @@ class CommentRepositoryTest {
     @Test
      void saveReplyCommentsTest() {
         // given
-        Comment comment = new Comment(1L, user, "comment");
+        Comment comment = new Comment(1L, 1L, user, "comment");
         comment.getComments().addAll(
                 Arrays.asList(
-                    new Comment(1L, user, "subcomment1"),
-                    new Comment(1L, user, "subcomment2")));
+                    new Comment(1L, 1L, user, "subcomment1"),
+                    new Comment(1L, 1L, user, "subcomment2")));
         // when
         template.save(comment);
         // then
