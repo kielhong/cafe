@@ -6,9 +6,7 @@ import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.user.entity.User;
-import com.widehouse.cafe.common.exception.NoAuthorityException;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +36,7 @@ class CommentTest {
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
                 .hasFieldOrPropertyWithValue("member.id", user.getId())
-                .hasFieldOrPropertyWithValue("comment", "test comment");
+                .hasFieldOrPropertyWithValue("text", "test comment");
         assertThat(comment.getCreateDateTime())
                 .isNotNull();
     }
@@ -52,7 +50,7 @@ class CommentTest {
                 .hasFieldOrPropertyWithValue("cafeId", article.getCafe().getId())
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
                 .hasFieldOrPropertyWithValue("member.id", user.getId())
-                .hasFieldOrPropertyWithValue("comment", "another comment");
+                .hasFieldOrPropertyWithValue("text", "another comment");
         assertThat(comment.getUpdateDateTime())
                 .isNotNull()
                 .isAfterOrEqualTo(comment.getCreateDateTime());

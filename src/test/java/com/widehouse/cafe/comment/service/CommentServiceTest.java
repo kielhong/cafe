@@ -45,7 +45,6 @@ class CommentServiceTest {
     @Mock
     private CafeMemberRepository cafeMemberRepository;
 
-    private User manager;
     private User commenter;
     private Cafe cafe;
     private Article article;
@@ -54,8 +53,6 @@ class CommentServiceTest {
     @BeforeEach
     void setUp() {
         commentService = new CommentService(commentRepository, cafeRepository, cafeMemberRepository);
-
-        manager = new User(1L, "manager", "password");
         commenter = new User(2L, "commenter", "password");
         User writer = new User(3L, "writer", "password");
 
@@ -78,7 +75,7 @@ class CommentServiceTest {
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
                 .hasFieldOrPropertyWithValue("member.id", commenter.getId())
-                .hasFieldOrPropertyWithValue("comment", "new comment");
+                .hasFieldOrPropertyWithValue("text", "new comment");
         verify(commentRepository).save(any(Comment.class));
     }
 
@@ -100,16 +97,16 @@ class CommentServiceTest {
         given(cafeRepository.findById(anyLong()))
                 .willReturn(Optional.of(cafe));
         Comment writeResult = new Comment(1L, 1L, commenter, "comment");
-        writeResult.getComments().add(new Comment(1L, 1L, commenter, "reply comment"));
+        writeResult.getReplies().add(new Comment(1L, 1L, commenter, "reply comment"));
         given(commentRepository.save(comment))
                 .willReturn(writeResult);
         // when
         Comment result = commentService.writeReplyComment(comment, commenter, "reply comment");
         // then
-        then(comment.getComments())
+        then(comment.getReplies())
                 .hasSize(1);
         then(result)
-                .hasFieldOrPropertyWithValue("comment", "reply comment");
+                .hasFieldOrPropertyWithValue("text", "reply comment");
         verify(commentRepository).save(any(Comment.class));
     }
 
@@ -124,7 +121,7 @@ class CommentServiceTest {
         thenThrownBy(() -> commentService.writeReplyComment(comment, another, "reply comment"))
                 .isInstanceOf(NoAuthorityException.class);
         // then
-        then(comment.getComments())
+        then(comment.getReplies())
                 .hasSize(0);
         verify(commentRepository, never()).save(any(Comment.class));
     }
@@ -137,7 +134,7 @@ class CommentServiceTest {
         then(comment)
                 .hasFieldOrPropertyWithValue("articleId", article.getId())
                 .hasFieldOrPropertyWithValue("member.id", commenter.getId())
-                .hasFieldOrPropertyWithValue("comment", "updated comment");
+                .hasFieldOrPropertyWithValue("text", "updated comment");
         then(comment.getUpdateDateTime())
                 .isAfterOrEqualTo(comment.getCreateDateTime());
         verify(commentRepository).save(comment);
@@ -165,6 +162,7 @@ class CommentServiceTest {
     @Test
     void deleteComment_withCafeManager_thenDeleteComment_DecreaseCounts() {
         // given
+        User manager = new User(1L, "manager", "password");
         given(cafeRepository.findById(anyLong()))
                 .willReturn(Optional.of(cafe));
         given(cafeMemberRepository.findByCafeAndMember(any(Cafe.class), any(User.class)))

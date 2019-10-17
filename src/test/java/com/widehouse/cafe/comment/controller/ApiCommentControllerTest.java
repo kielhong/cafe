@@ -18,6 +18,7 @@ import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
+import com.widehouse.cafe.comment.service.CommentListService;
 import com.widehouse.cafe.comment.service.CommentService;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.user.entity.User;
@@ -46,6 +47,8 @@ class ApiCommentControllerTest {
 
     @MockBean
     private CommentService commentService;
+    @MockBean
+    private CommentListService commentListService;
     @MockBean
     private CommentRepository commentRepository;
     @MockBean
@@ -76,7 +79,7 @@ class ApiCommentControllerTest {
         Comment comment3 = new Comment(article, user, "comment3");
         Comment comment4 = new Comment(article, user, "comment4");
         Comment comment5 = new Comment(article, user, "comment5");
-        given(commentService.getComments(user, 1L, 0, 5))
+        given(commentListService.listComments(user, 1L, 0, 5))
                 .willReturn(Arrays.asList(comment1, comment2, comment3, comment4, comment5));
         // then
         mvc.perform(get("/api/articles/1/comments?page=0&size=5")
@@ -96,7 +99,7 @@ class ApiCommentControllerTest {
                     .contentType(APPLICATION_JSON)
                     .content("{\"comment\":\"new comment\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.comment").value("new comment"))
+                .andExpect(jsonPath("$.text").value("new comment"))
                 .andExpect(jsonPath("$.member.id").value(user.getId()));
     }
 
@@ -104,12 +107,12 @@ class ApiCommentControllerTest {
     void write_withNonCafeMember_then403Forbidden() throws Exception {
         // given
         Comment comment = new Comment(article, user, "new comment");
-        given(commentService.writeComment(article, user, comment.getComment()))
+        given(commentService.writeComment(article, user, comment.getText()))
                 .willThrow(new NoAuthorityException());
         // then
         mvc.perform(post("/api/articles/1/comments")
                     .contentType(APPLICATION_JSON)
-                    .content("{\"comment\":\"new comment\"}"))
+                    .content("{\"text\":\"new comment\"}"))
                 .andExpect(status().isForbidden());
     }
 
@@ -130,7 +133,7 @@ class ApiCommentControllerTest {
                     .contentType(APPLICATION_JSON)
                     .content("{\"comment\":\"" + subCommentText + "\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.comment").value(subCommentText))
+                .andExpect(jsonPath("$.text").value(subCommentText))
                 .andExpect(jsonPath("$.articleId").value(article.getId()))
                 .andExpect(jsonPath("$.member.id").value(user.getId()));
     }

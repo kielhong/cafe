@@ -1,9 +1,8 @@
 package com.widehouse.cafe.comment.entity;
 
 import com.widehouse.cafe.article.entity.Article;
-import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.user.entity.User;
 import com.widehouse.cafe.user.entity.SimpleUser;
+import com.widehouse.cafe.user.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,28 +31,31 @@ public class Comment {
 
     private SimpleUser member;
 
-    private String comment;
+    private String text;
 
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> replies = new ArrayList<>();
 
     private LocalDateTime createDateTime;
 
     private LocalDateTime updateDateTime;
 
-    public Comment(Long cafeId, Long articleId, User member, String comment) {
+    /**
+     * constructor.
+     */
+    public Comment(Long cafeId, Long articleId, User member, String text) {
         this.cafeId = cafeId;
         this.articleId = articleId;
         this.member = new SimpleUser(member);
-        this.comment = comment;
+        this.text = text;
         this.createDateTime = this.updateDateTime = LocalDateTime.now();
     }
 
-    public Comment(Article article, User user, String comment) {
-        this(article.getCafe().getId(), article.getId(), user, comment);
+    public Comment(Article article, User user, String text) {
+        this(article.getCafe().getId(), article.getId(), user, text);
     }
 
-    public void modify(String comment) {
-        this.comment = comment;
+    public void modify(String text) {
+        this.text = text;
         this.updateDateTime = LocalDateTime.now();
     }
 }

@@ -101,7 +101,7 @@ class CommentRepositoryTest {
      void saveReplyCommentsTest() {
         // given
         Comment comment = new Comment(1L, 1L, user, "comment");
-        comment.getComments().addAll(
+        comment.getReplies().addAll(
                 Arrays.asList(
                     new Comment(1L, 1L, user, "subcomment1"),
                     new Comment(1L, 1L, user, "subcomment2")));
@@ -109,7 +109,7 @@ class CommentRepositoryTest {
         template.save(comment);
         // then
         Comment result = template.findOne(new Query().addCriteria(Criteria.where("articleId").is(1L)), Comment.class);
-        then(result.getComments())
+        then(result.getReplies())
                 .hasSize(2);
     }
 
@@ -135,7 +135,7 @@ class CommentRepositoryTest {
                 PageRequest.of(0, 5, new Sort(ASC, "id")));
         // then
         then(comments)
-                .extracting("comment")
+                .extracting("text")
                 .containsExactly("comment1", "comment2", "comment3", "comment4");
     }
 }

@@ -4,6 +4,7 @@ import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.ArticleRepository;
 import com.widehouse.cafe.comment.entity.Comment;
 import com.widehouse.cafe.comment.entity.CommentRepository;
+import com.widehouse.cafe.comment.service.CommentListService;
 import com.widehouse.cafe.comment.service.CommentService;
 import com.widehouse.cafe.common.annotation.CurrentMember;
 import com.widehouse.cafe.user.entity.User;
@@ -33,6 +34,8 @@ public class ApiCommentController {
     @Autowired
     private CommentService commentService;
     @Autowired
+    private CommentListService commentListService;
+    @Autowired
     private CommentRepository commentRepository;
     @Autowired
     private ArticleRepository articleRepository;
@@ -50,7 +53,7 @@ public class ApiCommentController {
                                      @RequestParam(defaultValue = "0") Integer page,
                                      @RequestParam(defaultValue = "10") Integer size,
                                      @CurrentMember User member) {
-        List<Comment> comments = commentService.getComments(member, articleId, page, size);
+        List<Comment> comments = commentListService.listComments(member, articleId, page, size);
 
         return comments;
     }

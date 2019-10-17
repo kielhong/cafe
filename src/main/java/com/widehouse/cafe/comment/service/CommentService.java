@@ -1,8 +1,5 @@
 package com.widehouse.cafe.comment.service;
 
-import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
-import static org.springframework.data.domain.Sort.Direction.ASC;
-
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeMember;
@@ -14,14 +11,10 @@ import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.user.entity.User;
 
-import java.util.Collections;
-import java.util.List;
 import javax.transaction.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,41 +28,63 @@ public class CommentService {
     private final CafeRepository cafeRepository;
     private final CafeMemberRepository cafeMemberRepository;
 
+    /**
+     * write a comment.
+     * cafe member 일 경우에만 작성 가능
+     * @return 생성된 comment
+     */
     @Transactional
-    public Comment writeComment(Article article, User user, String commentContent) {
+    public Comment writeComment(Article article, User user, String text) {
         if (!isCafeMember(article.getCafe(), user)) {
             throw new NoAuthorityException();
         }
 
-        Comment comment = new Comment(article, user, commentContent);
+        Comment comment = new Comment(article, user, text);
         commentRepository.save(comment);
 
         return comment;
     }
 
+    /**
+     * reply to a comment.
+     * @param comment reply 를 하려는 comment
+     * @param user reply 작성 user
+     * @param text reply comment text
+     * @return 신규로 작성된 reply
+     */
     @Transactional
-    public Comment writeReplyComment(Comment comment, User user, String commentText) {
+    public Comment writeReplyComment(Comment comment, User user, String text) {
         Cafe cafe = cafeRepository.findById(comment.getCafeId())
                 .orElse(new Cafe());
         if (!isCafeMember(cafe, user)) {
             throw new NoAuthorityException();
         }
 
-        comment.getComments().add(new Comment(comment.getCafeId(), comment.getArticleId(), user, commentText));
+        comment.getReplies().add(new Comment(comment.getCafeId(), comment.getArticleId(), user, text));
         Comment writeResult = commentRepository.save(comment);
 
-        return writeResult.getComments().get(writeResult.getComments().size() - 1);
+        return writeResult.getReplies().get(writeResult.getReplies().size() - 1);
     }
 
+    /**
+     * modify a comment.
+     * comment 작성자일 경우에만 삭제 가능
+     */
     @Transactional
-    public void modifyComment(Comment comment, User user, String newComment) {
+    public void modifyComment(Comment comment, User user, String text) {
         if (!isCommenter(comment, user)) {
             throw new NoAuthorityException();
         }
-        comment.modify(newComment);
+        comment.modify(text);
         commentRepository.save(comment);
     }
 
+    /**
+     * delete a comment.
+     * comment 작성자이거나 cafe manager 이면 삭제 가능
+     * @param comment 삭제하려는 Comment
+     * @param user 삭제하려는 user
+     */
     @Transactional
     public void deleteComment(Comment comment, User user) {
         Cafe cafe = cafeRepository.findById(comment.getCafeId())
@@ -80,20 +95,12 @@ public class CommentService {
         }
 
         commentRepository.delete(comment);
-    // TODO - move to cafeService, articleService
-//            cafe.getData().decreaseCommentCount();
-//            cafeRepository.save(cafe);
-//
-//            article.decreaseCommentCount();
-//            articleRepository.save(article);
-    }
-
-    public List<Comment> getComments(User user, Long articleId, int page, int size) {
-        return commentRepository.findByArticleId(articleId, PageRequest.of(page, size, new Sort(ASC, "id")));
-    }
-
-    private boolean isCommentReadable(Cafe cafe, User user) {
-        return cafe.getVisibility() == PUBLIC || isCafeMember(cafe, user);
+        // TODO - move to cafeService, articleService
+        //            cafe.getData().decreaseCommentCount();
+        //            cafeRepository.save(cafe);
+        //
+        //            article.decreaseCommentCount();
+        //            articleRepository.save(article);
     }
 
     private boolean isCafeMember(Cafe cafe, User user) {
