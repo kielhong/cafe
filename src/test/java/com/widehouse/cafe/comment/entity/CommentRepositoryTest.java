@@ -2,86 +2,41 @@ package com.widehouse.cafe.comment.entity;
 
 import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.BDDAssertions.then;
-import static org.springframework.data.domain.Sort.Direction.ASC;
 
-import com.mongodb.MongoClient;
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
-import com.widehouse.cafe.config.MongoConfiguration;
 import com.widehouse.cafe.user.entity.User;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import de.flapdoodle.embed.mongo.MongodExecutable;
-import de.flapdoodle.embed.mongo.MongodProcess;
-import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
-import de.flapdoodle.embed.mongo.config.Net;
-import de.flapdoodle.embed.mongo.distribution.Version;
-import de.flapdoodle.embed.process.runtime.Network;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * Created by kiel on 2017. 2. 20..
  */
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {MongoConfiguration.class})
-@Slf4j
+@DataMongoTest
 class CommentRepositoryTest {
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
     @Autowired
     private CommentRepository commentRepository;
 
-    private MongoTemplate template;
-
-    private static final MongodStarter starter = MongodStarter.getDefaultInstance();
-
-    private static MongodExecutable _mongodExe;
-    private static MongodProcess _mongod;
-
-    private static MongoClient mongo;
-    private static final String HOST = "localhost";
-    private static final int PORT = 12345;
-
     private User user;
-
-    @BeforeAll
-    static void initAll() throws Exception {
-        _mongodExe = starter.prepare(new MongodConfigBuilder()
-                .version(Version.Main.PRODUCTION)
-                .net(new Net(HOST, PORT, Network.localhostIsIPv6()))
-                .build());
-        _mongod = _mongodExe.start();
-        mongo = new MongoClient("localhost", 12345);
-    }
-
-    @AfterAll
-    static void tearDownAll() {
-        mongo.close();
-        _mongod.stop();
-        _mongodExe.stop();
-    }
 
     @BeforeEach
      void init() {
-        template = new MongoTemplate(mongo, "test");
-        template.dropCollection(Comment.class);
-
         user = new User(1L, "member", "password");
     }
 
@@ -92,7 +47,7 @@ class CommentRepositoryTest {
         // when
         commentRepository.save(comment);
         // then
-        int collectionSize = template.findAll(Comment.class).size();
+        int collectionSize = mongoTemplate.findAll(Comment.class).size();
         then(collectionSize)
                 .isEqualTo(1);
     }
@@ -100,15 +55,16 @@ class CommentRepositoryTest {
     @Test
      void saveReplyCommentsTest() {
         // given
-        Comment comment = new Comment(1L, 1L, user, "comment");
+        Long articleId = 2L;
+        Comment comment = new Comment(1L, articleId, user, "comment");
         comment.getReplies().addAll(
                 Arrays.asList(
-                    new Comment(1L, 1L, user, "subcomment1"),
-                    new Comment(1L, 1L, user, "subcomment2")));
+                    new Comment(1L, articleId, user, "subcomment1"),
+                    new Comment(1L, articleId, user, "subcomment2")));
         // when
-        template.save(comment);
+        mongoTemplate.save(comment);
         // then
-        Comment result = template.findOne(new Query().addCriteria(Criteria.where("articleId").is(1L)), Comment.class);
+        Comment result = mongoTemplate.findOne(new Query().addCriteria(Criteria.where("articleId").is(articleId)), Comment.class);
         then(result.getReplies())
                 .hasSize(2);
     }
@@ -117,22 +73,21 @@ class CommentRepositoryTest {
     @Test
      void findByArticle_Should_ListComments() {
         // given
-        Cafe cafe = new Cafe("testcafe", "testcafe");
-        Board board = Board.builder().cafe(cafe).name("board").build();
+        Board board = Board.builder().cafe(new Cafe("testcafe", "testcafe")).name("board").build();
         User commenter = new User(2L, "commenter", "password");
-        Article article = new Article(1L, board, user, "title", "content", Collections.emptyList(), 0, now(), now());
+        Article article = new Article(10L, board, user, "title", "content", Collections.emptyList(), 0, now(), now());
 
         Comment comment1 = new Comment(article, commenter, "comment1");
-        template.insert(comment1);
+        mongoTemplate.insert(comment1);
         Comment comment2 = new Comment(article, commenter, "comment2");
-        template.insert(comment2);
+        mongoTemplate.insert(comment2);
         Comment comment3 = new Comment(article, commenter, "comment3");
-        template.insert(comment3);
+        mongoTemplate.insert(comment3);
         Comment comment4 = new Comment(article, commenter, "comment4");
-        template.insert(comment4);
+        mongoTemplate.insert(comment4);
         // when
         List<Comment> comments = commentRepository.findByArticleId(article.getId(),
-                PageRequest.of(0, 5, new Sort(ASC, "id")));
+                PageRequest.of(0, 5, Sort.by("id")));
         // then
         then(comments)
                 .extracting("text")

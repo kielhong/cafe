@@ -36,7 +36,7 @@ public class CommentListService {
                 .map(Article::getCafe)
                 .orElse(new Cafe());
         if (isCommentReadable(cafe, user)) {
-            return commentRepository.findByArticleId(articleId, PageRequest.of(page, size, new Sort(ASC, "id")));
+            return commentRepository.findByArticleId(articleId, PageRequest.of(page, size, Sort.by("id")));
         }
 
         return Collections.emptyList();

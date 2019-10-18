@@ -4,6 +4,7 @@ import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.entity.CafeRepository;
@@ -65,11 +66,11 @@ class CategoryServiceTest {
         Cafe cafe4 = new Cafe();
         Category category = new Category(1, "category", 1, now());
         given(cafeRepository.findByCategoryId(category.getId(),
-                PageRequest.of(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
+                PageRequest.of(0, 4, Sort.by(DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(cafe4, cafe3, cafe2, cafe1));
         // then
         List<Cafe> cafes = service.getCafeByCategory(category.getId(),
-                PageRequest.of(0, 4, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount")));
+                PageRequest.of(0, 4, Sort.by(DESC, "statistics.cafeMemberCount")));
 
         then(cafes)
                 .contains(cafe4, cafe3, cafe2, cafe1);

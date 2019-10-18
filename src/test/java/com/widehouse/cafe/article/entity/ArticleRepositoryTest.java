@@ -56,7 +56,7 @@ class ArticleRepositoryTest {
 
     @Test
     void findByCafe_Should_Return_ListArticle() {
-        List<Article> articles = articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 2, new Sort(DESC, "id")));
+        List<Article> articles = articleRepository.findByBoardCafe(cafe, PageRequest.of(0, 2, Sort.by(DESC, "id")));
 
         then(articles)
                 .containsExactly(article3, article2);
@@ -64,7 +64,7 @@ class ArticleRepositoryTest {
 
     @Test
     void findByBoard_Should_Return_ListArticle() {
-        List<Article> articles = articleRepository.findByBoard(board1, PageRequest.of(0, 3, new Sort(DESC, "id")));
+        List<Article> articles = articleRepository.findByBoard(board1, PageRequest.of(0, 3, Sort.by(DESC, "id")));
 
         then(articles)
                 .containsExactly(article2, article1);

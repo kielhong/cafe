@@ -1,6 +1,7 @@
 package com.widehouse.cafe.config;
 
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClients;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -12,6 +13,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class MongoConfiguration {
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
-        return new MongoTemplate(new MongoClient("localhost", 12345), "test");
+        return new MongoTemplate(MongoClients.create("mongodb://localhost"), "test");
     }
 }

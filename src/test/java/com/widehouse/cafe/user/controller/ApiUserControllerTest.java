@@ -39,14 +39,14 @@ class ApiUserControllerTest {
     @Test
     void getCafesByMember() throws Exception {
         User user = new User(1L, "tester", "password");
-        given(userService.getCafesByUser(user, PageRequest.of(0, 10, new Sort(DESC, "cafe.createDateTime"))))
+        given(userService.getCafesByUser(user, PageRequest.of(0, 10, Sort.by(DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),
                         new Cafe("url3", "name3"), new Cafe("url4", "name4")));
         // then
         this.mockMvc.perform(get("/api/members/my/cafes")
                             .with(user(user)))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(4))
                 .andExpect(jsonPath("$.[0].url").value("url1"))
                 .andExpect(jsonPath("$.[1].url").value("url2"))
@@ -58,14 +58,14 @@ class ApiUserControllerTest {
     void getCafesByMemberWithPaging() throws Exception {
         User user = new User(1L, "tester", "password");
         given(this.userService.getCafesByUser(user,
-                PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "cafe.createDateTime"))))
+                PageRequest.of(0, 3, Sort.by(DESC, "cafe.createDateTime"))))
                 .willReturn(Arrays.asList(new Cafe("url1", "name1"), new Cafe("url2", "name2"),
                         new Cafe("url3", "name3")));
         // then
         this.mockMvc.perform(get("/api/members/my/cafes?page=0&size=3&sort=cafe.createDateTime,desc")
                             .with(user(user)))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(3))
                 .andExpect(jsonPath("$.[0].url").value("url1"))
                 .andExpect(jsonPath("$.[1].url").value("url2"))

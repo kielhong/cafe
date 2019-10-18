@@ -130,7 +130,7 @@ class CafeServiceTest {
         board1.update("update board1", 1);
         service.updateBoard(cafe, board1);
         // then
-        then(boardRepository.findAllByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder")))
+        then(boardRepository.findAllByCafe(cafe, Sort.by("listOrder")))
                 .filteredOn("name", "update board1")
                 .containsOnly(board1);
         verify(boardRepository).saveAll(anyList());
@@ -171,7 +171,7 @@ class CafeServiceTest {
         Board board1 = new Board(1L, cafe, "board1", LIST, 1);
         Board board2 = new Board(2L, cafe, "board2", LIST, 2);
         Board board3 = new Board(3L, cafe, "new board", LIST, 3);
-        given(boardRepository.findAllByCafe(cafe, new Sort(ASC, "listOrder")))
+        given(boardRepository.findAllByCafe(cafe, Sort.by("listOrder")))
                 .willReturn(Arrays.asList(board1, board2, board3));
         // when
         List<Board> boards = service.listBoard(cafe);

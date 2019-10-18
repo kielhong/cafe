@@ -1,7 +1,9 @@
 package com.widehouse.cafe.cafe.entity;
 
+import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import java.util.List;
 
@@ -34,9 +36,9 @@ class CafeRepositoryTest {
         category1 = new Category("category1", 1);
         entityManager.persist(category1);
 
-        cafe1 = new Cafe("test1", "test1", "", CafeVisibility.PUBLIC, category1);
-        cafe2 = new Cafe("test2", "test2", "", CafeVisibility.PUBLIC, category1);
-        cafe3 = new Cafe("test3", "test3", "", CafeVisibility.PUBLIC, category1);
+        cafe1 = new Cafe("test1", "test1", "", PUBLIC, category1);
+        cafe2 = new Cafe("test2", "test2", "", PUBLIC, category1);
+        cafe3 = new Cafe("test3", "test3", "", PUBLIC, category1);
         entityManager.persist(cafe1);
         entityManager.persist(cafe2);
         entityManager.persist(cafe3);
@@ -65,7 +67,7 @@ class CafeRepositoryTest {
         cafe3.getData().setMemberCount(2L);
 
         List<Cafe> result = cafeRepository.findByCategory(category1,
-                PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "data.memberCount")));
+                PageRequest.of(0, 3, Sort.by(DESC, "data.memberCount")));
 
         assertThat(result)
                 .extracting("cafeMemberCount")
@@ -79,7 +81,7 @@ class CafeRepositoryTest {
         cafe3.getData().setMemberCount(2L);
 
         List<Cafe> cafes = cafeRepository.findByCategoryId(category1.getId(),
-                PageRequest.of(0, 3, new Sort(Sort.Direction.DESC, "data.memberCount")));
+                PageRequest.of(0, 3, Sort.by(DESC, "data.memberCount")));
 
         assertThat(cafes)
                 .extracting("cafeMemberCount")

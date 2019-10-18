@@ -37,12 +37,12 @@ public class ArticleService {
 
     public List<Article> getArticles(Cafe cafe, int page, int size) {
         return articleRepository.findByBoardCafe(cafe,
-                PageRequest.of(page, size, new Sort(DESC, "id")));
+                PageRequest.of(page, size, Sort.by(DESC, "id")));
     }
 
     public List<Article> getArticles(Board board, int page, int size) {
         return articleRepository.findByBoard(board,
-                PageRequest.of(page, size, new Sort(DESC, "id")));
+                PageRequest.of(page, size, Sort.by(DESC, "id")));
     }
 
     /**

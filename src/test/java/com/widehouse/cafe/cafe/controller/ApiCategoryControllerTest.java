@@ -54,12 +54,12 @@ class ApiCategoryControllerTest {
     void getCafesByCategory() throws Exception {
         // given
         given(this.categoryService.getCafeByCategory(1,
-                PageRequest.of(0, 10, new Sort(Sort.Direction.DESC, "statistics.cafeMemberCount"))))
+                PageRequest.of(0, 10, Sort.by(DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(new Cafe("cafe1", "cafe1"), new Cafe("cafe2", "cafe2")));
         // then
         this.mvc.perform(get("/api/categories/1/cafes"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(2));
     }
 
@@ -67,13 +67,13 @@ class ApiCategoryControllerTest {
     void getCafesByCategoryWithPaging() throws Exception {
         // given
         given(this.categoryService.getCafeByCategory(1,
-                PageRequest.of(0, 4, new Sort(DESC, "statistics.cafeMemberCount"))))
+                PageRequest.of(0, 4, Sort.by(DESC, "statistics.cafeMemberCount"))))
                 .willReturn(Arrays.asList(new Cafe("cafe1", "cafe1"), new Cafe("cafe2", "cafe2"),
                         new Cafe("cafe3", "cafe3"), new Cafe("cafe4", "cafe4")));
         // then
         this.mvc.perform(get("/api/categories/1/cafes?page=0&size=4"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(4));
     }
 }

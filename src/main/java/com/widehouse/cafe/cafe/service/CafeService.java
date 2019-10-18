@@ -88,7 +88,7 @@ public class CafeService {
      * @param boardName added board name
      */
     public void addBoard(Cafe cafe, String boardName) {
-        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(DESC, BOARD_LIST_ORDER));
+        List<Board> boards = boardRepository.findAllByCafe(cafe, Sort.by(DESC, BOARD_LIST_ORDER));
         int lastOrder = boards.stream()
                 .sorted(Comparator.comparing(Board::getListOrder))
                 .mapToInt(Board::getListOrder)
@@ -115,7 +115,7 @@ public class CafeService {
     }
 
     public void updateBoard(Cafe cafe, Board board) {
-        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(ASC, BOARD_LIST_ORDER));
+        List<Board> boards = boardRepository.findAllByCafe(cafe, Sort.by(BOARD_LIST_ORDER));
         Optional<Board> boardOptional = boards.stream()
                 .filter(o -> o.getId() == board.getId())
                 .findFirst();
@@ -129,7 +129,7 @@ public class CafeService {
     }
 
     public List<Board> listBoard(Cafe cafe) {
-        return boardRepository.findAllByCafe(cafe, new Sort(ASC, BOARD_LIST_ORDER));
+        return boardRepository.findAllByCafe(cafe, Sort.by(BOARD_LIST_ORDER));
     }
 
     /**

@@ -36,7 +36,7 @@ class BoardRepositoryTest {
         Board board4 = Board.builder().cafe(cafe).name("board4").listOrder(1).build();
         entityManager.persist(board4);
 
-        List<Board> boards = boardRepository.findAllByCafe(cafe, new Sort(Sort.Direction.ASC, "listOrder"));
+        List<Board> boards = boardRepository.findAllByCafe(cafe, Sort.by("listOrder"));
 
         then(boards)
                 .containsExactly(board4, board3, board2, board1);

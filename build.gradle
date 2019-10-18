@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.1.9.RELEASE'
+    id 'org.springframework.boot' version '2.2.0.RELEASE'
     id "org.flywaydb.flyway" version "5.0.7"
     id "io.freefair.lombok" version "4.1.2"
     id 'jacoco'
@@ -48,9 +48,7 @@ dependencies {
     runtime("org.webjars:bootstrap:3.3.7")
 
     // test
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'junit', module: 'junit'
-    }
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.security:spring-security-test')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'

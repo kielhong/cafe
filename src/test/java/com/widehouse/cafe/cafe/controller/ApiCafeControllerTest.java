@@ -51,7 +51,7 @@ class ApiCafeControllerTest {
         // then
         this.mvc.perform(get("/api/cafes/cafeurl"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.url").value("cafeurl"))
                 .andExpect(jsonPath("$.name").value("cafename"))
                 .andExpect(jsonPath("$.visibility").value(PUBLIC.toString()))
