@@ -16,6 +16,8 @@ import com.widehouse.cafe.user.entity.User;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
@@ -33,7 +35,6 @@ public class ArticleService {
     private final CafeMemberRepository cafeMemberRepository;
     private final TagRepository tagRepository;
     private final ApplicationEventPublisher eventPublisher;
-
 
     public List<Article> getArticles(Cafe cafe, int page, int size) {
         return articleRepository.findByBoardCafe(cafe,
@@ -94,5 +95,32 @@ public class ArticleService {
         } else {
             return cafeMemberRepository.existsByCafeMember(cafe, reader);
         }
+    }
+
+    /**
+     * increase comment count of article.
+     * @param id Article id
+     */
+    public void addComment(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Article " + id + " does not exist"));
+
+        article.increaseCommentCount();
+
+        articleRepository.save(article);
+    }
+
+    /**
+     * decrease comment count of article.
+     * @param id Article id
+     */
+
+    public void removeComment(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Article " + id + " does not exist"));
+
+        article.decreaseCommentCount();
+
+        articleRepository.save(article);
     }
 }

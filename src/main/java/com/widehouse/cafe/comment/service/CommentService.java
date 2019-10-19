@@ -98,9 +98,6 @@ public class CommentService {
         // TODO - move to cafeService, articleService
         //            cafe.getData().decreaseCommentCount();
         //            cafeRepository.save(cafe);
-        //
-        //            article.decreaseCommentCount();
-        //            articleRepository.save(article);
     }
 
     private boolean isCafeMember(Cafe cafe, User user) {

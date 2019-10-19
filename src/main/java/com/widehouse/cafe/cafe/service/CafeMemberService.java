@@ -47,6 +47,9 @@ public class CafeMemberService {
         return cafeMemberRepository.existsByCafeMember(cafe, member);
     }
 
+    /**
+     * user withdraw from cafe.
+     */
     public void withdraw(Cafe cafe, User user) {
         CafeMember cafeMember = cafeMemberRepository.findByCafeAndMember(cafe, user);
         if (cafeMember.getRole().equals(MANAGER)) {

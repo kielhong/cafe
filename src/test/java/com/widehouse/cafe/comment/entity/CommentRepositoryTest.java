@@ -64,7 +64,8 @@ class CommentRepositoryTest {
         // when
         mongoTemplate.save(comment);
         // then
-        Comment result = mongoTemplate.findOne(new Query().addCriteria(Criteria.where("articleId").is(articleId)), Comment.class);
+        Comment result = mongoTemplate.findOne(
+                new Query().addCriteria(Criteria.where("articleId").is(articleId)), Comment.class);
         then(result.getReplies())
                 .hasSize(2);
     }

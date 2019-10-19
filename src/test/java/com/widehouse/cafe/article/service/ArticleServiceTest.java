@@ -1,6 +1,8 @@
 package com.widehouse.cafe.article.service;
 
 import static com.widehouse.cafe.cafe.entity.CafeVisibility.PRIVATE;
+import static java.time.LocalDateTime.now;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,9 +22,14 @@ import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.user.entity.User;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -160,5 +167,57 @@ class ArticleServiceTest {
                 .contains(tag);
         verify(articleRepository).save(article1);
         verify(tagRepository).save(tag);
+    }
+
+    @Test
+    void addComment_ThenIncreaseArticleCommentCountBy1() {
+        // given
+        Article article = new Article(100L, board1, writer, "test article1", "test1", emptyList(), 10, now(), now());
+        int beforeCount = article.getCommentCount();
+        given(articleRepository.findById(anyLong()))
+                .willReturn(Optional.of(article));
+        // when
+        service.addComment(article.getId());
+        // then
+        then(article.getCommentCount())
+                .isEqualTo(beforeCount + 1);
+        verify(articleRepository).save(article);
+    }
+
+    @Test
+    void addComment_GivenNotExistArticle_ThrowEntityNotExistException() {
+        // given
+        given(articleRepository.findById(anyLong()))
+                .willReturn(Optional.empty());
+        // then
+        thenThrownBy(() -> service.addComment(10L))
+                .isInstanceOf(EntityNotFoundException.class);
+        verify(articleRepository, never()).save(any(Article.class));
+    }
+
+    @Test
+    void removeComment_ThenDecreaseArticleCommentCountBy1() {
+        // given
+        Article article = new Article(100L, board1, writer, "test article1", "test1", emptyList(), 10, now(), now());
+        int beforeCount = article.getCommentCount();
+        given(articleRepository.findById(anyLong()))
+                .willReturn(Optional.of(article));
+        // when
+        service.removeComment(article.getId());
+        // then
+        then(article.getCommentCount())
+                .isEqualTo(beforeCount - 1);
+        verify(articleRepository).save(article);
+    }
+
+    @Test
+    void removeComment_GivenNotExistArticle_ThrowEntityNotExistException() {
+        // given
+        given(articleRepository.findById(anyLong()))
+                .willReturn(Optional.empty());
+        // then
+        thenThrownBy(() -> service.removeComment(10L))
+                .isInstanceOf(EntityNotFoundException.class);
+        verify(articleRepository, never()).save(any(Article.class));
     }
 }

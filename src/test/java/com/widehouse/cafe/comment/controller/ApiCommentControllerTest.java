@@ -21,8 +21,8 @@ import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.comment.service.CommentListService;
 import com.widehouse.cafe.comment.service.CommentService;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
-import com.widehouse.cafe.user.entity.User;
 import com.widehouse.cafe.user.entity.SimpleUser;
+import com.widehouse.cafe.user.entity.User;
 import com.widehouse.cafe.user.service.UserDetailsServiceImpl;
 
 import java.util.ArrayList;

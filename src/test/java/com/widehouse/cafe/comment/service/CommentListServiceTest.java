@@ -85,7 +85,6 @@ class CommentListServiceTest {
     @Test
     void listComments_PrivateCafeAndCafeMember_Should_ReturnCommentList() {
         // given
-        User nonCafeMember = new User(3L, "noncafemember", "password");
         cafe.updateInfo(cafe.getName(), "", CafeVisibility.PRIVATE, cafe.getCategory());
         given(articleRepository.findById(anyLong()))
                 .willReturn(Optional.of(article));
@@ -94,6 +93,7 @@ class CommentListServiceTest {
         given(commentRepository.findByArticleId(anyLong(), any(PageRequest.class)))
                 .willReturn(Arrays.asList(comment1, comment2, comment3, comment4, comment5));
         // when
+        User nonCafeMember = new User(3L, "noncafemember", "password");
         List<Comment> comments = service.listComments(nonCafeMember, article.getId(), 0, 5);
         // then
         then(comments)
@@ -103,7 +103,6 @@ class CommentListServiceTest {
     @Test
     void listComments_PrivateCafe_NotMember_Should_EmptyList() {
         // given
-        User nonCafeMember = new User(3L, "noncafemember", "password");
         cafe.updateInfo(cafe.getName(), "", CafeVisibility.PRIVATE, cafe.getCategory());
 
         given(articleRepository.findById(anyLong()))
@@ -111,6 +110,7 @@ class CommentListServiceTest {
         given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(User.class)))
                 .willReturn(false);
         // when
+        User nonCafeMember = new User(3L, "noncafemember", "password");
         List<Comment> comments = service.listComments(nonCafeMember, article.getId(), 0, 5);
         // then
         then(comments)

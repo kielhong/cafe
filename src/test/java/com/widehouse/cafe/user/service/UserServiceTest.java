@@ -30,6 +30,7 @@ class UserServiceTest {
     void setUp() {
         service = new UserService(cafeMemberRepository);
     }
+
     @Test
     void getCafesByMember_thenListCafes() {
         // given
