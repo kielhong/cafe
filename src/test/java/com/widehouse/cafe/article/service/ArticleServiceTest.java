@@ -173,7 +173,7 @@ class ArticleServiceTest {
     void addComment_ThenIncreaseArticleCommentCountBy1() {
         // given
         Article article = new Article(100L, board1, writer, "test article1", "test1", emptyList(), 10, now(), now());
-        int beforeCount = article.getCommentCount();
+        long beforeCount = article.getCommentCount();
         given(articleRepository.findById(anyLong()))
                 .willReturn(Optional.of(article));
         // when
@@ -199,7 +199,7 @@ class ArticleServiceTest {
     void removeComment_ThenDecreaseArticleCommentCountBy1() {
         // given
         Article article = new Article(100L, board1, writer, "test article1", "test1", emptyList(), 10, now(), now());
-        int beforeCount = article.getCommentCount();
+        long beforeCount = article.getCommentCount();
         given(articleRepository.findById(anyLong()))
                 .willReturn(Optional.of(article));
         // when

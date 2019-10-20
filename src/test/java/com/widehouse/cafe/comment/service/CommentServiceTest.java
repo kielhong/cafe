@@ -6,6 +6,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -185,5 +186,16 @@ class CommentServiceTest {
         thenThrownBy(() -> commentService.deleteComment(comment, anotherMember))
                 .isInstanceOf(NoAuthorityException.class);
         verify(commentRepository, never()).delete(comment);
+    }
+
+    @Test
+    void getComment_ThenReturnComment() {
+        given(commentRepository.findById(anyString()))
+                .willReturn(Optional.of(comment));
+        // when
+        Comment result = commentService.getComment("commentId");
+        // then
+        then(result)
+                .isEqualTo(comment);
     }
 }

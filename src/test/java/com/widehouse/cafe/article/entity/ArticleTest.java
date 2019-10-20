@@ -22,7 +22,7 @@ class ArticleTest {
     @BeforeEach
     void init() {
         cafe = new Cafe("testcafe", "testcafe");
-        board = board = Board.builder().cafe(cafe).name("testboard").build();
+        board = Board.builder().cafe(cafe).name("testboard").build();
         member = new User();
         article = new Article(board, member, "test title", "test content");
     }
@@ -37,14 +37,14 @@ class ArticleTest {
                 .hasFieldOrPropertyWithValue("board", board)
                 .hasFieldOrPropertyWithValue("writer", member)
                 .hasFieldOrPropertyWithValue("title", "test title")
-                .hasFieldOrPropertyWithValue("commentCount", 0)
+                .hasFieldOrPropertyWithValue("commentCount", 0L)
                 .hasFieldOrProperty("createdAt")
                 .hasFieldOrProperty("updatedAt");
     }
 
     @Test
     void modifyArticle_should_update_article() {
-        int commentCount = article.getCommentCount();
+        long commentCount = article.getCommentCount();
 
         article.modify("modify title", "modify content");
 
@@ -73,7 +73,7 @@ class ArticleTest {
 
     @Test
     void increaseCommentCount_thenCommentCountIncreasedBy1() {
-        int commentCount = article.getCommentCount();
+        long commentCount = article.getCommentCount();
 
         article.increaseCommentCount();
 
@@ -83,7 +83,7 @@ class ArticleTest {
 
     @Test
     void decreaseCommentCount_thenCommentCountDescreasedBy1() {
-        int commentCount = article.getCommentCount();
+        long commentCount = article.getCommentCount();
 
         article.decreaseCommentCount();
 

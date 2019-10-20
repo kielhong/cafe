@@ -6,7 +6,6 @@ import static com.widehouse.cafe.article.entity.BoardType.CALENDAR;
 import static com.widehouse.cafe.article.entity.BoardType.LIST;
 import static com.widehouse.cafe.article.entity.BoardType.TAG;
 import static com.widehouse.cafe.cafe.entity.CafeMemberRole.MANAGER;
-import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import com.widehouse.cafe.article.entity.Board;
@@ -78,10 +77,6 @@ public class CafeService {
         boardRepository.save(board);
     }
 
-    public void addBoard(Cafe cafe, String boardName, int listOrder) {
-        addBoard(cafe, boardName, LIST, listOrder);
-    }
-
     /**
      * add Board.
      * @param cafe cafe which add board
@@ -94,7 +89,7 @@ public class CafeService {
                 .mapToInt(Board::getListOrder)
                 .reduce((a, b) -> b)
                 .orElse(0);
-        addBoard(cafe, boardName, lastOrder + 1);
+        addBoard(cafe, boardName, LIST, lastOrder + 1);
     }
 
     private void addSpecialBoard(Cafe cafe) {
@@ -106,7 +101,7 @@ public class CafeService {
 
     private void addNormalBoard(Cafe cafe, int startOrder, int length) {
         for (int i = startOrder; i < startOrder + length; i++) {
-            addBoard(cafe, "일반 게시판" + i, (i + 1));
+            addBoard(cafe, "일반 게시판" + i, LIST, (i + 1));
         }
     }
 
@@ -170,4 +165,13 @@ public class CafeService {
 
     }
 
+    public void increaseCommentCount(Cafe cafe) {
+        cafe.getData().increaseCommentCount();
+        cafeRepository.save(cafe);
+    }
+
+    public void decreaseCommentCount(Cafe cafe) {
+        cafe.getData().decreaseCommentCount();
+        cafeRepository.save(cafe);
+    }
 }

@@ -11,6 +11,7 @@ import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.user.entity.User;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import lombok.RequiredArgsConstructor;
@@ -95,9 +96,11 @@ public class CommentService {
         }
 
         commentRepository.delete(comment);
-        // TODO - move to cafeService, articleService
-        //            cafe.getData().decreaseCommentCount();
-        //            cafeRepository.save(cafe);
+    }
+
+    public Comment getComment(String commentId) {
+        return commentRepository.findById(commentId)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     private boolean isCafeMember(Cafe cafe, User user) {
@@ -111,4 +114,6 @@ public class CommentService {
     private boolean isCafeManager(CafeMember cafeMember) {
         return cafeMember.getRole() == CafeMemberRole.MANAGER;
     }
+
+
 }

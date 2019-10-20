@@ -58,7 +58,7 @@ public class Article {
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private List<Tag> tags;
 
-    private int commentCount;
+    private long commentCount;
 
     @CreatedDate
     private LocalDateTime createdAt;

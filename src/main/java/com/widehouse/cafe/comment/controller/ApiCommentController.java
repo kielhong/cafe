@@ -1,9 +1,8 @@
 package com.widehouse.cafe.comment.controller;
 
 import com.widehouse.cafe.article.entity.Article;
-import com.widehouse.cafe.article.entity.ArticleRepository;
+import com.widehouse.cafe.article.service.ArticleService;
 import com.widehouse.cafe.comment.entity.Comment;
-import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.comment.service.CommentListService;
 import com.widehouse.cafe.comment.service.CommentService;
 import com.widehouse.cafe.common.annotation.CurrentMember;
@@ -36,26 +35,22 @@ public class ApiCommentController {
     @Autowired
     private CommentListService commentListService;
     @Autowired
-    private CommentRepository commentRepository;
-    @Autowired
-    private ArticleRepository articleRepository;
+    private ArticleService articleService;
 
     /**
      * GET /api/articles/{articleId}/comments.
      * @param articleId id of Article
      * @param page page
      * @param size size
-     * @param member current member
+     * @param user current user
      * @return list of {@link Comment}
      */
     @GetMapping("/articles/{articleId}/comments")
     public List<Comment> getComments(@PathVariable Long articleId,
                                      @RequestParam(defaultValue = "0") Integer page,
                                      @RequestParam(defaultValue = "10") Integer size,
-                                     @CurrentMember User member) {
-        List<Comment> comments = commentListService.listComments(member, articleId, page, size);
-
-        return comments;
+                                     @CurrentMember User user) {
+        return commentListService.listComments(user, articleId, page, size);
     }
 
     /**
@@ -63,16 +58,16 @@ public class ApiCommentController {
      * Create comment on article
      * @param articleId id of article
      * @param input comment request form
-     * @param member current member
+     * @param user current member
      * @return created {@link Comment}
      */
     @PostMapping("/articles/{articleId}/comments")
     public Comment write(@PathVariable Long articleId,
                          @RequestBody CommentForm input,
-                         @CurrentMember User member) {
-        Article article = articleRepository.findById(articleId).get();
+                         @CurrentMember User user) {
+        Article article = articleService.getArticle(articleId, user);
 
-        return commentService.writeComment(article, member, input.getComment());
+        return commentService.writeComment(article, user, input.getComment());
     }
 
     /**
@@ -80,16 +75,16 @@ public class ApiCommentController {
      * Create reply comment on comment
      * @param commentId id of comment
      * @param input request comment form
-     * @param member current member
+     * @param user current member
      * @return created reply {@link Comment}
      */
     @PostMapping("/comments/{commentId}/comments")
     public Comment writeReplyComment(@PathVariable String commentId,
                                      @RequestBody CommentForm input,
-                                     @CurrentMember User member) {
-        Comment comment = commentRepository.findById(commentId).get();
+                                     @CurrentMember User user) {
+        Comment comment = commentService.getComment(commentId);
 
-        return commentService.writeReplyComment(comment, member, input.getComment());
+        return commentService.writeReplyComment(comment, user, input.getComment());
     }
 
     @NoArgsConstructor

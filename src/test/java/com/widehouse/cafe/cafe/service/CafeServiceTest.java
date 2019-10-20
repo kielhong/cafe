@@ -3,17 +3,19 @@ package com.widehouse.cafe.cafe.service;
 import static com.widehouse.cafe.article.entity.BoardType.LIST;
 import static com.widehouse.cafe.cafe.entity.CafeVisibility.PUBLIC;
 import static java.time.LocalDateTime.now;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.data.domain.Sort.Direction.ASC;
 
+import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.article.entity.BoardRepository;
 import com.widehouse.cafe.cafe.entity.Cafe;
@@ -29,6 +31,8 @@ import com.widehouse.cafe.user.entity.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -84,15 +88,6 @@ class CafeServiceTest {
         verify(cafeRepository, times(2)).save(any(Cafe.class));
         verify(cafeMemberRepository).save(any(CafeMember.class));
         verify(boardRepository, times(8)).save(any(Board.class));
-    }
-
-
-
-    @Test
-    void addBoard_should_attach_board_sort() {
-        service.addBoard(cafe, "test board3", 2);
-
-        verify(boardRepository).save(any(Board.class));
     }
 
     @Test
@@ -233,5 +228,34 @@ class CafeServiceTest {
 
         thenThrownBy(() -> service.getBoard(1L))
                 .isInstanceOf(BoardNotExistsException.class);
+    }
+
+    @Test
+    void increaseCommentCount() {
+        // given
+        Cafe cafe = new Cafe(10L, "cafeurl", "cafename");
+        long commentCount = cafe.getData().getCommentCount();
+        // when
+        service.increaseCommentCount(cafe);
+        // then
+        then(cafe.getData().getCommentCount())
+                .isEqualTo(commentCount + 1);
+        verify(cafeRepository).save(cafe);
+    }
+
+    @Test
+    void decreaseCommentCount() {
+        // given
+        Cafe cafe = new Cafe(10L, "cafeurl", "cafename");
+        for (int i = 0; i < 10; i++) {
+            cafe.getData().increaseCommentCount();
+        }
+        long commentCount = cafe.getData().getCommentCount();
+        // when
+        service.decreaseCommentCount(cafe);
+        // then
+        then(cafe.getData().getCommentCount())
+                .isEqualTo(commentCount - 1);
+        verify(cafeRepository).save(cafe);
     }
 }
