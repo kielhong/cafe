@@ -97,8 +97,8 @@ class ApiArticleControllerTest {
     @Test
     void getArticle_withAuh_thenReturnArticle() throws Exception {
         User reader = new User(1L, "reader", "password");
-        given(articleService.getArticle(1L, reader))
-                .willReturn(new Article(1L, board, writer, "title", "content", emptyList(), 0, now(), now()));
+        given(articleService.readArticle(1L, reader))
+                .willReturn(new Article(1L, board, writer, "title", "content", emptyList(), 0, 0, now(), now()));
         // when
         mvc.perform(get("/api/cafes/testurl/articles/1")
                     .with(user(reader)))
@@ -111,7 +111,7 @@ class ApiArticleControllerTest {
     @Test
     void getArticle_withNoAuthorityMember_then403Forbidden() throws Exception {
         User reader = new User(1L, "reader", "password");
-        given(articleService.getArticle(1L, reader))
+        given(articleService.readArticle(1L, reader))
                 .willThrow(new NoAuthorityException());
 
         mvc.perform(get("/api/cafes/testurl/articles/1")

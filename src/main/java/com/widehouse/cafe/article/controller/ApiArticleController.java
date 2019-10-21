@@ -54,7 +54,7 @@ public class ApiArticleController {
     public Article getArticle(@PathVariable String cafeUrl,
                               @PathVariable Long articleId,
                               @CurrentMember User reader) {
-        return articleService.getArticle(articleId, reader);
+        return articleService.readArticle(articleId, reader);
     }
 
     /**

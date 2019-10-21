@@ -30,11 +30,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 /**
  * Created by kiel on 2017. 2. 10..
  */
-@Entity
-@EntityListeners(AuditingEntityListener.class)
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Article {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -58,7 +58,9 @@ public class Article {
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private List<Tag> tags;
 
-    private long commentCount;
+    private long readCount = 0;
+
+    private long commentCount = 0;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -102,5 +104,9 @@ public class Article {
 
     public Cafe getCafe() {
         return this.board.getCafe();
+    }
+
+    public void increaseReadCount() {
+        this.readCount++;
     }
 }

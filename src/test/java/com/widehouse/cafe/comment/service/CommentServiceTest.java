@@ -59,8 +59,7 @@ class CommentServiceTest {
 
         cafe = new Cafe(1L, "testurl", "testname");
         Board board = Board.builder().cafe(cafe).name("article").build();
-        article = new Article(1L, board, writer, "title", "content",
-                new ArrayList<>(), 0, now(), now());
+        article = new Article(1L, board, writer, "title", "content", new ArrayList<>(), 0, 0, now(), now());
         comment = new Comment("commentId", 1L, 1L, new SimpleUser(commenter), "comment",
                 new ArrayList<>(), now(), now());
     }

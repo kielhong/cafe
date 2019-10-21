@@ -65,7 +65,7 @@ public class ApiCommentController {
     public Comment write(@PathVariable Long articleId,
                          @RequestBody CommentForm input,
                          @CurrentMember User user) {
-        Article article = articleService.getArticle(articleId, user);
+        Article article = articleService.readArticle(articleId, user);
 
         return commentService.writeComment(article, user, input.getComment());
     }

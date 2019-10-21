@@ -8,8 +8,8 @@ import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.user.entity.User;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -69,14 +69,13 @@ class CommentRepositoryTest {
         then(result.getReplies())
                 .hasSize(2);
     }
-
-
+    
     @Test
      void findByArticle_Should_ListComments() {
         // given
         Board board = Board.builder().cafe(new Cafe("testcafe", "testcafe")).name("board").build();
         User commenter = new User(2L, "commenter", "password");
-        Article article = new Article(10L, board, user, "title", "content", Collections.emptyList(), 0, now(), now());
+        Article article = new Article(10L, board, user, "title", "content", new ArrayList<>(), 0, 0, now(), now());
 
         Comment comment1 = new Comment(article, commenter, "comment1");
         mongoTemplate.insert(comment1);

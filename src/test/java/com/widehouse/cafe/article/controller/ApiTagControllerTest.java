@@ -95,7 +95,7 @@ class ApiTagControllerTest {
         Article article = new Article(board, writer, "title", "content");
         article.getTags().add(new Tag("tag1"));
         article.getTags().add(new Tag("tag2"));
-        given(articleService.getArticle(eq(1L), any()))
+        given(articleService.readArticle(eq(1L), any()))
                 .willReturn(article);
         // then
         mvc.perform(get("/api/articles/1/tags"))
@@ -116,7 +116,7 @@ class ApiTagControllerTest {
         tag1.getArticles().add(article);
         tag3.getArticles().add(article);
         tag4.getArticles().add(article);
-        given(articleService.getArticle(1L, writer))
+        given(articleService.readArticle(1L, writer))
                 .willReturn(article);
         given(tagRepository.findByName("testtag1"))
                 .willReturn(Optional.of(tag1));

@@ -16,26 +16,26 @@ import org.junit.jupiter.api.Test;
 class ArticleTest {
     private Cafe cafe;
     private Board board;
-    private User member;
+    private User user;
     private Article article;
 
     @BeforeEach
     void init() {
         cafe = new Cafe("testcafe", "testcafe");
         board = Board.builder().cafe(cafe).name("testboard").build();
-        member = new User();
-        article = new Article(board, member, "test title", "test content");
+        user = new User();
+        article = new Article(board, user, "test title", "test content");
     }
 
     @Test
     void writeArticle_should_create_article() {
-        Article newArticle = new Article(board, member, "test title", "test content");
+        Article newArticle = new Article(board, user, "test title", "test content");
 
         then(newArticle)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("cafe", cafe)
                 .hasFieldOrPropertyWithValue("board", board)
-                .hasFieldOrPropertyWithValue("writer", member)
+                .hasFieldOrPropertyWithValue("writer", user)
                 .hasFieldOrPropertyWithValue("title", "test title")
                 .hasFieldOrPropertyWithValue("commentCount", 0L)
                 .hasFieldOrProperty("createdAt")
@@ -51,7 +51,7 @@ class ArticleTest {
         then(article)
                 .hasFieldOrPropertyWithValue("cafe", cafe)
                 .hasFieldOrPropertyWithValue("board", board)
-                .hasFieldOrPropertyWithValue("writer", member)
+                .hasFieldOrPropertyWithValue("writer", user)
                 .hasFieldOrPropertyWithValue("title", "modify title")
                 .hasFieldOrPropertyWithValue("commentCount", commentCount);
         then(article.getUpdatedAt())
@@ -101,5 +101,17 @@ class ArticleTest {
 
         then(article.getTags())
                 .contains(tag1, tag2);
+    }
+
+    @Test
+    void increaseReadCount_ThenIncreaseReadCountBy1() {
+        // given
+        Article article = new Article(board, user, "title", "content");
+        long readCount = article.getReadCount();
+        // when
+        article.increaseReadCount();
+        // then
+        then(article.getReadCount())
+                .isEqualTo(readCount + 1);
     }
 }

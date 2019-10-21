@@ -73,13 +73,13 @@ public class ApiTagController {
      * GET /api/articles/{articleId}/tags.
      * List Tags of Article
      * @param articleId id of article
-     * @param member member who reads article
+     * @param user user who reads article
      * @return list of {@link Tag}
      */
     @GetMapping("articles/{articleId}/tags")
     public List<Tag> getTags(@PathVariable Long articleId,
-                             @CurrentMember User member) {
-        Article article = articleService.getArticle(articleId, member);
+                             @CurrentMember User user) {
+        Article article = articleService.readArticle(articleId, user);
 
         return article.getTags();
     }
@@ -89,14 +89,14 @@ public class ApiTagController {
      * Attach Tags to Article
      * @param articleId id of article
      * @param tagForms request form of tags
-     * @param member member who is requesting
+     * @param user member who is requesting
      * @return list of attached {@link Tag}
      */
     @PostMapping("/articles/{articleId}/tags")
     public List<Tag> postTags(@PathVariable Long articleId,
                               @RequestBody List<TagForm> tagForms,
-                              @CurrentMember User member) {
-        Article article = articleService.getArticle(articleId, member);
+                              @CurrentMember User user) {
+        Article article = articleService.readArticle(articleId, user);
 
         List<Tag> tags = tagForms.stream()
                 .map(t -> tagService.getTagByName(t.getName()).orElse(tagRepository.save(new Tag(t.getName()))))

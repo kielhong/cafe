@@ -22,13 +22,9 @@ import com.widehouse.cafe.cafe.entity.Category;
 import com.widehouse.cafe.common.exception.NoAuthorityException;
 import com.widehouse.cafe.user.entity.User;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -103,11 +99,31 @@ class ArticleServiceTest {
     }
 
     @Test
-    void getArticle_withArticleId_thenReturnArticle() {
+    void getArticle_ThenReturnArticle() {
+        given(articleRepository.findById(anyLong()))
+                .willReturn(Optional.of(article1));
+        // when
+        Article result = service.getArticle(1L);
+        // then
+        then(result).isEqualTo(article1);
+    }
+
+    @Test
+    void getArticle_GivenNotExistArticle_ThrowEntityNotFoundExcetion() {
+        // given
+        given(articleRepository.findById(anyLong()))
+                .willReturn(Optional.empty());
+        // expect
+        thenThrownBy(() -> service.getArticle(1L))
+                .isInstanceOf(EntityNotFoundException.class);
+    }
+
+    @Test
+    void readArticle_withArticleId_thenReturnArticle() {
         given(articleRepository.findById(anyLong()))
                 .willReturn(Optional.of(article1));
 
-        Article article = service.getArticle(1L, reader);
+        Article article = service.readArticle(1L, reader);
 
         then(article)
                 .isNotNull()
@@ -115,7 +131,7 @@ class ArticleServiceTest {
     }
 
     @Test
-    void getArticle_withPrivateCafeAndNonCafeMember_thenRaiseNoAuthorityException() {
+    void readArticle_withPrivateCafeAndNonCafeMember_thenRaiseNoAuthorityException() {
         // given
         Cafe privateCafe = new Cafe("private", "private cafe", "", PRIVATE, new Category());
         Board board = Board.builder().cafe(privateCafe).name("board").build();
@@ -125,7 +141,7 @@ class ArticleServiceTest {
         given(cafeMemberRepository.existsByCafeMember(any(Cafe.class), any(User.class)))
                 .willReturn(false);
         // then
-        thenThrownBy(() -> service.getArticle(1L, reader))
+        thenThrownBy(() -> service.readArticle(1L, reader))
                 .isInstanceOf(NoAuthorityException.class);
     }
 
@@ -172,7 +188,7 @@ class ArticleServiceTest {
     @Test
     void addComment_ThenIncreaseArticleCommentCountBy1() {
         // given
-        Article article = new Article(100L, board1, writer, "test article1", "test1", emptyList(), 10, now(), now());
+        Article article = new Article(100L, board1, writer, "test article1", "test1", emptyList(), 0, 10, now(), now());
         long beforeCount = article.getCommentCount();
         given(articleRepository.findById(anyLong()))
                 .willReturn(Optional.of(article));
@@ -198,7 +214,7 @@ class ArticleServiceTest {
     @Test
     void removeComment_ThenDecreaseArticleCommentCountBy1() {
         // given
-        Article article = new Article(100L, board1, writer, "test article1", "test1", emptyList(), 10, now(), now());
+        Article article = new Article(100L, board1, writer, "test article1", "test1", emptyList(), 0, 10, now(), now());
         long beforeCount = article.getCommentCount();
         given(articleRepository.findById(anyLong()))
                 .willReturn(Optional.of(article));

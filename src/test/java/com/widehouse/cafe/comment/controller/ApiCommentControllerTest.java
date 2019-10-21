@@ -66,13 +66,13 @@ class ApiCommentControllerTest {
 
         Cafe cafe = new Cafe("testurl", "testcafe", "", PUBLIC, new Category("category", 1));
         Board board = Board.builder().cafe(cafe).name("board").build();
-        article = new Article(1L, board, user, "title", "content", new ArrayList<>(), 0, now(), now());
+        article = new Article(1L, board, user, "title", "content", new ArrayList<>(), 0, 0, now(), now());
     }
 
     @Test
     void getComments_thenListComments() throws Exception {
         // given
-        given(articleservice.getArticle(anyLong(), any(User.class)))
+        given(articleservice.readArticle(anyLong(), any(User.class)))
                 .willReturn(article);
         List<Comment> comments = IntStream.range(1, 6)
                 .mapToObj(i -> new Comment(article, user, "comment" + i))
@@ -89,7 +89,7 @@ class ApiCommentControllerTest {
     @Test
     void write_withCafeMember_thenCreateComment() throws Exception {
         // given
-        given(articleservice.getArticle(anyLong(), any(User.class)))
+        given(articleservice.readArticle(anyLong(), any(User.class)))
                 .willReturn(article);
         given(commentService.writeComment(article, user, "new comment"))
                 .willReturn(new Comment(article, user, "new comment"));

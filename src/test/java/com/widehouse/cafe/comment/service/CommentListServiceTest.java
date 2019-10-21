@@ -1,6 +1,7 @@
 package com.widehouse.cafe.comment.service;
 
 import static java.time.LocalDateTime.now;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -17,7 +18,6 @@ import com.widehouse.cafe.comment.entity.CommentRepository;
 import com.widehouse.cafe.user.entity.User;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +57,7 @@ class CommentListServiceTest {
         cafe = new Cafe("testurl", "testname");
         Board board = Board.builder().cafe(cafe).name("article").build();
         User writer = new User(1L, "writer", "password");
-        article = new Article(1L, board, writer, "title", "content", Collections.emptyList(), 0, now(), now());
+        article = new Article(1L, board, writer, "title", "content", emptyList(), 0, 0, now(), now());
 
         commenter = new User(2L, "commenter", "password");
 

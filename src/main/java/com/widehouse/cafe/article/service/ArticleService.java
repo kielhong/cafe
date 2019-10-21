@@ -46,13 +46,18 @@ public class ArticleService {
                 PageRequest.of(page, size, Sort.by(DESC, "id")));
     }
 
+    public Article getArticle(Long id) {
+        return articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("article " + id + " does not exist"));
+    }
+
     /**
      * get a article with reader.
      * if reader has no read auth then throw NoAuthorityException
      * @param id id of article
      * @param reader reader {@link User}
      */
-    public Article getArticle(Long id, User reader) {
+    public Article readArticle(Long id, User reader) {
         Article article = articleRepository.findById(id).get();
 
         if (isArticleReadable(article.getCafe(), reader)) {
