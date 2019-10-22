@@ -31,6 +31,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 /**
  * Created by kiel on 2017. 2. 19..
@@ -63,13 +64,16 @@ class ApiArticleControllerTest {
 
     @Test
     void listArticlesByCafe_thenListArticles() throws Exception {
+        // given
         given(articleService.getArticles(cafe, 0, 3))
                 .willReturn(Arrays.asList(
                         new Article(board, writer, "test article1", "test1"),
                         new Article(board, writer, "test article2", "test2"),
                         new Article(board, writer, "test article3", "test3")));
+        // when
+        ResultActions result = mvc.perform(get("/api/cafes/testurl/articles?page=0&size=3"));
         // then
-        mvc.perform(get("/api/cafes/testurl/articles?page=0&size=3"))
+        result
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(3))
                 .andExpect(jsonPath("$").isArray());
