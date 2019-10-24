@@ -47,12 +47,9 @@ class ArticleServiceTest {
     private CafeMemberRepository cafeMemberRepository;
     @Mock
     private TagRepository tagRepository;
-    @Mock
-    private ApplicationEventPublisher eventPublisher;
 
     private Cafe cafe;
     private Board board1;
-    private Board board2;
     private User writer;
     private User reader;
 
@@ -62,17 +59,17 @@ class ArticleServiceTest {
 
     @BeforeEach
     void setUp() {
-        service = new ArticleService(articleRepository, cafeMemberRepository, tagRepository, eventPublisher);
-
-        cafe = new Cafe("testurl", "testcafe");
-        board1 = Board.builder().cafe(cafe).name("board1").build();
-        board2 = Board.builder().cafe(cafe).name("board2").build();
+        service = new ArticleService(articleRepository, cafeMemberRepository, tagRepository);
 
         writer = new User(1L, "writer", "password");
         reader = new User(2L, "reader", "password");
 
+        cafe = new Cafe("testurl", "testcafe");
+        board1 = Board.builder().cafe(cafe).name("board1").build();
         article1 = new Article(board1, writer, "test article1", "test1");
         article2 = new Article(board1, writer, "test article2", "test2");
+
+        Board board2 = Board.builder().cafe(cafe).name("board2").build();
         article3 = new Article(board2, writer, "test article3", "test3");
     }
 

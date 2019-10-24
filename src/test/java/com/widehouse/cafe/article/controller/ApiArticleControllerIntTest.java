@@ -47,7 +47,7 @@ class ApiArticleControllerIntTest {
     @Sql("classpath:data.sql")
     @Test
     void writeArticle_withCafeMember_thenSuccess() throws Exception {
-        mvc.perform(post("/api/cafes/testurl/articles/")
+        mvc.perform(post("/api/cafes/cafetest/articles/")
                     .with(user(writer))
                     .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)

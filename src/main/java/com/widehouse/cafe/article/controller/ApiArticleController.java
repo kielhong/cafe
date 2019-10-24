@@ -6,12 +6,14 @@ import com.widehouse.cafe.article.service.ArticleService;
 import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.common.annotation.CurrentMember;
+import com.widehouse.cafe.common.event.ArticleCreateEvent;
 import com.widehouse.cafe.user.entity.User;
 
 import java.util.List;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +32,8 @@ public class ApiArticleController {
     private ArticleService articleService;
     @Autowired
     private CafeService cafeService;
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     @GetMapping("/cafes/{cafeUrl}/articles")
     public List<Article> getArticlesByCafe(@PathVariable String cafeUrl,
@@ -62,16 +66,20 @@ public class ApiArticleController {
      * Create article
      * @param cafeUrl url of cafe
      * @param articleForm request article form
-     * @param member current member
+     * @param user current member
      * @return created {@link Article}
      */
     @PostMapping(value = "/cafes/{cafeUrl}/articles")
     public Article writeArticle(@PathVariable String cafeUrl,
                                 @RequestBody ArticleForm articleForm,
-                                @CurrentMember User member) {
+                                @CurrentMember User user) {
+        Cafe cafe = cafeService.getCafe(cafeUrl);
         Board board = cafeService.getBoard(articleForm.getBoard().getId());
+        Article article = articleService.writeArticle(board, user, articleForm.getTitle(), articleForm.getContent());
 
-        return articleService.writeArticle(board, member, articleForm.getTitle(), articleForm.getContent());
+        eventPublisher.publishEvent(new ArticleCreateEvent(cafe));
+
+        return article;
     }
 
     @Data

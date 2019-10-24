@@ -34,7 +34,6 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final CafeMemberRepository cafeMemberRepository;
     private final TagRepository tagRepository;
-    private final ApplicationEventPublisher eventPublisher;
 
     public List<Article> getArticles(Cafe cafe, int page, int size) {
         return articleRepository.findByBoardCafe(cafe,
@@ -76,11 +75,7 @@ public class ArticleService {
             throw new NoAuthorityException();
         }
 
-        Article article = articleRepository.save(new Article(board, writer, title, content));
-
-        eventPublisher.publishEvent(new ArticleCreateEvent(board.getCafe()));
-
-        return article;
+        return articleRepository.save(new Article(board, writer, title, content));
     }
 
     /**
