@@ -1,5 +1,6 @@
 package com.widehouse.cafe.article.controller;
 
+import com.widehouse.cafe.common.dto.ArticleResponse;
 import com.widehouse.cafe.article.entity.Article;
 import com.widehouse.cafe.article.entity.Board;
 import com.widehouse.cafe.article.service.ArticleService;
@@ -7,6 +8,7 @@ import com.widehouse.cafe.cafe.entity.Cafe;
 import com.widehouse.cafe.cafe.service.CafeService;
 import com.widehouse.cafe.common.annotation.CurrentMember;
 import com.widehouse.cafe.common.event.ArticleCreateEvent;
+import com.widehouse.cafe.common.event.ArticleReadEvent;
 import com.widehouse.cafe.user.entity.User;
 
 import java.util.List;
@@ -55,10 +57,14 @@ public class ApiArticleController {
     }
 
     @GetMapping("/cafes/{cafeUrl}/articles/{articleId}")
-    public Article getArticle(@PathVariable String cafeUrl,
-                              @PathVariable Long articleId,
-                              @CurrentMember User reader) {
-        return articleService.readArticle(articleId, reader);
+    public ArticleResponse getArticle(@PathVariable String cafeUrl,
+                                      @PathVariable Long articleId,
+                                      @CurrentMember User reader) {
+        Article article = articleService.readArticle(articleId, reader);
+
+        eventPublisher.publishEvent(new ArticleReadEvent(article));
+
+        return ArticleResponse.of(article);
     }
 
     /**
